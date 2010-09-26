@@ -1,0 +1,32 @@
+escape ^Zz
+vbell off
+bind ^k kill
+defscrollback 5000
+
+bind a select 0
+bind ^a select 0
+bind -c REGION 2 split
+bind -c REGION 1 only
+bind -c REGION 0 remove
+bind o focus
+bind v vert_split
+bind v split -v
+bind ^X command -c REGION
+
+# encoding aliases
+bind u eval 'encoding utf8' 'info'
+bind ^U eval 'encoding utf8' 'info'
+bind e eval 'encoding eucjp' 'info'
+bind ^E eval 'encoding eucjp' 'info'
+
+bind ^n eval "next" "command -c move"
+bind ^p eval "prev" "command -c move"
+bind ^z eval "next" "command -c move"
+bind -c move ^z command
+
+hardstatus alwayslastline "[%02c] %`%-w%{=b bw}%n %t%{-}%+w"
+
+#idle 1200
+#blankerprg fortune
+
+
