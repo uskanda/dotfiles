@@ -1,0 +1,10 @@
+ls
+less zsh_history
+ls
+cd .zsh
+less .zsh/.zsh_history
+tac
+ta
+gtac .zshrc
+gtac
+sudo port install coreutils
