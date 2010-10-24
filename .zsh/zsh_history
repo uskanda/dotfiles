@@ -16,7 +16,6 @@
 : 1257139470:0;svn diff application.js
 : 1257139474:0;svn log application.js
 : 1257139518:0;svn log
-: 1257139526:0;ls;
 : 1257139640:0;less 404.html
 : 1257139701:0;svn co svn://prmlf0.main.ist.hokudai.ac.jp/questionnaire
 : 1257139779:0;mv questionnaire quest
@@ -38,8 +37,6 @@
 : 1257155297:0;vi c-autosave.el
 : 1257155457:0;gem list -r tmail
 : 1257155470:0;sudo gem install tmail
-: 1257264667:0;man top
-: 1257264703:0;top -o cpu
 : 1257323312:0;cd pu
 : 1257323476:0;emacs ext/Cluster.cpp ext/Cluster.hpp ext/ClusterGenerator.cpp ext/ClusterGenerator.hpp ext/DefaultLCPMaker.cpp ext/DefaultLCPMaker.hpp ext/Document.cpp ext/Document.hpp ext/EnTermContainer.hpp ext/EnglishTerm.cpp ext/EnglishTerm.hpp ext/FastLCPMaker.cpp ext/FastLCPMaker.hpp ext/IndexedMap.hpp ext/JpTerm.cpp ext/JpTerm.hpp ext/JpTermContainer.cpp ext/JpTermContainer.hpp ext/LCPMaker.cpp ext/LCPMaker.hpp ext/LabelCandidateExtractor.hpp ext/LarssonSadakaneSuffixArraySorter.cpp ext/LarssonSadakaneSuffixArraySorter.hpp ext/Libclustxt.cpp ext/Libclustxt.hpp ext/Phrase.cpp ext/Phrase.hpp ext/PopoutPhrases.hpp ext/Stemmer.hpp ext/StopwordList.cpp ext/StopwordList.hpp ext/StringUtil.cpp ext/StringUtil.hpp ext/Substring.cpp ext/Substring.hpp ext/SubstringUtil.hpp ext/SuffixArray.cpp ext/SuffixArray.hpp ext/SuffixArraySorter.cpp ext/SuffixArraySorter.hpp ext/Term.cpp ext/Term.hpp ext/TermContainer.hpp ext/edge.hpp
 : 1257323834:0;emacs StopwordList.cpp
@@ -71,7 +68,6 @@
 : 1257333873:0;
 : 1257335275:0;gdb
 : 1257335931:0;git diff LabelCandidateExtractor.hpp
-: 1257348374:0;cd /Volumes/Macbook\ HD
 : 1257348388:0;less id_dsa
 : 1257348407:0;mv id_rsa id_rsa_2
 : 1257348423:0;cp id_rsa ~/.ssh
@@ -91,9 +87,7 @@
 : 1257401752:0;ln *el ../../provided
 : 1257401756:0;ln -f *el ../../provided
 : 1257403684:0;less PopoutPhrases.hpp
-: 1257407042:0;cd /Volumes/NO\ NAME
 : 1257407045:0;cd DCIM
-: 1257407047:0;cd 101_FUJI
 : 1257410178:0;less yahoo_search
 : 1257410202:0;grep def *rb
 : 1257410205:0;grep gsub *rb
@@ -123,9 +117,6 @@
 : 1257555552:0;ls -lS | tac
 : 1257555869:0;ping www.google.com
 : 1257601167:0;rm hoge.rb hoge
-: 1257601172:0;less install.sh\~
-: 1257601178:0;less installation_list
-: 1257601189:0;less ppp
 : 1257601198:0;cd quest
 : 1257601203:0;rm -rf quest
 : 1257691681:0;sls
@@ -140,13 +131,11 @@
 : 1257698108:0;vi c-prog-c.el
 : 1257698175:0;grep -r flymake
 : 1257698176:0;grep -r flymake .
-: 1257698204:0;cd Configurations
 : 1257698205:0;cd emacs.old
 : 1257698212:0;less c-flymake.el
 : 1257698340:0;emacs c-flymake.el
 : 1257699424:0;less vline.el
 : 1257701480:0;emacs curl_search.rb
-: 1257715023:0;less ../init.el
 : 1257724700:0;cd rb-file-classifier
 : 1257724704:0;less file-classifier
 : 1257724833:0;less classify.conf.sample
@@ -179,14 +168,11 @@
 : 1257859928:0;man dig
 : 1257859986:0;dig -b 192.168.0.15
 : 1257865395:0;cd Virtual\ Machines.localized
-: 1257865400:0;cd ‰ªÆË£É•„É£û„Ç∑„É£≥
 : 1257865691:0;mv bbw5227500k.wmv bs892500k.wmv btra1098500k.wmv btra3301500k.wmv btra3468500k.wmv btra3805500k.wmv btra4002500k.wmv btra4006500k.wmv btra4349500k.wmv usr_4ae7c039be394.wmv /Volumes/Primes-back
 : 1257866870:0;ping 192.168.0.15
 : 1257873724:0;less iTunes\ Music\ Library.xml
 : 1257873748:0;less iTunes\ Library
 : 1257917370:0;cd th
-: 1257917378:0;cd OpenSources
-: 1257922741:0;sudo port -v sync
 : 1257922791:0;sudo port search go
 : 1257922799:0;sudo port search "go$"
 : 1257922806:0;sudo port search "go"
@@ -196,18 +182,14 @@
 : 1257929254:0;less questionnaire_data_master.rb
 : 1258008349:0;say wireless
 : 1258009615:0;mv *mp3 Music
-: 1258009619:0;less install
 : 1258009959:0;cd /System/Library/CoreServices/Dock.app/Contents/Resources
 : 1258009966:0;open DockMenus.plist
 : 1258012064:0;ssh 133.87.136.228 -l railsuser
-: 1258014148:0;ks
 : 1258014154:0;$HOME
 : 1258014166:0;emacs Cluster.cpp Cluster.hpp ClusterGenerator.cpp ClusterGenerator.hpp DefaultLCPMaker.cpp DefaultLCPMaker.hpp Document.cpp Document.hpp EnTermContainer.hpp EnglishTerm.cpp EnglishTerm.hpp FastLCPMaker.cpp FastLCPMaker.hpp IndexedMap.hpp JpTerm.cpp JpTerm.hpp JpTermContainer.cpp JpTermContainer.hpp LCPMaker.cpp LCPMaker.hpp LabelCandidateExtractor.cpp LabelCandidateExtractor.hpp LarssonSadakaneSuffixArraySorter.cpp LarssonSadakaneSuffixArraySorter.hpp Libclustxt.cpp Libclustxt.hpp Phrase.cpp Phrase.hpp PopoutPhrases.hpp Stemmer.hpp StopwordList.cpp StopwordList.hpp StringUtil.cpp StringUtil.hpp Substring.cpp Substring.hpp SubstringUtil.hpp SuffixArray.cpp SuffixArray.hpp SuffixArraySorter.cpp SuffixArraySorter.hpp Term.cpp Term.hpp TermContainer.hpp edge.hpp
 : 1258014255:0;sudo gem list thing
 : 1258014257:0;sudo gem list thin
-: 1258014296:0;gem -v
 : 1258014304:0;sudo gem update --system
-: 1258014658:0;vi anything-config.el
 : 1258014892:0;vi c-anything.el
 : 1258014977:0;emacs LabelCandidateExtractor.
 : 1258015023:0;emacs JpTerm.cpp
@@ -391,7 +373,6 @@
 : 1258438662:0;sudo port search screen
 : 1258439193:0;hg clone http://tscreen.repository.steve.org.uk/
 : 1258439208:0;cd tscreen.repository.steve.org.uk
-: 1258439242:0;less install.sh
 : 1258439261:0;less insta
 : 1258439285:0;less INSTALL
 : 1258439310:0;./install.sh
@@ -405,7 +386,6 @@
 : 1258439532:0;ln -s .screenrc .tscreenrc
 : 1258439569:0;vi .tscreenrc
 : 1258439601:0;screen
-: 1258443011:0;psg Fire
 : 1258443013:0;psg Shire
 : 1258443020:0;kill 36835
 : 1258448944:0;emacs application.html.erb
@@ -469,7 +449,6 @@
 : 1258476190:0;cd www
 : 1258476193:0;rm -r www
 : 1258476196:0;rm -fr www
-: 1258476202:0;cd Downloads/
 : 1258476266:0;rm -fr debian-40r0-i386-netinst
 : 1258476271:0;rm -fr debian
 : 1258476284:0;rm -rf Public
@@ -505,12 +484,9 @@
 : 1258477061:0;cd System
 : 1258477072:0;cd Macbook\ HD
 : 1258477079:0;cd Users/kanda
-: 1258484162:0;less id_rsa
 : 1258485281:0;ssh kanda@fremont122.linode.com
 : 1258485307:0;ssh kandaa@fremont122.linode.com
 : 1258485892:0;ssh kanda@li93-248.members.linode.com
-: 1258486322:0;less id_rsa.pub
-: 1258487036:0;vi id_rsa.pub
 : 1258487103:0;ssh root@74.207.251.248
 : 1258487314:0;scp router:~/.zshrc .
 : 1258487345:0;scp .zshrc kanda@74.207.251.248:~/
@@ -525,7 +501,6 @@
 : 1258491316:0;ping router.uskanda.com
 : 1258491355:0;dig
 : 1258492131:0;dig vps.uskanda.com
-: 1258492158:0;vi known_hosts
 : 1258493012:0;open cluiser
 : 1258493013:0;open cluiser.png
 : 1258493027:0;rm cluiser.png
@@ -598,7 +573,6 @@
 : 1258603784:0;html2haml index.html.erb > index.haml
 : 1258603973:0;rm index.html.erb
 : 1258607620:0;git pul
-: 1258607639:0;less update
 : 1258607683:0;emacs user.rb
 : 1258607726:0;app/controllers
 : 1258608052:0;emacs sessions_controller.rb
@@ -632,7 +606,6 @@
 : 1258613927:0;cd sue
 : 1258614895:0;less migrate/001_create_users.rb
 : 1258615590:0;vi section_controller.rb
-: 1258625899:0;vi update
 : 1258625910:0;./update
 : 1258625932:0;vi conf/c-auto-complete.el
 : 1258628269:0;emacs app/views/layouts/application.haml
@@ -653,8 +626,6 @@
 : 1258637451:0;./script/plugin install git://github.com/tvw/web-app-theme.git
 : 1258637480:0;./script/generate theme --help
 : 1258637542:0;./script/generate themed --theme="drastic-dark"
-: 1258637567:0;touch .gitignore
-: 1258637656:0;cd tmp
 : 1258637658:0;cd cache
 : 1258637665:0;cd pi
 : 1258637667:0;cd pids
@@ -686,9 +657,7 @@
 : 1258646393:0;sudo gem search rspec
 : 1258646398:0;sudo gem search auth
 : 1258646402:0;sudo gem search -r auth
-: 1258647531:0;cd rsense
 : 1258647553:0;hg update
-: 1258647578:0;hg pull
 : 1258647594:0;hg log
 : 1258647600:0;hg log H
 : 1258647671:0;vi c-auto-complete.el
@@ -702,12 +671,10 @@
 : 1258648004:0;nkf -Lu c-yasnippet.el > c-ys
 : 1258648007:0;rm c-yasnippet.el
 : 1258648012:0;mv c-ys c-yasnippet.el
-: 1258648286:0;cd imported
 : 1258648287:0;cd ruby-mode/y
 : 1258648288:0;cd ruby-mode/
 : 1258648335:0;less .yas-ignore-filenames-as-triggers
 : 1258648590:0;cd snippets/imported
-: 1258648596:0;cd ruby-mode
 : 1258648632:0;less ../rails-mode/Controllers/Create\ controller\ class.yasnippet
 : 1258648914:0;vi c-yasnippet.el
 : 1258649026:0;cd Hashes
@@ -718,7 +685,6 @@
 : 1258649155:0;rm embed\ string\ variable.yasnippet
 : 1258649157:0;less Insert\ ERb\'s.yasnippet
 : 1258649748:0;mv Emacs.app CocoaEmacs.app
-: 1258651196:0;ssh kanda@vps.uskanda.com
 : 1258652457:0;ssh 192.168.0.1
 : 1258657744:0;mv provided site-lisp
 : 1258657868:0;git rm --cached site-lisp
@@ -743,13 +709,11 @@
 : 1258659119:0;tree -L 2
 : 1258659126:0;tree -L 1
 : 1258659222:0;tree -L 1 G -v any
-: 1258659292:0;man grep
 : 1258659759:0;grep -r add-hook .
 : 1258660997:0;vi c-vi.el
 : 1258661401:0;vi ruby-electric.el
 : 1258661868:0;vi c-ruby.el
 : 1258694807:0;ssh vp
-: 1258708770:0;ssh prmlra2.main.ist.hokudai.ac.jp -l kanda
 : 1258714658:0;mkdir old
 : 1258714662:0;mv old_web_cruiser old
 : 1258714667:0;mv ls2 old
@@ -761,7 +725,6 @@
 : 1258788353:0;rm -rf tags
 : 1258788380:0;rm -rf .svn/
 : 1258788436:0;rm -rf questionnaire
-: 1258788616:0;cd .zsh
 : 1258788622:0;ls -a
 : 1258788641:0;wc zsh_history
 : 1258788660:0;less zsh_history
@@ -794,7 +757,6 @@
 : 1258812770:0;git push vps master
 : 1258812989:0;ssh 192.168.0.2
 : 1258837249:0;mv Downloads
-: 1258837252:0;cd Do
 : 1258837267:0;mv AsukaTools
 : 1258837270:0;cd AsukaTools
 : 1258837276:0;less readme.txt
@@ -805,8 +767,6 @@
 : 1259213125:0;emacs app/views/search
 : 1259213159:0;emacs app/views/search/index.haml
 : 1259213283:0;which emacs
-: 1259213626:0;vi .zshrc
-: 1259213683:0;reload
 : 1259213683:0;emacs do.html.erb
 : 1259214374:0;cd rails/public
 : 1259214457:0;less c-key-chord.el
@@ -818,7 +778,6 @@
 : 1259220539:0;./script/backgroundrb
 : 1259313716:0;mv questionnaire qu_old_repos
 : 1259313720:0;svn checkout http://living.academic.hokudai.ac.jp/svn/questionnaire
-: 1259313927:0;less selenium_testcase_template.erb
 : 1259313937:0;touch qu_csv.rb
 : 1259314095:0;less config/environment..r
 : 1259314097:0;less config/environment.rb
@@ -834,7 +793,6 @@
 : 1259316462:0;svn commit -m "kanda added qu2csv script"
 : 1259411796:0;a
 : 1259411799:0;b
-: 1259411804:0;e
 : 1259411807:0;f
 : 1259411816:0;which f
 : 1259411821:0;g
@@ -868,7 +826,6 @@
 : 1259531689:0;cd jq
 : 1259531770:0;cp -r images $DROPBOXDIR/Products/cluiser/rails/public/images
 : 1259531780:0;cd custom-theme
-: 1259531958:0;mv * ../
 : 1259531963:0;rm -r images
 : 1259532882:0;.ui-accordion-header {
 : 1259532882:0;.ui-accordion-header a {
@@ -930,7 +887,6 @@
 : 1259741625:0;ruby test.rb "ÊÉ£º≠ÂπÉ£¨" 100
 : 1259741634:0;ruby test.rb "ÊÉ£º\
 exit
-: 1259811996:0;vi init.el
 : 1259822454:0;man git
 : 1259822508:0;man ls
 : 1259822544:0;ls -h
@@ -938,7 +894,6 @@ exit
 : 1259822562:0;git --
 : 1259822591:0;ls --
 : 1259822593:0;ls --a
-: 1259822614:0;lal
 : 1259823528:0;man file
 : 1259823539:0;man main.tex
 : 1259823543:0;file main.tex
@@ -957,7 +912,6 @@ exit
 : 1259875218:0;man ps2pdfwr
 : 1259875229:0;ps2pdfwr graduate_thesis.ps
 : 1259882552:0;man jbibtex
-: 1259882572:0;vi c-env.el
 : 1259882631:0;which jbibtex
 : 1259882757:0;grep -r Mecab
 : 1259882759:0;grep -r Mecab .
@@ -1001,14 +955,11 @@ exit
 : 1259902285:0;ebb clusty_ss.pdf
 : 1260157766:0;prm
 : 1260172112:0;vi env-carbon.el
-: 1260172124:0;emacs env-carbon.el
 : 1260172278:0;emacs app/views/search/_cluster.haml app/views/search/_main.haml app/views/search/index.haml
 : 1260172318:0;grep -r anything-project
 : 1260172320:0;grep -r anything-project.
 : 1260172322:0;grep -r anything-project ./
-: 1260173773:0;cd env
 : 1260173776:0;less env-cocoa.el
-: 1260173780:0;less env-carbon.el
 : 1260173796:0;vi c-key-chord.el
 : 1260174459:0;emacs c-key-chord.el
 : 1260174588:0;cd /Applications/Emacs.app
@@ -1028,7 +979,6 @@ exit
 : 1260175583:0;grep viper-toggle .
 : 1260175585:0;grep -r viper-toggle .
 : 1260175628:0;cd eu
-: 1260175630:0;cd emulation
 : 1260175633:0;grep -r input-method .
 : 1260175676:0;grep -r toggle-input-method .
 : 1260175687:0;grep -r input-method *viper*el
@@ -1038,7 +988,6 @@ exit
 : 1260175975:0;emacs init.el
 : 1260175993:0;less tramp
 : 1260176036:0;cd sdic
-: 1260176125:0;git push origin master
 : 1260176906:0;grep -r view-mode .
 : 1260176915:0;vi view-extend.el
 : 1260425040:0;heroku help
@@ -1065,7 +1014,6 @@ exit
 : 1260499375:0;less screen.css
 : 1260499553:0;mv folder.png opened_folder.png public/images
 : 1260499726:0;open folder.png
-: 1260501893:0;cd Pictures
 : 1260501901:0;cd Photo\ Booth
 : 1260501917:0;open „Çπ„ÇØ„É£™„É£º„É£≥„Ç∑„É£ß„É£É£„É£É®ÔºÉ®2009-12-11\ 12.23.36ÔºÉ©.png
 : 1260501945:0;mv „Çπ„ÇØ„É£™„É£º„É£≥„Ç∑„É£ß„É£É£„É£É®ÔºÉ®2009-12-11\ 12.23.36ÔºÉ©.png cluiser_ss.png
@@ -1108,7 +1056,6 @@ exit
 : 1260589104:0;rm _webpage.haml
 : 1260597292:0;sort hoge
 : 1260597297:0;sort hoge > fuga
-: 1260597299:0;less fuga
 : 1260597315:0;emacs fuga
 : 1260597347:0;rm fuga hoge
 : 1260597439:0;emacs show.js.rjs
@@ -1134,15 +1081,12 @@ exit
 : 1260612013:0;git remote add hokudai railsuser@living.academic.hokudai.ac.jp:~/cluiser
 : 1260612124:0;git remote rm hokudai
 : 1260612174:0;git clone --shared cluiser ssh://railsuser@living.academic.hokudai.ac.jp:/home/railsuser/cluiser
-: 1260612180:0;rm -rf ssh:
 : 1260612184:0;git clone help
 : 1260612194:0;git clone
 : 1260612199:0;rm -rf help
 : 1260612272:0;git clone --bare --shared cluiser cluiser.git
 : 1260612342:0;git remote add hokudai railsuser@living.academic.hokudai.ac.jp:~/cluiser.git
-: 1260612404:0;cd cluiser.git
 : 1260612405:0;cd objects
-: 1260612414:0;rm -rf cluiser.git
 : 1260612424:0;git clone --bare cluiser cluiser.git
 : 1260612430:0;scp -r cluiser.git railsuser@living.academic.hokudai.ac.jp:~/
 : 1260615951:0;lsswig -ruby -c++ -Wall libclustxt.i
@@ -1315,7 +1259,6 @@ exit
 : 1260849891:0;less devw
 : 1260850086:0;less 20090131155133_create_web_pages.rb
 : 1260850325:0;vi development.rb
-: 1260852787:0;cd test
 : 1260852793:0;less web_pages.yml
 : 1260861484:0;touch cache.haml
 : 1260861486:0;emacs cache.haml
@@ -1448,7 +1391,6 @@ exit
 : 1261385327:0;less FastLCPMaker.cpp
 : 1261385402:0;grep -r larsson .
 : 1261385405:0;grep -r sadakane .
-: 1261386466:0;git push origin
 : 1261387424:0;emacs app/views/layouts/search.haml
 : 1261389990:0;mv 3d loading.gif
 : 1261390014:0;mv loading.gif Dropbox/Products/cluiser/rails/public/images/
@@ -1485,7 +1427,6 @@ exit
 : 1261488059:0;rm master_thesis.tex
 : 1261488067:0;mv master_thesis.tex.bak master_thesis.tex
 : 1261488088:0;iscoding master_thesis.tex
-: 1261488215:0;git init
 : 1261488221:0;git add .
 : 1261549028:0;svn co http://jp.rubyist.net/svn/rurema/doctree/trunk rubydoc
 : 1261549067:0;wget http://www.rubyist.net/~rubikitch/archive/ar-index.rb
@@ -1576,7 +1517,6 @@ exit
 : 1261649546:0;cd Documents/PDFs
 : 1261649564:0;open \[suffix\ tree\ clustering\]ÊÉ∂ÉßÊÉª∏„Å´ÁÉ©πÂæ¥ÁÉ∫É§„Å™ÂÉ≠É∏Ë™û„ÇÉ≤ËÄÉ£ÊÉ•Æ„ÅÉ∑„ÅüÊ§ÉºÁ¥¢ÁµÉ∞ÊûÉº„ÅÆ„ÇØ„É£©„Çπ„Çø„É£™„É£≥„ÇØ„ÇÉπ.p
 : 1261649566:0;open \[suffix\ tree\ clustering\]ÊÉ∂ÉßÊÉª∏„Å´ÁÉ©πÂæ¥ÁÉ∫É§„Å™ÂÉ≠É∏Ë™û„ÇÉ≤ËÄÉ£ÊÉ•Æ„ÅÉ∑„ÅüÊ§ÉºÁ¥¢ÁµÉ∞ÊûÉº„ÅÆ„ÇØ„É£©„Çπ„Çø„É£™„É£≥„ÇØ„ÇÉπ.pdf
-: 1261649717:0;cd Keynotes
 : 1261649725:0;open prml200812.key
 : 1261652429:0;open dmoz.
 : 1261652431:0;open dmoz.pdf
@@ -1655,7 +1595,6 @@ exit
 : 1262847113:0;less USER0
 : 1262847144:0;rm -fr UNIX_user_data
 : 1262847226:0;unzip reuters21578.tar.gz
-: 1262847259:0;mkdir r
 : 1262847264:0;mv reuters21578.tar.gz r
 : 1262847354:0;less all-exchanges-strings.lc.txt
 : 1262847360:0;less all-orgs-strings.lc.txt
@@ -1663,7 +1602,6 @@ exit
 : 1262847378:0;less feldman-cia-worldfactbook-data.txt
 : 1262847445:0;touch get_body.rb
 : 1262847802:0;./get_body.rb
-: 1262848184:0;winb
 : 1262848200:0;rdesktop -a 16 -r sound -d syori prml9b -K -g 1270x968 -k ja
 : 1262848205:0;rdesktop -a 16 -d syori prml9b -K -g 1270x968 -k ja
 : 1262848208:0;rdesktop -a 16 -d syori prml9b -g 1270x968 -k ja
@@ -1687,8 +1625,6 @@ exit
 : 1263017793:0;less doc/README_FOR_APP
 : 1263018037:0;less user.rb
 : 1263018170:0;less 002_add_sessions.rb
-: 1263018204:0;less 001_create_users.rb
-: 1263018273:0;less 500_create_answers.rb
 : 1263018875:0;grep -r Qu .
 : 1263018940:0;emacs questionnaire_data_bachelor.rb
 : 1263019015:0;cd section/
@@ -1700,10 +1636,8 @@ exit
 : 1263020820:0;./script/generate model Person name:string birth_month:integer birth_day:integer
 : 1263020844:0;less person.rb
 : 1263020858:0;less 20100109070701_create_people.rb
-: 1263020916:0;cd oouchi_test
 : 1263021230:0;touch index.erb
 : 1263021239:0;emacs index.erb
-: 1263021957:0;cd prmldarts
 : 1263021963:0;less app/views/users
 : 1263021966:0;cdd app/views/users
 : 1263021969:0;cd app/views/users
@@ -1712,10 +1646,8 @@ exit
 : 1263023029:0;less questionnaire_data
 : 1263023099:0;cd doc
 : 1263023101:0;less README_FOR_APP
-: 1263103049:0;ssh prml89 -l root
 : 1263108942:0;p
 : 1263108971:0;rdesktop -a 16 -d syori prml9b
-: 1263274825:0;cd r
 : 1263274829:0;less get_body.rb
 : 1263274850:0;vi reut2-000.sgm
 : 1263275118:0;vi get_body.rb
@@ -1758,7 +1690,6 @@ exit
 : 1263281784:0;less Makefile
 : 1263282402:0;cd .emacs.d/y
 : 1263282403:0;cd .emacs.d/
-: 1263282405:0;cd snippets
 : 1263282407:0;cd uskanda
 : 1263282409:0;cd text-mode
 : 1263282410:0;cd cd
@@ -1784,7 +1715,6 @@ exit
 : 1263365760:0;less 350
 : 1263365839:0;less 999
 : 1263365853:0;less reut2-000.sgm
-: 1263366291:0;cd ClassReports
 : 1263366296:0;cd pattern
 : 1263366303:0;cd pattern2
 : 1263366307:0;less r0831.tex
@@ -1817,7 +1747,6 @@ exit
 : 1263970293:0;svn commit -m "kanda added 'ÈÄÅ‰ø°„ÅÉ∑„Å¶Ê¨°„ÅÆ„Çª„ÇØ„Ç∑„É£ß„É£≥„Å∏' function"
 : 1263972901:0;emacs lib/qu.rb
 : 1263972908:0;cd trunk/misc
-: 1263972916:0;emacs validation_template.erb
 : 1263973015:0;touch custom_ist.js
 : 1263973021:0;svn add misc/custom_ist.js
 : 1263973071:0;svn commit -m "kanda added custom_ist.js(empty file)"
@@ -1829,17 +1758,14 @@ exit
 : 1263975246:0;rake spec
 : 1263975310:0;less spec.opts
 : 1263975324:0;less index_after.html
-: 1263975349:0;less validation_template.erb
 : 1263975361:0;less word_genarator.rb
 : 1263975368:0;less stress_test_client.rb
 : 1263975372:0;less index
 : 1263975374:0;less index.html
 : 1263975379:0;less custom_ist.js
 : 1263975383:0;touch custom.js
-: 1263975388:0;less custom_bachelor.js
 : 1263975394:0;vi custom.js
 : 1263975574:0;cd stories
-: 1263975612:0;emacs qu.rb
 : 1263978976:0;less questionnaire_data.rb
 : 1263979067:0;less questionnaire_data_bachelor.rb
 : 1263979649:0;svn commit -m "kanda added some comments to qu.rb"
@@ -1858,7 +1784,6 @@ exit
 : 1264145009:0;less section_helper_spec.rb
 : 1264145042:0;less password_generator_spec.rb
 : 1264145047:0;less qu_spec.rb
-: 1264145065:0;cd admin
 : 1264145066:0;less index.rhtml_spec.rb
 : 1264145317:0;less new.html.erb
 : 1264145332:0;vi _clusterinfo.haml
@@ -1875,9 +1800,7 @@ exit
 : 1264152462:0;less application.js
 : 1264152768:0;./script/console
 : 1264152986:0;less lib/answer_validations.rb
-: 1264317653:0;less answer.rb
 : 1264319529:0;lsls
-: 1264320668:0;ssh ippcn -l root
 : 1264323847:0;emacs tasks/user.rake
 : 1264323878:0;less ../../trunk/lib/questionnaire_data_ist.rb
 : 1264324203:0;run-help svn
@@ -1889,7 +1812,6 @@ exit
 : 1264389153:0;open hino.pdf
 : 1264389157:0;open masa.pdf
 : 1264389162:0;open taisuke.pdf
-: 1264389185:0;open muto.pdf
 : 1264389192:0;cd tabaken
 : 1264389283:0;open tabaken.pdf
 : 1264389289:0;less tabaken.tex
@@ -1899,7 +1821,6 @@ exit
 : 1264389676:0;grep -r SAC .
 : 1264389697:0;cd ron
 : 1264389712:0;open hase.pdf
-: 1264391341:0;open hoge.pdf
 : 1264391548:0;open gw10-1.doc
 : 1264391581:0;open -a Pages gw10-1.doc
 : 1264391612:0;rm gw10-1.doc ÂÄÉ´‰∫∫„É£Ø„É£º„ÇØ„Ç∑„É£º„É£É®.doc
@@ -1908,7 +1829,6 @@ exit
 : 1264391673:0;open -a Pages
 : 1264396759:0;less iis.tex
 : 1264397005:0;open kinosita.pdf
-: 1264397018:0;cd ronbun
 : 1264397022:0;cd sotsuron
 : 1264397030:0;open ronbun/kinoshita/kinoshita.pdf
 : 1264397091:0;cd thesis/prmu_2008_12_kumamoto
@@ -1930,7 +1850,6 @@ exit
 : 1264409750:0;cd app/models
 : 1264409755:0;emacs web_page.rb
 : 1264409843:0;emacs lib/workers/clustering_backend_worker.rb
-: 1264476727:0;open aaa.pdf
 : 1264482694:0;grep -r Stemm .
 : 1264482701:0;emacs EnglishTerm.hpp
 : 1264482729:0;grep -r stem .
@@ -1977,9 +1896,6 @@ exit
 : 1264493935:0;vi eng
 : 1264493963:0;uniq eng
 : 1264493983:0;uniq eng | sort
-: 1264494093:0;less engd
-: 1264494210:0;rm engd
-: 1264494212:0;rm eng
 : 1264494215:0;touch eng
 : 1264494217:0;emacs eng
 : 1264494256:0;cat eng | sort -u
@@ -2010,8 +1926,6 @@ exit
 : 1264662860:0;grep -r erase
 : 1264662908:0;grep -r erase . | grep cpp
 : 1264662948:0;git clone cluiser cluiser2
-: 1264662952:0;cd cluiser2
-: 1264662979:0;cd old
 : 1264663036:0;git stash overflow
 : 1264663063:0;git stash save overflow
 : 1264663250:0;git checkout ext/ClusterGenerator.cpp
@@ -2020,7 +1934,6 @@ exit
 : 1264663897:0;ruby test_en.rb "sapporo" 100
 : 1264664043:0;git stash list
 : 1264664086:0;git diff > hoge
-: 1264664088:0;less hoge
 : 1264664094:0;mv hoge ../../
 : 1264664100:0;git checkout
 : 1264664122:0;emacs ../hoge
@@ -2031,7 +1944,6 @@ exit
 : 1264686456:0;vi
 : 1264686467:0;vi fuga
 : 1264686472:0;vi hoge
-: 1265017880:0;less todown
 : 1265095138:0;cd pro
 : 1265096387:0;grep -r anything-show-
 : 1265096388:0;grep -r anything-show-anything-show-
@@ -2039,10 +1951,8 @@ exit
 : 1265096394:0;grep -r anything-show .
 : 1265096518:0;grep -r kill-ring .
 : 1265096522:0;grep -r c-kill-ring .
-: 1265096691:0;cd lisp
 : 1265096697:0;grep -r M-y .
 : 1265096701:0;less c-anything.el
-: 1265096711:0;cd site-lisp
 : 1265096722:0;less anything-config.el
 : 1265097871:0;ruby test.rb "ÊÉº≠ÂπÉ¨" 200
 : 1265098106:0;kill 54560
@@ -2067,11 +1977,7 @@ exit
 : 1265112397:0;vi section/_question.haml
 : 1265112480:0;svn commit -m "kanda modified answer expression (remove 'toi')"
 : 1265174600:0;sudo port search ruby1.9
-: 1265174608:0;sudo port search ruby
-: 1265174612:0;sudo port search ruby19
-: 1265174618:0;sudo port install ruby19
 : 1265175807:0;irb1.9
-: 1265179228:0;psa
 : 1265181034:0;open /Users/Shared/Keynote\ Additions/
 : 1265181096:0;cd /Users/Shared/Keynote\ Additions
 : 1265181110:0;open transgray.png
@@ -2079,14 +1985,12 @@ exit
 : 1265181129:0;open back.jpg
 : 1265181172:0;open -a Seashore back.jpg
 : 1265181309:0;cp back.jpg ../
-: 1265186199:0;less answer_validations.rb
 : 1265188693:0;cd ../Shared
 : 1265188695:0;cd Keynote\ Additions
 : 1265188697:0;cd Theme\ Park
 : 1265188700:0;cd Extras
 : 1265188702:0;cd Titanium\ \(Lt\)\ Extras.key
 : 1265188706:0;cp *jpg ../
-: 1265188726:0;cd Contents
 : 1265188733:0;cp *png ../
 : 1265265149:0;cd presen
 : 1265265151:0;open hase.ppt
@@ -2146,7 +2050,6 @@ exit
 : 1265345838:0;l;
 : 1265345839:0;j
 : 1265345850:0;cd Lab/thesis/
-: 1265345852:0;cd 2006
 : 1265345856:0;cd syuron/presen
 : 1265345860:0;open muto.ppt
 : 1265352455:0;open hino.ppt
@@ -2271,8 +2174,6 @@ exit
 : 1265751324:0;./script/destroy model Answer
 : 1265751345:0;./script/destroy migration
 : 1265751364:0;./script/destroy migration 20100209002711_add_query_to_answers
-: 1265751375:0;cd db/migrate
-: 1265751379:0;rm *
 : 1265751391:0;rm 20100209002711_add_query_to_answers.rb
 : 1265751392:0;rm 20100209213439_add_comment1_and_comment2_and_comment3_and_comment4_to_answers.rb
 : 1265751443:0;./script/generate model Answer query:string task_num:integer sys1:integer comment1:string sys2:integer comment2:string sys3:integer comment3:string sys4:integer comment4:string
@@ -2313,7 +2214,6 @@ exit
 : 1265768045:0;git add db/migrate/20100210021030_add_complement_and_general_comment_to_answers.rb
 : 1265768053:0;git add app/views/top/search.haml
 : 1265768093:0;git rm --cached development.sqlite3
-: 1265768199:0;vi .gitignore
 : 1265768250:0;git rm --cache cmp/log
 : 1265768259:0;git rm --cache cmp/log/development.log cmp/log/production.log cmp/log/server.log cmp/log/test.log
 : 1265768351:0;cd config
@@ -2344,10 +2244,7 @@ exit
 : 1265783957:0;emacs _search_form.haml
 : 1265783998:0;./script/generate migration AddComplementAndGeneralCommentToAnswers complement:integer general_comment:string
 : 1265789656:0;git add app/views/
-: 1265789725:0;git staus
 : 1265789792:0;cd living
-: 1265790976:0;less extconf.rb
-: 1265791137:0;lls
 : 1265791349:0;cd ex
 : 1265791352:0;cd exp
 : 1265791361:0;git log
@@ -2370,7 +2267,6 @@ exit
 : 1265795786:0;less StopwordList.hpp
 : 1265795896:0;emacs EnTermContainer.cpp
 : 1265796414:0;git push hokudai
-: 1265849446:0;cd Researches/Master
 : 1265849465:0;mkdir abstract
 : 1265849475:0;cd 0
 : 1265849559:0;cp * ../../Master/abstract
@@ -2387,9 +2283,7 @@ exit
 : 1265850297:0;nkf -J chukan.sty.euc > chukan.sty
 : 1265850315:0;less chukan.sty
 : 1265850338:0;man nkf
-: 1265850399:0;cd conf
 : 1265850404:0;less c-yatex.el
-: 1265850415:0;cd Scripts
 : 1265850417:0;less platex2pdf
 : 1265850567:0;nkf -Lu chukan.sty.euc chukan.sty
 : 1265850571:0;nkf -Lu chukan.sty.euc > chukan.sty
@@ -2419,12 +2313,9 @@ exit
 : 1265876926:0;less result.bb
 : 1265876952:0;cd Master/thesis_1st
 : 1265876956:0;less normal3.bb
-: 1265878643:0;cd lib/tasks
 : 1265878654:0;vi qu.rake
 : 1265878844:0;vi user.rake
-: 1265879159:0;less qu.rake
 : 1265879349:0;less user_ids_ist
-: 1265881875:0;svn up
 : 1265881886:0;vi lib/questionnaire_data_ist.rb
 : 1265881978:0;svn commit -m "kanda fixed question text about TA"
 : 1265882717:0;ssh living -l root
@@ -2436,10 +2327,8 @@ exit
 : 1265928359:0;open result.pdf
 : 1265930105:0;cd Lab/thesis/2008
 : 1265930110:0;cd 2005
-: 1265930113:0;cd syuron
 : 1265930116:0;cd ronshi
 : 1265930130:0;gs hase.ps
-: 1265930827:0;ssh prmlra1
 : 1265931846:0;scp root@improve.ist.hokudai.ac.jp:~railsuser/cluiser/text .
 : 1265931858:0;scp root@improve.ist.hokudai.ac.jp:~railsuser/cluiser/texts .
 : 1265931866:0;emacs texts
@@ -2452,9 +2341,7 @@ exit
 : 1265963163:0;swig -ruby -c++ -Wall libclustxt.i
 : 1265965895:0;ls -altr | reverse
 : 1265965898:0;ls -altr | rev
-: 1265965903:0;ls -alt
 : 1266022502:0;cd Products/cluiser
-: 1266022918:0;ssh 133.87.182.66 -l root
 : 1266023656:0;less log/backgroundrb_11006.log
 : 1266023659:0;less log/backgroundrb_debug_11006.log
 : 1266025278:0;ps axu | grep ruby
@@ -2462,13 +2349,11 @@ exit
 : 1266026661:0;cd Researches/Master/abstract
 : 1266026664:0;less key_passage_rc.
 : 1266028606:0;less top_controller.rb
-: 1266036708:0;cd PDFs
 : 1266037422:0;open SnakeT\ -\ A\ Personalized\ Search\ Engine.pdf
 : 1266037737:0;less master_thesis.tex
 : 1266052439:0;less ../app/models/query.rb
 : 1266052522:0;cd rails/log
 : 1266052567:0;rm backgroundrb_debug_11006.log
-: 1266052692:0;sl
 : 1266052742:0;printenv PATH
 : 1266052844:0;cd /usr/local/bin
 : 1266052857:0;cd /opt/local/
@@ -2503,7 +2388,6 @@ exit
 : 1266070586:0;less production.log
 : 1266070703:0;less log/development.log
 : 1266070820:0;emacs ClusterGenerator.cpp
-: 1266071130:0;top
 : 1266071199:0;ruby test_en.rb Google 200
 : 1266071388:0;less EnglishTerm.cpp
 : 1266071390:0;less EnglishTerm.hpp
@@ -2523,7 +2407,6 @@ exit
 : 1266073260:0;vi EnTermContainer.cpp
 : 1266074094:0;less test_en.rb
 : 1266075285:0;ruby test_en.rb "Amazon Kindle" 1000
-: 1266075606:0;ls -al
 : 1266075732:0;ruby test_en.rb "Amazon" 1000
 : 1266075761:0;ruby test_en.rb "Amazon Kindle" 400
 : 1266076010:0;ruby test_en.rb "Google" 400
@@ -2532,10 +2415,7 @@ exit
 : 1266076307:0;ruby test_en.rb Study 400
 : 1266076319:0;ruby test_en.rb „ÅÉµ„Å£„ÅΩ„ÇÉ≠ 400
 : 1266076509:0;thin start -e production
-: 1266105357:0;cd .emacs.d
-: 1266105361:0;cd vc
 : 1266105364:0;cd auto-complete
-: 1266105366:0;git pull
 : 1266105375:0;less auto-complete.el
 : 1266107966:0;grep -r activesupport app
 : 1266107969:0;grep -r activesupport
@@ -2544,13 +2424,10 @@ exit
 : 1266108053:0;cd vendor/plugins
 : 1266108464:0;cd backgroundrb
 : 1266108470:0;less know_issues.org
-: 1266108489:0;less README
 : 1266108499:0;cd server
 : 1266108502:0;less backgroundrb_server.rb
 : 1266112602:0;./script/backgroundrb stop
 : 1266113219:0;cdd 2
-: 1266113222:0;cdd 3
-: 1266113225:0;cdd 4
 : 1266113235:0;cdd 5
 : 1266113241:0;cdd 6
 : 1266113248:0;cdd 7
@@ -2560,10 +2437,8 @@ exit
 : 1266114412:0;less search_controller.rb
 : 1266114485:0;vi search_controller.rb
 : 1266123724:0;open Lingo_master_thesis.pdf
-: 1266123835:0;cd LabDocuments
 : 1266123856:0;grep -r Lingo .
 : 1266123870:0;cd JournalSeminar
-: 1266123881:0;cd 2008
 : 1266123885:0;cd 2007
 : 1266123889:0;cd 3_SRC
 : 1266123891:0;less 071122.
@@ -2603,7 +2478,6 @@ exit
 : 1266182112:0;kill -9 330
 : 1266182143:0;emacs Libclustxt.cpp
 : 1266182236:0;thin -e production start
-: 1266182706:0;cd ext
 : 1266182934:0;vi extconf.rb
 : 1266182938:0;vi Makefile
 : 1266182966:0;make clean
@@ -2613,16 +2487,11 @@ exit
 : 1266187397:0;„ÄÅ
 : 1266187467:0;ruby test.rb "„É£Éß„É£º„Çø„É£û„Ç§„É£É´„É£≥„Ç∞" 400
 : 1266187469:0;thin start
-: 1266190291:0;ssh 133.87.136.228 -l root
-: 1266190691:0;cd misc
-: 1266190705:0;less questionnaire_data_ist.rb
 : 1266191617:0;mecab
 : 1266191833:0;mv „Çπ„ÇØ„É£™„É£º„É£≥„Ç∑„É£ß„É£É£„É£É®ÔºÉ®2010-02-15\ 8.55.11ÔºÉ©.png clusters.png
 : 1266191840:0;open -a Seashore clusters.png
-: 1266198854:0;make
 : 1266199472:0;emacs key_passage_rc.tex
 : 1266200403:0;cd thesis_1st/
-: 1266200406:0;emacs master_thesis.tex
 : 1266200427:0;cdd 0
 : 1266200430:0;cd Bachelor
 : 1266200436:0;less graduate_thesis.tex
@@ -2635,7 +2504,6 @@ exit
 : 1266200754:0;vi master_thesis.bbl
 : 1266200853:0;emacs master_thesis.bbl
 : 1266201681:0;mkdir satoshi
-: 1266201682:0;cd satoshi
 : 1266201775:0;scp prmlra1@~satoshi/Master_Paper/Sotsuron/syuron_final_v2.pdf .
 : 1266201781:0;scp prmlra1:~satoshi/Master_Paper/Sotsuron/syuron_final_v2.pdf .
 : 1266201788:0;open syuron_final_v2.pdf
@@ -2643,59 +2511,29 @@ exit
 : 1266204635:0;cp result.pdf result.bb ../thesis_1st
 : 1266205393:0;less key_passage_rc.tex
 : 1266218582:0;vi aa
-: 1266295108:0;ssh ipsb -l root
-: 1266295116:0;ssh ipsb -l kanda
-: 1266295127:0;cd .ssh
 : 1266295140:0;mv id_dsa .ssh
-: 1266295144:0;ssh ipsb
-: 1266295997:0;ssh prml90 -l root
-: 1266298607:0;ssh prml88 -l root
 : 1266304787:0;cd log
-: 1266304799:0;cd lib
-: 1266304804:0;less qu.rb
 : 1266369595:0;/Users/kanda/Desktop/save/ASUKA____RNK ; exit;
 : 1266369831:0;cd Share
 : 1266369846:0;cd Primes
-: 1266370095:0;cd /
 : 1266370101:0;cd /home
 : 1266370103:0;cd home
 : 1266370108:0;cd /Users
-: 1266370109:0;cd kanda
-: 1266370113:0;df
-: 1266370134:0;cd Documents
 : 1266370154:0;rm -rf Emacs.app
-: 1266370159:0;cd Lab
-: 1266370164:0;cd Library
-: 1266370175:0;cd Movies
 : 1266370179:0;cd Music
 : 1266370189:0;cd iTunes
 : 1266370233:0;cd Public
 : 1266370241:0;cd Sources
 : 1266370254:0;cd __MACOSX
-: 1266370257:0;du -h
 : 1266370269:0;cd /System
-: 1266370278:0;cd Applications
 : 1266370286:0;du -h -d 1
-: 1266370333:0;cd
-: 1266370351:0;la
-: 1266378223:0;cd Researches
-: 1266378225:0;cd Master
-: 1266378227:0;cd abstract
-: 1266378231:0;open key_passage_rc.pdf
 : 1266378245:0;cd iis
-: 1266378262:0;cd thesis
 : 1266378265:0;cd iis2009
 : 1266378273:0;open yusuke_kanda_iis2009.pdf
-: 1266380340:0;cd Desktop
 : 1266380355:0;mv „Çπ„ÇØ„É£™„É£º„É£≥„Ç∑„É£ß„É£É£„É£É®ÔºÉ®2010-02-17\ 13.17.26ÔºÉ©.png a.png
-: 1266381369:0;d
-: 1266381370:0;cd Products
-: 1266381372:0;cd questionnaire
-: 1266381374:0;cd trunk
 : 1266381377:0;cd branches
 : 1266381380:0;cd questionnaire2009
 : 1266381405:0;rake db:migrate
-: 1266381454:0;rake qu:debug
 : 1266381482:0;./script/server
 : 1266381525:0;cd layouts
 : 1266381527:0;vi application.haml
@@ -2709,8 +2547,6 @@ exit
 : 1266386690:0;./rails/script/backgroundrb stop
 : 1266418736:0;less readme
 : 1266418739:0;rm readme
-: 1266418741:0;git status
-: 1266418745:0;git commit -a
 : 1266418832:0;cd rails
 : 1266418844:0;cd views
 : 1266418847:0;cd search
@@ -2718,571 +2554,222 @@ exit
 : 1266418878:0;cd controllers
 : 1266418885:0;emacs search_controller.rb
 : 1266418918:0;cdd 1
-: 1266418927:0;cd cluiser
 : 1266418934:0;cd cmp
 : 1266418946:0;vi app/controllers/top_controller.rb
 : 1266419191:0;cd mo
-: 1266419193:0;cd app
-: 1266419194:0;cd models
 : 1266419201:0;emacs query.rb
 : 1266419494:0;vi web_cluster.rb
 : 1266419506:0;emacs web_cluster.rb
-: 1266600014:0;s
 : 1266600282:0;mkdir maicos_photo20100220
-: 1266600284:0;cd maicos_photo20100220
 : 1266600321:0;cp /Volumes/NO\ NAME/DCIM/100D5000/CSC_0019.JPG /Volumes/NO\ NAME/DCIM/100D5000/CSC_0068.JPG /Volumes/NO\ NAME/DCIM/100D5000/CSC_0069.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0007.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0008.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0009.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0010.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0020.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0022.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0023.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0024.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0025.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0026.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0027.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0028.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0029.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0030.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0031.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0032.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0033.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0034.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0035.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0036.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0037.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0038.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0039.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0040.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0041.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0042.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0043.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0044.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0045.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0046.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0047.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0048.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0049.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0050.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0052.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0053.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0054.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0055.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0057.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0058.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0059.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0060.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0061.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0063.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0064.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0065.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0066.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0067.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0071.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0073.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0074.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0075.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0076.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0077.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0078.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0079.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0080.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0081.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0082.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0083.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0084.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0085.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0086.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0087.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0088.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0089.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0091.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0092.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0093.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0094.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0095.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0097.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0098.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0100.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0101.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0102.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0105.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0106.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0107.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0108.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0109.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0110.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0111.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0112.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0113.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0114.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0115.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0116.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0117.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0118.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0119.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0120.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0121.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0122.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0123.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0124.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0125.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0126.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0127.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0128.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0129.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0130.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0132.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0133.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0134.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0135.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0137.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0139.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0140.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0141.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0142.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0143.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0145.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0146.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0147.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0148.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0149.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0150.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0151.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0152.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0153.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0154.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0155.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0156.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0157.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0158.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0161.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0162.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0163.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0164.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0165.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0166.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0167.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0168.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0169.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0170.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0171.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0172.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0173.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0174.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0175.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0177.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0179.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0185.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0186.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0187.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0188.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0188.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0189.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0189.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0190.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0190.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0191.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0191.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0192.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0192.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0193.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0193.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0194.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0194.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0195.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0195.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0196.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0196.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0197.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0197.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0198.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0198.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0199.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0199.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0200.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0200.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0201.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0201.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0202.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0202.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0203.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0203.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0204.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0204.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0205.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0205.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0206.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0206.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0207.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0207.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0208.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0208.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0209.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0209.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0210.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0210.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0211.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0211.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0212.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0212.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0213.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0213.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0214.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0214.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0215.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0215.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0216.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0216.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0217.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0217.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0218.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0218.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0219.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0219.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0220.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0220.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0221.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0221.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0222.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0222.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0223.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0223.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0224.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0224.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0225.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0225.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0226.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0226.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0227.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0227.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0228.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0228.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0229.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0229.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0230.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0230.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0231.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0231.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0232.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0232.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0233.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0233.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0234.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0234.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0235.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0235.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0236.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0236.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0237.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0237.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0238.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0238.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0239.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0239.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0240.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0240.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0241.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0241.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0242.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0242.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0243.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0243.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0244.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0244.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0245.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0245.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0246.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0246.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0247.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0247.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0248.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0248.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0249.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0249.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0250.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0250.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0251.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0251.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0252.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0252.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0253.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0253.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0254.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0254.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0255.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0255.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0256.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0256.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0257.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0257.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0258.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0258.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0259.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0259.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0260.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0260.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0261.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0261.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0262.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0262.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0263.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0263.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0264.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0264.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0265.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0265.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0266.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0266.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0267.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0267.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0268.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0268.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0269.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0269.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0270.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0270.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0271.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0271.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0272.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0272.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0273.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0273.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0274.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0274.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0275.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0275.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0276.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0276.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0277.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0277.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0278.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0278.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0279.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0279.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0280.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0280.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0281.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0281.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0282.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0282.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0283.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0283.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0284.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0284.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0285.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0285.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0286.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0286.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0287.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0287.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0288.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0288.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0289.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0289.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0290.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0290.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0291.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0291.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0292.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0292.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0293.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0293.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0294.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0294.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0295.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0295.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0296.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0296.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0297.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0297.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0298.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0298.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0299.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0299.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0300.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0300.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0301.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0301.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0302.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0302.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0303.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0303.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0304.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0304.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0305.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0305.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0306.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0306.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0307.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0307.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0308.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0308.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0309.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0309.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0310.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0310.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0311.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0311.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0312.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0312.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0313.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0313.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0314.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0314.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0315.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0315.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0316.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0316.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0317.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0317.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0318.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0318.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0319.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0319.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0320.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0320.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0321.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0321.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0322.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0322.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0323.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0323.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0324.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0324.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0325.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0325.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0326.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0326.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0327.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0327.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0328.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0328.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0329.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0329.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0330.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0330.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0331.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0331.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0332.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0332.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0333.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0333.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0334.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0334.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0335.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0335.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0336.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0336.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0337.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0337.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0338.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0338.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0339.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0339.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0340.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0340.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0341.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0341.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0342.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0342.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0343.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0343.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0344.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0344.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0345.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0345.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0346.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0346.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0347.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0347.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0348.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0348.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0349.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0349.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0350.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0350.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0351.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0351.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0352.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0352.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0353.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0353.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0354.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0354.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0355.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0355.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0356.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0356.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0357.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0357.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0358.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0358.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0359.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0359.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0360.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0360.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0361.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0361.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0362.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0362.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0363.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0363.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0364.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0364.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0365.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0365.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0366.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0366.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0367.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0367.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0368.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0368.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0369.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0369.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0370.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0370.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0371.AVI /Volumes/NO\ NAME/DCIM/100D5000/DSC_0372.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0372.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0373.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0373.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0374.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0374.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0375.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0375.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0376.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0376.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0377.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0377.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0378.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0378.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0379.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0379.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0380.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0380.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0381.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0381.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0382.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0382.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0383.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0383.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0384.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0384.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0385.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0385.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0386.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0386.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0387.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0387.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0388.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0388.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0389.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0389.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0390.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0390.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0391.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0391.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0392.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0392.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0393.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0393.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0394.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0394.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0395.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0395.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0396.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0396.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0397.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0397.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0398.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0398.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0399.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0399.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0400.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0400.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0401.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0401.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0402.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0402.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0403.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0403.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0404.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0404.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0405.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0405.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0406.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0406.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0407.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0407.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0408.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0408.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0409.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0409.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0410.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0410.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0411.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0411.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0412.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0412.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0413.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0413.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0414.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0414.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0415.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0415.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0416.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0416.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0417.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0417.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0418.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0418.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0419.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0419.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0420.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0420.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0421.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0421.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0422.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0422.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0423.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0423.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0424.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0424.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0425.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0425.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0426.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0426.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0427.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0427.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0428.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0428.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0429.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0429.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0430.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0430.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0431.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0431.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0432.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0432.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0433.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0433.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0434.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0434.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0435.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0435.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0436.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0436.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0437.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0437.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0438.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0438.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0439.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0439.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0440.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0440.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0441.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0441.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0442.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0442.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0443.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0443.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0444.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0444.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0445.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0445.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0446.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0446.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0447.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0447.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0448.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0448.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0449.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0449.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0450.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0450.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0451.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0451.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0452.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0452.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0453.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0453.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0454.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0454.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0455.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0455.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0456.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0456.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0457.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0457.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0458.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0458.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0459.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0459.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0460.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0460.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0461.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0461.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0462.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0462.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0463.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0463.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0464.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0464.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0465.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0465.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0466.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0466.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0467.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0467.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0468.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0468.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0469.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0469.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0470.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0470.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0471.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0471.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0472.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0472.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0473.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0473.NEF /Volumes/NO\ NAME/DCIM/100D5000/DSC_0474.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0475.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0476.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0477.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0478.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0479.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0480.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0481.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0482.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0483.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0484.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0485.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0486.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0487.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0488.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0489.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0490.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0491.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0492.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0493.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0494.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0495.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0496.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0497.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0498.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0499.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0500.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0501.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0502.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0503.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0504.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0505.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0506.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0507.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0508.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0509.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0510.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0511.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0512.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0513.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0514.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0515.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0516.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0517.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0518.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0519.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0520.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0521.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0522.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0523.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0524.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0525.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0526.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0527.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0528.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0529.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0530.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0531.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0532.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0533.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0534.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0535.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0536.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0537.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0538.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0539.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0540.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0541.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0542.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0543.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0544.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0545.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0546.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0547.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0548.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0549.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0550.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0551.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0552.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0553.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0554.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0555.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0556.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0557.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0558.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0559.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0560.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0561.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0562.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0563.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0564.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0565.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0566.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0567.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0568.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0569.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0570.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0571.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0572.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0573.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0574.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0575.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0576.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0577.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0578.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0579.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0580.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0581.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0582.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0583.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0584.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0585.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0586.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0587.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0588.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0589.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0590.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0591.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0592.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0593.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0594.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0595.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0596.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0597.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0598.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0599.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0600.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0601.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0602.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0603.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0604.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0605.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0606.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0607.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0608.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0609.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0610.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0611.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0612.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0613.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0614.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0615.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0616.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0617.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0618.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0619.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0620.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0621.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0622.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0623.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0624.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0625.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0626.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0627.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0628.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0629.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0630.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0631.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0632.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0633.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0634.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0635.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0636.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0637.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0638.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0639.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0640.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0641.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0642.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0643.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0644.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0645.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0646.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0647.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0648.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0649.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0650.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0651.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0652.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0653.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0654.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0655.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0656.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0657.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0658.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0659.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0660.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0661.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0662.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0663.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0664.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0665.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0666.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0667.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0668.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0669.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0670.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0671.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0672.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0673.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0674.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0675.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0676.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0677.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0678.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0679.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0680.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0681.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0682.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0683.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0684.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0685.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0686.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0687.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0688.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0689.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0690.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0691.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0692.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0693.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0694.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0695.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0696.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0697.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0698.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0699.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0700.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0701.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0702.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0703.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0704.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0705.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0706.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0707.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0708.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0709.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0710.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0711.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0712.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0713.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0714.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0715.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0716.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0717.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0718.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0719.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0720.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0721.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0722.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0723.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0724.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0725.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0726.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0727.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0729.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0730.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0731.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0733.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0735.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0736.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0737.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0738.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0739.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0740.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0741.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0742.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0743.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0744.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0745.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0746.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0747.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0748.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0749.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0750.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0751.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0752.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0753.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0754.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0755.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0756.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0757.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0758.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0759.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0760.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0761.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0762.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0763.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0764.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0765.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0766.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0767.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0768.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0769.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0770.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0771.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0772.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0773.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0774.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0775.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0776.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0777.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0778.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0779.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0780.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0781.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0782.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0783.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0784.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0785.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0786.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0787.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0788.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0789.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0790.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0791.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0792.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0793.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0794.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0795.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0796.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0797.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0798.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0799.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0800.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0801.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0802.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0803.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0804.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0805.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0806.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0807.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0808.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0809.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0810.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0811.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0812.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0813.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0814.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0815.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0816.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0817.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0818.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0819.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0820.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0821.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0822.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0823.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0824.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0825.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0826.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0827.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0828.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0829.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0830.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0831.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0832.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0833.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0834.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0835.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0836.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0837.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0838.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0839.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0840.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0841.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0842.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0843.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0844.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0845.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0846.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0847.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0848.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0850.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0851.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0852.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0854.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0855.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0856.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0857.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0858.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0860.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0861.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0862.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0864.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0867.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0868.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0869.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0870.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0871.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0872.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0873.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0874.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0875.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0876.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0877.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0878.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0879.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0880.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0881.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0882.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0883.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0884.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0885.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0886.JPG /Volumes/NO\ NAME/DCIM/100D5000/DSC_0887.JPG .
-: 1266603579:0;cd Downloads
-: 1266603585:0;ls -altr
 : 1266603590:0;open KD_Winterprogramm_engl_0910-1.pdf
 : 1266795709:0;mkdir maicos_photo20100222
-: 1266795719:0;l
-: 1266795727:0;cd maicos_photo2010022
 : 1266795731:0;cd maicos_photo20100222
 : 1266795761:0;cp /Volumes/NO\ NAME/DCIM/102D5000/DSC_0001.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0002.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0003.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0004.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0005.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0006.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0007.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0008.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0009.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0010.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0011.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0012.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0013.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0014.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0015.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0016.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0017.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0018.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0019.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0020.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0021.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0022.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0023.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0024.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0025.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0026.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0027.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0028.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0029.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0030.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0031.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0032.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0033.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0034.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0035.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0036.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0037.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0038.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0039.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0040.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0041.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0042.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0043.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0044.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0045.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0046.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0047.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0048.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0049.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0050.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0051.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0052.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0053.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0054.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0055.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0056.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0057.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0058.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0059.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0060.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0061.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0062.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0063.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0064.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0065.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0066.AVI /Volumes/NO\ NAME/DCIM/102D5000/DSC_0067.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0068.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0069.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0070.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0071.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0072.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0073.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0074.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0075.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0076.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0077.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0078.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0079.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0080.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0081.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0082.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0083.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0084.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0085.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0086.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0087.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0088.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0089.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0090.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0091.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0092.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0093.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0094.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0095.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0096.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0097.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0098.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0099.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0100.AVI /Volumes/NO\ NAME/DCIM/102D5000/DSC_0101.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0102.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0103.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0104.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0105.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0106.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0107.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0108.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0109.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0110.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0111.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0112.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0113.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0114.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0115.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0116.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0117.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0118.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0119.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0120.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0121.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0122.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0123.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0124.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0125.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0126.AVI /Volumes/NO\ NAME/DCIM/102D5000/DSC_0127.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0128.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0129.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0130.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0131.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0132.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0133.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0134.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0135.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0136.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0137.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0138.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0139.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0140.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0141.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0142.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0143.AVI /Volumes/NO\ NAME/DCIM/102D5000/DSC_0144.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0145.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0146.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0147.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0148.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0149.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0150.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0151.AVI /Volumes/NO\ NAME/DCIM/102D5000/DSC_0152.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0153.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0154.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0155.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0156.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0157.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0158.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0159.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0160.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0161.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0162.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0163.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0164.AVI /Volumes/NO\ NAME/DCIM/102D5000/DSC_0165.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0166.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0167.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0168.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0169.JPG /Volumes/NO\ NAME/DCIM/102D5000/DSC_0170.JPG .
-: 1266795814:0;open .
-: 1266950356:0;ifconfig
 : 1266950375:0;w3m www.google.com
-: 1267173743:0;irb
 : 1267175521:0;ssh prml9c -l root
 : 1267175528:0;ssh prml9c
 : 1267176670:0;cd /Volumes/Shared
 : 1267176712:0;mkdir 2009_m2_graduation_trip
 : 1267176716:0;cd 2009_
 : 1267176719:0;cd 2009_questionnaire
-: 1267176722:0;cd ..
 : 1267176741:0;mv 2009_m2_graduation_trip graduation_trip_2009_m2
 : 1267176744:0;cd graduation_trip_2009_m2
-: 1267180419:0;du
-: 1267180422:0;ls
-: 1267180429:0;exit
-: 1267180475:0;d
-: 1267180475:0;cd Products
-: 1267180476:0;ls
-: 1267180479:0;cd cluiser
-: 1267180479:0;ls
-: 1267180482:0;cd lu
-: 1267180485:0;cd cluiser
-: 1267180486:0;ls
-: 1267189961:0;ssh kanda@vps.uskanda.com
-: 1267190036:0;ls
-: 1267190688:0;irb
-: 1267190730:0;ls
-: 1267264359:0;cd Downloads
-: 1267264359:0;ls
-: 1267264362:0;ls -altr
-: 1267264372:0;ls
-: 1267264386:0;cd Movies
-: 1267264387:0;ls
-: 1267264389:0;cd Pictures
-: 1267264390:0;ls
 : 1267264395:0;cd maicos_photo2010022
-: 1267264402:0;cd /Volumes/Macbook\ HD
-: 1267264403:0;ls
 : 1267264407:0;df
 : 1267264421:0;mkdir graduated_trip
-: 1267264422:0;ls
-: 1267264428:0;cd maicos_photo20100220
-: 1267264452:0;cd Downloads
-: 1267264454:0;ls
-: 1267264806:0;cd Documents
-: 1267264806:0;ls
 : 1267264812:0;cd ‰ªÆË£É•„É£û„Ç∑„É£≥
 : 1267264832:0;cd Windows\ 7\ \(experimental\).vmwarevm
-: 1267264833:0;ls
-: 1267264844:0;vi Windows\ 7\ \(experimental\).vmx
-: 1267264847:0;ls
 : 1267265015:0;vi Windows\ 7\ \(experimental\).vmx
-: 1267265828:0;cd Applications
 : 1267265830:0;cd VMware\ Fusion.app
-: 1267265831:0;ls
 : 1267265833:0;cd Contents
-: 1267265834:0;ls
 : 1267265846:0;cd MacOS
-: 1267265846:0;ls
-: 1267265915:0;open -a /Library/Application\ Support/VMware\ Fusion/VMDKMounter.app ~/Documents/‰ªÆË£É•„É£û„Ç∑„É£≥/Windows\ 7\ \(experimental\).vmwarevm/Windows\ 7\ \(experimental\)-0.vmdk
-: 1267397823:0;ls
-: 1267397830:0;ssh 133.87.136.228 -l root
-: 1267398078:0;ls
 : 1267398079:0;cd l
-: 1267398080:0;ls
-: 1267398084:0;d
-: 1267398085:0;cd Products
-: 1267398086:0;ls
-: 1267398088:0;cd cluiser
-: 1267398088:0;ls
-: 1267398089:0;cd ext
-: 1267398094:0;cd questionnaire
-: 1267398096:0;cd trunk
-: 1267398098:0;cd misc
-: 1267398103:0;cd lib
 : 1267398108:0;less questionnaire_data_ist.rb
-: 1267398304:0;irb
-: 1267507965:0;ls
-: 1267507966:0;d
-: 1267507967:0;cd
-: 1267507968:0;ls
-: 1267508114:0;cd
-: 1267508115:0;ls
-: 1267508116:0;d
-: 1267508118:0;cd Products
-: 1267508118:0;ls
 : 1267508130:0;cd LabDocuments/ClassReports
-: 1267508131:0;ls
 : 1267508137:0;cd infonetwork
-: 1267508140:0;ls
 : 1267508163:0;cp -r ClassReports /Volumes/Macbook\ HD/
-: 1267508164:0;ls
-: 1267509388:0;cd /Volumes/Macbook\ HD
-: 1267509390:0;ls
-: 1267509391:0;cd graduated_trip
-: 1267509392:0;ls
-: 1267509397:0;cd 0222
-: 1267509398:0;ls
-: 1267509408:0;cd xacti_partial
-: 1267509409:0;ls
-: 1267509411:0;la
-: 1267509451:0;ls
 : 1267509577:0;port search util-linux
 : 1267509595:0;port search rename
-: 1267509599:0;ls
-: 1267509736:0;cd
-: 1267510076:0;ls
-: 1267510081:0;vi .zshrc
-: 1267510105:0;ls
 : 1267510107:0;reload
-: 1267510113:0;ls
 : 1267510118:0;cd /Volumes/Macbook\ HD
-: 1267510118:0;ls
 : 1267510121:0;cd graduated_trip
-: 1267510122:0;ls
 : 1267510126:0;cd 0222
-: 1267510127:0;ls
 : 1267510185:0;zmv -W 'DSC_*' 'DSC2_*'
-: 1267510187:0;ls
-: 1267510212:0;cd 102D5000
-: 1267510215:0;ls
 : 1267510270:0;cd 101_FUJI
-: 1267510270:0;ls
 : 1267510273:0;cd 102D5000
-: 1267510274:0;ls
 : 1267510277:0;cd 103_FUJI
-: 1267510278:0;ls
 : 1267510281:0;cd 104SANYO
-: 1267510281:0;ls
 : 1267510285:0;cd maicos_photo20100220
-: 1267510285:0;ls
-: 1267510289:0;cd satoshi
-: 1267510290:0;ls
 : 1267510295:0;cd satoshi
-: 1267510295:0;ls
 : 1267510299:0;cd xacti_partial
-: 1267510300:0;ls
-: 1267512322:0;cd cluiser.git
-: 1267512323:0;ls
 : 1267512333:0;cd cluiser.git
-: 1267512334:0;ls
 : 1267512339:0;rm -rf cluiser.git
-: 1267512341:0;ls
 : 1267512343:0;cd cluiser2
-: 1267512343:0;ls
-: 1267512345:0;lls
-: 1267512346:0;ls
 : 1267512352:0;rm -rf cluiser2
-: 1267512354:0;ls
 : 1267512359:0;cd oouchi_test
 : 1267512363:0;rm -rf oouchi_test
-: 1267512364:0;ls
 : 1267512366:0;cd prmldarts
-: 1267512367:0;ls
 : 1267512370:0;cd qu_old_repos
-: 1267512371:0;ls
 : 1267512376:0;rm -rf qu_old_repos
-: 1267512625:0;ls
 : 1267512627:0;cd old
-: 1267512629:0;ls
 : 1267512633:0;rm -rf ssh:
-: 1267512634:0;ls
-: 1267512646:0;cd Researches
-: 1267512647:0;ls
-: 1267512654:0;cd Miscs
-: 1267512654:0;ls
 : 1267512661:0;cd Miscs
 : 1267512662:0;cd Recruit
-: 1267512663:0;ls
 : 1267512666:0;less canon_es
-: 1267512668:0;ls
 : 1267512670:0;less docomo
 : 1267512672:0;less docomo-es
-: 1267512673:0;ls
 : 1267512678:0;less nri_es
-: 1267512679:0;ls
 : 1267512682:0;less ntt-east_es
-: 1267512685:0;ls
 : 1267512730:0;rm -rf AsukaTools
-: 1267512731:0;ls
-: 1267512733:0;cd Configurations
-: 1267512734:0;ls
-: 1267512738:0;cd Configurations
-: 1267512739:0;la
-: 1267512745:0;ls
-: 1267512747:0;la
-: 1267512762:0;cd latex
-: 1267512764:0;ls
-: 1267512784:0;cd Dropbox
-: 1267512784:0;ls
-: 1267512787:0;cd Documents
-: 1267512788:0;ls
-: 1267512790:0;cd Documents
-: 1267512791:0;ls
 : 1267512793:0;cd BlogDrafts
-: 1267512794:0;ls
 : 1267512797:0;cd PDFs
-: 1267512798:0;ls
-: 1267512860:0;cd Keynotes
-: 1267512860:0;ls
-: 1267513046:0;cd
-: 1267513046:0;ls
 : 1267513053:0;rm -rf maicos_photo20100220
 : 1267513057:0;rm -rf maicos_photo20100222
-: 1267513058:0;ls
 : 1267513065:0;rm -rf xacti
-: 1267513066:0;ls
 : 1267513074:0;cd emulation
 : 1267513076:0;rm -rf emulation
-: 1267513077:0;ls
 : 1267513083:0;rm hw_utility_mac10_6_V1_00 hw_utility_mac10_6_V1_00.zip
 : 1267513086:0;rm -rf hw_utility_mac10_6_V1_00 hw_utility_mac10_6_V1_00.zip
-: 1267513087:0;ls
 : 1267513092:0;less eng
-: 1267513094:0;ls
 : 1267513095:0;rm eng
-: 1267513096:0;ls
 : 1267513098:0;less engd
-: 1267513102:0;ls -altr
-: 1267513104:0;ls
 : 1267513107:0;rm engd
 : 1267513109:0;open aaa.pdf
 : 1267513114:0;rm aaa.pdf
-: 1267513115:0;ls
 : 1267513119:0;less fuga
-: 1267513120:0;ls
 : 1267513123:0;less fuga.rb
-: 1267513130:0;ls
 : 1267513138:0;mv fuga.rb babanuki.rb
-: 1267513138:0;ls
 : 1267513161:0;open pdf
 : 1267513164:0;open hoge.pdf
 : 1267513169:0;rm hoge.pdf
-: 1267513170:0;ls
 : 1267513174:0;less install.sh\~
-: 1267513176:0;ls
 : 1267513179:0;less install
-: 1267513181:0;less install.sh
-: 1267513182:0;ls
 : 1267513188:0;less installation_list
-: 1267513190:0;ls
 : 1267513193:0;rm installation_list
 : 1267513193:0;sl
-: 1267513199:0;ls
 : 1267513203:0;less ppp
-: 1267513204:0;ls
 : 1267513205:0;rm ppp
-: 1267513206:0;ls
 : 1267513210:0;rm rails-pdf.pdf
-: 1267513211:0;ls
 : 1267513216:0;less result.csv
-: 1267513217:0;ls
 : 1267513219:0;rm result.csv
-: 1267513219:0;ls
-: 1267513225:0;less todown
-: 1267513228:0;ls
 : 1267513237:0;rm ÂÄÉ´‰∫∫„É£Ø„É£º„ÇØ„Ç∑„É£º„É£É®.pdf
-: 1267513237:0;ls
 : 1267513241:0;rm logo_big.png
-: 1267513241:0;ls
 : 1267513247:0;open ReviewItinerary.aspx
 : 1267513251:0;open ReviewItinerary.aspx.html
 : 1267513283:0;less ReviewItinerary.aspx.html
-: 1267513285:0;ls
 : 1267513292:0;rm -rf ReviewItinerary.aspx.html ReviewItinerary.aspx_files
-: 1267513293:0;ls
 : 1267513296:0;less SSL,all-sets,ascii.tgz
-: 1267513297:0;ls
 : 1267513308:0;less hoge
-: 1267513309:0;ls
 : 1267513310:0;rm hoge
 : 1267513315:0;rm hoge.doc
 : 1267513317:0;less hoge.rb
-: 1267513320:0;ls
 : 1267513322:0;rm hoge.rb
-: 1267513322:0;ls
-: 1267513793:0;psg Fire
-: 1267513795:0;ls
-: 1267513798:0;open -a Firefox
-: 1267513860:0;ls
 : 1267513861:0;open -a Firefox
-: 1267515369:0;ls
-: 1267515383:0;cd ClassReports
-: 1267515384:0;ls
 : 1267515408:0;cp -rf ClassReports/ /Volumes/NO\ NAME/
-: 1267515859:0;ls
-: 1267520038:0;d
-: 1267520045:0;cd Documents
-: 1267520046:0;ls
 : 1267520053:0;cd Miscs/Recruit
 : 1267520059:0;less kddi_es
-: 1267520485:0;ls
-: 1267520521:0;cd Downloads
-: 1267520523:0;ls
-: 1267520523:0;cd
-: 1267520524:0;ls
-: 1267520528:0;cd Lab
-: 1267520533:0;svn up
-: 1267520535:0;cd thesis
-: 1267520538:0;ls
-: 1267520548:0;cd Lab
 : 1267520587:0;svn co svn://prmlint.main.ist.hokudai.ac.jp/labdocument/trunk labdocument
-: 1267520592:0;ls
-: 1267520593:0;cd labdocument
-: 1267520594:0;ls
 : 1267520598:0;cd guidebook
-: 1267520598:0;ls
 : 1267520623:0;cd seminar
-: 1267520623:0;ls
 : 1267520638:0;svn co svn://prmlint.main.ist.hokudai.ac.jp/admin
-: 1267520651:0;ls
 : 1267520653:0;cd admin
-: 1267520654:0;ls
 : 1267520655:0;cd documents
-: 1267520656:0;ls
 : 1267520667:0;less phone/phone.tex
-: 1267520674:0;ls
-: 1267520679:0;cd ad
-: 1267520680:0;cd address
-: 1267520681:0;ls
-: 1267520683:0;less address.
 : 1267520685:0;less address.tex
-: 1267520692:0;ls
 : 1267520700:0;cd admindoc
-: 1267520700:0;ls
 : 1267520703:0;less admindoc.tex
-: 1267520705:0;ls
 : 1267520710:0;cd welcome
-: 1267520712:0;ls
 : 1267520714:0;cd ad
 : 1267520716:0;cd address
-: 1267520716:0;ls
 : 1267520721:0;less address.
-: 1267522626:0;d
 : 1267522631:0;cd LabDocuments
-: 1267522633:0;cd ClassReports
-: 1267522634:0;du
-: 1267522636:0;ls
-: 1267544831:0;man zip
-: 1267544853:0;ls
 : 1267544858:0;zip ClassReports
-: 1267544860:0;ls
-: 1267544867:0;man zip
 : 1267544891:0;zip report.zip ClassReports
-: 1267544894:0;ls
 : 1267544900:0;mkdir r
 : 1267544902:0;mv report.zip
 : 1267544907:0;mv report.zip r
-: 1267544910:0;cd r
-: 1267544910:0;ls
 : 1267544912:0;unzip report.zip
-: 1267544914:0;ls
 : 1267544916:0;cd ClassReports
-: 1267544916:0;ls
 : 1267544924:0;rm -rf r
 : 1267544929:0;man zip
-: 1267544934:0;ls
 : 1267544944:0;zip -r reports.zip ClassReports
-: 1267544946:0;ls
 : 1267544947:0;ls ---al
-: 1267544949:0;ls -al
-: 1267692791:0;ls
-: 1267692950:0;cd OpenSources
-: 1267692951:0;ls
 : 1267692955:0;cd Photos
-: 1267692956:0;ls
-: 1267692960:0;cd Researches
-: 1267692961:0;ls
 : 1267692970:0;cd Scripts
-: 1267692970:0;ls
-: 1267692993:0;cd Configurations
-: 1267692994:0;ls
-: 1267851017:0;d
 : 1267851020:0;open 2009_kanda_presen.pdf
-: 1267851103:0;ls
-: 1267851105:0;ls -al
-: 1267851309:0;ls -altr
-: 1267851311:0;ls
 : 1267851339:0;cd Researches/Master
-: 1267851339:0;ls
-: 1267851347:0;less thesis_1st/master_thesis.tex
-: 1267851414:0;ls
-: 1267851415:0;less thesis_1st/master_thesis.tex
-: 1267851417:0;ls -altr
 : 1267851457:0;less thesis_1st/master_thesis.tex
-: 1267851460:0;ls -altr
-: 1267851567:0;ls
 : 1267851574:0;mv 2009_kanda_presen.pdf Researches/Master/
-: 1267851577:0;ls
-: 1267851581:0;cd abstract
-: 1267851582:0;ls
 : 1267851599:0;cp key_passage_rc.pdf ../2009_kanda_resume.pdf
 : 1267851605:0;open 2009_kanda_resume.pdf
-: 1267851841:0;ls
 : 1267852765:0;cp -r thesis_1st thesis
-: 1267852767:0;cd thesis
-: 1267852768:0;ls
-: 1268028285:0;d
-: 1268028286:0;ls
 : 1268028288:0;cd Keynotes
-: 1268028343:0;ls
-: 1268028377:0;ls -al
-: 1268028379:0;ls -altr
-: 1268028383:0;ls
-: 1268028587:0;d
 : 1268028593:0;cd Movies
 : 1268028597:0;open master2.mov
-: 1268028632:0;ls
-: 1268028634:0;open .
-: 1268113280:0;ls
-: 1268180572:0;d
-: 1268180574:0;ls
 : 1268180577:0;cd Researches
 : 1268180579:0;cd Master
-: 1268180579:0;ls
-: 1268180582:0;cd thesis
-: 1268180582:0;ls
 : 1268180586:0;emacs master_thesis.tex
-: 1268194443:0;ls
 : 1268194444:0;cd Lab
-: 1268194447:0;cd labdocument
-: 1268194447:0;ls
 : 1268194452:0;cd labdocument
 : 1268194455:0;cd thesis
-: 1268194455:0;ls
 : 1268194458:0;cd 2008
-: 1268194459:0;ls
-: 1268194460:0;cd syuron
-: 1268194461:0;ls
 : 1268194466:0;cd 2006
-: 1268194467:0;ls
 : 1268194468:0;cd syuron
-: 1268194468:0;ls
 : 1268194471:0;cd ronbun
-: 1268194471:0;ls
 : 1268194473:0;open muto.pdf
-: 1268195038:0;ls
 : 1268195056:0;ebb evflow.pdf
 : 1268200718:0;cd abstract
 : 1268200724:0;open key_passage_rc.pdf
-: 1268225271:0;ls
-: 1268230307:0;ifconfig
-: 1268632329:0;ls
-: 1268639380:0;cd
-: 1268639381:0;ls
 : 1268810676:0;vi .zshrc
-: 1268810736:0;ls
-: 1268811250:0;ssh prml88 -l root
 : 1268811345:0;ssh prml89 -l root
 : 1268813590:0;ssh 133.87.136.228 -l root
 : 1268813601:0;ssh 133.87.182.66 -l root
-: 1268813697:0;ls
-: 1268813700:0;d
-: 1268813703:0;cd Products
-: 1268813703:0;ls
 : 1268813707:0;cd questionnaire
-: 1268813708:0;svn up
-: 1268814937:0;ls -altr
 : 1268814938:0;ls -alt
 : 1268814942:0;cd Do
-: 1268814944:0;cd Downloads
-: 1268814959:0;ls
 : 1268815003:0;mv a.pdf$'\302\205'$'\302\203'j$'\302\203'P$'\302\201'\[$'\302\203'V$'\302\203'$'\302\207'$'\302\203'$'\302\223'$'\302\216'$'\302\226'$'\302\221'O$'\302\211'UÃÇ$'\302\221'eÃÄ.pdf a.pdf
-: 1268815004:0;ls
 : 1268815006:0;open a.pdf
-: 1268815432:0;ls
 : 1268904496:0;mv schedule schedule.ppt
 : 1268904500:0;open schedule.ppt
-: 1268904645:0;ssh prml90 -l root
 : 1268904775:0;ssh ipsb
 : 1268905172:0;ping prml90
-: 1268906427:0;winb
-: 1268913275:0;ssh prml88 -l root
-: 1268914081:0;ls
 : 1269308651:0;cd trunk
-: 1269308652:0;ls
 : 1269308655:0;cd lib
 : 1269308660:0;less qu.rb
 : 1269308681:0;emacs qu.rb
 : 1269308705:0;e
-: 1269308706:0;d
-: 1269308711:0;cd .emacs.d
-: 1269308715:0;cd env
-: 1269308715:0;ls
 : 1269308720:0;emacs env-carbon.el
 : 1269308758:0;emacs config/environment.rb
 : 1269308864:0;emacs lib/questionnaire_data_ist.rb
-: 1269309731:0;ls
 : 1269309747:0;cd lib/tasks
-: 1269309747:0;ls
 : 1269309751:0;less qu.rake
 : 1269309800:0;emacs qu.rake
 : 1269309847:0;rake qu:migration
-: 1269309892:0;ls
 : 1269309916:0;cd db/migrate
-: 1269309917:0;ls
 : 1269309924:0;less 001_create_users.rb
-: 1269309932:0;ls
 : 1269309935:0;less 500_create_answers.rb
-: 1269310007:0;cd misc
-: 1269310011:0;less validation_template.erb
-: 1269310077:0;d
-: 1269310081:0;cd Products
 : 1269310084:0;cdd 4
-: 1269310087:0;cd app
-: 1269310087:0;ls
 : 1269310088:0;cd models
 : 1269310090:0;less answer.rb
-: 1269310109:0;cd misc
 : 1269310114:0;less validation_template.erb
 : 1269310132:0;cd trunk/lib
-: 1269310135:0;less answer_validations.rb
-: 1269310149:0;ls
-: 1269310157:0;less answer_validations.rb
 : 1269310173:0;cdd 3
 : 1269310175:0;cd app
 : 1269310178:0;less models/answer.rb
 : 1269310193:0;less answer_validations.rb
 : 1269310232:0;irb
-: 1269310310:0;ls
 : 1269310337:0;emacs validation_template.erb
 : 1269311196:0;rake qu:debug
-: 1269311250:0;ssh ippcn -l root
-: 1269311442:0;ls
-: 1269311445:0;cd misc
-: 1269311446:0;ls
 : 1269311449:0;less selenium_testcase_template.erb
 : 1269311459:0;cd test
-: 1269311460:0;ls
 : 1269311461:0;cd selenium
-: 1269311462:0;ls
 : 1269311467:0;less section1
 : 1269311470:0;less section11_answer.rsel
 : 1269311579:0;cd misc
-: 1269311601:0;ls
-: 1269311609:0;less custom.js
-: 1269311611:0;ls
 : 1269311619:0;less custom_bachelor.js
-: 1269311639:0;ls
 : 1269311652:0;less custom.js
-: 1269311660:0;ls
 : 1269311667:0;less custom_master.js
-: 1269318756:0;ls
 : 1269319453:0;ssh ippcn -l root
 : 1269336824:0;ssh prml90 -l root
 : 1269336889:0;winb
@@ -3291,361 +2778,129 @@ exit
 : 1269336915:0;rdesktop -a 16 -r sound -d prml prml9b -K
 : 1269336918:0;rdesktop -r sound -d prml prml9b -K
 : 1269336920:0;rdesktop -d prml prml9b -K
-: 1269336926:0;rdesktop prml9b -K
 : 1269336949:0;rdesktop -a 16 -r sound prml9b -K -g 1270x968 -k ja
 : 1269336952:0;rdesktop -a 16 -r sound prml9b -K -g 1270x968
 : 1269336954:0;rdesktop -a 16 -r sound prml9b -K
 : 1269336958:0;rdesktop -r sound prml9b -K
 : 1269336961:0;rdesktop prml9b -K
 : 1269336963:0;rdesktop prml9b
-: 1269339453:0;ls
 : 1269339837:0;ssh ipsb -l root
 : 1269339845:0;ssh ipsb -l kanda
-: 1269417256:0;ls
-: 1269480408:0;s
 : 1269480409:0;d
-: 1269480410:0;cd Products
-: 1269480410:0;ls
 : 1269480411:0;cd lu
 : 1269480413:0;cd cluiser
-: 1269480413:0;ls
 : 1269480416:0;cd ext
 : 1269480418:0;make
-: 1269719559:0;cd
-: 1269719561:0;ls
-: 1269719577:0;cd Downloads
-: 1269719577:0;ls
-: 1269719583:0;open usr_4b18ac757ee2a.flv
 : 1269877060:0;ping fs
-: 1269877072:0;ls
-: 1270273668:0;top
 : 1270323967:0;open -a /Library/Application\ Support/VMware\ Fusion/VMDKMounter.app ~/Documents/‰ªÆË£É•„É£û„Ç∑„É£≥/Windows\ 7\ \(experimental\).vmwarevm/Windows\ 7\ \(experimental\)-0.vmdk
-: 1270355228:0;ls
-: 1271085493:0;cd Downloads
-: 1271085494:0;ls
 : 1271085499:0;open 1038a.wmv
-: 1271085781:0;open usr_4b18ac757ee2a.flv
-: 1271259306:0;ls
-: 1271259314:0;open .
-: 1271339645:0;ls
-: 1271941528:0;less pamphlet
 : 1272407103:0;psa
-: 1272407105:0;top
 : 1272631406:0;psg chrome
-: 1272631412:0;psg Chro
 : 1272631422:0;kill 16130
-: 1272631426:0;psg Chro
 : 1272631433:0;kill -9 16130
 : 1272631437:0;psg Chro
-: 1272718475:0;ssh prmlra1
-: 1272718479:0;ssh prmlra2
-: 1272728018:0;top
-: 1273079699:0;ls
-: 1273079704:0;top
-: 1273079719:0;ls
-: 1273079732:0;top
 : 1273147132:0;ssh kanda@vps.uskanda.com
-: 1273418661:0;top
-: 1273423330:0;killall Flickroom
-: 1273423331:0;top
 : 1273423336:0;killall Flickroom.app
 : 1273423339:0;killall Flickroom
 : 1273423344:0;killall -9 Flickroom
-: 1273423346:0;top
 : 1274108415:0;ruby -e "require 'p'"
 : 1274108426:0;ruby -e "require 'net/http'"
-: 1274199397:0;top
-: 1274267486:0;ls
-: 1274267491:0;du
-: 1274267496:0;ls
-: 1274267509:0;cd Library
-: 1274267512:0;du
-: 1274267517:0;ls
-: 1274267569:0;cd Downloads
-: 1274267570:0;du
-: 1274267581:0;ls
 : 1274267583:0;du -h
-: 1274267590:0;ls
-: 1274267593:0;cd Desktop
-: 1274267594:0;ls
-: 1274267595:0;du
-: 1274267598:0;cd Library
-: 1274267600:0;du
 : 1274267607:0;cd untitled\ folder
-: 1274267609:0;du
-: 1274267624:0;ls
-: 1274267626:0;cd ..
-: 1274267626:0;ls
 : 1274267628:0;cd ..
-: 1274267629:0;ls
-: 1274267636:0;cd tmp
-: 1274267638:0;du
-: 1274267642:0;ls
-: 1274267645:0;cd Library
-: 1274267648:0;du
-: 1274267768:0;cd Applications
-: 1274267771:0;du
-: 1274267776:0;ls
 : 1274267813:0;cd Safari.app
-: 1274267816:0;du
-: 1274267943:0;ls
-: 1274267944:0;cd
-: 1274267944:0;ls
-: 1274267973:0;cd Library
-: 1274267974:0;ls
 : 1274267975:0;du
 : 1274267985:0;du -1
-: 1274267988:0;du -d 1
 : 1274268000:0;cd Caches
-: 1274268004:0;du -d 1
-: 1274268039:0;ls
-: 1274268050:0;ls -al
-: 1274268125:0;du -d 1
 : 1274268168:0;du -d 1 -s
 : 1274268174:0;du -s 1
 : 1274268182:0;du -d 1 | sort
 : 1274268189:0;sort | du -d 1
 : 1274268196:0;sort | command du -d 1
-: 1274304467:0;cd
 : 1274304471:0;cd /
 : 1274304475:0;cd tmp
-: 1274304479:0;du -d 1
-: 1274304482:0;ls
 : 1274304487:0;cd var
-: 1274304488:0;ls
-: 1274304490:0;du -d 1
 : 1274304498:0;cd vm
-: 1274304499:0;ls
 : 1274304604:0;rm *
-: 1274304621:0;rm -rf *
-: 1274304632:0;ls
 : 1274304646:0;sudo rm -rf *
-: 1274304651:0;ls
-: 1274304660:0;du -d 1
-: 1274305107:0;ls
 : 1274305108:0;cd Applications
-: 1274305110:0;du -d 1
-: 1274305148:0;cd
 : 1274305150:0;du -d 1
-: 1274358372:0;ls
-: 1274358373:0;cd
-: 1274358374:0;ls
-: 1274358376:0;cd Downloads
-: 1274358377:0;ls
-: 1274358385:0;cd Dropbox
 : 1274358400:0;cd OpenSources
-: 1274358404:0;ls
 : 1274358407:0;cd Products
-: 1274358412:0;cd WiiNumberRecognition
-: 1274358413:0;ls
-: 1274358431:0;cd wii_recog
-: 1274358432:0;ls
-: 1274358437:0;less wii.rb
-: 1274358465:0;ls
-: 1274358469:0;cd wii-gesture-recog
-: 1274358470:0;ls
-: 1274358474:0;less recog.rb
-: 1274358478:0;ls
-: 1274358484:0;cd WiiNumberRecognition
-: 1274358485:0;ls
-: 1274358490:0;cd wii_recog
 : 1274358498:0;less classifier_c.c
-: 1274358503:0;ls
-: 1274358509:0;cd wii-gesture-recog
-: 1274358512:0;less recog.rb
-: 1274358517:0;ls
 : 1274358519:0;less re
-: 1274358521:0;less README
-: 1274358522:0;ls
-: 1274358532:0;git status
-: 1274358541:0;git pull
-: 1274358543:0;ls
-: 1274359215:0;ls -al
-: 1274359222:0;ls -altr
-: 1274359226:0;ls
-: 1274359228:0;cd WiiNumberRecognition
-: 1274359229:0;ls
-: 1274359233:0;cd wii_recog
-: 1274359233:0;ls
 : 1274359239:0;cd wii-gesture-recog
 : 1274359243:0;less recog.rb
-: 1274359248:0;cd WiiNumberRecognition
-: 1274359248:0;ls
-: 1274359252:0;cd wii_recog
-: 1274359253:0;ls
 : 1274359257:0;less sequence.txt
-: 1274359259:0;ls
-: 1274359265:0;cd templates
-: 1274359265:0;ls
 : 1274359312:0;zip wii.zip wii-gesture-recog
-: 1274359313:0;ls
-: 1274359315:0;ls -altr
 : 1274359320:0;rm wii
 : 1274359322:0;rm wii.zip
-: 1274359323:0;ls
 : 1274359334:0;zip -r wii.zip wii-gesture-recog WiiNumberRecognition
-: 1274359337:0;ls
 : 1274360273:0;cd WiiNumberRecognition
-: 1274360273:0;ls
-: 1274360281:0;cd wii_recog
-: 1274360283:0;cd templates
-: 1274360290:0;ls
 : 1274360301:0;less show.sh
-: 1274360303:0;ls
 : 1274360305:0;less extconf.rb
-: 1274360306:0;ls
 : 1274360588:0;cd wii
 : 1274360590:0;cd wii_recog
 : 1274360616:0;less wii.rb
-: 1274360686:0;ls
 : 1274360688:0;cd templates
-: 1274370210:0;ls
-: 1274458474:0;top
-: 1274611388:0;ls
-: 1274708413:0;top
-: 1274792654:0;ls
 : 1274796655:0;cd Pictures
-: 1274796656:0;ls
 : 1274796658:0;cd Eye-Fi
-: 1274796659:0;ls
 : 1274796660:0;cd 10-05-25
-: 1274796661:0;ls
 : 1274796662:0;rm IMG_3937.JPG IMG_3938.JPG IMG_3939.JPG IMG_3940.JPG IMG_3941.JPG IMG_3942.JPG IMG_3943.JPG IMG_3944.JPG IMG_3945.JPG IMG_3946.JPG IMG_3947.JPG IMG_3948.JPG IMG_3949.JPG IMG_3950.JPG IMG_3951.JPG IMG_3952.JPG IMG_3953.JPG IMG_3954.JPG IMG_3955.JPG IMG_3956.JPG IMG_3957.JPG IMG_3958.JPG
-: 1274796663:0;ls
-: 1274999909:0;la
-: 1275000045:0;ls
-: 1275042006:0;top
 : 1275315273:0;psg Google
 : 1275315292:0;psg google
 : 1275315294:0;psg goo
 : 1275315296:0;psg go
 : 1275315297:0;psg g
 : 1275315304:0;psg .app
-: 1275315386:0;psg Quick
 : 1275315391:0;kill 350
-: 1275315401:0;open -a Quick\ Search\ Box
 : 1275315412:0;psg Quick
 : 1275315418:0;kill 1108
-: 1275315419:0;ls
 : 1275315423:0;open -a Quick\ Search\ Box
 : 1275345600:0;less email
-: 1275346972:0;ls
-: 1275491785:0;top
-: 1275497878:0;ls
-: 1275790608:0;top
-: 1275794888:0;ls
 : 1275917189:0;Dropbox
-: 1275917189:0;ls
 : 1275917193:0;open Untitled.ppt
-: 1275927908:0;ls
-: 1275927955:0;top
-: 1275938737:0;ls
 : 1275953144:0;open com_kanazawa.001.png
-: 1275953155:0;ls
-: 1275953390:0;open .
-: 1276001829:0;ls
 : 1276001834:0;open Untitled.001.png
-: 1276033235:0;ls
 : 1276033238:0;cd Desktop
-: 1276033239:0;ls -al
-: 1276033577:0;l
-: 1276033578:0;ls
 : 1276033582:0;open 124232904_d5076c30f2_o.jpg
-: 1276033634:0;open .
 : 1276033825:0;open Dropbox/
-: 1276034864:0;ls
-: 1276034870:0;ls -al
-: 1276034900:0;ls
-: 1276037230:0;open 4567831032_9c4a20568d_b.jpg
-: 1276111705:0;ls
-: 1276111709:0;ls -al
-: 1276111710:0;ls -altr
-: 1276111975:0;ls
 : 1276111986:0;mkdir comkana
 : 1276111992:0;mv finish.png comkana
 : 1276113310:0;cd comkana
 : 1276113315:0;rm finish.xcf
-: 1276113316:0;ls
-: 1276113859:0;open .
-: 1276869656:0;ls
 : 1276875524:0;less Eye-Fi\ Card.log
-: 1278773618:0;top
 : 1278773677:0;llls
-: 1278773679:0;ls
-: 1278773692:0;top
 : 1278773753:0;man top
 : 1278773785:0;top -o cpu
 : 1279027003:0;psg Fire
 : 1279542325:0;cd Downloads/
-: 1279542327:0;ls
 : 1279542331:0;cd CCNA
-: 1279542331:0;ls
 : 1279542338:0;open JPEG/300x300px/ccna_large.jpg
-: 1279830800:0;ls
 : 1279830830:0;cd pptsozai
 : 1279830832:0;open hosyuteki.png
-: 1279831803:0;ls
-: 1279834907:0;open .
-: 1280670708:0;ifconfig
 : 1280670711:0;ifconfig eth0
 : 1280670714:0;ifconfig | less
-: 1280844436:0;top
-: 1281621688:0;ls
-: 1281621690:0;cd .emacs.d
-: 1281621690:0;ls
 : 1281621702:0;less README
-: 1281621706:0;ls
-: 1281621711:0;less init.el
-: 1281621720:0;s
-: 1281621721:0;ls
-: 1281621723:0;cd env
 : 1281621733:0;less ../init.el
-: 1281621785:0;ls
-: 1281621788:0;cd env
 : 1281621792:0;less env-carbon.el
 : 1281621797:0;cd conf
 : 1281621799:0;less c-env.el
 : 1281621813:0;vi c-env.el
-: 1281621824:0;ls
 : 1281621839:0;cd env
 : 1281621846:0;mv * ../
-: 1281621847:0;ls
 : 1281621854:0;rm -rf env
-: 1281621855:0;ls
-: 1281621859:0;git status
 : 1281621870:0;git add env-carbon.el env-cocoa.el env-linux.el env-meadow.el env-utf-8.el
 : 1281621881:0;git add site-lisp/popup.el
-: 1281621882:0;ls
-: 1281621893:0;git commit -a
-: 1281621945:0;ls
-: 1281622009:0;git push origin
-: 1281622094:0;ls
-: 1281622097:0;cd .emacs.d
-: 1281622107:0;vi conf/c-env.el
-: 1281622146:0;cd .emacs.d
 : 1281622153:0;less init.el
 : 1281622161:0;vi conf/c-env.el
-: 1281622166:0;vi init.el
-: 1281622208:0;ls
-: 1281622210:0;git status
-: 1281622215:0;git commit -a
-: 1281622224:0;git push origin
-: 1281622231:0;ls
-: 1281622235:0;vi env-meadow.el
-: 1281622391:0;ls
 : 1281622398:0;emacs env-meadow.el
-: 1281622564:0;grep -r require *el
-: 1281622574:0;cd .emacs.d
 : 1281622576:0;grep -r require *el
 : 1281622582:0;grep -r require */*el
 : 1281622589:0;grep -r require */*el | less
 : 1281622630:0;less site-lisp/ac-anything.el
-: 1281622823:0;ls
 : 1281622826:0;vi env-meadow.el
-: 1281622911:0;ls
-: 1281623058:0;cd site-lisp
 : 1281623062:0;vi anything-config.el
-: 1281623388:0;ls
 : 1281623564:0;cd site-lisp
 : 1281623575:0;rm install-elisp.el
 : 1281623602:0;wget http://www.emacswiki.org/emacs/download/auto-install.el
@@ -3654,143 +2909,68 @@ exit
 : 1281623630:0;grep -r "require install" */*.el
 : 1281623666:0;grep -r install-elisp */*.el
 : 1281623678:0;grep -r install-elisp */*.el | less
-: 1281623722:0;grep -r install-elisp .
 : 1281623727:0;grep -r install-elisp . | less
 : 1281623732:0;grep -r install-elisp .
 : 1281623738:0;grep -r install-elisp . L
-: 1281623750:0;vi init.el
 : 1281623884:0;less site-lisp/auto-install.el
-: 1281623916:0;vi init.el
-: 1281623932:0;ls
 : 1281624783:0;cd kanda
-: 1281624783:0;ls
-: 1281624787:0;cd .emacs.d
-: 1281624788:0;ls
-: 1281624796:0;cd vc
-: 1281624799:0;ls
 : 1281624801:0;auto-complete
-: 1281624809:0;git push origin
 : 1281624814:0;git pull
 : 1281624885:0;ls;
-: 1281624885:0;ls
 : 1281624889:0;less update
-: 1281624899:0;ls
-: 1281624901:0;vi update
-: 1281624911:0;ls
 : 1281624915:0;vi update
-: 1281624919:0;ls
 : 1281624925:0;cd auto-complete/
-: 1281624925:0;ls
 : 1281624928:0;cd etc
 : 1281624930:0;less install.el
-: 1281624946:0;ls
 : 1281624967:0;cp auto-complete-config.el auto-complete.el fuzzy.el popup.el ../../site-lisp
 : 1281625012:0;rm site-lisp/auto-complete.elc
-: 1281625221:0;git status
 : 1281625243:0;git add site-lisp/auto-install.el
 : 1281625246:0;git add site-lisp/fuzzy.el
-: 1281625249:0;git commit -a
-: 1281625332:0;ls
 : 1281625381:0;cd lisp
 : 1281625384:0;cd vc
-: 1281625384:0;ls
 : 1281625409:0;cd r
 : 1281625411:0;cd rsense
 : 1281625416:0;hg pull
-: 1281625425:0;ls
-: 1281625464:0;vi init.el
-: 1281625477:0;ls
 : 1281625526:0;grep -r outputz
-: 1281625529:0;grep -r outputz .
 : 1281625551:0;less conf/c-outputz.el
-: 1281625556:0;ls
 : 1281625567:0;less conf/c-private.el
-: 1281625629:0;ls
-: 1281625641:0;vi init.el
-: 1281625648:0;ls
 : 1281625659:0;rm site-lisp/outputz.el
 : 1281625669:0;rm conf/c-outputz.el
 : 1281625672:0;vi conf/c-private.el
-: 1281625676:0;ls
-: 1281625680:0;git status
-: 1281625683:0;git commit -a
-: 1281625709:0;git push origin
-: 1281625895:0;ls
-: 1281625897:0;cd .emacs.d
-: 1281625924:0;vi init.el
-: 1281625981:0;ls
-: 1281625989:0;vi init.el
-: 1281625999:0;ls
 : 1281626001:0;cd snippets
-: 1281626001:0;ls
 : 1281626003:0;cd imported
-: 1281626003:0;ls
 : 1281626016:0;cd c-mode
 : 1281626022:0;cd ruby-mode
 : 1281626025:0;cd Each\ Element
 : 1281626031:0;less each
 : 1281626032:0;less each\ \{\ e\ ..\ \}\ \(ea\).yasnippet
-: 1281626039:0;ls
-: 1281626049:0;ls -al
 : 1281626053:0;svn up
-: 1281626066:0;ls
 : 1281626078:0;rm -rf *
 : 1281626128:0;grep -r outputz .
 : 1281626143:0;vi conf/c-minibuffer.el
-: 1281626155:0;ls
-: 1281626166:0;git status
 : 1281626174:0;less ac-comphist.dat
-: 1281626176:0;ls
-: 1281626191:0;vi .gitignore
-: 1281626198:0;ls
-: 1281626210:0;vi .gitignore
-: 1281626214:0;ls
-: 1281626221:0;git commit -a
 : 1281626246:0;git push origin
-: 1281626325:0;ls
-: 1281626351:0;cd .emacs.d
-: 1281626352:0;ls
 : 1281626354:0;vi init.el
 : 1281626375:0;vi conf/c-keybind.el
-: 1281627516:0;ls
 : 1281627521:0;vi conf/c-key-chord.el
-: 1281740181:0;top
-: 1281778117:0;ls
-: 1281778118:0;cd
-: 1281779634:0;vi babanuki.rb
 : 1281779769:0;ruby babanuki.rb 10
-: 1281779771:0;ruby babanuki.rb 100
 : 1281779782:0;less babanuki.rb
 : 1281779812:0;./babanuki.rb 100
-: 1281779820:0;vi babanuki.rb
 : 1281779833:0;ruby babanuki.rb 100
-: 1281806563:0;ls
-: 1281806565:0;cd Downloads
 : 1281806571:0;open usr_4b18ac757ee2a.flv
 : 1281806595:0;open usr_4b3ae2e66c322.flv
 : 1281806613:0;open usr_4ba841ab79483.flv
 : 1281806633:0;open usr_4ba8464e663a5.flv
 : 1281806680:0;open usr_4ba9988d33646.flv
-: 1281836738:0;ls
 : 1281927068:0;ssh prml88 -l root
 : 1282012518:0;vi katsuragi
-: 1282012522:0;ls
 : 1282733705:0;ks
-: 1282733706:0;ls
 : 1282969702:0;open -a TextEdit
 : 1282970881:0;top
-: 1283289823:0;ls
-: 1283289830:0;ruby -v
 : 1283289842:0;sudo port search ruby19
-: 1283289864:0;sudo port -v sync
-: 1283289925:0;ls
 : 1283289933:0;port search ruby19
-: 1283289945:0;sudo port install ruby19
 : 1283289970:0;gem -v
-: 1284776677:0;ls
 : 1284776706:0;cd /Volumes/NO\ NAME
-: 1284776707:0;ls
-: 1284776713:0;open .
 : 1285465780:0;ruby -v
 : 1285465789:0;sudo port search ruby
 : 1285465817:0;sudo port install ruby19
@@ -3798,238 +2978,412 @@ exit
 : 1285465890:0;su
 : 1285465901:0;sudo port install outdated
 : 1285466140:0;synergy
-: 1285466141:0;ls
 : 1285466532:0;ifconfig
-: 1285467512:0;ls
 : 1285467514:0;man grep
-: 1285470824:0;ls
-: 1285492642:0;ssh 163.43.176.39
-: 1285492904:0;ssh 163.43.176.39 -l uskanda
-: 1285495557:0;ls
-: 1285495563:0;cd .ssh
-: 1285495563:0;ls
 : 1285495580:0;mv id_dsa id_dsa_a
-: 1285495581:0;ls
-: 1285495608:0;cd Dropbox
-: 1285495608:0;ls
-: 1285495613:0;cd Configurations
-: 1285495613:0;ls
 : 1285495625:0;vim .zshrc
-: 1285495772:0;ls
 : 1285495783:0;cp .zshrc .zshrc.remote
 : 1285495786:0;vi .zshrc.remote
-: 1285495866:0;ls
 : 1285500366:0;s
-: 1285500367:0;ls
-: 1285500369:0;cd Configurations
-: 1285500370:0;ls
-: 1285500375:0;la
 : 1285500378:0;cd latex
-: 1285500378:0;ls
 : 1285500385:0;vi zasshi-prml.cls
-: 1285500393:0;ls
-: 1285500400:0;la
 : 1285500404:0;vi .irbrc
-: 1285500406:0;ls
-: 1285500408:0;la
 : 1285500435:0;touch setup
 : 1285500442:0;chmod +x setup
-: 1285500444:0;vi setup
-: 1285500454:0;ls
 : 1285500487:0;vi emacs-migemo-settings.el
-: 1285500489:0;ls
-: 1285500495:0;la
 : 1285500571:0;git init
 : 1285500620:0;git add .irbrc .screenrc .zshrc dot.autotest dot.rails_fail.png dot.rails_ok.png dot.screenrc.remote setup .zshrc.remote
 : 1285500625:0;git commit -a
 : 1285500649:0;git remote add origin git@github.com:uskanda/uskanda-unix-rc.git
 : 1285500654:0;git push origin master
-: 1285501303:0;ssh 163.43.176.39 -l uskanda
-: 1285504324:0;ls
-: 1285504327:0;cd .ssh
-: 1285504327:0;ls
 : 1285504361:0;scp id_rsa.pub uskanda@63.43.176.39:/home/uskanda/.ssh
-: 1285504424:0;scp id_rsa.pub uskanda@63.43.176.39:/home/uskanda/
 : 1285504547:0;scp id_rsa.pub 63.43.176.39:/home/uskanda/ -l uskanda
 : 1285504550:0;scp id_rsa.pub 63.43.176.39:/home/uskanda/
-: 1285504560:0;ssh 163.43.176.39 -l uskanda
 : 1285504568:0;scp id_rsa.pub uskanda@63.43.176.39:/home/uskanda/
 : 1285504573:0;scp id_rsa.pub uskanda@63.43.176.39
 : 1285504578:0;scp id_rsa.pub uskanda@63.43.176.39:~/
-: 1285504598:0;ls
 : 1285504603:0;less id_rsa.pub
 : 1285504639:0;ssh 163.43.176.39
-: 1285504644:0;ssh 163.43.176.39 -l uskanda
-: 1285504656:0;ls
-: 1285504791:0;ssh 163.43.176.39 -l uskanda
-: 1285504799:0;ls
 : 1285504811:0;vi uskanda@63.43.176.39
-: 1285504814:0;ls
 : 1285504818:0;rm uskanda@63.43.176.39
-: 1285504819:0;ls
-: 1285504823:0;ssh 163.43.176.39 -l uskanda
-: 1285505034:0;ls
-: 1285505043:0;vi known_hosts
-: 1285505056:0;ssh 163.43.176.39 -l uskanda
-: 1285505202:0;ls
-: 1285505212:0;ssh 163.43.176.39 -l uskanda
-: 1285505229:0;ls
-: 1285505242:0;cd .ssh
-: 1285505242:0;ls
-: 1285505357:0;vi known_hosts
-: 1285505362:0;ls
-: 1285505363:0;ssh 163.43.176.39 -l uskanda
-: 1285505470:0;vi known_hosts
-: 1285505474:0;ssh 163.43.176.39 -l uskanda
-: 1285505571:0;ls
 : 1285505579:0;ssh prmlra1
 : 1285505580:0;ssh prmlra2
-: 1285505594:0;ssh prmlra2.main.ist.hokudai.ac.jp -l kanda
-: 1285505618:0;ssh 163.43.176.39 -l uskanda
-: 1285505640:0;vi known_hosts
-: 1285505645:0;ssh 163.43.176.39 -l uskanda
-: 1285505691:0;ls
 : 1285505726:0;ssh prmlra2.main.ist.hokudai.ac.jp -l kanda
-: 1285505773:0;ls
-: 1285505784:0;less id_rsa
-: 1285505790:0;ls
 : 1285505794:0;vi id_rsa.pub
-: 1285505802:0;ls
-: 1285505804:0;ssh 163.43.176.39 -l uskanda
 : 1285505837:0;vi known_hosts
-: 1285505839:0;ls
 : 1285505843:0;ssh 163.43.176.39 -l uskanda
-: 1285854399:0;ls
 : 1285854851:0;less katsuragi
-: 1285854853:0;ls
 : 1285854855:0;rm katsuragi
-: 1285854855:0;ls
 : 1285854858:0;less pamphlet
-: 1285854860:0;ls
 : 1285942269:0;open tm15.png
-: 1285942348:0;ls
-: 1285942350:0;cd
 : 1285942359:0;cd Library
-: 1285942359:0;ls
 : 1285942396:0;cd Documents/Virtual\ Machines.localized
 : 1285942400:0;ls -altr
-: 1285942403:0;ls
 : 1285984858:0;cd Downloads
 : 1285984870:0;mv Ubuntu-8.04-Japanese ../Documents
-: 1285984874:0;cd Documents
 : 1285984901:0;mv Ubuntu-8.04-Japanese Ubuntu-10.04-Japanese
-: 1285985512:0;ls
 : 1285997259:0;cd
-: 1285997259:0;ls
 : 1285997261:0;cd .ssh
-: 1285997262:0;ls
 : 1285997287:0;less id_rsa
 : 1285997298:0;vi id_rsa
-: 1285997308:0;ls
 : 1285997313:0;emacs id_rsa&
-: 1285997543:0;ls
-: 1285997551:0;cd Dropbox
-: 1285997552:0;ls
-: 1285997553:0;cd Configurations
-: 1285997553:0;ls
 : 1285997562:0;.s
-: 1285997563:0;ls
-: 1285997563:0;la
-: 1285997566:0;ls
 : 1285997571:0;cd .zsh/scripts
-: 1285997572:0;ls
 : 1285997618:0;less cdd_pwd_list
-: 1285997621:0;ls
 : 1285997779:0;cd scripts
-: 1285997779:0;ls
 : 1285997781:0;less cdd
-: 1285997784:0;ls
 : 1285997790:0;open .
 : 1285997813:0;emacs cdd
-: 1285997842:0;la
-: 1285997842:0;ls
-: 1285997864:0;la
 : 1285997866:0;lal
-: 1286001439:0;ls
-: 1286096938:0;cd Dropbox/Configurations
-: 1286096938:0;ls
-: 1286096942:0;vi setup
-: 1286096948:0;./setup
-: 1286096952:0;ls
 : 1286096955:0;./Configurations/setup
-: 1286096958:0;ls
-: 1286096961:0;cd Configurations
-: 1286096961:0;ls
-: 1286096963:0;vi setup
-: 1286097001:0;./setup
-: 1286097002:0;ls
-: 1286097004:0;vi setup
-: 1286097052:0;ls
-: 1286097056:0;ls -al
 : 1286097063:0;rm tm1.png tm11.png tm12.png tm13.png tm14.png tm15.png tm16.png tm17.png tm18.png tm19.png tm2.png tm20.png tm21.png tm22.png tm23.png tm3.png tm4.png tm5.png tm6.png tm7.png
-: 1286097063:0;ls
 : 1286097067:0;less install.sh
-: 1286097068:0;ls
 : 1286097073:0;less todown
-: 1286097074:0;ls
 : 1286097078:0;rm pamphlet
-: 1286097079:0;ls
 : 1286097089:0;rm ChristyMarks_22326_CMK_WMV_HD_1280x720_MFS.html
-: 1286097090:0;ls
 : 1286097096:0;open 4567831032_9c4a20568d_b.jpg
 : 1286097101:0;rm 4567831032_9c4a20568d_b.jpg
-: 1286097102:0;ls
 : 1286097106:0;open img20100607195602.jpg
 : 1286097498:0;rm SSL,all-sets,ascii.tgz
 : 1286097500:0;lls
-: 1286097507:0;ls
 : 1286097511:0;cd Documents
-: 1286097512:0;ls
 : 1286097519:0;open vi-vim-cheat-sheet.gif
 : 1286097533:0;vi babanuki.rb
-: 1286097549:0;ls
 : 1286098240:0;cd Dropbox/Configurations
-: 1286098245:0;ls
-: 1286098257:0;git status
-: 1286098281:0;ls -al
-: 1286098290:0;rm -rf .emacs.d
-: 1286098304:0;ls
 : 1286098306:0;cd .emacs.d
-: 1286098307:0;ls
-: 1286098335:0;cd Dropbox
-: 1286098336:0;ls
-: 1286098338:0;cd Configurations
-: 1286098339:0;ls
 : 1286098349:0;rm -rf emacs.old
 : 1286098358:0;rm emacs-migemo-settings.el
-: 1286098359:0;ls -al
 : 1286098362:0;git staus
-: 1286098365:0;git status
 : 1286098368:0;rm -rf .emacs.d
 : 1286098371:0;sudo rm -rf .emacs.d
-: 1286098374:0;ls
 : 1286098380:0;rm -rf latex
-: 1286098381:0;ls
 : 1286098383:0;ls -al
-: 1286098386:0;git status
 : 1286098393:0;git add .zsh
-: 1286098394:0;ls
 : 1286098401:0;mv dot.autotest .autotest
 : 1286098416:0;mv dot.rails_fail.png .rails_fail.png
 : 1286098428:0;mv dot.rails_ok.png .rails_ok.png
-: 1286098429:0;ls
-: 1286098431:0;la
 : 1286098439:0;mv dot.screenrc.remote .screenrc.remote
-: 1286098441:0;git status
-: 1286098449:0;ls
-: 1286098452:0;la
 : 1286098454:0;cd .zshr
 : 1286098465:0;touch .gitignore
 : 1286098468:0;vi .gitignore
-: 1286098480:0;git status
-: 1286098492:0;ls
 : 1286098506:0;cd .zsh
-: 1286098507:0;ls
 : 1286098511:0;git status
-: 1286098515:0;ls
 : 1286098573:0;mv Configurations rc
+: 1287245791:0;rm -r .zsh
+: 1287245792:0;ln -s ~/Dropbox/Configurations/rc/.zsh .
+: 1287245799:0;cd Dropbox
+: 1287245799:0;l
+: 1287245910:0;cd Configurations
+: 1287245911:0;cd rc
+: 1287245945:0;rm .zshrc
+: 1287245950:0;rm .zsh
+: 1287245979:0;less .autotest
+: 1287246002:0;open .rails_
+: 1287246004:0;open .rails_ok.png
+: 1287246043:0;cd .git
+: 1287246048:0;less config
+: 1287246132:0;la
+: 1287246143:0;vi setup
+: 1287246148:0;./setup
+: 1287246150:0;ls
+: 1287246151:0;exit
+: 1286373548:0;cdd 0
+: 1286373567:22;less ipa2epub
+: 1286373805:0;rm -rf Payload
+: 1286373807:2;./ipax Prog\ Lang\ 1.0.ipa
+: 1286373815:0;cd Payload
+: 1286373819:0;cd Prog\ Lang.app/book
+: 1286373824:0;cd OEBPS
+: 1286373851:13;vi toc.ncx
+: 1286373866:1;open .
+: 1286713113:0;less install.sh
+: 1286713177:0;ssh 163.43.176.39 -l uskanda
+: 1287242278:44;sudo gem install spork
+: 1287244681:31;sudo gem update
+: 1287244716:1;sudo gem list
+: 1287244740:0;sudo gem help
+: 1287244752:1;sudo gem install -v
+: 1287244755:9;sudo gem install help
+: 1287244767:0;sudo gem install -h
+: 1287244795:0;sudo gem -v
+: 1287244796:1;sudo gem -h
+: 1287244804:1;sudo gem help commands
+: 1287244829:1;sudo gem update -h
+: 1287244849:14;sudo gem update --system
+: 1287244925:0;rails new -h
+: 1287244941:0;sudo gem list rvm
+: 1287244945:13;sudo gem list -r rvm
+: 1287244967:27;sudo gem install rvm
+: 1287245067:0;sudo /opt/local/lib/ruby/gems/1.8/gems/rvm-1.0.14/bin/rvm-install
+: 1287245106:0;cd /usr/local/rvm
+: 1287245117:0;cd gems
+: 1287245122:4;rvim
+: 1287245131:0;cd src
+: 1287245135:0;cd bin
+: 1287245208:0;reload
+: 1287245219:0;cd
+: 1287245226:0;mkdir .rvm
+: 1287245229:3;rvm
+: 1287245238:121;sudo rvm
+: 1287245361:0;ruby -v
+: 1287245375:780;sudo rvm install 1.9.2
+: 1287246163:0;sudo rvm use 1.9.2
+: 1287246167:0;ruby -v
+: 1287246198:0;rvm --default ruby-head
+: 1287246203:0;sudo rvm --default ruby-head
+: 1287246209:0;sudo rvm install ruby-head
+: 1287246262:0;sudo rvm --default 1.9.2
+: 1287246267:0;ruby -v
+: 1287246320:0;reload
+: 1287246321:0;ruby -v
+: 1287246325:0;which ruby
+: 1287246330:0;where ruby
+: 1287246348:0;which command ruby
+: 1287246352:0;command ruby -v
+: 1287246364:0;ls
+: 1287246376:0;vi .zshrc
+: 1287248446:0;reload
+: 1287248596:0;which irb
+: 1287248635:0;vi .zshrc
+: 1287248643:0;reload
+: 1287248648:0;rvm list
+: 1287248661:0;cd .rvm
+: 1287248679:0;/opt/local/lib/ruby/gems/1.8/gems/rvm-1.0.14/bin/rvm-install
+: 1287248684:0;reload
+: 1287248687:0;ls
+: 1287248697:0;ruby -v
+: 1287248699:0;which ruby
+: 1287248702:0;which irb
+: 1287248709:0;rvm help
+: 1287248719:0;rvm use ruby-head
+: 1287248725:0;rvm install ruby-head
+: 1287248739:0;rvm use 1.9.2
+: 1287248750:0;rvm list known
+: 1287248761:0;rvm install 1.9.2-head
+: 1287248898:0;rvm info
+: 1286098579:0;mkdir Configurations
+: 1286098593:0;mv rc Configurations
+: 1286098693:0;gis
+: 1286098697:0;gic
+: 1286098706:0;giu
+: 1286098731:3;vi
+: 1286098818:0;git rm --cached .zsh/.zsh_history
+: 1286098833:0;cd .zsh/
+: 1286098837:2;less cdd_pwd_list
+: 1286098854:1;less .zsh/cdd_pwd_list.t
+: 1286098866:0;rm .zsh/cdd_pwd_list.t
+: 1286098879:11;vi .gitignore
+: 1286098905:0;git rm --cached .zsh/cdd_pwd_list*
+: 1286098932:0;git add *
+: 1286098948:0;git add .zsh/*
+: 1286098954:6;git commit -a
+: 1286098964:0;git status
+: 1286099072:11;git clone git@github.com:uskanda/uskandas-emacs-configurations.git
+: 1286099284:0;mv uskandas-emacs-configurations .emacs.d
+: 1286099318:0;cd .emacs.d
+: 1286099331:0;mv .emacs.d emacs
+: 1286099468:0;rm com_kanazawa.001.png com_kanazawa.001.tiff com_kanazawa.002.png com_kanazawa.002.tiff com_kanazawa.003.png com_kanazawa.003.tiff com_kanazawa.004.png com_kanazawa.004.tiff com_kanazawa.005.png com_kanazawa.005.tiff com_kanazawa.006.png com_kanazawa.006.tiff com_kanazawa.007.png com_kanazawa.007.tiff com_kanazawa.008.png com_kanazawa.008.tiff com_kanazawa.009.png com_kanazawa.009.tiff com_kanazawa.010.png com_kanazawa.010.tiff com_kanazawa.011.png com_kanazawa.011.tiff com_kanazawa.012.png com_kanazawa.012.tiff com_kanazawa.013.png com_kanazawa.013.tiff com_kanazawa.ppt
+: 1286099847:0;open Untitled.p
+: 1286099849:0;open Untitled.png
+: 1286099862:0;rm Untitled.001.png Untitled.png Untitled.ppt
+: 1286099892:1;rm -rf emacs
+: 1286369310:2;rails new hoge
+: 1286369320:0;cd new
+: 1286369323:0;rm -rf new
+: 1286369325:0;rails -v
+: 1286372204:0;chmod +x ipa2epub
+: 1286372421:2;./ipa2epub Prog\ Lang\ 1.0.ipa
+: 1286373238:42;vi ipa2epub
+: 1286373290:0;cp ipa2epub ipax
+: 1286373294:58;vi ipax
+: 1286373454:0;cd ../
+: 1286373465:0;cd Prog\ Lang.app
+: 1286373489:0;cd book/
+: 1286373503:28;vi OEBPS/toc.ncx
+: 1286373723:0;rm Archive.zip
+: 1286718008:0;psg Feel
+: 1286718012:0;kill 20071
+: 1286718525:1;less a.pdf
+: 1286718528:1;less email
+: 1286718533:0;rm email
+: 1286718655:5;sl
+: 1286725458:0;ifconfig
+: 1286725946:0;dig www.google.co.jp
+: 1286725953:2;ping 66.249.89.99
+: 1286726073:0;ssh 10.0.1.100
+: 1286728753:0;ssh 10.0.1.100 -l vyatta
+: 1286792759:156;top
+: 1287226350:0;ruby1.9 -v
+: 1287226360:14;sudo port -v sync
+: 1287227597:3;sudo port install outdated
+: 1287227668:0;cd QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+: 1287227678:0;open IMG_1196.JPG
+: 1287241931:0;mv QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ q
+: 1287241965:0;sudo port install help
+: 1287241969:0;sudo port install -h
+: 1287242020:0;sudo port install openssl -y
+: 1287242025:0;sudo port install openssl
+: 1287242056:0;sudo port help
+: 1287242070:36;sudo port selfupdate
+: 1287242134:1;sudo port clean openssl
+: 1287242487:0;sudo port clean apache2
+: 1287254735:0;sudo port upgrade outdated
+: 1287254759:0;sudo port clean p5-io-compress
+: 1287254761:0;sudo port upgrade outdated
+: 1287254793:0;sudo port -f activate p5-io-compress
+: 1287254808:0;sudo port -f deactivate p5-io-compress
+: 1287254829:0;sudo port -f deactivate p5-io-compress @2.027_0
+: 1287254833:0;sudo port -f activate p5-io-compress @2.027_0
+: 1287254848:0;sudo port upgrade outdated
+: 1287254942:0;cd Dropbox
+: 1287254943:0;ls
+: 1287254946:0;cd Products
+: 1287254947:0;ls
+: 1287254953:0;rm -rf rails_base
+: 1287254955:0;ls
+: 1287254959:0;rails new help
+: 1287254975:0;rails
+: 1287254985:0;rvm reset
+: 1287254987:0;sudo rvm reset
+: 1287254991:0;rails
+: 1287255012:0;ls
+: 1287255018:0;rails new help
+: 1287255023:0;rm -rf help
+: 1287255026:0;rails new -h
+: 1287255088:0;rails new -J -T rails_base
+: 1287255107:0;rails new rails_base -J -T
+: 1287255111:0;cd rails_base
+: 1287255117:0;grep -r rails_base
+: 1287255119:0;grep -r rails_base.
+: 1287255122:0;grep -r rails_base .
+: 1287255132:0;grep -r base .
+: 1287255153:0;ls
+: 1287255161:0;vi Gemfile
+: 1287255330:0;bundle install
+: 1287255529:0;vi Gemfile
+: 1287255563:0;bundle install
+: 1287255712:0;rails g help
+: 1287255724:0;rails g -h
+: 1287255740:0;rails g jquery:install
+: 1287255754:0;rails g rspec:install
+: 1287255775:0;ls
+: 1287255780:0;autotest
+: 1287255786:0;ls
+: 1287255825:0;vi config/initializers/sass_config.rb
+: 1287255864:0;ls
+: 1287255866:0;cd app
+: 1287255867:0;ls
+: 1287255878:0;mkdir stylesheets
+: 1287255879:0;l
+: 1287255885:0;git init
+: 1287255890:0;git add *
+: 1287255892:0;git commit -a
+: 1287255906:0;ls
+: 1287255911:0;less Rakefile
+: 1287255913:0;ls
+: 1287255932:0;rails clone rails_base a
+: 1287255941:0;git clone rails_base a
+: 1287255943:0;ls
+: 1287255944:0;cd a
+: 1287255949:0;rm -rf
+: 1287255950:0;ls
+: 1287255953:0;rm -rf a
+: 1287255957:0;ls
+: 1287255971:0;git clone rails_base chicatter
+: 1287255973:0;ls
+: 1287255974:0;cd chicatter
+: 1287255974:0;ls
+: 1287255992:0;rails g controller top index
+: 1287256021:0;cd public/stylesheets
+: 1287256022:0;ls
+: 1287256030:0;cd app
+: 1287256031:0;ls
+: 1287256057:0;mkdir stylesheets
+: 1287256058:0;ls
+: 1287256064:0;cd rails_base
+: 1287256065:0;ls
+: 1287256066:0;cd app
+: 1287256066:0;ls
+: 1287256074:0;git status
+: 1287256080:0;l
+: 1287256082:0;cd app
+: 1287256083:0;ls
+: 1287256085:0;cd stye
+: 1287256087:0;cd stylesheets
+: 1287256088:0;ls
+: 1287256093:0;cd views
+: 1287256094:0;ls
+: 1287256095:0;cd layouts
+: 1287256096:0;ls
+: 1287256098:0;cd stylesheets
+: 1287256099:0;ls
+: 1287256107:0;touch defaults.sass
+: 1287256194:0;ls
+: 1287256207:0;vi defaults.sass
+: 1287256210:0;ls
+: 1287256217:0;git status
+: 1287256231:0;git add *
+: 1287256238:0;git commit -a
+: 1287256253:0;ls
+: 1287256258:0;rm -rf chicatter
+: 1287256262:0;git clone rails_base chicatter
+: 1287256264:0;cd chicatter
+: 1287256264:0;ls
+: 1287256267:0;cd app
+: 1287256267:0;ls
+: 1287256270:0;cd stylesheets
+: 1287256274:0;vi defaults.sass
+: 1287256292:0;ls
+: 1287256304:0;rails g controller top
+: 1287256324:0;vi config/routes.rb
+: 1287256329:0;ls
+: 1287256334:0;cd app
+: 1287256342:0;rails g controller -h
+: 1287256372:0;rails g controller top index
+: 1287256398:0;ls
+: 1287256400:0;rails s
+: 1287256451:0;cdd 1
+: 1287256455:0;cd public
+: 1287256455:0;ls
+: 1287256456:0;cd sy
+: 1287256458:0;cd stylesheets
+: 1287256459:0;ls
+: 1287256461:0;less defaults.css
+: 1287256465:0;ls
+: 1287257040:0;rails -h
+: 1287257054:0;rails profiler
+: 1287257077:0;rails application
+: 1287257092:0;ls
+: 1287257113:0;grep -r RailsBase .
+: 1287257372:0;ls
+: 1287257375:0;sudo port list
+: 1287257384:0;sudo port installed
+: 1287284019:0;l
+: 1287284020:0;ls
+: 1287284126:0;cd rails_base
+: 1287284127:0;ls
+: 1287284129:0;lls
+: 1287284129:0;ls
+: 1287284147:0;cd app
+: 1287284148:0;ls
+: 1287284153:0;git status
+: 1287284218:0;git remote add origin git@github.com:uskanda/rails-base.git
+: 1287284226:0;git push origin master
+: 1287284255:0;ls
+: 1287285865:0;ssh 10.0.1.100 -l vyatta
+: 1287320947:0;ls
+: 1287322572:0;top
+: 1287325239:0;ls
+: 1287325826:0;ssh 10.0.1.100 -l vyatta
+: 1287497336:0;ls
+: 1287497353:0;s
+: 1287497355:0;open .
+: 1287501004:0;ls
+: 1287503228:0;top
+: 1287503232:0;ls
+: 1287839683:0;psg Google
+: 1287839701:0;top
+: 1287839716:0;psg Quick
+: 1287839719:0;kill 279
+: 1287839732:0;open -a Quick\ Search\ Box
+: 1287840152:0;ls

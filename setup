@@ -1,4 +1,9 @@
 #!/bin/sh
 DIR=$(cd $(dirname $0);pwd)
 ln -s $DIR/.zshrc $HOME
-
+ln -s $DIR/.zsh $HOME
+ln -s $DIR/.screenrc $HOME
+ln -s $DIR/.autotest $HOME
+ln -s $DIR/.irbrc $HOME
+cp $DIR/.rails_ok.png $HOME
+cp $DIR/.rails_fail.png $HOME
