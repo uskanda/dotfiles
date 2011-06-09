@@ -11,7 +11,6 @@
 : 1257138195:0;vi lib/tasks
 : 1257138537:0;svn commit -m "kanda fixed user.rake"
 : 1257139058:0;emacs public/500.html
-: 1257139165:0;less c-yasnippet.el
 : 1257139322:0;emacs c-auto-complete.el
 : 1257139470:0;svn diff application.js
 : 1257139474:0;svn log application.js
@@ -29,7 +28,6 @@
 : 1257143822:0;emacs README_FOR_APP
 : 1257149214:0;grep aeFai9ru user_ids_bachelor
 : 1257149237:0;emacs user_ids_bachelor
-: 1257150468:0;less .zshrc
 : 1257152714:0;vi c-fundamental.el
 : 1257152732:0;emacs c-fundamental.el n
 : 1257152734:0;emacs c-fundamental.el
@@ -37,7 +35,6 @@
 : 1257155297:0;vi c-autosave.el
 : 1257155457:0;gem list -r tmail
 : 1257155470:0;sudo gem install tmail
-: 1257323312:0;cd pu
 : 1257323476:0;emacs ext/Cluster.cpp ext/Cluster.hpp ext/ClusterGenerator.cpp ext/ClusterGenerator.hpp ext/DefaultLCPMaker.cpp ext/DefaultLCPMaker.hpp ext/Document.cpp ext/Document.hpp ext/EnTermContainer.hpp ext/EnglishTerm.cpp ext/EnglishTerm.hpp ext/FastLCPMaker.cpp ext/FastLCPMaker.hpp ext/IndexedMap.hpp ext/JpTerm.cpp ext/JpTerm.hpp ext/JpTermContainer.cpp ext/JpTermContainer.hpp ext/LCPMaker.cpp ext/LCPMaker.hpp ext/LabelCandidateExtractor.hpp ext/LarssonSadakaneSuffixArraySorter.cpp ext/LarssonSadakaneSuffixArraySorter.hpp ext/Libclustxt.cpp ext/Libclustxt.hpp ext/Phrase.cpp ext/Phrase.hpp ext/PopoutPhrases.hpp ext/Stemmer.hpp ext/StopwordList.cpp ext/StopwordList.hpp ext/StringUtil.cpp ext/StringUtil.hpp ext/Substring.cpp ext/Substring.hpp ext/SubstringUtil.hpp ext/SuffixArray.cpp ext/SuffixArray.hpp ext/SuffixArraySorter.cpp ext/SuffixArraySorter.hpp ext/Term.cpp ext/Term.hpp ext/TermContainer.hpp ext/edge.hpp
 : 1257323834:0;emacs StopwordList.cpp
 : 1257325156:0;ruby stress_test_client.rb 100 10 1
@@ -68,21 +65,16 @@
 : 1257333873:0;
 : 1257335275:0;gdb
 : 1257335931:0;git diff LabelCandidateExtractor.hpp
-: 1257348388:0;less id_dsa
 : 1257348407:0;mv id_rsa id_rsa_2
 : 1257348423:0;cp id_rsa ~/.ssh
 : 1257348438:0;ssh prmlra1.main.ist.hokuda.ac.jp
 : 1257348452:0;ping prmlra1.main.ist.hokuda.ac.jp
 : 1257348456:0;ping prmlra2.main.ist.hokuda.ac.jp
-: 1257348471:0;less ../.zshrc
 : 1257348496:0;ssh kanda@prmlra1.main.ist.hokuda.ac.jp
 : 1257348508:0;ssh kanda@prmlra2.main.ist.hokuda.ac.jp
 : 1257348579:0;cp id_dsa ~/.ssh
-: 1257348582:0;ssh kanda@prmlra1.main.ist.hokudai.ac.jp
-: 1257348696:0;ssh kanda@prmlra2.main.ist.hokudai.ac.jp
 : 1257348715:0;rm id_rsa
 : 1257348720:0;mv id_rsa_2 id_rsa
-: 1257401701:0;rm -rf auto-complete
 : 1257401707:0;git clone git://github.com/m2ym/auto-complete.git
 : 1257401752:0;ln *el ../../provided
 : 1257401756:0;ln -f *el ../../provided
@@ -134,7 +126,6 @@
 : 1257698205:0;cd emacs.old
 : 1257698212:0;less c-flymake.el
 : 1257698340:0;emacs c-flymake.el
-: 1257699424:0;less vline.el
 : 1257701480:0;emacs curl_search.rb
 : 1257724700:0;cd rb-file-classifier
 : 1257724704:0;less file-classifier
@@ -147,7 +138,6 @@
 : 1257725011:0;vi hoge.jpg
 : 1257725221:0;emacs file-classifier
 : 1257725538:0;mkdir ÂÉ∞É¨‰∫∫Ë™É¨
-: 1257725543:0;cd sample
 : 1257725544:0;cd sampledir
 : 1257725548:0;cd ÂÉ∞É¨‰∫∫Ë™É¨
 : 1257725813:0;vi file-classifier
@@ -189,7 +179,6 @@
 : 1258014166:0;emacs Cluster.cpp Cluster.hpp ClusterGenerator.cpp ClusterGenerator.hpp DefaultLCPMaker.cpp DefaultLCPMaker.hpp Document.cpp Document.hpp EnTermContainer.hpp EnglishTerm.cpp EnglishTerm.hpp FastLCPMaker.cpp FastLCPMaker.hpp IndexedMap.hpp JpTerm.cpp JpTerm.hpp JpTermContainer.cpp JpTermContainer.hpp LCPMaker.cpp LCPMaker.hpp LabelCandidateExtractor.cpp LabelCandidateExtractor.hpp LarssonSadakaneSuffixArraySorter.cpp LarssonSadakaneSuffixArraySorter.hpp Libclustxt.cpp Libclustxt.hpp Phrase.cpp Phrase.hpp PopoutPhrases.hpp Stemmer.hpp StopwordList.cpp StopwordList.hpp StringUtil.cpp StringUtil.hpp Substring.cpp Substring.hpp SubstringUtil.hpp SuffixArray.cpp SuffixArray.hpp SuffixArraySorter.cpp SuffixArraySorter.hpp Term.cpp Term.hpp TermContainer.hpp edge.hpp
 : 1258014255:0;sudo gem list thing
 : 1258014257:0;sudo gem list thin
-: 1258014304:0;sudo gem update --system
 : 1258014892:0;vi c-anything.el
 : 1258014977:0;emacs LabelCandidateExtractor.
 : 1258015023:0;emacs JpTerm.cpp
@@ -225,7 +214,6 @@
 : 1258131677:0;git .
 : 1258131765:0;heroku rename prml-darts
 : 1258131771:0;heroku rename prmldarts
-: 1258131793:0;rails
 : 1258131802:0;rails .
 : 1258131839:0;git commit -m "first commit"
 : 1258131919:0;heroku open
@@ -233,7 +221,6 @@
 : 1258131948:0;./script/generate scaffold
 : 1258132163:0;git commit -m "add restful-authentication"
 : 1258132420:0;heroku db:migrate
-: 1258132788:0;psg rails
 : 1258132794:0;psg mog
 : 1258132797:0;psg mong
 : 1258132873:0;rake
@@ -276,9 +263,7 @@
 : 1258141763:0;./script/generate themed tests
 : 1258141855:0;git commit -m "add theme, jquery"
 : 1258141867:0;./script/generate themed users
-: 1258142176:0;vi top_controller.rb
 : 1258142185:0;rm top_controller.rb
-: 1258142226:0;emacs index.html.erb
 : 1258142584:0;git checkout new.html.erb
 : 1258142773:0;less users/new.html.erb
 : 1258142961:0;cd d
@@ -293,7 +278,6 @@
 : 1258144353:0;cd syt
 : 1258145219:0;cd -28
 : 1258146170:0;less show.html.erb
-: 1258147572:0;cd public/javascripts
 : 1258149010:0;git rm public/index.html
 : 1258149018:0;touch index.html
 : 1258154898:0;vi app/controllers/users_controller.rb
@@ -310,7 +294,6 @@
 : 1258274427:0;less expander.el
 : 1258274713:0;cd ./docu
 : 1258274721:0;cd ./documents/
-: 1258274724:0;cd ../
 : 1258276239:0;heroku --help
 : 1258276372:0;heroku db:pull
 : 1258276395:0;sudo gem install taps
@@ -339,7 +322,6 @@
 : 1258357418:0;html2haml new.html.erb
 : 1258357431:0;html2haml new.html.erb > new.haml
 : 1258357436:0;vi new.haml
-: 1258357541:0;vi application.html.erb
 : 1258357602:0;html2haml _user.html.erb > _user.haml
 : 1258357904:0;cd sessions
 : 1258357908:0;less new.h
@@ -366,7 +348,6 @@
 : 1258365245:0;less generate
 : 1258365256:0;cd initializers/i
 : 1258365257:0;cd initializers/
-: 1258365259:0;cd locales
 : 1258365278:0;less sessions_controller_spec.rb
 : 1258365346:0;less spec/controllers/sessions_controller_spec.rb
 : 1258438657:0;sudo port search tscreen
@@ -381,7 +362,6 @@
 : 1258439381:0;cd tscreen-0.4.9
 : 1258439384:0;./configure
 : 1258439400:0;sudo make
-: 1258439420:0;make install
 : 1258439425:0;sudo make install
 : 1258439532:0;ln -s .screenrc .tscreenrc
 : 1258439569:0;vi .tscreenrc
@@ -389,7 +369,6 @@
 : 1258443013:0;psg Shire
 : 1258443020:0;kill 36835
 : 1258448944:0;emacs application.html.erb
-: 1258448965:0;less search.html.erb
 : 1258449127:0;html2haml application.html.erb > application.haml
 : 1258449370:0;touch html2haml_all
 : 1258449373:0;vi html2haml_all
@@ -410,8 +389,6 @@
 : 1258450601:0;vi _footer.html.erb
 : 1258450680:0;less _cluster.html.erb
 : 1258450708:0;less _main.html.erb
-: 1258450927:0;less application.html.erb
-: 1258451071:0;less index.html.erb
 : 1258451098:0;haml index.html.erb > index.haml
 : 1258451334:0;cdd4
 : 1258451389:0;html2haml _main.html.erb > _main.haml
@@ -423,7 +400,6 @@
 : 1258453526:0;./script/destroy help
 : 1258453559:0;rm -r top
 : 1258453813:0;vi app/views/users/index.html.erb
-: 1258454100:0;vi index.html.erb
 : 1258454593:0;git
 : 1258456021:0;cd public/
 : 1258456022:0;cd images/m
@@ -441,7 +417,6 @@
 : 1258471781:0;ping www.google.co.jp
 : 1258472149:0;ping router
 : 1258476017:0;cd /Volumes/
-: 1258476038:0;cd Users
 : 1258476046:0;grep -r xml .
 : 1258476051:0;find . G xml
 : 1258476059:0;find . G -e "xml$"
@@ -483,7 +458,6 @@
 : 1258476990:0;rm *wmv *xpi *tex *jpg
 : 1258477061:0;cd System
 : 1258477072:0;cd Macbook\ HD
-: 1258477079:0;cd Users/kanda
 : 1258485281:0;ssh kanda@fremont122.linode.com
 : 1258485307:0;ssh kandaa@fremont122.linode.com
 : 1258485892:0;ssh kanda@li93-248.members.linode.com
@@ -535,7 +509,6 @@
 : 1258501725:0;rm -rf haml
 : 1258501730:0;git clone git://github.com/nex3/haml.git/extra
 : 1258501912:0;git clone git://github.com/nex3/haml.git
-: 1258501926:0;cd haml
 : 1258501929:0;cd extra
 : 1258501947:0;cp -r haml-mode.el sass-mode.el ../../../provided
 : 1258502184:0;./build.sh
@@ -544,7 +517,6 @@
 : 1258535567:0;ssh router
 : 1258535576:0;dig router
 : 1258535588:0;dig router.uskanda.local
-: 1258565771:0;svn checkout http://yasnippet.googlecode.com/svn/trunk/ yasnippet-read-only
 : 1258565834:0;less div
 : 1258565844:0;less ul.class
 : 1258565892:0;less r
@@ -569,9 +541,7 @@
 : 1258576354:0;sudo port search vnc
 : 1258576365:0;sudo port install vnc
 : 1258603757:0;vi application.h
-: 1258603768:0;rm application.html.erb
 : 1258603784:0;html2haml index.html.erb > index.haml
-: 1258603973:0;rm index.html.erb
 : 1258607620:0;git pul
 : 1258607683:0;emacs user.rb
 : 1258607726:0;app/controllers
@@ -583,9 +553,7 @@
 : 1258608594:0;emacs refe2x
 : 1258611052:0;sudo mv Emacs.app ~/
 : 1258611060:0;cd Sources/emacs
-: 1258611064:0;cd nextstep
 : 1258611070:0;cd Cocoa
-: 1258611079:0;mv Emacs.app /Applications
 : 1258611159:0;vi c-flymake.el
 : 1258611415:0;cd rails-snippets
 : 1258611427:0;rm -rf builtin rails
@@ -593,7 +561,6 @@
 : 1258611478:0;less Remove\ 3A\ Add\ Column.yasnippet
 : 1258611497:0;less rails\ params.yasnippet
 : 1258611525:0;cp -r snippets ../../vc
-: 1258611572:0;cd rinari
 : 1258611615:0;mv snippets ../snippets
 : 1258611621:0;mv snippets/ builtin
 : 1258611654:0;cd yasnippet-read-only
@@ -634,7 +601,6 @@
 : 1258637960:0;git remote add origin git@github.com:uskanda/uskanda-rails-base.git
 : 1258638043:0;./script/destroy theme
 : 1258638080:0;./script/generate theme --theme="drastic-dark"
-: 1258638101:0;cd app/views/layouts
 : 1258638106:0;mv application.html.haml application.haml
 : 1258642630:0;say scour
 : 1258642761:0;say score
@@ -714,7 +680,6 @@
 : 1258661401:0;vi ruby-electric.el
 : 1258661868:0;vi c-ruby.el
 : 1258694807:0;ssh vp
-: 1258714658:0;mkdir old
 : 1258714662:0;mv old_web_cruiser old
 : 1258714667:0;mv ls2 old
 : 1258714673:0;mv libclustxt.swig old
@@ -745,7 +710,6 @@
 : 1258795814:0;git push heroku master
 : 1258795899:0;rake gems:help
 : 1258795902:0;rake gems
-: 1258805523:0;gem list
 : 1258805542:0;kgem list
 : 1258809953:0;git remote show
 : 1258810215:0;git remote add vps kanda@vps.uskanda.com:~/repos/mileate
@@ -818,7 +782,6 @@
 : 1259526860:0;rm _cluster.html.erb
 : 1259528513:0;vi jquery-ui.js
 : 1259530599:0;grep -r call .
-: 1259531631:0;less jquery.js
 : 1259531677:0;mkdir jq
 : 1259531679:0;mv jq
 : 1259531682:0;mv jq jquery-ui-1.6.custom.zip
@@ -847,7 +810,6 @@
 : 1259534600:0;emacs uisass
 : 1259535252:0;rm uisass
 : 1259535331:0;mv jquery-ui-1.6.custom.zip js
-: 1259535343:0;cd js
 : 1259535347:0;unzip jquery-ui-1.6.custom.zip
 : 1259535353:0;cd ui-darkness
 : 1259535358:0;cp ui.all.css $DROPBOXDIR/Products/cluiser/rails/public/stylesheets
@@ -876,7 +838,6 @@
 : 1259542558:0;vi ui.all.css
 : 1259633465:0;git add rails/public/
 : 1259650216:0;emacs *pp
-: 1259656024:0;cd emacs
 : 1259656029:0;cvs up
 : 1259727386:0;ssh prml8c -l root
 : 1259736183:0;cp 3_named_entity 4_own
@@ -963,7 +924,6 @@ exit
 : 1260173796:0;vi c-key-chord.el
 : 1260174459:0;emacs c-key-chord.el
 : 1260174588:0;cd /Applications/Emacs.app
-: 1260174591:0;cd Resources
 : 1260174624:0;less viper-keym.el
 : 1260174638:0;grep ime viper*
 : 1260174645:0;grep ime viper*.el
@@ -1041,7 +1001,6 @@ exit
 : 1260522479:0;grep -r sort .
 : 1260522484:0;less cpp2rb
 : 1260522491:0;./ignore_nouns_sorted
-: 1260523576:0;rm index.html
 : 1260523596:0;git add ext/LabelCandidateExtractor.cpp
 : 1260526708:0;cd JavaCruiser
 : 1260526776:0;cd web
@@ -1059,7 +1018,6 @@ exit
 : 1260597315:0;emacs fuga
 : 1260597347:0;rm fuga hoge
 : 1260597439:0;emacs show.js.rjs
-: 1260606202:0;less Rakefile
 : 1260606210:0;less rspec.rake
 : 1260607383:0;mv _child_cluster.haml _child_clusters.haml
 : 1260608463:0;less boss_search.rb
@@ -1083,7 +1041,6 @@ exit
 : 1260612174:0;git clone --shared cluiser ssh://railsuser@living.academic.hokudai.ac.jp:/home/railsuser/cluiser
 : 1260612184:0;git clone help
 : 1260612194:0;git clone
-: 1260612199:0;rm -rf help
 : 1260612272:0;git clone --bare --shared cluiser cluiser.git
 : 1260612342:0;git remote add hokudai railsuser@living.academic.hokudai.ac.jp:~/cluiser.git
 : 1260612405:0;cd objects
@@ -1186,7 +1143,6 @@ exit
 : 1260782398:0;rm saving_worker.rb
 : 1260782461:0;emacs clustering_backend_worker.rb
 : 1260784194:0;rm backgroundrb_
-: 1260784627:0;rm development.log
 : 1260784662:0;less ab
 : 1260784905:0;grep -r ResultStrage .
 : 1260784908:0;grep -r ResultStorage .
@@ -1258,7 +1214,6 @@ exit
 : 1260837957:0;kill -9 6368
 : 1260849891:0;less devw
 : 1260850086:0;less 20090131155133_create_web_pages.rb
-: 1260850325:0;vi development.rb
 : 1260852793:0;less web_pages.yml
 : 1260861484:0;touch cache.haml
 : 1260861486:0;emacs cache.haml
@@ -1287,10 +1242,8 @@ exit
 : 1260958058:0;less db/migrate/20091216100732_add_order_to_web_page.rb
 : 1260960085:0;rake db:help
 : 1260960090:0;rake db
-: 1260960157:0;rm development.sqlite3
 : 1260960265:0;./script/generate migration AddSuccessedToQuery successed:boolean
 : 1260985791:0;grep -r ierarchi .
-: 1260986279:0;less development.log
 : 1260986322:0;grep -r allow .
 : 1260986467:0;cd app/views/search
 : 1260986478:0;less do_
@@ -1300,7 +1253,6 @@ exit
 : 1260988532:0;f ar.log
 : 1260988539:0;less ar.log
 : 1260988576:0;rm ar.log
-: 1260988587:0;vi environments/development.rb
 : 1260988665:0;less 20091216100732_add_order_to_web_page.rb
 : 1260989223:0;sudo kill 51
 : 1260989340:0;mv 20091216100732_add_order_to_web_page.rb 20091216100732_add_order_id_to_web_page.rb
@@ -1343,7 +1295,6 @@ exit
 : 1261039964:0;cd imag
 : 1261039977:0;open hover.png
 : 1261040033:0;mv hover.png ../../../Dropbox/Products/cluiser/rails/public/images
-: 1261040101:0;cd css
 : 1261040103:0;less style.css
 : 1261122703:0;git mv do.html.erb do.haml
 : 1261122850:0;grep -r image_t .
@@ -1427,7 +1378,6 @@ exit
 : 1261488059:0;rm master_thesis.tex
 : 1261488067:0;mv master_thesis.tex.bak master_thesis.tex
 : 1261488088:0;iscoding master_thesis.tex
-: 1261488221:0;git add .
 : 1261549028:0;svn co http://jp.rubyist.net/svn/rurema/doctree/trunk rubydoc
 : 1261549067:0;wget http://www.rubyist.net/~rubikitch/archive/ar-index.rb
 : 1261549099:0;ruby1.9 ar-index.rb . rurima.e
@@ -1448,8 +1398,6 @@ exit
 : 1261552512:0;vi application.js
 : 1261559665:0;cd vendor/rails/
 : 1261559670:0;grep -r memcache .
-: 1261559715:0;less environment
-: 1261559857:0;cd environments
 : 1261559926:0;cd railties
 : 1261559935:0;grep -r memcache . L
 : 1261559951:0;less mem_cache_store.rb
@@ -1461,7 +1409,6 @@ exit
 : 1261562760:0;touch hoge
 : 1261562767:0;touch hoge.rb
 : 1261562769:0;vi hoge.rb
-: 1261562799:0;ruby hoge.rb
 : 1261562898:0;pd
 : 1261562944:0;irb -rlibclustxt.bundle
 : 1261563043:0;cd rails/vendor/plugins
@@ -1480,7 +1427,6 @@ exit
 : 1261563276:0;emacs mem_cache_store.rb
 : 1261563351:0;cd /opt/local/lib/ruby/gems
 : 1261563353:0;cd 1.8
-: 1261563355:0;cd gems
 : 1261563362:0;cd memcache-client-1.7.7
 : 1261563458:0;vi init.rb
 : 1261564710:0;sei
@@ -1495,7 +1441,6 @@ exit
 : 1261566048:0;./script/destroy plugin memcache_store_raw
 : 1261566059:0;cd vendor/plugins/mem
 : 1261566062:0;cd vendor/plugins/
-: 1261566335:0;gem list -r mecab
 : 1261566352:0;gem search -r Mecab
 : 1261566365:0;gem search -r *Mecab
 : 1261566374:0;gem search -r ".*Mecab"
@@ -1522,7 +1467,6 @@ exit
 : 1261652431:0;open dmoz.pdf
 : 1261658733:0;less pulldown.el
 : 1261658738:0;rm pulldown.el
-: 1261658747:0;rm auto-complete-config.el auto-complete.el
 : 1261658770:0;ln auto-complete-config.el ../../site-lisp
 : 1261658785:0;ln auto-complete.el ../../site-lisp
 : 1261658790:0;ln popup.el ../../site-lisp
@@ -1546,7 +1490,6 @@ exit
 : 1261695148:0;cd git status
 : 1261697529:0;open hier.pdf
 : 1261697627:0;ebb hier.pdf
-: 1262400840:0;cd /Volumes
 : 1262403456:0;ls *doc
 : 1262403508:0;open *doc
 : 1262405036:0;unzip hw_utility_mac10_6_V1_00.zip
@@ -1561,7 +1504,6 @@ exit
 : 1262454241:0;open Sensual4.mpg
 : 1262476181:0;open cwusr_4afcf95d270d8.flv
 : 1262520460:0;open ÂÄÉ´‰∫∫„É£Ø„É£º„ÇØ„Ç∑„É£º„É£É®.pdf
-: 1262537324:0;cd /Applications
 : 1262537439:0;mkdir p
 : 1262537447:0;mv Downloads/img20091230062529.jpg Downloads/img20091230080602.jpg Downloads/img20091230102049.gif Downloads/img20091231054544.jpg Downloads/img20091231232749.jpg Downloads/img20100101172008.jpg Downloads/img20100101172035.jpg Downloads/img20100101172326.jpg Downloads/img20100101172337.jpg Downloads/img20100101181842.jpg Downloads/img20100101212937.jpg Downloads/img20100101224218.jpg Downloads/img20100101224229.jpg Downloads/img20100101224239.jpg Downloads/img20100102175701.jpg Downloads/img20100102201537.jpg Downloads/img20100102201548.jpg Downloads/img20100103092036.jpg Downloads/img20100103092052.jpg Downloads/img20100103092107.jpg Downloads/img20100103092121.jpg Downloads/img20100103092132.jpg Downloads/img20100103092144.jpg Downloads/img20100103112729.jpg Downloads/img20100103112743.jpg Downloads/img20100103141858.jpg Downloads/img20100103193726.jpg Downloads/img20100103210503.jpg p
 : 1262537448:0;cd p
@@ -1572,7 +1514,6 @@ exit
 : 1262763755:0;ssh prmlc1
 : 1262763792:0;ssh prmlint -l root
 : 1262763816:0;ssh prml8b -l root
-: 1262766457:0;prml
 : 1262766524:0;grep -r kanda.
 : 1262766530:0;grep -r kanda .
 : 1262845492:0;wget http://www.kyb.tuebingen.mpg.de/ssl-book/SSL,set=9,data.mat
@@ -1614,8 +1555,6 @@ exit
 : 1262862900:0;less lewis.dtd
 : 1262862917:0;less README.txt
 : 1262863058:0;/usr/bin/ruby get_body.rb
-: 1262863072:0;which ruby
-: 1262863076:0;where ruby
 : 1262863379:0;/opt/local/bin/ruby -Ke get_body.rb
 : 1262863427:0;/opt/local/bin/ruby get_body.rb
 : 1262863431:0;/opt/local/bin/ruby -Ku get_body.rb
@@ -1630,7 +1569,6 @@ exit
 : 1263019015:0;cd section/
 : 1263019022:0;emacs form.haml
 : 1263019117:0;emacs _sectionlist.haml
-: 1263019800:0;cd images
 : 1263020236:0;less answer_spec.rb
 : 1263020450:0;rails oouchi_test
 : 1263020820:0;./script/generate model Person name:string birth_month:integer birth_day:integer
@@ -1700,7 +1638,6 @@ exit
 : 1263282905:0;less 1
 : 1263283357:0;cd ist
 : 1263283401:0;cd mi
-: 1263283421:0;less environment.rb
 : 1263285669:0;vi questionnaire_data_ist.rb
 : 1263361025:0;touch hoge.tex
 : 1263361027:0;emacs hoge.tex
@@ -1739,7 +1676,6 @@ exit
 : 1263661113:0;open bbhd.wmv
 : 1263661204:0;open aaeehd.wmv
 : 1263662298:0;mv aaeehd.wmv bbhd.wmv haqsd.wmv hawsd.wmv hbhyd.wmv htttd.wmv Share/Movies
-: 1263832766:0;sudo gem update
 : 1263891690:0;svn switch --relocate http://living.academic.hokudai.ac.jp/svn/questionnaire http://improve.ist.hokudai.ac.jp/svn/questionnaire
 : 1263892101:0;vi qu.rb
 : 1263892268:0;emacs section
@@ -1761,7 +1697,6 @@ exit
 : 1263975361:0;less word_genarator.rb
 : 1263975368:0;less stress_test_client.rb
 : 1263975372:0;less index
-: 1263975374:0;less index.html
 : 1263975379:0;less custom_ist.js
 : 1263975383:0;touch custom.js
 : 1263975394:0;vi custom.js
@@ -1775,10 +1710,8 @@ exit
 : 1264144887:0;emacs exp.tex
 : 1264144943:0;less rcov.opts
 : 1264144947:0;less spec
-: 1264144948:0;less spec_helper.rb
 : 1264144969:0;less views/admin/index.rhtml_spec.rb
 : 1264144975:0;less section_controller_spec.rb
-: 1264144995:0;cd fixtures
 : 1264144997:0;less answers.yml
 : 1264145001:0;less users.yml
 : 1264145009:0;less section_helper_spec.rb
@@ -1789,15 +1722,11 @@ exit
 : 1264145332:0;vi _clusterinfo.haml
 : 1264145489:0;cd app/
 : 1264145513:0;less section_controller.rb
-: 1264146233:0;less admin_controller.rb
 : 1264148167:0;vi validation_template.erb
-: 1264149610:0;cd spec
 : 1264149636:0;emacs questionnaire_data_ist.rb
 : 1264151107:0;grep -r Qu::Question .
 : 1264151601:0;rake qu:debug --trace
 : 1264152159:0;svn commit -m "kanda added etc validation"
-: 1264152460:0;cd javascripts
-: 1264152462:0;less application.js
 : 1264152768:0;./script/console
 : 1264152986:0;less lib/answer_validations.rb
 : 1264319529:0;lsls
@@ -1843,11 +1772,9 @@ exit
 : 1264401463:0;cd se
 : 1264401467:0;rm _header.haml
 : 1264407047:0;emacs _webpageinfo.haml
-: 1264407544:0;cd app/controllers
 : 1264407727:0;emacs wait_search_async.js.rjs
 : 1264407802:0;grep -r waiting .
 : 1264407940:0;emacs stylesheets/sass/cluiser.sass
-: 1264409750:0;cd app/models
 : 1264409755:0;emacs web_page.rb
 : 1264409843:0;emacs lib/workers/clustering_backend_worker.rb
 : 1264482694:0;grep -r Stemm .
@@ -1887,7 +1814,6 @@ exit
 : 1264487599:0;less JpTerm.cpp
 : 1264487607:0;less JpTerm.hpp
 : 1264487655:0;cd libclustxt.swig
-: 1264487657:0;cd src
 : 1264487672:0;less EnglishTerm.
 : 1264490827:0;ping prml88
 : 1264490838:0;ping 133.87.136.1129
@@ -1907,7 +1833,6 @@ exit
 : 1264496901:0;ake
 : 1264498359:0;ruby test.rb "„É£Éß„É£º„Çø„É£û„Ç§„É£É´„É£≥„Ç∞" 100
 : 1264498384:0;ruby test.rb "ÊÉº≠ÂπÉ¨"
-: 1264498408:0;vi test.rb
 : 1264498458:0;ruby test.rb "„ÇØ„É£©„Çπ„Çø„É£™„É£≥„Ç∞" 400
 : 1264498640:0;less test.rb
 : 1264499918:0;ruby test_en.rb "sapporo" 400
@@ -1930,7 +1855,6 @@ exit
 : 1264663063:0;git stash save overflow
 : 1264663250:0;git checkout ext/ClusterGenerator.cpp
 : 1264663263:0;git dif
-: 1264663658:0;git diff
 : 1264663897:0;ruby test_en.rb "sapporo" 100
 : 1264664043:0;git stash list
 : 1264664086:0;git diff > hoge
@@ -1941,10 +1865,8 @@ exit
 : 1264664615:0;git fsck | awk '/dangling commit/ {print $3}'
 : 1264664631:0;git show --summary 11e2ad1f15a616242507620572ada5eb4b856b23
 : 1264664680:0;git cherry-pick -n -m1 11e2ad1f15a616242507620572ada5eb4b856b23
-: 1264686456:0;vi
 : 1264686467:0;vi fuga
 : 1264686472:0;vi hoge
-: 1265095138:0;cd pro
 : 1265096387:0;grep -r anything-show-
 : 1265096388:0;grep -r anything-show-anything-show-
 : 1265096392:0;grep -r anything-show- .
@@ -2040,7 +1962,6 @@ exit
 : 1265274684:0;cd top/p
 : 1265274685:0;cd top/
 : 1265274689:0;less thanks.haml
-: 1265274796:0;cd rails_base
 : 1265275012:0;cd ls
 : 1265275018:0;vi index.haml
 : 1265340036:0;less exp.
@@ -2109,7 +2030,6 @@ exit
 : 1265668213:0;less _clusters.haml
 : 1265668284:0;grep -r child ..
 : 1265668300:0;grep -r render .
-: 1265668391:0;emacs top_controller.rb
 : 1265668513:0;cd questionnaire/branches/living
 : 1265668522:0;cd section
 : 1265668527:0;less _question.haml
@@ -2131,14 +2051,10 @@ exit
 : 1265673850:0;emacs _search_engines.haml
 : 1265675228:0;./script/generate migration AddQueryToAnswers query:string
 : 1265675477:0;touch top.haml
-: 1265677960:0;less config/routes.rb
 : 1265678005:0;touch init.haml
-: 1265678096:0;less routes.rb
-: 1265678196:0;rm public/index.html
 : 1265678317:0;cd mldm2009
 : 1265679067:0;mv „Çπ„ÇØ„É£™„É£º„É£≥„Ç∑„É£ß„É£É£„É£É®ÔºÉ®2010-02-09\ 10.30.32ÔºÉ©.png ss.png
 : 1265679135:0;less application_controller.rb
-: 1265679148:0;vi config/routes.rb
 : 1265679174:0;mv init.haml readme.haml
 : 1265679175:0;emacs readme.haml
 : 1265679543:0;grep -r main .
@@ -2151,7 +2067,6 @@ exit
 : 1265696974:0;mv „Çπ„ÇØ„É£™„É£º„É£≥„Ç∑„É£ß„É£É£„É£É®ÔºÉ®2010-02-09\ 15.28.40ÔºÉ©.png hie.png
 : 1265696975:0;open hie.png
 : 1265696990:0;mv hie.png ~/Dropbox/Products/cluiser/cmp/public/images
-: 1265697571:0;cd public/images
 : 1265697583:0;open ss
 : 1265697584:0;open ss.png
 : 1265697590:0;open cluss.png
@@ -2165,7 +2080,6 @@ exit
 : 1265704311:0;emacs cmp/config/environment.rb
 : 1265707896:0;./rails/script/server
 : 1265708147:0;emacs search/_clusters.haml
-: 1265750876:0;cd migrate
 : 1265751012:0;./script/generate model Answer query:string task_num:integer sys1:integer sys2:integer sys3:integer sys4:integer
 : 1265751152:0;./script/generate model Impression sys1:string sys2:string sys3:string sys4:string
 : 1265751276:0;./script/generate migration AddComment1AndComment2AndComment3AndComment4ToAnswers comment1:string comment2:string comment3:string comment4:string
@@ -2186,7 +2100,6 @@ exit
 : 1265754281:0;touch _intro4.haml
 : 1265754314:0;touch impression.haml
 : 1265754319:0;emacs intro.haml
-: 1265754951:0;vi routes.rb
 : 1265755049:0;vi _intro1.haml
 : 1265761485:0;mv „Çπ„ÇØ„É£™„É£º„É£≥„Ç∑„É£ß„É£É£„É£É®ÔºÉ®2010-02-10\ 9.23.57ÔºÉ©.png ss.png
 : 1265761488:0;mv ss.png ~/Dropbox/Products/cluiser/cmp/public/images/
@@ -2216,8 +2129,6 @@ exit
 : 1265768093:0;git rm --cached development.sqlite3
 : 1265768250:0;git rm --cache cmp/log
 : 1265768259:0;git rm --cache cmp/log/development.log cmp/log/production.log cmp/log/server.log cmp/log/test.log
-: 1265768351:0;cd config
-: 1265768353:0;vi environment.rb
 : 1265772062:0;vi ClusterGenerator.cpp
 : 1265772111:0;less Cluster.cpp
 : 1265772155:0;less Phrase.cpp
@@ -2236,7 +2147,6 @@ exit
 : 1265774227:0;grep -r unordered . | grep boost
 : 1265775423:0;less ClusterGenerator.cpp
 : 1265777508:0;less LabelCandidateExtractor.hpp
-: 1265783890:0;cd top
 : 1265783897:0;touch cluiser_use.haml
 : 1265783903:0;emacs cluiser_use.haml
 : 1265783954:0;touch _search_form.haml
@@ -2247,7 +2157,6 @@ exit
 : 1265789792:0;cd living
 : 1265791349:0;cd ex
 : 1265791352:0;cd exp
-: 1265791361:0;git log
 : 1265791505:0;git stash save now
 : 1265791528:0;git diff ext
 : 1265791533:0;git log ext
@@ -2302,7 +2211,6 @@ exit
 : 1265868702:0;ps aux | grep Rails
 : 1265872177:0;cp website.bib ../abstract
 : 1265872945:0;gnuplot
-: 1265873644:0;less db/schema.rb
 : 1265873999:0;cd qu
 : 1265875601:0;vi result.csv
 : 1265875610:0;open -a Numbers result.csv
@@ -2360,14 +2268,9 @@ exit
 : 1266052868:0;cd local
 : 1266052888:0;sudo chmod 755 bin
 : 1266052961:0;tail -f backgroundrb_debug_11006.log
-: 1266053065:0;rails -v
 : 1266053073:0;gem list rails
-: 1266053100:0;vi config/environment.rb
 : 1266053146:0;sudo gem install thin
-: 1266053349:0;rake db:migrate VERSION=0
-: 1266053362:0;cd db
 : 1266053373:0;rm development.sqlite3 production.sqlite3
-: 1266053389:0;rake db:migrate RAILS_ENV=production
 : 1266053536:0;cd /usr
 : 1266053547:0;sudo chmod 755 local
 : 1266053808:0;ruby test.rb "ÊÉº≠ÂπÉ¨" 100
@@ -2415,7 +2318,6 @@ exit
 : 1266076307:0;ruby test_en.rb Study 400
 : 1266076319:0;ruby test_en.rb „ÅÉµ„Å£„ÅΩ„ÇÉ≠ 400
 : 1266076509:0;thin start -e production
-: 1266105364:0;cd auto-complete
 : 1266105375:0;less auto-complete.el
 : 1266107966:0;grep -r activesupport app
 : 1266107969:0;grep -r activesupport
@@ -2454,7 +2356,6 @@ exit
 : 1266173510:0;less _main.haml
 : 1266173530:0;less do.haml
 : 1266173635:0;less query.rb
-: 1266173670:0;cd app/views
 : 1266173681:0;grep -r @q .
 : 1266173684:0;grep -r q .
 : 1266174100:0;rm cache.haml
@@ -2472,7 +2373,6 @@ exit
 : 1266178205:0;w3m www.google.co.jp
 : 1266181853:0;/Users/kanda/Downloads/ZTEPPPSet\ 2/ZTEPPPSet ; exit;
 : 1266181949:0;./script/backgroundrb start
-: 1266182101:0;psg ruby
 : 1266182104:0;psg thin
 : 1266182108:0;kill 330
 : 1266182112:0;kill -9 330
@@ -2481,18 +2381,15 @@ exit
 : 1266182934:0;vi extconf.rb
 : 1266182938:0;vi Makefile
 : 1266182966:0;make clean
-: 1266183735:0;cd script
 : 1266183738:0;ruby test_en.rb sapporo 400
 : 1266187363:0;emacs StopwordList.hpp
 : 1266187397:0;„ÄÅ
 : 1266187467:0;ruby test.rb "„É£Éß„É£º„Çø„É£û„Ç§„É£É´„É£≥„Ç∞" 400
 : 1266187469:0;thin start
-: 1266191617:0;mecab
 : 1266191833:0;mv „Çπ„ÇØ„É£™„É£º„É£≥„Ç∑„É£ß„É£É£„É£É®ÔºÉ®2010-02-15\ 8.55.11ÔºÉ©.png clusters.png
 : 1266191840:0;open -a Seashore clusters.png
 : 1266199472:0;emacs key_passage_rc.tex
 : 1266200403:0;cd thesis_1st/
-: 1266200427:0;cdd 0
 : 1266200430:0;cd Bachelor
 : 1266200436:0;less graduate_thesis.tex
 : 1266200454:0;touch mine.bib
@@ -2511,15 +2408,12 @@ exit
 : 1266204635:0;cp result.pdf result.bb ../thesis_1st
 : 1266205393:0;less key_passage_rc.tex
 : 1266218582:0;vi aa
-: 1266295140:0;mv id_dsa .ssh
-: 1266304787:0;cd log
 : 1266369595:0;/Users/kanda/Desktop/save/ASUKA____RNK ; exit;
 : 1266369831:0;cd Share
 : 1266369846:0;cd Primes
 : 1266370101:0;cd /home
 : 1266370103:0;cd home
 : 1266370108:0;cd /Users
-: 1266370154:0;rm -rf Emacs.app
 : 1266370179:0;cd Music
 : 1266370189:0;cd iTunes
 : 1266370233:0;cd Public
@@ -2533,30 +2427,20 @@ exit
 : 1266380355:0;mv „Çπ„ÇØ„É£™„É£º„É£≥„Ç∑„É£ß„É£É£„É£É®ÔºÉ®2010-02-17\ 13.17.26ÔºÉ©.png a.png
 : 1266381377:0;cd branches
 : 1266381380:0;cd questionnaire2009
-: 1266381405:0;rake db:migrate
 : 1266381482:0;./script/server
-: 1266381525:0;cd layouts
 : 1266381527:0;vi application.haml
-: 1266381540:0;cd public
 : 1266381545:0;vi screen.css
 : 1266381550:0;cd sass
 : 1266381552:0;less screen.sass
-: 1266381564:0;cd stylesheets
-: 1266383785:0;cd public/stylesheets
 : 1266383791:0;svn log screen.css
 : 1266386690:0;./rails/script/backgroundrb stop
 : 1266418736:0;less readme
 : 1266418739:0;rm readme
 : 1266418832:0;cd rails
-: 1266418844:0;cd views
 : 1266418847:0;cd search
 : 1266418857:0;emacs do.haml
-: 1266418878:0;cd controllers
 : 1266418885:0;emacs search_controller.rb
-: 1266418918:0;cdd 1
 : 1266418934:0;cd cmp
-: 1266418946:0;vi app/controllers/top_controller.rb
-: 1266419191:0;cd mo
 : 1266419201:0;emacs query.rb
 : 1266419494:0;vi web_cluster.rb
 : 1266419506:0;emacs web_cluster.rb
@@ -2576,7 +2460,6 @@ exit
 : 1267176741:0;mv 2009_m2_graduation_trip graduation_trip_2009_m2
 : 1267176744:0;cd graduation_trip_2009_m2
 : 1267264395:0;cd maicos_photo2010022
-: 1267264407:0;df
 : 1267264421:0;mkdir graduated_trip
 : 1267264812:0;cd ‰ªÆË£É•„É£û„Ç∑„É£≥
 : 1267264832:0;cd Windows\ 7\ \(experimental\).vmwarevm
@@ -2591,8 +2474,6 @@ exit
 : 1267508163:0;cp -r ClassReports /Volumes/Macbook\ HD/
 : 1267509577:0;port search util-linux
 : 1267509595:0;port search rename
-: 1267510107:0;reload
-: 1267510118:0;cd /Volumes/Macbook\ HD
 : 1267510121:0;cd graduated_trip
 : 1267510126:0;cd 0222
 : 1267510185:0;zmv -W 'DSC_*' 'DSC2_*'
@@ -2612,7 +2493,6 @@ exit
 : 1267512366:0;cd prmldarts
 : 1267512370:0;cd qu_old_repos
 : 1267512376:0;rm -rf qu_old_repos
-: 1267512627:0;cd old
 : 1267512633:0;rm -rf ssh:
 : 1267512661:0;cd Miscs
 : 1267512662:0;cd Recruit
@@ -2647,7 +2527,6 @@ exit
 : 1267513179:0;less install
 : 1267513188:0;less installation_list
 : 1267513193:0;rm installation_list
-: 1267513193:0;sl
 : 1267513203:0;less ppp
 : 1267513205:0;rm ppp
 : 1267513210:0;rm rails-pdf.pdf
@@ -2707,7 +2586,6 @@ exit
 : 1268028288:0;cd Keynotes
 : 1268028593:0;cd Movies
 : 1268028597:0;open master2.mov
-: 1268180577:0;cd Researches
 : 1268180579:0;cd Master
 : 1268180586:0;emacs master_thesis.tex
 : 1268194444:0;cd Lab
@@ -2721,13 +2599,10 @@ exit
 : 1268195056:0;ebb evflow.pdf
 : 1268200718:0;cd abstract
 : 1268200724:0;open key_passage_rc.pdf
-: 1268810676:0;vi .zshrc
 : 1268811345:0;ssh prml89 -l root
 : 1268813590:0;ssh 133.87.136.228 -l root
 : 1268813601:0;ssh 133.87.182.66 -l root
 : 1268813707:0;cd questionnaire
-: 1268814938:0;ls -alt
-: 1268814942:0;cd Do
 : 1268815003:0;mv a.pdf$'\302\205'$'\302\203'j$'\302\203'P$'\302\201'\[$'\302\203'V$'\302\203'$'\302\207'$'\302\203'$'\302\223'$'\302\216'$'\302\226'$'\302\221'O$'\302\211'UÃÇ$'\302\221'eÃÄ.pdf a.pdf
 : 1268815006:0;open a.pdf
 : 1268904496:0;mv schedule schedule.ppt
@@ -2735,7 +2610,6 @@ exit
 : 1268904775:0;ssh ipsb
 : 1268905172:0;ping prml90
 : 1269308651:0;cd trunk
-: 1269308655:0;cd lib
 : 1269308660:0;less qu.rb
 : 1269308681:0;emacs qu.rb
 : 1269308705:0;e
@@ -2746,23 +2620,18 @@ exit
 : 1269309751:0;less qu.rake
 : 1269309800:0;emacs qu.rake
 : 1269309847:0;rake qu:migration
-: 1269309916:0;cd db/migrate
 : 1269309924:0;less 001_create_users.rb
 : 1269309935:0;less 500_create_answers.rb
 : 1269310084:0;cdd 4
-: 1269310088:0;cd models
 : 1269310090:0;less answer.rb
 : 1269310114:0;less validation_template.erb
 : 1269310132:0;cd trunk/lib
 : 1269310173:0;cdd 3
-: 1269310175:0;cd app
 : 1269310178:0;less models/answer.rb
 : 1269310193:0;less answer_validations.rb
-: 1269310232:0;irb
 : 1269310337:0;emacs validation_template.erb
 : 1269311196:0;rake qu:debug
 : 1269311449:0;less selenium_testcase_template.erb
-: 1269311459:0;cd test
 : 1269311461:0;cd selenium
 : 1269311467:0;less section1
 : 1269311470:0;less section11_answer.rsel
@@ -2786,7 +2655,6 @@ exit
 : 1269336963:0;rdesktop prml9b
 : 1269339837:0;ssh ipsb -l root
 : 1269339845:0;ssh ipsb -l kanda
-: 1269480409:0;d
 : 1269480411:0;cd lu
 : 1269480413:0;cd cluiser
 : 1269480416:0;cd ext
@@ -2807,9 +2675,7 @@ exit
 : 1274108426:0;ruby -e "require 'net/http'"
 : 1274267583:0;du -h
 : 1274267607:0;cd untitled\ folder
-: 1274267628:0;cd ..
 : 1274267813:0;cd Safari.app
-: 1274267975:0;du
 : 1274267985:0;du -1
 : 1274268000:0;cd Caches
 : 1274268168:0;du -d 1 -s
@@ -2823,10 +2689,8 @@ exit
 : 1274304498:0;cd vm
 : 1274304604:0;rm *
 : 1274304646:0;sudo rm -rf *
-: 1274305108:0;cd Applications
 : 1274305150:0;du -d 1
 : 1274358400:0;cd OpenSources
-: 1274358407:0;cd Products
 : 1274358498:0;less classifier_c.c
 : 1274358519:0;less re
 : 1274359239:0;cd wii-gesture-recog
@@ -2847,22 +2711,17 @@ exit
 : 1274796658:0;cd Eye-Fi
 : 1274796660:0;cd 10-05-25
 : 1274796662:0;rm IMG_3937.JPG IMG_3938.JPG IMG_3939.JPG IMG_3940.JPG IMG_3941.JPG IMG_3942.JPG IMG_3943.JPG IMG_3944.JPG IMG_3945.JPG IMG_3946.JPG IMG_3947.JPG IMG_3948.JPG IMG_3949.JPG IMG_3950.JPG IMG_3951.JPG IMG_3952.JPG IMG_3953.JPG IMG_3954.JPG IMG_3955.JPG IMG_3956.JPG IMG_3957.JPG IMG_3958.JPG
-: 1275315273:0;psg Google
 : 1275315292:0;psg google
 : 1275315294:0;psg goo
 : 1275315296:0;psg go
 : 1275315297:0;psg g
 : 1275315304:0;psg .app
 : 1275315391:0;kill 350
-: 1275315412:0;psg Quick
 : 1275315418:0;kill 1108
-: 1275315423:0;open -a Quick\ Search\ Box
-: 1275345600:0;less email
 : 1275917189:0;Dropbox
 : 1275917193:0;open Untitled.ppt
 : 1275953144:0;open com_kanazawa.001.png
 : 1276001834:0;open Untitled.001.png
-: 1276033238:0;cd Desktop
 : 1276033582:0;open 124232904_d5076c30f2_o.jpg
 : 1276033825:0;open Dropbox/
 : 1276111986:0;mkdir comkana
@@ -2881,10 +2740,8 @@ exit
 : 1279830832:0;open hosyuteki.png
 : 1280670711:0;ifconfig eth0
 : 1280670714:0;ifconfig | less
-: 1281621702:0;less README
 : 1281621733:0;less ../init.el
 : 1281621792:0;less env-carbon.el
-: 1281621797:0;cd conf
 : 1281621799:0;less c-env.el
 : 1281621813:0;vi c-env.el
 : 1281621839:0;cd env
@@ -2892,8 +2749,6 @@ exit
 : 1281621854:0;rm -rf env
 : 1281621870:0;git add env-carbon.el env-cocoa.el env-linux.el env-meadow.el env-utf-8.el
 : 1281621881:0;git add site-lisp/popup.el
-: 1281622153:0;less init.el
-: 1281622161:0;vi conf/c-env.el
 : 1281622398:0;emacs env-meadow.el
 : 1281622576:0;grep -r require *el
 : 1281622582:0;grep -r require */*el
@@ -2901,7 +2756,6 @@ exit
 : 1281622630:0;less site-lisp/ac-anything.el
 : 1281622826:0;vi env-meadow.el
 : 1281623062:0;vi anything-config.el
-: 1281623564:0;cd site-lisp
 : 1281623575:0;rm install-elisp.el
 : 1281623602:0;wget http://www.emacswiki.org/emacs/download/auto-install.el
 : 1281623616:0;grep -r install- */*.el
@@ -2919,7 +2773,6 @@ exit
 : 1281624885:0;ls;
 : 1281624889:0;less update
 : 1281624915:0;vi update
-: 1281624925:0;cd auto-complete/
 : 1281624928:0;cd etc
 : 1281624930:0;less install.el
 : 1281624967:0;cp auto-complete-config.el auto-complete.el fuzzy.el popup.el ../../site-lisp
@@ -2927,8 +2780,6 @@ exit
 : 1281625243:0;git add site-lisp/auto-install.el
 : 1281625246:0;git add site-lisp/fuzzy.el
 : 1281625381:0;cd lisp
-: 1281625384:0;cd vc
-: 1281625409:0;cd r
 : 1281625411:0;cd rsense
 : 1281625416:0;hg pull
 : 1281625526:0;grep -r outputz
@@ -2945,12 +2796,10 @@ exit
 : 1281626031:0;less each
 : 1281626032:0;less each\ \{\ e\ ..\ \}\ \(ea\).yasnippet
 : 1281626053:0;svn up
-: 1281626078:0;rm -rf *
 : 1281626128:0;grep -r outputz .
 : 1281626143:0;vi conf/c-minibuffer.el
 : 1281626174:0;less ac-comphist.dat
 : 1281626246:0;git push origin
-: 1281626354:0;vi init.el
 : 1281626375:0;vi conf/c-keybind.el
 : 1281627521:0;vi conf/c-key-chord.el
 : 1281779769:0;ruby babanuki.rb 10
@@ -2964,38 +2813,26 @@ exit
 : 1281806680:0;open usr_4ba9988d33646.flv
 : 1281927068:0;ssh prml88 -l root
 : 1282012518:0;vi katsuragi
-: 1282733705:0;ks
 : 1282969702:0;open -a TextEdit
-: 1282970881:0;top
 : 1283289842:0;sudo port search ruby19
 : 1283289933:0;port search ruby19
-: 1283289970:0;gem -v
 : 1284776706:0;cd /Volumes/NO\ NAME
-: 1285465780:0;ruby -v
 : 1285465789:0;sudo port search ruby
 : 1285465817:0;sudo port install ruby19
-: 1285465837:0;sudo port -v sync
 : 1285465890:0;su
-: 1285465901:0;sudo port install outdated
 : 1285466140:0;synergy
-: 1285466532:0;ifconfig
 : 1285467514:0;man grep
-: 1285495580:0;mv id_dsa id_dsa_a
 : 1285495625:0;vim .zshrc
 : 1285495783:0;cp .zshrc .zshrc.remote
 : 1285495786:0;vi .zshrc.remote
-: 1285500366:0;s
 : 1285500378:0;cd latex
 : 1285500385:0;vi zasshi-prml.cls
 : 1285500404:0;vi .irbrc
 : 1285500435:0;touch setup
 : 1285500442:0;chmod +x setup
 : 1285500487:0;vi emacs-migemo-settings.el
-: 1285500571:0;git init
 : 1285500620:0;git add .irbrc .screenrc .zshrc dot.autotest dot.rails_fail.png dot.rails_ok.png dot.screenrc.remote setup .zshrc.remote
-: 1285500625:0;git commit -a
 : 1285500649:0;git remote add origin git@github.com:uskanda/uskanda-unix-rc.git
-: 1285500654:0;git push origin master
 : 1285504361:0;scp id_rsa.pub uskanda@63.43.176.39:/home/uskanda/.ssh
 : 1285504547:0;scp id_rsa.pub 63.43.176.39:/home/uskanda/ -l uskanda
 : 1285504550:0;scp id_rsa.pub 63.43.176.39:/home/uskanda/
@@ -3003,41 +2840,28 @@ exit
 : 1285504573:0;scp id_rsa.pub uskanda@63.43.176.39
 : 1285504578:0;scp id_rsa.pub uskanda@63.43.176.39:~/
 : 1285504603:0;less id_rsa.pub
-: 1285504639:0;ssh 163.43.176.39
 : 1285504811:0;vi uskanda@63.43.176.39
 : 1285504818:0;rm uskanda@63.43.176.39
 : 1285505579:0;ssh prmlra1
 : 1285505580:0;ssh prmlra2
-: 1285505726:0;ssh prmlra2.main.ist.hokudai.ac.jp -l kanda
 : 1285505794:0;vi id_rsa.pub
-: 1285505837:0;vi known_hosts
-: 1285505843:0;ssh 163.43.176.39 -l uskanda
 : 1285854851:0;less katsuragi
 : 1285854855:0;rm katsuragi
 : 1285854858:0;less pamphlet
 : 1285942269:0;open tm15.png
-: 1285942359:0;cd Library
 : 1285942396:0;cd Documents/Virtual\ Machines.localized
-: 1285942400:0;ls -altr
-: 1285984858:0;cd Downloads
 : 1285984870:0;mv Ubuntu-8.04-Japanese ../Documents
 : 1285984901:0;mv Ubuntu-8.04-Japanese Ubuntu-10.04-Japanese
-: 1285997259:0;cd
-: 1285997261:0;cd .ssh
 : 1285997287:0;less id_rsa
 : 1285997298:0;vi id_rsa
 : 1285997313:0;emacs id_rsa&
 : 1285997562:0;.s
 : 1285997571:0;cd .zsh/scripts
-: 1285997618:0;less cdd_pwd_list
 : 1285997779:0;cd scripts
 : 1285997781:0;less cdd
-: 1285997790:0;open .
 : 1285997813:0;emacs cdd
-: 1285997866:0;lal
 : 1286096955:0;./Configurations/setup
 : 1286097063:0;rm tm1.png tm11.png tm12.png tm13.png tm14.png tm15.png tm16.png tm17.png tm18.png tm19.png tm2.png tm20.png tm21.png tm22.png tm23.png tm3.png tm4.png tm5.png tm6.png tm7.png
-: 1286097067:0;less install.sh
 : 1286097073:0;less todown
 : 1286097078:0;rm pamphlet
 : 1286097089:0;rm ChristyMarks_22326_CMK_WMV_HD_1280x720_MFS.html
@@ -3045,19 +2869,15 @@ exit
 : 1286097101:0;rm 4567831032_9c4a20568d_b.jpg
 : 1286097106:0;open img20100607195602.jpg
 : 1286097498:0;rm SSL,all-sets,ascii.tgz
-: 1286097500:0;lls
 : 1286097511:0;cd Documents
 : 1286097519:0;open vi-vim-cheat-sheet.gif
 : 1286097533:0;vi babanuki.rb
 : 1286098240:0;cd Dropbox/Configurations
-: 1286098306:0;cd .emacs.d
 : 1286098349:0;rm -rf emacs.old
 : 1286098358:0;rm emacs-migemo-settings.el
 : 1286098362:0;git staus
-: 1286098368:0;rm -rf .emacs.d
 : 1286098371:0;sudo rm -rf .emacs.d
 : 1286098380:0;rm -rf latex
-: 1286098383:0;ls -al
 : 1286098393:0;git add .zsh
 : 1286098401:0;mv dot.autotest .autotest
 : 1286098416:0;mv dot.rails_fail.png .rails_fail.png
@@ -3065,28 +2885,18 @@ exit
 : 1286098439:0;mv dot.screenrc.remote .screenrc.remote
 : 1286098454:0;cd .zshr
 : 1286098465:0;touch .gitignore
-: 1286098468:0;vi .gitignore
 : 1286098506:0;cd .zsh
-: 1286098511:0;git status
 : 1286098573:0;mv Configurations rc
 : 1287245791:0;rm -r .zsh
 : 1287245792:0;ln -s ~/Dropbox/Configurations/rc/.zsh .
-: 1287245799:0;cd Dropbox
-: 1287245799:0;l
-: 1287245910:0;cd Configurations
-: 1287245911:0;cd rc
-: 1287245945:0;rm .zshrc
 : 1287245950:0;rm .zsh
 : 1287245979:0;less .autotest
 : 1287246002:0;open .rails_
 : 1287246004:0;open .rails_ok.png
 : 1287246043:0;cd .git
 : 1287246048:0;less config
-: 1287246132:0;la
 : 1287246143:0;vi setup
 : 1287246148:0;./setup
-: 1287246150:0;ls
-: 1287246151:0;exit
 : 1286373548:0;cdd 0
 : 1286373567:22;less ipa2epub
 : 1286373805:0;rm -rf Payload
@@ -3095,11 +2905,9 @@ exit
 : 1286373819:0;cd Prog\ Lang.app/book
 : 1286373824:0;cd OEBPS
 : 1286373851:13;vi toc.ncx
-: 1286373866:1;open .
 : 1286713113:0;less install.sh
 : 1286713177:0;ssh 163.43.176.39 -l uskanda
 : 1287242278:44;sudo gem install spork
-: 1287244681:31;sudo gem update
 : 1287244716:1;sudo gem list
 : 1287244740:0;sudo gem help
 : 1287244752:1;sudo gem install -v
@@ -3110,7 +2918,6 @@ exit
 : 1287244804:1;sudo gem help commands
 : 1287244829:1;sudo gem update -h
 : 1287244849:14;sudo gem update --system
-: 1287244925:0;rails new -h
 : 1287244941:0;sudo gem list rvm
 : 1287244945:13;sudo gem list -r rvm
 : 1287244967:27;sudo gem install rvm
@@ -3120,44 +2927,24 @@ exit
 : 1287245122:4;rvim
 : 1287245131:0;cd src
 : 1287245135:0;cd bin
-: 1287245208:0;reload
-: 1287245219:0;cd
 : 1287245226:0;mkdir .rvm
 : 1287245229:3;rvm
 : 1287245238:121;sudo rvm
-: 1287245361:0;ruby -v
 : 1287245375:780;sudo rvm install 1.9.2
 : 1287246163:0;sudo rvm use 1.9.2
-: 1287246167:0;ruby -v
 : 1287246198:0;rvm --default ruby-head
 : 1287246203:0;sudo rvm --default ruby-head
 : 1287246209:0;sudo rvm install ruby-head
 : 1287246262:0;sudo rvm --default 1.9.2
-: 1287246267:0;ruby -v
-: 1287246320:0;reload
-: 1287246321:0;ruby -v
-: 1287246325:0;which ruby
 : 1287246330:0;where ruby
 : 1287246348:0;which command ruby
 : 1287246352:0;command ruby -v
-: 1287246364:0;ls
-: 1287246376:0;vi .zshrc
-: 1287248446:0;reload
-: 1287248596:0;which irb
-: 1287248635:0;vi .zshrc
-: 1287248643:0;reload
-: 1287248648:0;rvm list
 : 1287248661:0;cd .rvm
 : 1287248679:0;/opt/local/lib/ruby/gems/1.8/gems/rvm-1.0.14/bin/rvm-install
-: 1287248684:0;reload
-: 1287248687:0;ls
-: 1287248697:0;ruby -v
 : 1287248699:0;which ruby
 : 1287248702:0;which irb
-: 1287248709:0;rvm help
 : 1287248719:0;rvm use ruby-head
 : 1287248725:0;rvm install ruby-head
-: 1287248739:0;rvm use 1.9.2
 : 1287248750:0;rvm list known
 : 1287248761:0;rvm install 1.9.2-head
 : 1287248898:0;rvm info
@@ -3166,7 +2953,6 @@ exit
 : 1286098693:0;gis
 : 1286098697:0;gic
 : 1286098706:0;giu
-: 1286098731:3;vi
 : 1286098818:0;git rm --cached .zsh/.zsh_history
 : 1286098833:0;cd .zsh/
 : 1286098837:2;less cdd_pwd_list
@@ -3174,23 +2960,15 @@ exit
 : 1286098866:0;rm .zsh/cdd_pwd_list.t
 : 1286098879:11;vi .gitignore
 : 1286098905:0;git rm --cached .zsh/cdd_pwd_list*
-: 1286098932:0;git add *
 : 1286098948:0;git add .zsh/*
-: 1286098954:6;git commit -a
-: 1286098964:0;git status
-: 1286099072:11;git clone git@github.com:uskanda/uskandas-emacs-configurations.git
-: 1286099284:0;mv uskandas-emacs-configurations .emacs.d
-: 1286099318:0;cd .emacs.d
 : 1286099331:0;mv .emacs.d emacs
 : 1286099468:0;rm com_kanazawa.001.png com_kanazawa.001.tiff com_kanazawa.002.png com_kanazawa.002.tiff com_kanazawa.003.png com_kanazawa.003.tiff com_kanazawa.004.png com_kanazawa.004.tiff com_kanazawa.005.png com_kanazawa.005.tiff com_kanazawa.006.png com_kanazawa.006.tiff com_kanazawa.007.png com_kanazawa.007.tiff com_kanazawa.008.png com_kanazawa.008.tiff com_kanazawa.009.png com_kanazawa.009.tiff com_kanazawa.010.png com_kanazawa.010.tiff com_kanazawa.011.png com_kanazawa.011.tiff com_kanazawa.012.png com_kanazawa.012.tiff com_kanazawa.013.png com_kanazawa.013.tiff com_kanazawa.ppt
 : 1286099847:0;open Untitled.p
 : 1286099849:0;open Untitled.png
 : 1286099862:0;rm Untitled.001.png Untitled.png Untitled.ppt
 : 1286099892:1;rm -rf emacs
-: 1286369310:2;rails new hoge
 : 1286369320:0;cd new
 : 1286369323:0;rm -rf new
-: 1286369325:0;rails -v
 : 1286372204:0;chmod +x ipa2epub
 : 1286372421:2;./ipa2epub Prog\ Lang\ 1.0.ipa
 : 1286373238:42;vi ipa2epub
@@ -3206,13 +2984,9 @@ exit
 : 1286718525:1;less a.pdf
 : 1286718528:1;less email
 : 1286718533:0;rm email
-: 1286718655:5;sl
-: 1286725458:0;ifconfig
 : 1286725946:0;dig www.google.co.jp
 : 1286725953:2;ping 66.249.89.99
 : 1286726073:0;ssh 10.0.1.100
-: 1286728753:0;ssh 10.0.1.100 -l vyatta
-: 1286792759:156;top
 : 1287226350:0;ruby1.9 -v
 : 1287226360:14;sudo port -v sync
 : 1287227597:3;sudo port install outdated
@@ -3227,163 +3001,1671 @@ exit
 : 1287242070:36;sudo port selfupdate
 : 1287242134:1;sudo port clean openssl
 : 1287242487:0;sudo port clean apache2
-: 1287254735:0;sudo port upgrade outdated
 : 1287254759:0;sudo port clean p5-io-compress
-: 1287254761:0;sudo port upgrade outdated
 : 1287254793:0;sudo port -f activate p5-io-compress
 : 1287254808:0;sudo port -f deactivate p5-io-compress
 : 1287254829:0;sudo port -f deactivate p5-io-compress @2.027_0
 : 1287254833:0;sudo port -f activate p5-io-compress @2.027_0
 : 1287254848:0;sudo port upgrade outdated
-: 1287254942:0;cd Dropbox
-: 1287254943:0;ls
-: 1287254946:0;cd Products
-: 1287254947:0;ls
 : 1287254953:0;rm -rf rails_base
-: 1287254955:0;ls
-: 1287254959:0;rails new help
-: 1287254975:0;rails
 : 1287254985:0;rvm reset
 : 1287254987:0;sudo rvm reset
-: 1287254991:0;rails
-: 1287255012:0;ls
 : 1287255018:0;rails new help
 : 1287255023:0;rm -rf help
 : 1287255026:0;rails new -h
 : 1287255088:0;rails new -J -T rails_base
 : 1287255107:0;rails new rails_base -J -T
-: 1287255111:0;cd rails_base
 : 1287255117:0;grep -r rails_base
 : 1287255119:0;grep -r rails_base.
 : 1287255122:0;grep -r rails_base .
 : 1287255132:0;grep -r base .
-: 1287255153:0;ls
-: 1287255161:0;vi Gemfile
-: 1287255330:0;bundle install
-: 1287255529:0;vi Gemfile
-: 1287255563:0;bundle install
 : 1287255712:0;rails g help
 : 1287255724:0;rails g -h
 : 1287255740:0;rails g jquery:install
 : 1287255754:0;rails g rspec:install
-: 1287255775:0;ls
 : 1287255780:0;autotest
-: 1287255786:0;ls
 : 1287255825:0;vi config/initializers/sass_config.rb
-: 1287255864:0;ls
-: 1287255866:0;cd app
-: 1287255867:0;ls
-: 1287255878:0;mkdir stylesheets
-: 1287255879:0;l
-: 1287255885:0;git init
-: 1287255890:0;git add *
-: 1287255892:0;git commit -a
-: 1287255906:0;ls
-: 1287255911:0;less Rakefile
-: 1287255913:0;ls
 : 1287255932:0;rails clone rails_base a
 : 1287255941:0;git clone rails_base a
-: 1287255943:0;ls
-: 1287255944:0;cd a
 : 1287255949:0;rm -rf
-: 1287255950:0;ls
-: 1287255953:0;rm -rf a
-: 1287255957:0;ls
-: 1287255971:0;git clone rails_base chicatter
-: 1287255973:0;ls
-: 1287255974:0;cd chicatter
-: 1287255974:0;ls
-: 1287255992:0;rails g controller top index
-: 1287256021:0;cd public/stylesheets
-: 1287256022:0;ls
-: 1287256030:0;cd app
-: 1287256031:0;ls
 : 1287256057:0;mkdir stylesheets
-: 1287256058:0;ls
-: 1287256064:0;cd rails_base
-: 1287256065:0;ls
-: 1287256066:0;cd app
-: 1287256066:0;ls
-: 1287256074:0;git status
-: 1287256080:0;l
-: 1287256082:0;cd app
-: 1287256083:0;ls
 : 1287256085:0;cd stye
-: 1287256087:0;cd stylesheets
-: 1287256088:0;ls
-: 1287256093:0;cd views
-: 1287256094:0;ls
-: 1287256095:0;cd layouts
-: 1287256096:0;ls
-: 1287256098:0;cd stylesheets
-: 1287256099:0;ls
 : 1287256107:0;touch defaults.sass
-: 1287256194:0;ls
-: 1287256207:0;vi defaults.sass
-: 1287256210:0;ls
-: 1287256217:0;git status
-: 1287256231:0;git add *
-: 1287256238:0;git commit -a
-: 1287256253:0;ls
 : 1287256258:0;rm -rf chicatter
 : 1287256262:0;git clone rails_base chicatter
 : 1287256264:0;cd chicatter
-: 1287256264:0;ls
-: 1287256267:0;cd app
-: 1287256267:0;ls
-: 1287256270:0;cd stylesheets
 : 1287256274:0;vi defaults.sass
-: 1287256292:0;ls
 : 1287256304:0;rails g controller top
-: 1287256324:0;vi config/routes.rb
-: 1287256329:0;ls
-: 1287256334:0;cd app
 : 1287256342:0;rails g controller -h
-: 1287256372:0;rails g controller top index
-: 1287256398:0;ls
-: 1287256400:0;rails s
-: 1287256451:0;cdd 1
-: 1287256455:0;cd public
-: 1287256455:0;ls
 : 1287256456:0;cd sy
-: 1287256458:0;cd stylesheets
-: 1287256459:0;ls
 : 1287256461:0;less defaults.css
-: 1287256465:0;ls
-: 1287257040:0;rails -h
 : 1287257054:0;rails profiler
 : 1287257077:0;rails application
-: 1287257092:0;ls
 : 1287257113:0;grep -r RailsBase .
-: 1287257372:0;ls
 : 1287257375:0;sudo port list
 : 1287257384:0;sudo port installed
-: 1287284019:0;l
-: 1287284020:0;ls
 : 1287284126:0;cd rails_base
-: 1287284127:0;ls
-: 1287284129:0;lls
-: 1287284129:0;ls
-: 1287284147:0;cd app
-: 1287284148:0;ls
-: 1287284153:0;git status
 : 1287284218:0;git remote add origin git@github.com:uskanda/rails-base.git
 : 1287284226:0;git push origin master
-: 1287284255:0;ls
-: 1287285865:0;ssh 10.0.1.100 -l vyatta
-: 1287320947:0;ls
-: 1287322572:0;top
-: 1287325239:0;ls
 : 1287325826:0;ssh 10.0.1.100 -l vyatta
-: 1287497336:0;ls
-: 1287497353:0;s
-: 1287497355:0;open .
-: 1287501004:0;ls
-: 1287503228:0;top
-: 1287503232:0;ls
-: 1287839683:0;psg Google
-: 1287839701:0;top
 : 1287839716:0;psg Quick
 : 1287839719:0;kill 279
 : 1287839732:0;open -a Quick\ Search\ Box
-: 1287840152:0;ls
+: 1287895280:0;killall -9 tmux
+: 1287895344:0;cd rc
+: 1287895351:0;cp .zshrc .zshrc.screen
+: 1287896787:0;less .tmux.conf
+: 1287896794:0;sudo port install lv
+: 1287896808:0;command less .tmux.conf
+: 1287897038:0;yy
+: 1287897039:0;yyyy
+: 1287897045:0;psg tmux
+: 1287897048:0;vi .tmux.conf
+: 1288362792:0;unzip h2.zip
+: 1288362848:0;rm -r hokuriku
+: 1288362851:0;rm -fr hokuriku
+: 1288363047:0;mv hokuriku ../
+: 1288363055:0;mkdir R
+: 1288363058:0;mv hokuriku R
+: 1288363452:0;rvm install 1.8.7-head
+: 1288363644:0;rvm user 1.8.7-head
+: 1288363965:0;cd autotest
+: 1288363968:0;less rails_rspec_rspec2
+: 1288363971:0;less discover.rb
+: 1288364090:0;vi config/boot.rb
+: 1288364123:0;less config/boot.rb
+: 1288364139:0;rails -h
+: 1288364162:0;gem install rails
+: 1288364296:0;port search sqlite3
+: 1288364317:0;sudo port install search rb-sqlite3
+: 1288364331:0;sudo port install rb-sqlite3
+: 1288397919:0;rvm help
+: 1288407801:0;ld
+: 1288418084:0;cp /Volumes/backup/Users/kanda/.ssh/* .ssh
+: 1288418085:0;cd .s
+: 1288418092:0;rm .zshrc
+: 1288418119:0;vi .zshrc
+: 1288418236:0;git clone git@github.com:uskanda/uskandas-emacs-configurations.git
+: 1288418256:0;cd uskandas-emacs-configurations
+: 1288418263:0;cd Configurations
+: 1288418269:0;mv uskandas-emacs-configurations .emacs.d
+: 1288418291:0;rm -rf .emacs.d
+: 1288418293:0;ln -s ~/Dropbox/Configurations/.emacs.d .
+: 1288418548:0;grep -r ruby-comp .
+: 1288418596:0;sudo port install wget
+: 1288418717:0;wget http://www.emacswiki.org/emacs/ruby-compilation.el
+: 1288418766:0;les ruby-compilation.el
+: 1288418771:0;rm ruby-compilation.el
+: 1288418782:0;wget http://www.emacswiki.org/emacs/download/ruby-compilation.el
+: 1288418807:0;grep -r pcmp
+: 1288418809:0;grep -r pcmp.
+: 1288418812:0;grep -r pcmp .
+: 1288418872:0;cd auto-complete
+: 1288418881:0;cd haml
+: 1288418920:0;rm -rf rinari
+: 1288418921:0;git clone git://github.com/eschulte/rinari.git
+: 1288418934:0;git submodule init
+: 1288418939:0;git submodule update
+: 1288419024:0;rm -rf rhtml
+: 1288419032:0;git clone http://github.com/eschulte/rhtml.git
+: 1288419200:0;less c-yasnippet.el
+: 1288419602:0;vi conf/c-env.el
+: 1288419670:0;cd ema
+: 1288419693:0;emacs app/views/entry/_customer_info.html.erb
+: 1288419747:0;env-cocoa.el
+: 1288420956:0;rm -rf auto-complete
+: 1288420960:0;git clone http://github.com/m2ym/auto-complete.git
+: 1288420977:0;cd auto-complete/o
+: 1288420978:0;cd auto-complete/
+: 1288420984:0;vi auto-complete-config.el
+: 1288421630:0;rm auto-complete-config.el auto-complete.el
+: 1288421635:0;cd vc/auto-complete
+: 1288421660:0;rm fuzzy.el popup.el
+: 1288421797:0;svn checkout http://yasnippet.googlecode.com/svn/trunk/ yasnippet-read-only
+: 1288421816:0;mv yasnippet-read-only yasnippet
+: 1288421819:0;less README
+: 1288421823:0;less Rakefile
+: 1288421838:0;less yasnippet
+: 1288421840:0;less yasnippet.el
+: 1288422161:0;open dropdown-list.el
+: 1288422412:0;emacs env-cocoa.el
+: 1288422615:0;kill 28688
+: 1288422631:0;kill -9 28688
+: 1288437211:0;cdd 1
+: 1288462319:0;cd rinari
+: 1288462324:0;less rinari.el
+: 1288499709:0;cd public/javascripts
+: 1288499722:0;wget http://cyokodog.appspot.com/exj/exfixed/lib/exfixed/jquery.exfixed.1.2.2-min.js
+: 1288499772:0;mv jquery.exfixed.1.2.2-min.js jquery-exfixed.min.js
+: 1288499859:0;less jquery-exfixed.min.js
+: 1288500529:0;rm jquery-exfixed.min.js
+: 1288520314:0;gem list
+: 1288520353:0;rvm default 1.8.7-head
+: 1288520376:0;man rvm
+: 1288520380:0;rvm -h
+: 1288520396:0;rvm use --default 1.8.7-head
+: 1288539360:0;less db/migrate/20100930104751_create_customer_infos.rb
+: 1288539464:0;less db/migrate/20101007132850_add_acc_date_and_close_date_and_close_result_and_close_reason_and_line_num_and_b_remarks_to_customer_info.rb
+: 1288551948:0;emacs conf/c-anything.el&
+: 1288559514:0;grep -r b_line
+: 1288559520:0;grep -r b_line .
+: 1288560243:0;git clone http://github.com/rails/arel.git
+: 1288560255:0;cd arel
+: 1288560277:0;grep -r out join .
+: 1288560281:0;grep -r outer join .
+: 1288560299:0;grep -r full .
+: 1288560305:0;grep -r outer .
+: 1288560310:0;grep -r join .
+: 1288560322:0;less arel/visitors/dot.rb
+: 1288560352:0;less arel/visitors/to_sql.rb
+: 1288560389:0;grep -r join . | head -n 30
+: 1288560413:0;less arel/select_manager.rb
+: 1288560562:0;grep -r outer_join
+: 1288560565:0;grep -r outer_join .
+: 1288563946:0;unzip hokuriku
+: 1288563960:0;mv hokuriku.zip h3.zip
+: 1288712107:0;mv h5x.zip ../
+: 1288712120:0;mv h5x.zip R
+: 1288712138:0;mkdir old
+: 1288712147:0;mv hokuriku hokuriku.zip old
+: 1288712214:0;unzip h5x.zip
+: 1288768299:0;less application.js
+: 1288768728:0;open -a Emacs application.js
+: 1288778708:0;spork --bootstrap
+: 1288778775:0;sample
+: 1288778783:0;less customer_infos.csv
+: 1288780162:0;rspec -d --drb spec/models/customer_info_spec.rb
+: 1288780716:0;rspec -b --drb spec/models/customer_info_spec.rb
+: 1288782631:0;cd sample
+: 1288782647:0;cp customer_infos.csv customer_infos_invalid_column.csv
+: 1288782652:0;vi customer_infos_invalid_column.csv
+: 1288782803:0;sudo port install nkf
+: 1288782817:0;nkf --guess customer_infos.csv
+: 1288782826:0;nkf --windows customer_infos.csv
+: 1288782835:0;nkf --windows customer_infos.csv > customer_infos_sjis.csv
+: 1288782855:0;less customer_infos_sjis.csv
+: 1288782863:0;nkf --guess customer_infos_sjis.csv
+: 1288783291:0;mkdir fixtures
+: 1288783352:0;touch customer_infos.csv
+: 1288783357:0;vi customer_infos.csv
+: 1288783723:0;less spec/spec_helper.rb
+: 1288783752:0;cd spec
+: 1288783754:0;cd fixtures
+: 1288783760:0;less spec_helper.rb
+: 1288783934:0;rake db:migrate RAILS_ENV=test VERSION=0
+: 1288783939:0;rake db:migrate RAILS_ENV=test
+: 1288785143:0;rails stats
+: 1288787055:0;rails g migration AddCreatedNttmanNumToCustomerInfos created_nttman_num:string
+: 1288787079:0;less 20101103122418_add_created_nttman_num_to_customer_infos.rb
+: 1288788320:0;kill -9 192
+: 1288788324:0;kill -9 1192
+: 1288788324:0;nfdasjfkdslafjkdslajfkadlsjfkdsl;jfkdsl;ajfklds;ajfkldsa;jffjdkslajfkldsajfkldsajfkasdjfkaslfjdsaklfjls;fjskljfksdjlsjflsjflsjflsjflksjf;lashjfibhueobgjkwebnk
+: 1288788400:0;psg rails
+: 1288788405:0;kill -9 5929
+: 1288788784:0;cd R/arel
+: 1288788788:0;grep -r def or
+: 1288788789:0;grep -r def or .
+: 1288788794:0;grep -r "def or" .
+: 1288788807:0;less lib/arel/nodes/node.rb
+: 1288788962:0;grep -r Node .
+: 1288788971:0;cd lib/arel
+: 1288788980:0;less nodes
+: 1288788982:0;less nodes.rb
+: 1288788995:0;less nodes/or.rb
+: 1288789874:0;gem list arel
+: 1288790297:0;grep -r format .
+: 1288790311:0;grep -r Predicates .
+: 1288790320:0;grep -r Pre .
+: 1288790733:0;bundle update rspec
+: 1288790736:0;bundle update rspec-rails
+: 1288790812:0;bundle update arel
+: 1288791079:0;bundle update rails arel
+: 1288791164:0;bundle show arel
+: 1288791507:0;bundle -h
+: 1288792404:0;vi Gemfile.lock
+: 1288792422:0;bundle update rails
+: 1288792603:0;less test/attributes/test_attribute.rb
+: 1288792750:0;cd test/attributes
+: 1288792757:0;grep -r OR .
+: 1288792766:0;less nodes/test_equality.rb
+: 1288792927:0;grep -r find_with_search .
+: 1288792962:0;less app/controllers/admin_controller.rb
+: 1288792979:0;grep -r search_entri .
+: 1288793003:0;grep -r entries .
+: 1288793014:0;less views/admin/entries.html.erb
+: 1288793030:0;rm views/admin/entries.html.erb
+: 1288793043:0;cd views/admin
+: 1288793048:0;less _entries_info.html.erb
+: 1288793053:0;rm _entries_info.html.erb
+: 1288793243:0;grep -r find_with_se .
+: 1288793318:0;grep -r find_by_con .
+: 1288797646:0;grep -r ! .
+: 1288797650:0;grep -r ÔºÅ .
+: 1288800776:0;grep -r entries_info .
+: 1288804268:0;grep -r lack_param .
+: 1288807223:0;grep -r TODO .
+: 1288807337:0;grep -r FIXME .
+: 1288807685:0;man wc
+: 1288807697:0;grep -r .
+: 1288807701:0;grep -r "" .
+: 1288807726:0;grep -r "" . | wc
+: 1288808258:0;git add app/*
+: 1288808273:0;git add db/*
+: 1288808278:0;git add db/migrate/*
+: 1288808283:0;git add sample/*
+: 1288809008:0;spork
+: 1288809264:0;grep "partial \""
+: 1288809268:0;grep -r "partial \"" .
+: 1288809272:0;grep -r "partial" .
+: 1288809280:0;grep -r "partial => \"" .
+: 1288809293:0;grep -r "partial => \"cus" .
+: 1288809423:0;grep -r "puts" .
+: 1288809429:0;grep -r "p " .
+: 1288809436:0;grep -r "put " .
+: 1288809439:0;grep -r "puts " .
+: 1288810233:0;grep -r "value_from_" .
+: 1288811134:0;grep -r "value_from_ne" .
+: 1288811157:0;less helpers/entry_helper.rb
+: 1288811671:0;grep -r value_from .
+: 1288813803:0;rake stats
+: 1288820912:0;mv hokuriku.zip h6.zip
+: 1288820918:0;mkdir b
+: 1288820923:0;mv h6.zip b
+: 1289040456:0;mv h8x.zip R
+: 1289040519:0;mv hokuriku old
+: 1289040534:0;cd old/
+: 1289040542:0;mv hokuriku hokurikua
+: 1289040549:0;mv hokurikua old
+: 1289040553:0;rm h3.zip
+: 1289040555:0;rm h5x.zip
+: 1289040559:0;unzip h8x.zip
+: 1289040633:0;rm -r spec/fixtures
+: 1289040882:0;port search mysql
+: 1289040899:0;sudo port install rb-mysql
+: 1289041343:0;sl
+: 1289041355:0;vi site-lisp/anything-project.el
+: 1289041962:0;mv site-lispsplit-root.el split-root.el
+: 1289041966:0;rm site-lispsplit-root.elc
+: 1289041969:0;mv split-root.el site-lisp
+: 1289043774:0;vi ../../.irbrc
+: 1289043794:0;sudo gem install wirble
+: 1289043830:0;vi ~/.irbrc
+: 1289045299:0;grep -r odd .
+: 1289047215:0;cd public/stylesheets
+: 1289047218:0;touch ie.css
+: 1289047378:0;rm ie.css
+: 1289050894:0;gem search nokogiri
+: 1289050905:0;gem search mysql
+: 1289059106:0;less 20100930104751_create_customer_infos.rb
+: 1289059251:0;rails g migration ChangeColumnsOfCustomerInfo
+: 1289059261:0;vi 20101106160055_change_columns_of_customer_info.rb
+: 1289060041:0;vi migrate/20100930104751_create_customer_infos.rb
+: 1289060896:0;rm 20101007132442_add_furigana_and_policy1_and_policy2_and_policy3_to_customer_info.rb 20101007132850_add_acc_date_and_close_date_and_close_result_and_close_reason_and_line_num_and_b_remarks_to_customer_info.rb 20101103122418_add_created_nttman_num_to_customer_infos.rb 20101106160055_change_columns_of_customer_info.rb
+: 1289061043:0;less sc
+: 1289061268:0;grep -r status_flag .
+: 1289062264:0;ruby hoge.rb
+: 1289063460:0;grep -r new_with_de .
+: 1289064514:0;grep -r strf .
+: 1289070986:0;rspec --drb spec/models/customer_info_spec.rb
+: 1289071017:0;rspec spec/models/customer_info_spec.rb
+: 1289071064:0;rake db:create RAILS_ENV=test
+: 1289144847:0;nkf --guess entries20101108004431.csv
+: 1289144850:0;emacs entries20101108004431.csv
+: 1289150043:0;rake db:migrate VERSION=0 RAILS_ENV=production
+: 1289150056:0;rake db:migrate RAILS_ENV=production
+: 1289150205:0;less production.rb
+: 1289150263:0;less development.rb
+: 1289150603:0;rm production.sqlite3
+: 1289150609:0;cp development.sqlite3 production.sqlite3
+: 1289150738:0;less public/stylesheets/all.css
+: 1289150771:0;less config/environments/production.rb
+: 1289150872:0;less config/routes.rb
+: 1289151020:0;vi config/environments/production.rb
+: 1289151336:0;less public/javascripts/datepicker-ja.js
+: 1289166871:0;cd db/migrate
+: 1289167024:0;du
+: 1289167046:0;rm development.log
+: 1289167052:0;rm h9.zip
+: 1289167079:0;zipcloak hokuriku.zip
+: 1289167106:0;mv hokuriku.zip h9.zip
+: 1289219178:0;m id_dsa_a id_dsa
+: 1289219185:0;prml
+: 1289219237:0;ssh prmlra2@main.ist.hokudai.ac.jp -l kanda
+: 1289219267:0;less ../.zshrc
+: 1289219303:0;mkdir now
+: 1289219307:0;mv id_rsa id_rsa.pub now
+: 1289219440:0;cp /Volumes/backup/Users/kanda/.ssh/id_rsa.pub .
+: 1289219492:0;less .zshrc
+: 1289219778:0;mv id_dsa id_dsa_a
+: 1289219886:0;rm id_rsa id_rsa.pub
+: 1289219907:0;mv id_dsa_a id_dsa
+: 1289219914:0;vi known_hosts
+: 1289219933:0;ssh kanda@prmlra1.main.ist.hokudai.ac.jp
+: 1289220071:0;ssh kanda@prmlra2.main.ist.hokudai.ac.jp
+: 1289220131:0;ssh prmlra3.main.ist.hokudai.ac.jp -l kanda
+: 1289220194:0;ssh prmlra.main.ist.hokudai.ac.jp -l kanda
+: 1289220209:0;cd /Volumes/backup/
+: 1289220212:0;cd Users
+: 1289220217:0;cd kanda/.ssh
+: 1289220235:0;cp /Volumes/backup/Users/kanda/.ssh/ls
+: 1289220253:0;mv known_hosts kh
+: 1289220256:0;ssh prmlra1.main.ist.hokudai.ac.jp -l kanda
+: 1289220301:0;cp /Volumes/backup/Users/kanda/.ssh/id_rsa .
+: 1289220745:0;ssh -v prmlra1.main.ist.hokudai.ac.jp -l kanda
+: 1289221261:0;less known_hosts
+: 1289221277:0;less kh
+: 1289221330:0;cd /Volumes/Macbook\ HD
+: 1289221344:0;cd /Volumes/backup
+: 1289221354:0;cd Users/kanda
+: 1289221390:0;mv id_dsa id_dsa_
+: 1289221419:0;less .ssh/known_hosts
+: 1289221452:0;cp .ssh/known_hosts ~/.ssh/
+: 1289221469:0;mv id_dsa_ id_dsa
+: 1289221549:0;less id_dsa_a
+: 1289221578:0;ssh prmlra2.main.ist.hokudai.ac.jp -l kanda
+: 1289221615:0;rvm set 1.9.2-head
+: 1289221666:0;cd now
+: 1289221677:0;mv id_rsa id_rsa_a
+: 1289221680:0;rvm use 1.9.2-head --default
+: 1289221700:0;mv id_rsa_a id_rsa
+: 1289221723:0;rm known_hosts
+: 1289221746:0;mv id_dsa id_dsa_b
+: 1289221748:0;less id_dsa
+: 1289221775:0;mv id_dsa_b id_dsa
+: 1289223045:0;touch pinqa.rb
+: 1289223064:0;sudo port install mecab
+: 1289225482:0;emacs pinqa.rb
+: 1289225546:0;gem list -r Mecab
+: 1289225551:0;gem list -r mecab
+: 1289225605:0;port search mecab
+: 1289225649:0;irb -v
+: 1289225664:0;rvm use 1.8.7-head --default
+: 1289225802:0;sudo port uninstall mecab
+: 1289225810:0;sudo port uninstall rb-mecab
+: 1289225818:0;sudo port deactivate mecab
+: 1289225853:0;sudo port install mecab +utf8
+: 1289226081:0;port search libxml
+: 1289226520:0;ruby pi
+: 1289226549:0;gem install nokogiri
+: 1289226647:0;exit
+: 1289227357:0;sudo port install mecab-ipadic-utf8
+: 1289227399:0;ruby v
+: 1289227407:0;ruby list
+: 1289227409:0;rvm list
+: 1289227499:0;sudo port install rb-mecab
+: 1289227516:0;sudo vi /opt/local/etc/mecabrc
+: 1289227529:0;mecab
+: 1289227627:0;vi pinqa.rb
+: 1289227656:0;port search rubygem
+: 1289227666:0;sudo port install rb-rubygems
+: 1289227683:0;reload
+: 1289227684:0;gem -v
+: 1289227691:0;sudo gem install nokogiri
+: 1289228498:0;ruby pinqa.rb | desc
+: 1289228801:0;ruby pinqa.rb | grep desc
+: 1289229131:0;rvm use 1.9.2
+: 1289229138:0;rvm use 1.9.2-head
+: 1289229446:0;ruby pinqa.rb | less
+: 1289229703:0;ruby pinqa.rb
+: 1289233760:0;ruby pinqa.rb ÁÉ¥∞ÁÉ¥∫
+: 1289254790:0;ruby pinqa.rb ÂÉ≥ÅÂ∑ÉΩ
+: 1289254832:0;ruby pinqa.rb ÊÉº≠ÂπÉ¨
+: 1289254839:0;ruby pinqa.rb ÊÉΩ±‰∫¨
+: 1289654638:0;mkdir sample_t
+: 1289654986:0;cd yusuke\ kanda
+: 1289661833:0;cd /Developer/Platforms/iPhoneSimulator.platform
+: 1289661836:0;cd Developer
+: 1289661838:0;cd Applications
+: 1289661844:0;open iPhone\ Simulator.app
+: 1289661862:0;cp -r iPhone\ Simulator.app /Applications
+: 1289662825:0;git clone https://github.com/appcelerator/KitchenSink.git
+: 1289954557:0;unzip h12.zip
+: 1289954634:0;rm -rf s
+: 1289954646:0;cd script
+: 1289954648:0;less rails
+: 1289954692:0;cd Do
+: 1289954744:0;mv database.yml database.yml.bak
+: 1289954756:0;cp c/config/database.yml config/database.yml
+: 1289954759:0;cd config/data
+: 1289954762:0;less config/database.yml
+: 1289958268:0;rm -rf c
+: 1289958290:0;rvm use system
+: 1289958303:0;rvm use ruby1.8.7-head
+: 1289958308:0;rvm use 1.8.7-head
+: 1289958333:0;emacs app/models/service.rb
+: 1289960098:0;rails g controller plans create update delete index
+: 1289960183:0;less admin_controller.rb
+: 1289960228:0;emacs plans_controller.rb
+: 1289960272:0;cd ho
+: 1289960308:0;rails g controller services create update delete index
+: 1289960332:0;emacs app/controllers/services_controller.rb
+: 1289960433:0;mv hokuriku hokurikuold
+: 1289960439:0;rm hokuriku.zip\ Folder
+: 1289960441:0;rm -rf hokuriku.zip\ Folder
+: 1289960445:0;rm -rf hokuriku.zip\ Folder.1
+: 1289960453:0;cd old
+: 1289960458:0;rm -rf old
+: 1289960468:0;mv hokuriku ../R
+: 1289960530:0;less linum.el
+: 1289969506:0;emacs app/controllers/admin_controller.rb
+: 1289970059:0;wget http://stud4.tuwien.ac.at/~e0225855/linum/linum.el
+: 1289970065:0;rm linum.el
+: 1289970069:0;mv linum.el.1 linum.el
+: 1289970121:0;less vline.el
+: 1289970422:0;cd vc
+: 1289970439:0;cd yasnippet
+: 1290030888:0;zip -r h13.zip hokuriku
+: 1290030897:0;zipcloak h13.zip
+: 1290172513:0;open iphone/Default.png
+: 1290172521:0;open iphone/appicon.png
+: 1290172528:0;open KS_nav_ui.png
+: 1290172631:0;open app.js
+: 1290172640:0;open -a Emacs app.js
+: 1290173050:0;rm -rf a
+: 1290173052:0;rm -rf b
+: 1290173058:0;rm -rf h13.zip
+: 1290173064:0;rm -rf h13.zip\ Folder
+: 1290173070:0;rm -rf h8x.zip h9.zip
+: 1290173074:0;rm -rf hokurikuold
+: 1290173078:0;cd sample_t
+: 1290173082:0;rm -rf sample_t
+: 1290173146:0;less Resources/app.js
+: 1290173164:0;less manifest
+: 1290173181:0;less build
+: 1290173196:0;grep -r default .
+: 1290173203:0;grep -r default_app .
+: 1290178298:0;vi conf/c-anything.el
+: 1290178336:0;git add .
+: 1290178417:0;emacs conf/c-buffer.el
+: 1290178681:0;mv ../../../Downloads/js2-20090723b.el .
+: 1290178686:0;mv js2-20090723b.el js2-mode.el
+: 1290178699:0;mv js2-mode.el site-lisp
+: 1290178713:0;mv js2-mode.el js2.e
+: 1290178717:0;mv js2.e js2.el
+: 1290178767:0;vi init.el
+: 1290178787:0;cd conf
+: 1290178798:0;touch c-prog.el
+: 1290178802:0;emacs c-prog.el
+: 1290178872:0;cd Korekue
+: 1290178879:0;emacs Resources/app.js
+: 1290178976:0;less c-prog.el
+: 1290178983:0;less init.el
+: 1290179095:0;vi env-cocoa.el
+: 1290179129:0;emacs conf/c-prog.el
+: 1290179169:0;emacs site-lisp/js2.el
+: 1290179226:0;cd site-i
+: 1290179834:0;mkdir Repositories
+: 1290179835:0;cd Repositories
+: 1290179839:0;git clone git://repo.or.cz/emacs.git
+: 1290179951:0;mkdir emacs
+: 1290179971:0;curl -O http://ftp.gnu.org/pub/gnu/emacs/emacs-23.2.tar.gz
+: 1290180129:0;cd emacs
+: 1290180135:0;wget ftp://ftp.math.s.chiba-u.ac.jp/emacs/emacs-23.2-mac-1.997.tar.gz
+: 1290180155:0;tar zxvf emacs-23.2-mac-1.997.tar.gz
+: 1290180158:0;cd emacs-23.2-mac-1.997
+: 1290180159:0;curl -O http://jaist.dl.sourceforge.jp/macemacsjp/47986/inline_patch-23.2-beta3.tar.gz
+: 1290180159:0;tar xvfz inline_patch-23.2-beta3.tar.gz
+: 1290180159:0;tar xvfz emacs-23.2.tar.gz
+: 1290180161:0;less README-mac
+: 1290180166:0;cd emacs-23.2
+: 1290180166:0;patch -p 0 < ../inline_patch-23.2-beta3/emacs-inline.patch
+: 1290180166:0;./configure --with-ns --without-x
+: 1290180194:0;make bootstrap
+: 1290181453:0;make install
+: 1290181533:0;less vc/auto-complete/auto-complete
+: 1290181535:0;less vc/auto-complete/auto-complete.el
+: 1290181566:0;cd nextstep
+: 1290181583:0;cd /Applications
+: 1290181595:0;mv Emacs.app/ ~/
+: 1290181607:0;mv Emacs.app /Applications
+: 1290181692:0;rm -rf Emacs.app
+: 1290224787:0;cd .emacs.d
+: 1290224790:0;cd site-lisp
+: 1290224792:0;`emacs -q --batch --eval '(byte-compile-file "js2-xxxx.el")'`
+: 1290224798:0;command emacs -q --batch --eval '(byte-compile-file "js2-xxxx.el")'
+: 1290224805:0;command emacs -q --batch --eval '(byte-compile-file "js2.el")'
+: 1290549893:0;less app/views/nttmen/sessions/new.html.erb
+: 1290549904:0;less config/locales/ja.yml
+: 1290550135:0;zip top.zip top.png
+: 1290550141:0;zipcloak top.zip
+: 1290630381:0;unzip h16.zip
+: 1290630418:0;mv ../Downloads/hokuriku .
+: 1290630453:0;emacs app/models/customer_info.rb
+: 1290631124:0;unzip ÂÉØÉ∂Ê¨°„Ç∑„Çπ„É£É¶„É£ÉÄ„É£Å„Çß„É£É£„ÇØ_20101124_HORII2.zip
+: 1290631136:0;cd jÃÇaÃÉ¶%E2V%E2X%E2e%E2%C7%E2\`%E2F%E2b%E2N_20101124_HORII2
+: 1290631141:0;open %FCy%F4Y%F2t%C4%E6%F9+%FCzjÃÇaÃÉ¶%E2V%E2X%E2e%E2%C7_%E8m%F6F_20101125.ppt
+: 1290631177:0;mv %FCy%F4Y%F2t%C4%E6%F9+%FCzjÃÇaÃÉ¶%E2V%E2X%E2e%E2%C7_%E8m%F6F_20101125.ppt a.ppt
+: 1290631180:0;open a.ppt
+: 1290631340:0;mv database.yml
+: 1290631344:0;mv database.yml db.yml
+: 1290631349:0;mv database.sqlite.yml database.yml
+: 1290631394:0;cd R/hokuriku
+: 1290634300:0;mv database.yml database.yml.sqlite
+: 1290634307:0;mv db.yml database.yml
+: 1290634322:0;zip -r h20.zip hokuriku
+: 1290634330:0;zipcloak h20.zip
+: 1290842742:0;ssh 10.0.1.12
+: 1290870046:0;vi ~/.ssh/known_hosts
+: 1290875708:0;ssh -v prmlra2.main.ist.hokudai.ac.jp -l kanda
+: 1290928183:0;rm -rf hokuriku.zip
+: 1290928219:0;rm -rf hokuriku
+: 1290928220:0;unzip h30.zip
+: 1290928327:0;lal
+: 1290928350:0;ks
+: 1290929182:0;less line.rb
+: 1291256296:0;grep -r /Users/user
+: 1291256298:0;grep -r /Users/user.
+: 1291256300:0;grep -r /Users/user .
+: 1291256353:0;vi manifest
+: 1291256380:0;grep -r "/Users/user" .
+: 1291256537:0;touch splush.js
+: 1291263163:0;grep -r "\$()" .
+: 1291263171:0;grep -r "$()" .
+: 1291263189:0;grep -r jquery .
+: 1291263200:0;grep jquery app.js
+: 1291263213:0;grep -r jquery . | less
+: 1291263238:0;less local_webview
+: 1291263241:0;less local_webview.html
+: 1291263688:0;touch db.js
+: 1291275297:0;touch events.js
+: 1291348621:0;less events.js ls
+: 1291348626:0;less tenpoimage.png
+: 1291349641:0;less search_details.js
+: 1291353602:0;less examples
+: 1291353607:0;less database
+: 1291353608:0;less database.js
+: 1291526676:0;ssh 10.0.1.12 -l kanda
+: 1291901137:0;unzip korekue.zip
+: 1291901188:0;rm -rf korekue
+: 1291901196:0;mv korekue ../
+: 1291901553:0;mv db.js events.js splush.js korekue/Resources
+: 1291931888:0;cd /Users/uskanda/Library/Application\ Support/iPhone\ Simulator/4.2/Applications/B9F99BE9-0015-4FBC-B3BC-3E5ADFDED8C0/
+: 1291931899:0;cd Library/Application\ Support/database
+: 1291931903:0;rm korekuedb.sql
+: 1291958997:0;open rank.png
+: 1292237676:0;cp histories.js ~/korekue/Resources/
+: 1292238266:0;mv search_details.js sdjs
+: 1292238271:0;cp ../../Downloads/search_details.js .
+: 1292238294:0;open ../../Downloads/search.js
+: 1292238416:0;diff ../../Downloads/search.js search
+: 1292238418:0;diff ../../Downloads/search.js search.js
+: 1292238421:0;diff ../../Downloads/search.js search.js | less
+: 1292238515:0;diff ../../Downloads/search.js search.js | grep -e "^<"
+: 1292238519:0;diff ../../Downloads/search.js search.js | grep -e "^<" | less
+: 1292238588:0;grep -r Ti.in .
+: 1292238632:0;touch search_restaurant_view.js
+: 1292238637:0;vi search_restaurant_view.js
+: 1292238785:0;cd korekue/Resources
+: 1292238824:0;less ../../Downloads/search.js
+: 1292375391:0;touch restaurants_list.js
+: 1292375395:0;emacs restaurants_list.js
+: 1292456626:0;less search
+: 1292471096:0;less db.js
+: 1292471107:0;vi db.js
+: 1292471330:0;find . | grep sqlite | grep kore
+: 1292471350:0;cd /Library/Application\ Support
+: 1292471358:0;cd Library/Application\ Support
+: 1292471450:0;find . | grep sqlite | grep ore
+: 1292471461:0;cd iPhone\ Simulator
+: 1292471476:0;grep -r sqlite .
+: 1292471484:0;grep -r sqlite . | less
+: 1292471529:0;find . | grep
+: 1292471532:0;find . | grep sqlite
+: 1292471570:0;cd Library/Application\ Support/iPhone\ Simulator
+: 1292471573:0;cd User/
+: 1292471579:0;cd Library
+: 1292471584:0;cd Media
+: 1292471744:0;grep -r INSERT .
+: 1292471813:0;grep -r Date .
+: 1292554057:0;less search.js
+: 1292557414:0;less search\ \(1\).js
+: 1292558625:0;rm -rf .
+: 1292558627:0;rm -rf *
+: 1292559228:0;vi tiapp.xml
+: 1292559793:0;less fukidashi.png
+: 1292559807:0;open -a Inkscape fukidashi.png
+: 1292560009:0;open fukidashi.png
+: 1292560035:0;open fukidashi2.png
+: 1292560058:0;mv fukidashi.png fukidashi_old.png
+: 1292560078:0;mv ~/fukidashi.png .
+: 1292814368:0;mv icon3030_46.png favorite_on.png
+: 1292814607:0;diff search.js ../../Downloads/search\ \(2\).js
+: 1292814753:0;diff search_details.js ../../Downloads/search\ \(2\).js
+: 1292814849:0;diff search_details.js ../../Downloads/search_details\ \(1\).js
+: 1292814877:0;rm search_details.js
+: 1292814887:0;mv ../../Downloads/search_details\ \(1\).js .
+: 1292814895:0;mv search_details\ \(1\).js search_details.js
+: 1292814907:0;less ../../Downloads/search_restaurant_view.js
+: 1292814920:0;diff search_restaurant_view.js ../../Downloads/search_restaurant_view.js
+: 1292814952:0;mv search_restaurant_view.js srv.js
+: 1292814958:0;mv ../../Downloads/search_restaurant_view.js .
+: 1292815267:0;cd KitchenSinki
+: 1292815293:0;less table_view_custom_rowdata.js
+: 1292815314:0;less table_view_delete.js
+: 1292815344:0;less table_view_delete_2.js
+: 1292815362:0;less table_view_edit_and_move.js
+: 1292815469:0;less table_view_touch.js
+: 1292815849:0;grep -r ImageView .
+: 1292816058:0;open -a Inkscape favorite_on.png
+: 1292876780:0;rm srv.js
+: 1292877819:0;grep -r "name ="
+: 1292877824:0;grep -r "name =" .
+: 1292879004:0;grep -r "update" .
+: 1292879009:0;grep -r "UPDATE" .
+: 1292879565:0;rm splush.js
+: 1292879710:0;open drawing.png
+: 1292879778:0;open Default.png
+: 1292880133:0;open search.js
+: 1292880972:0;cd examples
+: 1292974251:0;less histories.js
+: 1292976807:0;grep -r db.
+: 1292976808:0;grep -r db. .
+: 1292977045:0;grep -r execute .
+: 1292990876:0;open app_logo.png
+: 1292991256:0;grep -r logo .
+: 1292991262:0;less tiapp.xml
+: 1292992976:0;open appicon.png
+: 1292992986:0;grep -r icon .
+: 1292994806:0;grep -r delete .
+: 1292994811:0;grep -r DELETE .
+: 1292995994:0;grep -r image .
+: 1292996009:0;mv ~/fav* .
+: 1292996020:0;mv ~/black_fav.png .
+: 1292996023:0;mv ~/yellow_fav.png .
+: 1293110274:0;cd R/KitchenSink
+: 1293110276:0;cd KitchenSink
+: 1293110283:0;grep -r zIndex .
+: 1293110290:0;cd Resources/examples
+: 1293110296:0;less views_zindex.js
+: 1293111246:0;less activity_indicator.js
+: 1293131768:0;cd down
+: 1293131780:0;unzip h50.zip
+: 1293131816:0;emacs app/controllers/plans_controller.rb
+: 1293132045:0;less services_controller.rb
+: 1293132302:0;grep -r where .
+: 1293132969:0;cp database.yml database.yml.mysql2
+: 1293133002:0;less database.yml.sqlite
+: 1293133017:0;cp database.yml.sqlite ../../../Downloads/hokuriku/config
+: 1293133027:0;rm database.yml
+: 1293133032:0;mv database.yml.sqlite
+: 1293133037:0;mv database.yml.sqlite database.yml
+: 1293133114:0;grep -r services .
+: 1293133866:0;cd Downloads
+: 1293133886:0;cp services/edit.html.erb plans/edit.html.erb
+: 1293133892:0;emacs plans/edit.html.erb
+: 1293136097:0;cd Downloads/hokuriku
+: 1293136879:0;cp admin.html.erb services.html.erb
+: 1293136885:0;cp admin.html.erb plans.html.erb
+: 1293146568:0;grep -r clear_inpu .
+: 1293147454:0;zip -r h60.zip hokuriku
+: 1293147908:0;cp h60.zip /Volumes/BSD\ IDEA
+: 1296974579:0;ssh -v 133.87.136.145 -l kanda
+: 1297513707:0;say pst
+: 1297513711:0;say psst
+: 1297513714:0;say pssst
+: 1297519000:0;which zsh
+: 1297887918:0;open plan2.png
+: 1297887934:0;open plan.png
+: 1297887997:0;zip p.zip plan2.png
+: 1297888009:0;zipcloak p.zip
+: 1300500131:0;rails new radiation_map
+: 1300500196:0;rails g controller top index
+: 1300500341:0;wget http://code.google.com/intl/ja/apis/maps/documentation/javascript/examples/map-simple.html
+: 1300500426:0;tmux
+: 1300500463:0;ps aux ruby
+: 1300500474:0;kill 26467
+: 1300500482:0;kill -9 26467
+: 1300500535:0;cd Products/ra
+: 1300500538:0;cd Products/radiation_map
+: 1300500548:0;less map-simple.html
+: 1300501852:0;mv line Dropbox/Products/radiation_map/public/images
+: 1300501856:0;mv line.png Dropbox/Products/radiation_map/public/images
+: 1300501863:0;vi map-simple.html
+: 1300501935:0;d
+: 1300501937:0;cd Products
+: 1300504661:0;vi config/database.yml
+: 1300504675:0;rake db:create
+: 1300504746:0;rails generate -h
+: 1300504946:0;rails generate model CounterLocation name:string latitude:float longitude:float
+: 1300505085:0;rails generate model Measurand counter_location_id:integer measured_at:datetime value:float
+: 1300505140:0;emacs counter_location.rb
+: 1300505217:0;emacs top_controller.rb
+: 1300505234:0;rm map-simple.html
+: 1300509005:0;less counter_location.rb
+: 1300511171:0;E
+: 1300514099:0;rm line.png
+: 1300514108:0;mv ~/gra_bar.png .
+: 1300514111:0;mv gra_bar.png line.png
+: 1300514183:0;open line.png
+: 1300517761:0;touch top.html.erb
+: 1300518253:0;git init
+: 1300518257:0;git add -a
+: 1300518326:0;rails generate scaffold CounterLocations
+: 1300518376:0;rm 20110319032228_create_counter_locations.rb 20110319032447_create_measurands.rb
+: 1300518394:0;rails generate scaffold CounterLocation name:string latitude:float longitude:float
+: 1300518417:0;rails generate scaffold Measurand counter_location_id:integer measured_at:datetime value:float
+: 1300520300:0;emacs measurands_controller.rb
+: 1300520335:0;cd Researches
+: 1300523564:0;bundle install
+: 1300523587:0;rails generate jquery:install | less
+: 1300523655:0;gem update
+: 1300748587:0;rails generate jquery:install
+: 1300748632:0;sudo gem update
+: 1300748664:0;sudo rails generate jquery:install
+: 1300748799:0;sudo rails generate jquery:install --ui
+: 1300748944:0;grep -r config .
+: 1300748951:0;grep -r config . | grep javascript
+: 1300749591:0;touch graph.html
+: 1300749593:0;vi graph.html
+: 1300749616:0;mv graph.html sample.html
+: 1300750425:0;chmod 644 rails.js
+: 1300750431:0;chmod 644 jquery.colorbox.js
+: 1300750435:0;chmod 644 jquery.colorbox-min.js
+: 1300750481:0;mv jquery.colorbox-min.js jquery.min.js ../
+: 1300752216:0;emacs colorbox.css
+: 1300752477:0;emacs sample.html
+: 1300755925:0;rm jquery.colorbox-min.js
+: 1300761151:0;grep -r graph_back .
+: 1300761712:0;cp graph.html ~/Dropbox/Products/radiation_map/public
+: 1300761748:0;rm sample.html
+: 1300761757:0;rm jquery.colorbox.js
+: 1300761980:0;cd img
+: 1300761984:0;less graph_back.png
+: 1300762073:0;cd css
+: 1300762088:0;mv fancybox ~/Dropbox/Products/radiation_map/public/stylesheets
+: 1300762510:0;less counter_locations_controller.rb
+: 1300762829:0;less rails.js
+: 1300762863:0;wget http://code.jquery.com/jquery-1.4.2.min.js
+: 1300762867:0;rm jquery.js
+: 1300763040:0;cd app/controllers
+: 1300763045:0;emacs counter_locations_controller.rb
+: 1300763134:0;touch graph.html.erb
+: 1300763136:0;emacs graph.html.erb
+: 1300768557:0;less entry_controller.rb
+: 1300768765:0;cd entry
+: 1300768767:0;less import.html.erb
+: 1300768779:0;less search.html.erb
+: 1300768787:0;less _import_box.html.erb
+: 1300768808:0;touch import.html.erb
+: 1300768810:0;emacs import.html.erb
+: 1300769154:0;cd conn
+: 1300769422:0;less environment
+: 1300770063:0;less server.log
+: 1300770066:0;less development.log
+: 1300770111:0;cd ridi
+: 1300770113:0;cd redi
+: 1300770132:0;mv jquery-1.4.2.min.js jquery.js
+: 1300770251:0;less app/controllers/measurands_controller.rb
+: 1300770654:0;grep -r FasterCSV .
+: 1300770665:0;grep -r Faster .
+: 1300770668:0;grep -r faster .
+: 1300770689:0;bundle
+: 1300771314:0;rm development.sqlite3
+: 1300774017:0;rails generate migration AddNormalMinAndNormalMaxToCountLocation
+: 1300774026:0;less db/migrate/20110322060659_add_normal_min_and_normal_max_to_count_location.rb
+: 1300774064:0;rm db/migrate/20110322060659_add_normal_min_and_normal_max_to_count_location.rb
+: 1300774099:0;rails generate migration AddNormalMinAndNormalMaxToCountLocation normal_max:float normal_min:float
+: 1300774108:0;less db/migrate/20110322060821_add_normal_min_and_normal_max_to_count_location.rb
+: 1300774142:0;rm db/migrate/20110322060821_add_normal_min_and_normal_max_to_count_location.rb
+: 1300774146:0;less db/migrate/20110322060821_add_normal_min_and_normal_max_to_counter_location.rb
+: 1300774153:0;rails generate migration AddNormalMinAndNormalMaxToCounterLocation normal_max:float normal_min:float
+: 1300774158:0;rake db:migraste
+: 1300774707:0;vi scaffold.css
+: 1300774910:0;cd 222
+: 1300774915:0;open -a Emacs index.html
+: 1300775295:0;cp css/original.css ~/Dropbox/Products/radiation_map/public/stylesheets
+: 1300775427:0;cp img/graph_back.png ~/Dropbox/Products/radiation_map/public/images
+: 1300775475:0;vi public/stylesheets/original.css
+: 1300777819:0;cp css/fancybox/jquery.fancybox-1.3.4.css ~/Dropbox/Products/radiation_map/public/stylesheets/fancybox
+: 1300777965:0;vi fancybox/jquery.fancybox-1.3.4.css
+: 1300787426:0;time
+: 1300788213:0;vi counter_locations_controller.rb
+: 1300788296:0;find . | grep name
+: 1300788301:0;find . | grep html
+: 1300788306:0;less 8.html
+: 1300788323:0;rm 8.html 9.html
+: 1300788511:0;cp img/q.png ~/Dropbox/Products/radiation_map/public/images
+: 1300790948:0;cp housha0315_0318.csv housha0315_03xxx.csv
+: 1300790953:0;vi housha0315_03xxx.csv
+: 1300792822:0;-
+: 1300793230:0;cd .ssh
+: 1300793237:0;mv id_dsa id_dsa_main
+: 1300793273:0;chmod 600 id_dsa
+: 1300793275:0;mv id_dsa .ssh
+: 1300793287:0;ssh -A bwa101.goo.ne.jp
+: 1300795380:0;cd lay
+: 1300796244:0;git add *
+: 1300796264:0;git add app/* public/*
+: 1300799079:0;ping 192.168.11.1
+: 1300840418:0;cp arrow-down.gif arrow-left.gif arrow-right.gif arrow-up.gif banner.gif graph_back.png graph_link.gif houshasen.jpg q.gif q.png zoom_in.gif zoom_in.png zoom_out.gif zoom_out.png ~/Dropbox/Products/radiation_map/public/images
+: 1300840437:0;cp ../stylesheets/original.css ~/Dropbox/Products/radiation_map/public/stylesheets
+: 1300840684:0;vi original.css
+: 1300841565:0;Desktop/goo_20110322_utf8_r1
+: 1300841600:0;cp graph2.html ~/Dropbox/Products/radiation_map/app/views/counter_locations/
+: 1300841629:0;mv graph2.html integrating_graph.html.erb
+: 1300841632:0;emacs integrating_graph.html.erb
+: 1300842332:0;touch _graph_header.html.erb
+: 1300842335:0;emacs _graph_header.html.erb
+: 1300842680:0;less stylesheets/original.css
+: 1300843958:0;rm _graph_header.html.erb
+: 1300844574:0;cd js
+: 1300854484:0;touch test.rb
+: 1300856403:0;cp import.html.erb import_fukushima.html.erb
+: 1300856412:0;vi import_fukushima.html.erb
+: 1300856540:0;cd pu
+: 1300857853:0;cd Dropbox/Products
+: 1300857906:0;vi test.rb
+: 1300857924:0;ruby test.rb
+: 1300859680:0;cp -r goo_20110323_utf8 ~/Desktop
+: 1300859683:0;cd ~/Desktop
+: 1300859686:0;cd goo_20110322_utf8_r1
+: 1300860379:0;cd goo_20110323_utf8
+: 1300863803:0;cd goo_20110323_utf8_r1
+: 1300863847:0;cp images/gooicon.ico images/graph_back.png ~/Dropbox/Products/radiation_map/public/images
+: 1300865275:0;less database.yml
+: 1300872739:0;rails -v
+: 1300873130:0;grep -r html .
+: 1300873268:0;vi app/views/layouts
+: 1300873274:0;cd app/views/layouts
+: 1300873278:0;emacs top.html.erb
+: 1300874568:0;ruby -v
+: 1300875386:0;rake route
+: 1300875389:0;rake routes
+: 1300876932:0;emacs application_controller.rb
+: 1300880603:0;rm db/development.sqlite3
+: 1300882317:0;rm graph.html index.html top.html
+: 1300882323:0;rm 11.html 12.html 13.html 16.html 20.html 21.html 24.html 8.html 9.html
+: 1300882326:0;rm 16.html 21.html 24.html 8.html
+: 1300882713:0;rm .DS_Store arrow-down.gif arrow-left.gif arrow-right.gif arrow-up.gif banner.gif gooicon.ico graph_back.png graph_link.gif houshasen.jpg line.png q.gif q.png zoom_in.gif zoom_in.png zoom_out.gif zoom_out.png
+: 1300882752:0;cp arrow-down.gif arrow-left.gif arrow-right.gif arrow-up.gif gooicon.ico graph_back.png graph_link.gif graph_ref.png houshasen.jpg logo_resonant.gif zoom_in.gif zoom_out.gif ~/Dropbox/Products/radiation_map/public/images
+: 1300882763:0;chmod 644 arrow-down.gif arrow-left.gif arrow-right.gif arrow-up.gif gooicon.ico graph_back.png graph_link.gif graph_ref.png houshasen.jpg logo_resonant.gif zoom_in.gif zoom_out.gif
+: 1300883108:0;chmod 644 original.css
+: 1300883166:0;cp original.css ~/Dropbox/Products/radiation_map/public/stylesheets
+: 1300883189:0;chown 644 original.css
+: 1300884448:0;cd integrating_graph
+: 1300884455:0;rm 10.html
+: 1300884506:0;cd stylesheets
+: 1300884508:0;cd fancybox
+: 1300884892:0;open graph.html
+: 1300884897:0;open -a Emacs graph.html
+: 1300886827:0;cd cou
+: 1300886831:0;cd views/counter_locations
+: 1300886835:0;chmod 644 integrating_graph.html.erb
+: 1300886847:0;cp import_fukushima.html.erb import_locations.html.erb
+: 1300886850:0;vi import_locations.html.erb
+: 1300889164:0;less idokeido0323.csv
+: 1300924994:0;rails s -e production
+: 1300939322:0;cd Desktop/goo_20110323_utf8_r2
+: 1300941026:0;rm radiation_map.zip
+: 1300941036:0;rm radiation_map
+: 1300941040:0;cd log
+: 1300941043:0;rm development.log production.log
+: 1301019153:0;cd raq
+: 1301019227:0;emacs database.yml
+: 1301019899:0;cp index.html.erb visual_check.html.erb
+: 1301019903:0;emacs visual_check.html.erb
+: 1301020828:0;port search poppler
+: 1301020834:0;port install poppler
+: 1301020840:0;sudo port install poppler
+: 1301026468:0;vi
+: 1301026483:0;rails new a
+: 1301026485:0;cd a
+: 1301026487:0;less Gemfile
+: 1301031991:0;cd vi
+: 1301032022:0;mv visual_check.html.erb confirm_import.html.erb
+: 1301032028:0;emacs confirm_import.html.erb
+: 1301032381:0;cd pro
+: 1301033559:0;cd views/measurands
+: 1301033562:0;less confirm_import.html.erb
+: 1301033581:0;less ../controllers/measurands_controller.rb
+: 1301034342:0;vi environment.rb
+: 1301034683:0;grep -r Tokyo .
+: 1301035149:0;less routes.rb
+: 1301035531:0;cd ../views
+: 1301035545:0;cp index.html.erb create_all.html.erb
+: 1301035547:0;vi create_all.html.erb
+: 1301037575:0;la
+: 1301037874:0;rake db:migrate VERSION=0
+: 1301038285:0;cd environments
+: 1301038287:0;vi development.rb
+: 1301038345:0;cd /Volumes
+: 1301038347:0;cd BSD\ IDEA
+: 1301038358:0;cd csv
+: 1301038374:0;vi housha0320.csv
+: 1301038499:0;open -a Emacs housha0320.csv
+: 1301038533:0;less housha0320.csv
+: 1301038543:0;mv housha_test.csv
+: 1301038563:0;mv housha0320.csv test.csv
+: 1301039564:0;mv radiation_map radiation_map_import
+: 1301039572:0;unzip radiation_map.zip
+: 1301039669:0;vi top/index.html.erb
+: 1301039744:0;less index.html.erb
+: 1301039762:0;rm index_kanda.html.erb
+: 1301039840:0;rm hoge.js
+: 1301040334:0;touch sweep.html.erb
+: 1301040337:0;vi sweep.html.erb
+: 1301040356:0;vi top_controller.rb
+: 1301040360:0;vi measurands_controller.rb
+: 1301041193:0;vi environments/development.rb
+: 1301041199:0;cd ra
+: 1301041214:0;vi models/measurand.rb
+: 1301041244:0;vi controllers/measurands_controller.rb
+: 1301041418:0;kill -9 2099
+: 1301041443:0;ps aux | grep ruby
+: 1301041448:0;kill -9 2148
+: 1301041671:0;w3m localhost:3000
+: 1301041693:0;vi database.yml
+: 1301041724:0;kill -9 2153
+: 1301041782:0;cp Gemfile Gemfile.mysql
+: 1301041784:0;vi Gemfile
+: 1301042106:0;vi measurand.rb
+: 1301042176:0;emacs measurand.rb
+: 1301042522:0;ls -al
+: 1301042524:0;cd graph
+: 1301042599:0;top
+: 1301042614:0;psg ruby
+: 1301043373:0;zip -r radiation_map.zip radiation_map
+: 1301043406:0;mv radiation_map.zip radiation_map2.zip
+: 1301043416:0;mv radiation_map2.zip /Volumes/BSD\ IDEA
+: 1301044844:0;mv 1303577_6_2.pdf radiation_map/public
+: 1301044847:0;cd radiation_map/public
+: 1301045277:0;rm radiation_map3.zip
+: 1301045312:0;zip -r radiation_map3.zip radiation_map
+: 1301306892:0;mv radiation_map radiation_map_03281908
+: 1301306895:0;unzip radiation_map
+: 1301306924:0;git add public/ app/ db/ test/
+: 1301307408:0;vi counter_location.rb
+: 1301308100:0;vi config/environments/development.rb
+: 1301308151:0;emacs app/views/top/index.html.erb
+: 1301308248:0;rm public/index.html
+: 1301308606:0;rm -rf graph
+: 1301309208:0;mv jquery.min.js javascripts
+: 1301309235:0;cd con
+: 1301400948:0;emacs index.html.erb
+: 1301474654:0;git diff app/models/counter_location.rb
+: 1301474667:0;git diff app/models/measurand.rb
+: 1301474689:0;git diff app/views/top/index.html.erb
+: 1301474728:0;vi app/views/top/index.html.erb
+: 1301475417:0;cp index.html.erb index.html.erb.new
+: 1301475439:0;git checkout index.html.erb
+: 1301475466:0;git diff top/index.html.erb
+: 1301475479:0;mv index.html.erb.old
+: 1301475485:0;mv index.html.erb index.html.erb.old
+: 1301475762:0;mkdir test
+: 1301475767:0;cp radiation_map4.zip test
+: 1301475772:0;cd test
+: 1301475776:0;unzip radiation_map4.zip
+: 1301475818:0;mv index.html.erb index.html.erb.new
+: 1301475829:0;xcd
+: 1301475856:0;cp app/views/top/index.html.erb ../radiation_map/app/views/top
+: 1301475863:0;cp app/views/top/index.html.erb ../../radiation_map/app/views/top
+: 1301475903:0;cp app/views/top/index.html.erb /Users/uskanda/radiation_map/app/views/top
+: 1301475906:0;git log
+: 1301475908:0;git diff index.html.erb
+: 1301476160:0;diff . ../../radiation_map
+: 1301476166:0;diff -r . ../../radiation_map
+: 1301476357:0;cd test/radiation_map
+: 1301476378:0;cp db/development.sqlite3 ../../../uskanda/radiation_map/db
+: 1301476399:0;git diff
+: 1301476482:0;mv jquery-ui.min.js javascripts
+: 1301476635:0;mv jquery.min.js ../
+: 1301476640:0;mv jquery-ui.min.js ../
+: 1301476708:0;l
+: 1301476714:0;rm index.html.erb
+: 1301476718:0;mv index.html.erb.new index.html.erb
+: 1301476720:0;rm index.html.erb.old
+: 1301481872:0;grep -r measured_since .
+: 1301483338:0;less migrate/20101108043423_add_index_to_lines_and_b_lines.rb
+: 1301483453:0;less db/migrate/20101014123437_add_company_and_department_and_section_and_team_to_nttmen.rb
+: 1301483456:0;less db/migrate/20101108043423_add_index_to_lines_and_b_lines.rb
+: 1301483488:0;rails generate migration AddIndex
+: 1301560906:0;cd counter_locations
+: 1301560909:0;less graph.html.erb
+: 1301561527:0;open public/images/houshasen.jpg
+: 1301566113:0;cp import.html.erb import_common.html.erb
+: 1301566116:0;vi import_common.html.erb
+: 1301566891:0;cd locales
+: 1301566910:0;less environment.rb
+: 1301566924:0;grep -r ja .
+: 1301567302:0;cp imported_common.html.erb
+: 1301567305:0;touch imported_common.html.erb
+: 1301567316:0;cd radiation_map_import
+: 1301567327:0;less app/views/measurands/confirm_import.html.erb
+: 1301567356:0;emacs app/views/measurands/confirm_import.html.erb
+: 1301567654:0;git add app/ db/
+: 1301567703:0;mv Gemfile Gemfile.sqlite
+: 1301567709:0;mv Gemfile.mysql Gemfile
+: 1301567786:0;zip -r radiation_map5.zip radiation_map
+: 1301637599:0;rm 20110401055931_add_temp_to_mesurands.rb
+: 1301637613:0;rails g migration AddTempToMesurands temp:boolean
+: 1301637635:0;vi db/migrate/20110401060015_add_temp_to_mesurands.rb
+: 1301637659:0;rm db/migrate/20110401060015_add_temp_to_mesurands.rb
+: 1301637664:0;rails g migration AddTempToMeasurands temp:boolean
+: 1301637681:0;vi db/migrate/20110330111130_add_index.rb
+: 1301637689:0;vi db/migrate/20110401060106_add_temp_to_measurands.rb
+: 1301637758:0;touch swap_gemfile.sh
+: 1301637760:0;vi swap_gemfile.sh
+: 1301637781:0;rm swap_gemfile.sh
+: 1301637788:0;mv Gemfile Gemfile.mysql
+: 1301637795:0;mv Gemfile.sqlite Gemfile
+: 1301641021:0;touch _map.html.erb
+: 1301641332:0;touch _goo_header.html.erb
+: 1301641334:0;emacs _goo_header.html.erb
+: 1301641476:0;touch _goo_footer.html.erb
+: 1301641479:0;emacs _goo_footer.html.erb
+: 1301641623:0;touch _goo_search_area.html.erb
+: 1301641627:0;emacs _goo_search_area.html.erb
+: 1301642705:0;vi application.rb
+: 1301643119:0;cd abe_20110322
+: 1301643149:0;cd Desktop
+: 1301643153:0;cd goo_20110323_utf8_r2
+: 1301643173:0;less graph.html
+: 1301643631:0;cd layouts
+: 1301643884:0;less map_rad.js
+: 1301643944:0;cd toop
+: 1301644080:0;touch map_rad.js
+: 1301644813:0;cd app/views
+: 1301644815:0;cd layouts/ls
+: 1301644816:0;cd layouts/
+: 1301644852:0;touch counter_locations.html.erb
+: 1301644854:0;emacs counter_locations.html.erb
+: 1301644898:0;rm counter_locations.html.erb
+: 1301644953:0;less application.html.erb
+: 1301644964:0;cp top.html.erb application.html.erb
+: 1301644965:0;vi application.html.erb
+: 1301645092:0;vi top.html.erb
+: 1301645103:0;rm application.html.erb
+: 1301645281:0;vi _goo_style.html.erb
+: 1301645305:0;touch _goo_style.html.erb
+: 1301645306:0;emacs _goo_style.html.erb
+: 1301645608:0;mv top.html.erb application.html.erb
+: 1301645811:0;less Desktop/goo_20110323_utf8_r2
+: 1301645814:0;less Desktop/goo_20110323_utf8_r2/index.html
+: 1301645817:0;less Desktop/goo_20110323_utf8_r2/graph.html
+: 1301646188:0;vi config/environment.rb
+: 1301646194:0;vi config/application.rb
+: 1301646222:0;git status
+: 1301646233:0;git add app/ db/ public/
+: 1301646236:0;git commit -a
+: 1301646342:0;grep -r values_for_flot .
+: 1301647011:0;cd rou
+: 1301648164:0;unzip rad_20110401.zip
+: 1301648175:0;open area_1.gif
+: 1301648182:0;open area_2.gif
+: 1301648215:0;grep -r area_1.gif .
+: 1301825166:0;emacs index.html
+: 1301825198:0;emacs map_rad.js
+: 1301832596:0;cp area_1.gif area_2.gif npp_mrkr.gif ../radiation_map/public/images
+: 1301832669:0;cd abe0328
+: 1301832698:0;mv kouka.gif josui.gif radiation_map/public/images
+: 1301835813:0;emacs original.css
+: 1301835830:0;diff original.css ../radiation_map/public/stylesheets/original.css
+: 1301835836:0;diff original.css ../radiation_map/public/stylesheets/original.css | less
+: 1301835898:0;diff original.css ../radiation_map/public/stylesheets/original.css | grep -e "^<"
+: 1301835901:0;diff original.css ../radiation_map/public/stylesheets/original.css | grep -e "^<" | less
+: 1301836187:0;cd lib
+: 1301837805:0;rails g model MeasuringType code:integer name:string unit:string unit_ja:string
+: 1301840165:0;vi migrate/20110403133648_create_measuring_types.rb
+: 1301842035:0;less db/migrate/20110403133648_create_measuring_types.rb
+: 1301842969:0;vi db/migrate/20110403133648_create_measuring_types.rb
+: 1301842992:0;rails
+: 1301847816:0;ifconfig
+: 1301848563:0;vi config/routes.rb
+: 1301875250:0;cd public/images
+: 1301901352:0;less jquery.js
+: 1301901370:0;cd javascripts
+: 1301901381:0;less all.js
+: 1301901385:0;rm all.js
+: 1301903002:0;less migrate/20110403133648_create_measuring_types.rb
+: 1301903043:0;less db/schema.rb
+: 1301903056:0;less schema.rb
+: 1301906684:0;vi 20110403133648_create_measuring_types.rb
+: 1301906752:0;mv 20110403133648_create_measuring_types.rb migrate
+: 1301906777:0;mv 20110403133648_create_measuring_types.rb .../
+: 1301906779:0;mv 20110403133648_create_measuring_types.rb ../
+: 1301906797:0;cp 20110403133648_create_measuring_types.rb migrate
+: 1301906812:0;rails destroy model MeasuringType
+: 1301907128:0;rails g migration AddTypeToCounterLocations type:string
+: 1301907339:0;grep -r Measurands .
+: 1301907342:0;grep -r Measurand .
+: 1301913371:0;rake db:rollback
+: 1301913377:0;cd migrate
+: 1301913383:0;vi 20110404085210_add_type_to_counter_locations.rb
+: 1301913465:0;rake db:migrate
+: 1301916620:0;cd rad
+: 1301916667:0;cd rad_20110401
+: 1301916669:0;less index.html
+: 1301973282:0;rails new hoge
+: 1301973284:0;cd hoge
+: 1301973287:0;grep -r hoge .
+: 1301973293:0;grep -r Hoge .
+: 1301973346:0;rm -rf hoge
+: 1302221992:0;grep -r filter .
+: 1302222341:0;rails s
+: 1302226072:0;cp index.html.erb staging.html.erb
+: 1302226075:0;emacs staging.html.erb
+: 1302226139:0;cd controllers
+: 1302226604:0;cd measurands
+: 1302226613:0;less imported_common.html.erb
+: 1302229015:0;emacs import_common.html.erb
+: 1302241805:0;emacs imported_common.html.erb
+: 1302253104:0;cd R/
+: 1302253106:0;cd hokuriku
+: 1302253108:0;cd app/models
+: 1302253111:0;less nttman.rb
+: 1302475616:0;cd db
+: 1302475625:0;less migrate/20110404085210_add_type_to_counter_locations.rb
+: 1302476001:0;cd models
+: 1302476005:0;grep -r catch .
+: 1302476008:0;grep -r try .
+: 1302476014:0;grep -r raise .
+: 1302476017:0;less customer_info.rb
+: 1302476127:0;cp import_auto.html.erb
+: 1302476129:0;touch import_auto.html.erb
+: 1302476133:0;emacs import_auto.html.erb
+: 1302476564:0;emacs _map.html.erb
+: 1302503410:0;cd config
+: 1302506656:0;mkdir rrr
+: 1302506660:0;mv radiation_map5.zip rrr
+: 1302506662:0;cd rrr
+: 1302506664:0;unzip radiation_map5.zip
+: 1302508226:0;s
+: 1302508352:0;vi routes.rb
+: 1302508684:0;zip -r radiation_map6.zip radiation_map
+: 1302509461:0;rails c
+: 1302511715:0;irb
+: 1302563501:0;cd mobile
+: 1302563504:0;cd radiationmap
+: 1302563560:0;rm -rf radiation_map
+: 1302563570:0;cd build
+: 1302564372:0;cd iphone
+: 1302564383:0;less favorite
+: 1302564385:0;less favorites.js
+: 1302564484:0;touch graph.js
+: 1302564585:0;emacs graph.js
+: 1302590077:0;mv radiation_map radiation_map_a
+: 1302590083:0;unzip radiation_map8.zip
+: 1302590158:0;touch idea
+: 1302590159:0;vi idea
+: 1302590846:0;emacs README
+: 1302837393:0;ls -altr | grep kore
+: 1302837399:0;cd r
+: 1302837414:0;cd Dropbox
+: 1302837421:0;find . -name korekue
+: 1302837432:0;find . -name ".korekue"
+: 1302837436:0;find . -name ".*korekue"
+: 1302837441:0;find . | grep korekue
+: 1302837449:0;find . -name Misc
+: 1302837451:0;find . -name Miscs
+: 1302837472:0;cd R
+: 1302837479:0;find . G kore
+: 1302837486:0;cd mo
+: 1302838032:0;vi app.js
+: 1302838130:0;less app.js
+: 1303081217:0;cd korekue
+: 1303081219:0;ls -alt
+: 1303081225:0;cd Resources
+: 1303081232:0;emacs app.js
+: 1303446594:0;lls
+: 1303446597:0;cd views
+: 1303446607:0;cd top
+: 1303446902:0;cd radiation_map
+: 1303446903:0;cd app
+: 1303446910:0;cd ..
+: 1303446915:0;rm index.html
+: 1303446938:0;vi app/controllers/top_controller.rb
+: 1303446982:0;vi app/views/top/_map.html.erb
+: 1303447020:0;cd radiation_map/app/views/top
+: 1303447023:0;vi index.html.erb
+: 1303447036:0;vi _map.html.erb
+: 1303447063:0;emacs app/views/top/_map.html.erb
+: 1303447197:0;cd public
+: 1303447202:0;cd images
+: 1303447210:0;cp area_1.gif area_3.gif
+: 1303447213:0;open area_3.gif
+: 1303447239:0;open -a Inkscape area_3.gif
+: 1303447599:0;open area_3.png
+: 1303450109:0;cd /Volumes/BSD\ IDEA
+: 1303450113:0;mkdir hoge
+: 1303450126:0;cd
+: 1303450130:0;mkdir update_rad
+: 1303450139:0;cd update_rad
+: 1303450156:0;cp area_3.gif ~/update_rad
+: 1303450167:0;cp _map.html.erb ~/update_rad
+: 1303450194:0;zip -r update_rad.zip update_rad
+: 1303589301:0;psg Google
+: 1303589323:0;psg Google L
+: 1303589398:0;psg SearchBox L
+: 1303589401:0;psg SearchBox
+: 1303589409:0;killall 143
+: 1303589414:0;kill -q 143
+: 1303589417:0;kill -9 143
+: 1303589465:0;kill -9 1506
+: 1303589499:0;psg Search
+: 1303589502:0;kill -9 1521
+: 1303606587:0;open .
+: 1303606603:0;mkdir unclassified
+: 1303606608:0;mv db.js events.js hogejs jquery-ui.js jquery.colorbox.js jquery.js splush.js unclassified
+: 1303606619:0;mv fukidashi.pdf unclassified
+: 1303606623:0;open drawing
+: 1303606624:0;open drawing-1.png
+: 1303606630:0;rm drawing-1.png
+: 1303606638:0;unzip p
+: 1303606648:0;mv p.zip unclassified
+: 1303606652:0;less idea
+: 1303627990:0;ls -altr
+: 1303627992:0;ls
+: 1303627997:0;ssh 163.43.176.39
+: 1303737492:0;java
+: 1303737495:0;java -v
+: 1303737498:0;java --version
+: 1303737502:0;javac -v
+: 1303737507:0;javac --version
+: 1303737531:0;man java
+: 1303737540:0;java -version
+: 1303737552:0;javac -version
+: 1303737755:0;/Users/uskanda/Downloads/android-sdk-mac_x86/tools/android ; exit;
+: 1303738284:0;df
+: 1303741582:0;ls
+: 1303742629:0;adb uninstall com.example.android.apis
+: 1303742633:0;reload
+: 1303742635:0;adb uninstall com.example.android.apis
+: 1303742650:0;cd Downloads
+: 1303742651:0;ls
+: 1303742656:0;cd android-sdk-mac_x86
+: 1303742657:0;ls
+: 1303742660:0;cd tools
+: 1303742660:0;ls
+: 1303742668:0;less adb_has_moved.txt
+: 1303742674:0;ls
+: 1303742675:0;cd ..
+: 1303742676:0;ls
+: 1303742677:0;cd platform
+: 1303742679:0;cd platform-tools
+: 1303742680:0;ls
+: 1303742692:0;./adb uninstall com.example.android.apis
+: 1303995844:0;ls
+: 1303995876:0;cd
+: 1303995877:0;ls
+: 1303995881:0;open .
+: 1303997674:0;ls
+: 1304337243:0;open -a YoruFukurou
+: 1304734026:0;ls
+: 1304734031:0;ls -al
+: 1304734032:0;ls
+: 1304734284:0;cd .emacs.d
+: 1304734284:0;ls
+: 1304734289:0;cd ..
+: 1304734290:0;ls
+: 1304734293:0;cd ..
+: 1304734296:0;cd
+: 1304734309:0;ls
+: 1304734313:0;open -a Emacs
+: 1304734487:0;ls
+: 1304734494:0;curl -O http://ftp.gnu.org/pub/gnu/emacs/emacs-23.3.tar.bz2
+: 1304734884:0;tar -jxf emacs-23.3.tar.bz2
+: 1304734912:0;cd emacs-23.3
+: 1304734920:0;curl -O http://cloud.github.com/downloads/typester/emacs/feature-fullscreen.patch
+: 1304734929:0;curl -O http://cloud.github.com/downloads/typester/emacs/fix-shiftmodifier-with-ime.patch
+: 1304734938:0;patch -p < feature-fullscreen.patch
+: 1304734948:0;patch
+: 1304734951:0;man patch
+: 1304734959:0;patch -p < feature-fullscreen.patch
+: 1304734963:0;patch -p1 < feature-fullscreen.patch
+: 1304735034:0;make install
+: 1304736137:0;ls
+: 1304736143:0;tmux
+: 1304736146:0;ls
+: 1304736147:0;cd
+: 1304736148:0;ls
+: 1304736160:0;cd /Applications
+: 1304736161:0;ls
+: 1304736166:0;mv Emacs.app EmacsOld.app
+: 1304736167:0;ls
+: 1304736170:0;cd
+: 1304736170:0;ls
+: 1304736179:0;cd bin
+: 1304736180:0;ls
+: 1304736183:0;cd nextstep
+: 1304736183:0;ls
+: 1304736194:0;mv Emacs.app /Applications
+: 1304736200:0;open -a Emacs
+: 1304736270:0;ls
+: 1304737000:0;cd .emacs.d
+: 1304737001:0;ls
+: 1304737018:0;cd ..
+: 1304737019:0;ls
+: 1304737032:0;cp -r .emacs.d .emacs.d.20110507
+: 1304737040:0;cd .emacs.d
+: 1304737041:0;ls
+: 1304737047:0;less env-carbon.el
+: 1304737052:0;ls
+: 1304737054:0;cd conf
+: 1304737054:0;ls
+: 1304737056:0;cd ..
+: 1304737056:0;ls
+: 1304737063:0;less env-cocoa.el
+: 1304737066:0;ls
+: 1304737069:0;less env-linux.el
+: 1304737071:0;ls
+: 1304737076:0;less env-meadow.el
+: 1304737081:0;ls
+: 1304737083:0;less init.el
+: 1304737094:0;ls
+: 1304737096:0;cd lisp
+: 1304737097:0;ls
+: 1304737117:0;cd ..
+: 1304737117:0;ls
+: 1304737119:0;cd site-lisp
+: 1304737119:0;ls
+: 1304737130:0;cd ..
+: 1304737130:0;ls
+: 1304737135:0;mv site-lisp site-lisp-old
+: 1304737135:0;ls
+: 1304737138:0;mkdir site-lisp
+: 1304737138:0;ls
+: 1304737140:0;cd site-lisp
+: 1304737141:0;ls
+: 1304737151:0;cd ..
+: 1304737151:0;ls
+: 1304737153:0;less init.el
+: 1304737157:0;ls
+: 1304737163:0;open -a Emacs
+: 1304737177:0;ls
+: 1304737179:0;cd site-lisp
+: 1304737179:0;ls
+: 1304737181:0;cd ..
+: 1304737184:0;cd site-lisp-old
+: 1304737184:0;ls
+: 1304737199:0;mv auto-install.el auto-save-buffers.el ../site-lisp
+: 1304737200:0;cd ..
+: 1304737200:0;ls
+: 1304737205:0;open -a Emacs
+: 1304737287:0;ls
+: 1304737300:0;rm site-lispanything.el site-lispanything.elc
+: 1304737301:0;ls
+: 1304737303:0;vi init.el
+: 1304737346:0;ls
+: 1304737355:0;rm site-lispanything.el
+: 1304737358:0;rm site-lispanything.elc
+: 1304737379:0;ls
+: 1304737381:0;cd site-lisp
+: 1304737385:0;wget http://www.emacswiki.org/emacs/download/auto-install.el
+: 1304737397:0;open -a Emacs
+: 1304737437:0;ls
+: 1304737445:0;ls -alt
+: 1304737456:0;ls -altr
+: 1304737476:0;rm auto-install.el
+: 1304737483:0;mv auto-install.el.1 auto-install.el
+: 1304737484:0;ls
+: 1304738313:0;op
+: 1304738316:0;open -a Emacs
+: 1304738325:0;ls
+: 1304738326:0;cd ..
+: 1304738326:0;ls
+: 1304738330:0;cd site-lisp-old
+: 1304738331:0;ls
+: 1304738420:0;cd
+: 1304738422:0;cd Downloads
+: 1304738427:0;mv auto-complete-1.3.1
+: 1304738428:0;ls
+: 1304738432:0;cd auto-complete-1.3.1
+: 1304738432:0;ls
+: 1304738439:0;cd dict
+: 1304738439:0;ls
+: 1304738444:0;less c-mode
+: 1304738450:0;less ruby-mode
+: 1304738457:0;ls
+: 1304738471:0;mv auto-complete-1.3.1 ~/.emacs.d/site-lisp
+: 1304738472:0;ls
+: 1304738479:0;¬ÉÄopen
+: 1304738481:0;open -a Emacs
+: 1304738499:0;ls
+: 1304738505:0;cd ..
+: 1304738505:0;ls
+: 1304738513:0;cd site-lisp
+: 1304738513:0;ls
+: 1304738516:0;cd ..
+: 1304738516:0;ls
+: 1304738525:0;less init.el
+: 1304738626:0;ls
+: 1304738638:0;cd conf
+: 1304738639:0;ls
+: 1304738641:0;less c-abbrev.el
+: 1304738646:0;ls
+: 1304738650:0;less c-anything.el
+: 1304738714:0;ls
+: 1304738725:0;less c-anything.el
+: 1305587973:0;open -a Firefox
+: 1305588086:0;ls
+: 1305589843:0;cd
+: 1305589844:0;ls
+: 1305590684:0;ks
+: 1305590684:0;ls
+: 1305590691:0;touch 0518
+: 1305590692:0;vi 0518
+: 1305996190:0;open -a Eclipse
+: 1305997505:0;ls
+: 1305999225:0;open -a Evernote
+: 1306021245:0;ls
+: 1306027349:0;open -a Emacs
+: 1306027364:0;open -a TextEdit
+: 1306027818:0;ls
+: 1306048171:0;open .
+: 1306055944:0;ls -altr
+: 1306055947:0;cd Dropbox
+: 1306055948:0;ls
+: 1306055952:0;cd Public
+: 1306055953:0;ls
+: 1306055954:0;ls -al
+: 1306061865:0;ls
+: 1306234396:0;cd
+: 1306234397:0;ls
+: 1306234405:0;ls -altr
+: 1306234405:0;ls
+: 1306234412:0;cd .emacs.d.20110507
+: 1306234413:0;ls
+: 1306234419:0;cd ..
+: 1306234426:0;mv .emacs.d .emacs.d.building
+: 1306234434:0;mv .emacs.d.20110507 .emacs.d
+: 1306234438:0;open -a Emacs
+: 1306234443:0;ls
+: 1306234500:0;unzip radiation_map12.zip
+: 1306234503:0;ls
+: 1306234512:0;mv radiation_map radiation_map_unknown_bak
+: 1306234514:0;ls
+: 1306234519:0;unzip radiation_map12.zip
+: 1306234521:0;ls
+: 1306234523:0;cd rad
+: 1306234524:0;cd radiation_map
+: 1306234525:0;ls
+: 1306234546:0;emacs app/controllers/measurands_controller.rb
+: 1306234608:0;ls
+: 1306234611:0;cd rad
+: 1306234612:0;cd radiation_map
+: 1306234614:0;ls
+: 1306234724:0;cd app/views
+: 1306234725:0;ls
+: 1306234726:0;cd measurands
+: 1306234726:0;ls
+: 1306234741:0;cp ../top/staging.html.erb .
+: 1306234748:0;mv staging.html.erb new_fukushima.html.erb
+: 1306234748:0;ls
+: 1306234752:0;emacs new_fukushima.html.erb
+: 1306234792:0;less ../top/staging.html.erb
+: 1306234976:0;ls
+: 1306234979:0;cd ..
+: 1306234981:0;ls
+: 1306234983:0;cd config
+: 1306234983:0;ls
+: 1306234987:0;vi database.yml
+: 1306234992:0;ls
+: 1306234999:0;cd ..
+: 1306234999:0;ls
+: 1306235019:0;git status
+: 1306235026:0;ls
+: 1306235035:0;cd config
+: 1306235035:0;ls
+: 1306235038:0;vi database.yml
+: 1306235099:0;ls
+: 1306235099:0;cd
+: 1306235099:0;ls
+: 1306235109:0;cd radiation_map_a
+: 1306235109:0;ls
+: 1306235111:0;cd config
+: 1306235111:0;ls
+: 1306235113:0;cd ..
+: 1306235118:0;grep -r sqlite .
+: 1306235124:0;ls
+: 1306235126:0;cd ..
+: 1306235126:0;ls
+: 1306235153:0;cd radiation_map_03281908
+: 1306235154:0;ls
+: 1306235155:0;cd config
+: 1306235156:0;ls
+: 1306235158:0;less database.yml
+: 1306235184:0;cd ../db
+: 1306235184:0;ls
+: 1306235186:0;ls -al
+: 1306235193:0;rails s
+: 1306235201:0;cd rad
+: 1306235202:0;cd radiation_map
+: 1306235235:0;vi Gemfile
+: 1306235280:0;rails s
+: 1306235298:0;cd radiation_map
+: 1306235298:0;ls
+: 1306235313:0;vi config/routes.rb
+: 1306235387:0;rails c
+: 1306235596:0;ls
+: 1306235629:0;cd app
+: 1306235630:0;cd views
+: 1306235630:0;ls
+: 1306235632:0;cd top
+: 1306235632:0;ls
+: 1306235634:0;less staging.html.erb
+: 1306236637:0;irb
+: 1306237522:0;ls
+: 1306237526:0;cd app
+: 1306237526:0;ls
+: 1306237600:0;rails g migration AddAddressToCounterLocations address:string
+: 1306237607:0;rake db:migrate
+: 1306237613:0;ls
+: 1306278377:0;rails c
+: 1306278424:0;ls
+: 1306278426:0;cd views
+: 1306278426:0;ls
+: 1306278427:0;cd top
+: 1306278428:0;ls
+: 1306278430:0;cd measurands
+: 1306278430:0;ls
+: 1306278438:0;touch create_fukushima.html.erb
+: 1306278484:0;ls
+: 1306278487:0;cd config
+: 1306278488:0;vi routes.rb
+: 1306278606:0;rails s
+: 1306306351:0;ls
+: 1306306353:0;cd ..
+: 1306306354:0;ls
+: 1306306358:0;cd app/views
+: 1306306358:0;ls
+: 1306306360:0;cd counter_locations
+: 1306306361:0;ls
+: 1306306365:0;emacs new.html.erb
+: 1306307193:0;ls
+: 1306307203:0;zip -r radiation_map13.zip radiation_map
+: 1306307207:0;open .
+: 1306310352:0;ls
+: 1306310357:0;touch ps
+: 1306310358:0;vi ps
+: 1306310403:0;ls
+: 1306797199:0;cd Dropbox
+: 1306797200:0;ls
+: 1306797205:0;cd asaren
+: 1306797206:0;ls
+: 1306798840:0;open .
+: 1306798874:0;cd asaren
+: 1306798874:0;ls
+: 1306798884:0;cd okamura
+: 1306798885:0;ls
+: 1306798892:0;cd ..
+: 1306798893:0;ls
+: 1306798894:0;cd hara
+: 1306798895:0;ls
+: 1306798897:0;cd TwitterSample1
+: 1306798898:0;ls
+: 1306798906:0;cd res
+: 1306798906:0;ls
+: 1306798911:0;cd bin
+: 1306798911:0;ls
+: 1306798913:0;cd ..
+: 1306798913:0;ls
+: 1306798914:0;cd src
+: 1306798915:0;ls
+: 1306798916:0;cd asaren
+: 1306798916:0;ls
+: 1306798919:0;cd hara
+: 1306798919:0;ls
+: 1306798921:0;cd TwitterSample1
+: 1306798921:0;ls
+: 1306798925:0;less TweetActivity.java
+: 1306798932:0;less MainActivity.java
+: 1306799063:0;ls
+: 1306841819:0;rails c
+: 1307256611:0;ls
+: 1307259187:0;open .
+: 1307259761:0;ls
+: 1307284313:0;l
+: 1307284314:0;ls
+: 1307284315:0;cd
+: 1307284316:0;ls
+: 1307284451:0;vi .zshrc
+: 1307284499:0;reload
+: 1307284522:0;oa Keynote
+: 1307499773:0;cd R
+: 1307499773:0;ls
+: 1307499774:0;cd hokuriku
+: 1307499774:0;ls
+: 1307499778:0;rails s
+: 1307499825:0;ls
+: 1307499827:0;cd config
+: 1307499827:0;ls
+: 1307499833:0;mv database.yml database.yml.a
+: 1307499841:0;mv database.yml.sqlite database.yml
+: 1307499847:0;rails s
+: 1307499894:0;cd
+: 1307499896:0;cd R/hokuriku
+: 1307499897:0;l
+: 1307499899:0;rails c
+: 1307635723:0;ssh 49.212.43.54
+: 1307635738:0;ssh yusuke@49.212.43.54
+: 1307637763:0;ls
+: 1307637766:0;cd .emacs.d
+: 1307637767:0;ls
+: 1307637776:0;cd Dropbox
+: 1307637776:0;ls
+: 1307637777:0;cd Configurations
+: 1307637778:0;ls
+: 1307637780:0;ls -a
+: 1307637783:0;cd rc
+: 1307637783:0;ls
+: 1307637786:0;ls -al
+: 1307637789:0;ls
+: 1307637796:0;ls -al
+: 1307637801:0;git log
+: 1307637807:0;ls
+: 1307637810:0;l
+: 1307637811:0;ls
+: 1307637813:0;ls -al
+: 1307637829:0;git status
+: 1307638113:0;ls
+: 1307638116:0;git status
+: 1307638119:0;ls
+: 1307638122:0;ls -alt
+: 1307638133:0;ls
+: 1307638137:0;ls -al
+: 1307638140:0;cd .zshr
+: 1307638140:0;ls
+: 1307638145:0;vi setup
+: 1307638156:0;ls -al
+: 1307638169:0;git status
+: 1307638179:0;git commit -a

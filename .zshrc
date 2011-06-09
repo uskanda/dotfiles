@@ -127,7 +127,6 @@ _cache_hosts=(localhost $HOST
 
 #cd関係の設定
 function chpwd() { #cdしたらls
-    _reg_pwd_screennum
     precmd
     local DI=`pwd`
     if [ "$DI" = "/Users/kanda" ]; then #ホームディレクトリ以外ならば -a
@@ -136,16 +135,6 @@ function chpwd() { #cdしたらls
         ls -AG
     fi
 }
-
-case "${TERM}" in screen)
-    preexec() {
-        echo -ne "\ek#${1%% *}\e\\"
-    }
-    precmd() {
-        echo -ne "\ek$(basename $(pwd))\e\\"
-    }
-esac
-
 
 #cdpath=($HOME) #サブディレクトリがない場合、$HOME下のディレクトリを補完しようとする
 function cdup() { #親ディレクトリへの移動
@@ -156,11 +145,6 @@ function cdup() { #親ディレクトリへの移動
 }
 zle -N cdup
 bindkey '^u' cdup # C-uでcd ..
-
-preexec () {
-  [ ${STY} ] && echo -ne "\ek${1%% *}\e\\"  # 20070907 修正
-}
-[ ${STY} ] || tscreen -rx || tscreen -D -RR  # 20070905 修正
 
 #ls関係のエイリアス
 alias l='ls'
@@ -224,6 +208,8 @@ case $OSTYPE in
     ;;
   darwin*)
     alias ls='ls -G'
+    alias o='open'
+    alias oa='open -a'
     alias ruby='ruby -Ku'
     alias vlc="open -a VLC"
     alias pv="open -a Preview"
