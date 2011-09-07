@@ -9,7 +9,6 @@ bind -c REGION 2 split
 bind -c REGION 1 only
 bind -c REGION 0 remove
 bind o focus
-bind v vert_split
 bind v split -v
 bind ^X command -c REGION
 

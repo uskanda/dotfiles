@@ -5,14 +5,12 @@ fpath=(~/.zsh/zsh_completion ${fpath})
 #######################################################
 export LANG=ja_JP.UTF-8
 export PAGER=lv
-export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:~/Dropbox/Scripts/:/Applications/pTeX.app/teTeX/bin/:$PATH
+export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:~/Dropbox/Scripts/:$PATH
 export TEXINPUTS=$HOME/Documents/bibtex/:$TEXINPUTS
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export DROPBOXDIR=$HOME/Dropbox
 
 #Environments for Ruby
-#export RUBYLIB=/opt/local/lib/ruby/gems/gems/sources-0.0.1/lib:/opt/local/lib/ruby/1.8:/opt/local/lib/ruby/gems/1.8/gems:$RUBYLIB
-#export GEM_HOME=/opt/local/lib/ruby/gems/1.8/
 export RSPEC=true
 
 export BOOST_ROOT=/opt/local/include/boost-1_35/boost/
@@ -22,8 +20,7 @@ autoload -U compinit
 compinit
 #######################################################
 
-source ~/.zsh/scripts/cdd
-
+#######################################################
 #シェルの挙動設定
 setopt auto_cd # ディレクトリ名だけ打つと打ったディレクトリへcdされる
 setopt auto_pushd # cdするとpushdされる　'cd -[TAB]'で幸せになれる
@@ -32,7 +29,7 @@ setopt pushd_ignore_dups #pushdで重複があれば削除してからpush
 setopt correct #コマンドのスペルミスを修正する
 #setopt correctall #コマンドの引数についてもスペルミス修正を適用 mvとかするとき邪魔
 setopt list_packed # compacked complete list display
-setopt nolistbeep #補完が曖昧な場合にビープ音を鳴らさない
+setopt nobeep #補完が曖昧な場合にビープ音を鳴らさない
 setopt glob_dots
 setopt rmstar_wait #"rm *"実行時に確認する
 setopt complete_aliases
@@ -48,6 +45,8 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 #C-l スクリーンをクリア
 #bindkey -v #vi風のキーバインドにしたければこちら
 bindkey -e
+#######################################################
+
 
 #######################################################
 # コマンドヒストリーの設定
@@ -72,7 +71,9 @@ bindkey "\\ep" history-beginning-search-backward-end
 bindkey "\\en" history-beginning-search-forward-end
 #######################################################
 
+#######################################################
 ## ターミナルの設定
+#######################################################
 unset LSCOLORS
 case "${TERM}" in
 xterm)
@@ -105,10 +106,13 @@ kterm*|xterm*)
     'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
   ;;
 esac
+#######################################################
 
+#######################################################
 #プロンプトの設定。
 #現在は左のプロンプトにディレクトリ、
 #右にユーザ名とマシン名表示
+#######################################################
 autoload colors
 colors
   PROMPT="%{${fg[green]}%}%/%%%{${reset_color}%} "
@@ -124,9 +128,13 @@ _cache_hosts=(localhost $HOST
   ip{pcn,sb}
   192.168.0.1 192.168.1.1 uskanda.com
 )
+#######################################################
 
-#cd関係の設定
+#######################################################
+#cdの設定
+#######################################################
 function chpwd() { #cdしたらls
+    _reg_pwd_screennum
     precmd
     local DI=`pwd`
     if [ "$DI" = "/Users/kanda" ]; then #ホームディレクトリ以外ならば -a
@@ -145,7 +153,11 @@ function cdup() { #親ディレクトリへの移動
 }
 zle -N cdup
 bindkey '^u' cdup # C-uでcd ..
+#######################################################
 
+#######################################################
+#エイリアス設定
+#######################################################
 #ls関係のエイリアス
 alias l='ls'
 alias la="ls -A"
@@ -174,17 +186,6 @@ alias pd='popd'
 alias psa='ps aux'
 alias em='emacs'
 alias p=$PAGER
-#psしてgrep
-function psg() {
-    psa | head -n 1              # ラベルを表示
-    psa | grep $* | grep -v "ps -auxww" | grep -v grep # grep プロセスを除外
-}
-
-alias iscoding='nkf --guess'
-alias beeps='echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sleep 0.1;echo "\a";sleep 0.1;echo "\a"'
-
-#ついつい打っちゃうコマンドを矯正
-
 alias less='lv'
 
 #######################################################
@@ -230,34 +231,24 @@ case $OSTYPE in
     alias -s xhtml=firefox
     ;;
 esac
-
-
 #######################################################
 
+###########################################################
 #for Dropbox
+###########################################################
 function drop() {mv $* $DROPBOXDIR}
 function dropcp() {cp $* $DROPBOXDIR}
 alias dropcd='cd $DROPBOXDIR'
 alias d='dropcd'
+###########################################################
 
+###########################################################
 #for Typo
+###########################################################
 alias dc='cd'
 alias bc='cd'
 alias les='less'
-
-function reload() {
-    source ~/.zshrc
-    rehash
-}
-
-#VMWareのWindowsへログインする
-#winb,winc,windでそれぞれ異なるwindowsへのログイン。
-function win(){rdesktop -a 16 -r sound -d syori $* -K -g 1270x968 -k ja&}
-alias winb='win prml9b'
-alias winc='win prml9c'
-alias wind='win prml9d'
-alias wine='win prml9e'
-
+###########################################################
 
 ###################################################
 #グローバルエイリアス:先頭以外でも使えるエイリアス
@@ -297,9 +288,10 @@ alias -s dvi=xdvi
 alias -s ps=gv
 ###########################################################
 
-
-
-alias prml='ssh kanda@prmlra1.main.ist.hokudai.ac.jp'
+###########################################################
+#screen設定
+###########################################################
+#replace screen to tscreen if tscreen exist
 if [ -x /usr/bin/tscreen ]; then
    alias screen='tscreen'
 fi
@@ -309,8 +301,11 @@ if [ "$TERM" = "screen" ]; then
        screen -X title $(basename $(print -P "%~"))
    }
 fi
+preexec () {
+  [ ${STY} ] && echo -ne "\ek${1%% *}\e\\"
+}
+[ ${STY} ] || tscreen -rx || tscreen -D -RR
 
-alias svn-remove-repos='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -print`'
 
 ###############################################
 #sshしたときにscreenのウィンドウを新規生成する
@@ -326,5 +321,49 @@ fi
 [[ $EMACS = t ]] && unsetopt zle
 ###############################################
 
-if [[ -s $HOME/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
 
+###############################################
+#インクリメンタル補完設定
+#http://github.com/hchbaw/auto-fu.zsh
+###############################################
+source ~/.zsh/auto-fu.zsh
+{ . ~/.zsh/auto-fu; auto-fu-install; }
+zstyle ':auto-fu:highlight' input bold
+zstyle ':auto-fu:highlight' completion fg=black,bold
+zstyle ':auto-fu:highlight' completion/one fg=white,bold,underline
+zstyle ':auto-fu:var' track-keymap-skip opp
+zstyle ':completion:*' completer _oldlist _complete
+zle-line-init () {auto-fu-init;}; zle -N zle-line-init
+zle -N zle-keymap-select auto-fu-zle-keymap-select
+###############################################
+
+
+###############################################
+#cdd - screen の別WINDOWのカレントディレクトリに移動する zsh スクリプト
+#http://d.hatena.ne.jp/secondlife/20080218/1203303528
+###############################################
+source ~/.zsh/scripts/cdd
+###############################################
+
+###############################################
+#その他関数
+###############################################
+function reload() {
+    source ~/.zshrc
+    rehash
+}
+#psしてgrep
+function psg() {
+    psa | head -n 1              # ラベルを表示
+    psa | grep $* | grep -v "ps -auxww" | grep -v grep # grep プロセスを除外
+}
+
+alias beeps='echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sleep 0.1;echo "\a";sleep 0.1;echo "\a"'
+alias svn-remove-repos='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -print`'
+###############################################
+
+###############################################
+#RVM設定
+###############################################
+if [[ -s $HOME/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
+###############################################
