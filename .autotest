@@ -16,7 +16,7 @@ require 'autotest/growl'
 # require 'autotest/notify'
 # require 'autotest/pretty'
 # require 'autotest/rcov'
-require 'autotest/redgreen'
+# require 'autotest/redgreen'
 # require 'autotest/screen'
 # require 'autotest/shame'
 # require 'autotest/snarl'
@@ -55,7 +55,7 @@ module Autotest::Growl
         `say test failed!`
       else
         growl "Test Results", "#{output}", "~/.rails_ok.png"
-        `say srs!`
+        `say test successed!`
       end
     end
   end

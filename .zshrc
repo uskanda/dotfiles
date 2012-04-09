@@ -14,6 +14,9 @@ export DROPBOXDIR=$HOME/Dropbox
 export RSPEC=true
 
 export BOOST_ROOT=/opt/local/include/boost-1_35/boost/
+export JAVA_HOME='/Library/Java/Home'
+export CATALINA_HOME='/usr/local/Cellar/tomcat/7.0.21/libexec'
+export RSENSE_HOME='/Users/uskanda/Configs/.emacs.d/ext/rsense'
 
 #補完設定のおまじない
 autoload -U compinit
@@ -229,6 +232,7 @@ case $OSTYPE in
     alias -s pdf=preview
     alias -s html=firefox
     alias -s xhtml=firefox
+    alias dev='cd ~/Developments'
     ;;
 esac
 #######################################################
