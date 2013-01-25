@@ -12,10 +12,6 @@ export DROPBOXDIR=$HOME/Dropbox
 
 #Environments for Ruby
 export RSPEC=true
-
-export BOOST_ROOT=/opt/local/include/boost-1_35/boost/
-export JAVA_HOME='/Library/Java/Home'
-export CATALINA_HOME='/usr/local/Cellar/tomcat/7.0.21/libexec'
 export RSENSE_HOME='/Users/uskanda/Configs/.emacs.d/ext/rsense'
 
 #補完設定のおまじない
@@ -124,13 +120,6 @@ colors
   SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
   [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
     PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
-
-#Host名追加。ssh等の補完
-_cache_hosts=(localhost $HOST
-  prml{,int,gw,88,89,8a,8b,8f,a0,ra1,ra2,c0,c1,c2,c3,b2,b3}
-  ip{pcn,sb}
-  192.168.0.1 192.168.1.1 uskanda.com
-)
 #######################################################
 
 #######################################################
@@ -272,7 +261,6 @@ alias -g A='| awk'
 alias -g B=';echo "\a"'
 alias -g F='| tail -f'
 alias -g D=$DROPBOXDIR
-alias -g prmlfs='/Volumes/prmlra1.main.ist.hokudai.ac.jp'
 ##################################################
 
 ###########################################################
@@ -333,15 +321,7 @@ fi
 #インクリメンタル補完設定
 #http://github.com/hchbaw/auto-fu.zsh
 ###############################################
-source ~/.zsh/auto-fu.zsh
-{ . ~/.zsh/auto-fu; auto-fu-install; }
-zstyle ':auto-fu:highlight' input bold
-zstyle ':auto-fu:highlight' completion fg=black,bold
-zstyle ':auto-fu:highlight' completion/one fg=white,bold,underline
-zstyle ':auto-fu:var' track-keymap-skip opp
-zstyle ':completion:*' completer _oldlist _complete
-zle-line-init () {auto-fu-init;}; zle -N zle-line-init
-zle -N zle-keymap-select auto-fu-zle-keymap-select
+source ~/.zsh/completion.zsh
 ###############################################
 
 
@@ -368,6 +348,8 @@ function psg() {
 alias beeps='echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sleep 0.1;echo "\a";sleep 0.1;echo "\a"'
 alias svn-remove-repos='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -print`'
 ###############################################
+
+install-auto-fu
 
 ###############################################
 #RVM設定
