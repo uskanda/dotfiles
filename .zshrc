@@ -5,7 +5,7 @@ fpath=(~/.zsh/zsh_completion ${fpath})
 #######################################################
 export LANG=ja_JP.UTF-8
 export PAGER=lv
-export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:~/Dropbox/Scripts/:$PATH
+export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
 export TEXINPUTS=$HOME/Documents/bibtex/:$TEXINPUTS
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export DROPBOXDIR=$HOME/Dropbox
@@ -201,6 +201,7 @@ case $OSTYPE in
     ;;
   darwin*)
     alias ls='ls -G'
+    alias v='mvim'
     alias o='open'
     alias oa='open -a'
     alias ruby='ruby -Ku'
@@ -266,16 +267,16 @@ alias -g D=$DROPBOXDIR
 ###########################################################
 #サフィックスエイリアス:拡張子に応じた実行プログラムを指定
 ###########################################################
-alias -s java=emacs
-alias -s c=emacs
-alias -s h=emacs
-alias -s C=emacs
-alias -s cpp=emacs
-alias -s txt=emacs
-alias -s xml=emacs
-alias -s tex=emacs
-alias -s aux=emacs
-alias -s el=emacs
+alias -s java=mvim
+alias -s c=mvim
+alias -s h=mvim
+alias -s C=mvim
+alias -s cpp=mvim
+alias -s txt=mvim
+alias -s xml=mvim
+alias -s tex=mvim
+alias -s aux=mvim
+alias -s el=mvim
 alias -s dvi=xdvi
 alias -s ps=gv
 ###########################################################
@@ -296,10 +297,14 @@ if [ "$TERM" = "screen" ]; then
        screen -X title $(basename $(print -P "%~"))
    }
 fi
+if [ "$TERM" = "screen" ]; then
 preexec () {
   [ ${STY} ] && echo -ne "\ek${1%% *}\e\\"
 }
-[ ${STY} ] || tscreen -rx || tscreen -D -RR
+fi
+if [ -x /usr/bin/tscreen ]; then
+  [ ${STY} ] || tscreen -rx || tscreen -D -RR
+fi
 
 
 ###############################################
