@@ -127,7 +127,7 @@ colors
 #######################################################
 function chpwd() { #cdしたらls
     _reg_pwd_screennum
-    precmd
+    #precmd
     local DI=`pwd`
     if [ "$DI" = "/Users/kanda" ]; then #ホームディレクトリ以外ならば -a
         ls -G
@@ -169,7 +169,6 @@ alias follow='tail -f'
 
 #その他のエイリアス・関数
 alias where="command -v"
-alias j="jobs -l"
 alias du="du -h"
 alias df="df -h"
 alias su="su -l"
@@ -201,10 +200,11 @@ case $OSTYPE in
     ;;
   darwin*)
     alias ls='ls -G'
+    alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
     alias v='mvim'
+    alias mvim='mvim --remote-tab-silent'
     alias o='open'
     alias oa='open -a'
-    alias ruby='ruby -Ku'
     alias vlc="open -a VLC"
     alias pv="open -a Preview"
     alias qs="open -a Quicksilver"
@@ -305,6 +305,29 @@ fi
 if [ -x /usr/bin/tscreen ]; then
   [ ${STY} ] || tscreen -rx || tscreen -D -RR
 fi
+if [[ "$TERM" != "screen" ]] && 
+        [[ "$SSH_CONNECTION" == "" ]]; then
+    # Attempt to discover a detached session and attach 
+    # it, else create a new session
+
+    WHOAMI=$(whoami)
+    if tmux has-session -t $WHOAMI 2>/dev/null; then
+        tmux -2 attach-session -t $WHOAMI
+    else
+        tmux -2 new-session -s $WHOAMI
+    fi
+else
+
+    # One might want to do other things in this case, 
+    # here I print my motd, but only on servers where 
+    # one exists
+
+    # If inside tmux session then print MOTD
+    MOTD=/etc/motd.tcl
+    if [ -f $MOTD ]; then
+        $MOTD
+    fi
+fi
 
 
 ###############################################
@@ -357,7 +380,10 @@ alias svn-remove-repos='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -pri
 install-auto-fu
 
 ###############################################
-#RVM設定
+#rbenv設定
 ###############################################
-if [[ -s $HOME/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 ###############################################
+
+[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
