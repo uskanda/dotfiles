@@ -310,12 +310,14 @@ if [[ "$TERM" != "screen" ]] &&
     # Attempt to discover a detached session and attach 
     # it, else create a new session
 
+if which tmux > /dev/null; then
     WHOAMI=$(whoami)
     if tmux has-session -t $WHOAMI 2>/dev/null; then
         tmux -2 attach-session -t $WHOAMI
     else
         tmux -2 new-session -s $WHOAMI
     fi
+fi
 else
 
     # One might want to do other things in this case, 
