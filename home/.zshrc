@@ -130,15 +130,11 @@ if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
   autojump
   brew
   bundler
-  dircycle
-  encode64
-  gem
   git
   git-flow
   heroku
   npm
   osx
-  rails4
   rbenv
   ruby
   urltools
@@ -154,7 +150,7 @@ source ~/.zsh/cdd/cdd
 #cdの設定
 #######################################################
 function chpwd() { #cdしたらls
-    _reg_pwd_screennum
+    _cdd_chpwd
     #precmd
     local DI=`pwd`
     if [ "$DI" = "/Users/kanda" ]; then #ホームディレクトリ以外ならば -a
@@ -384,3 +380,4 @@ install-auto-fu
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 ###############################################
 
+zstyle ':auto-fu:var' autoable-function/skiplines "cdd*" 
