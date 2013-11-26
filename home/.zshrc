@@ -122,6 +122,8 @@ colors
     PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 #######################################################
 
+source ~/.zsh/antigen/antigen.zsh
+
 #######################################################
 #cdの設定
 #######################################################
@@ -287,29 +289,6 @@ compdef -d rake
 ###########################################################
 #screen設定
 ###########################################################
-#replace screen to tscreen if tscreen exist
-if [ -x /usr/bin/tscreen ]; then
-   alias screen='tscreen'
-fi
-
-if [ "$TERM" = "screen" ]; then
-    precmd(){
-       screen -X title $(basename $(print -P "%~"))
-   }
-fi
-if [ "$TERM" = "screen" ]; then
-preexec () {
-  [ ${STY} ] && echo -ne "\ek${1%% *}\e\\"
-}
-fi
-if [ -x /usr/bin/tscreen ]; then
-  [ ${STY} ] || tscreen -rx || tscreen -D -RR
-fi
-if [[ "$TERM" != "screen" ]] && 
-        [[ "$SSH_CONNECTION" == "" ]]; then
-    # Attempt to discover a detached session and attach 
-    # it, else create a new session
-
 if which tmux > /dev/null; then
     WHOAMI=$(whoami)
     if tmux has-session -t $WHOAMI 2>/dev/null; then
