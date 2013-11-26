@@ -145,6 +145,7 @@ EOBUNDLES
 fi
 
 source ~/.zsh/cdd/cdd
+source $HOME/.zsh/zaw/zaw.zsh
 
 #######################################################
 #cdの設定
