@@ -122,7 +122,32 @@ colors
     PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 #######################################################
 
-source ~/.zsh/antigen/antigen.zsh
+if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
+  source $HOME/.zsh/antigen/antigen.zsh
+
+  # Bundles from the default app.
+  antigen-bundles <<EOBUNDLES
+  autojump
+  brew
+  bundler
+  dircycle
+  encode64
+  gem
+  git
+  git-flow
+  github
+  heroku
+  npm
+  osx
+  rails4
+  rbenv
+  ruby
+  urltools
+  zsh-users/zsh-syntax-highlighting
+EOBUNDLES
+
+  antigen-apply
+fi
 
 #######################################################
 #cdの設定
@@ -356,7 +381,7 @@ alias beeps='echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sle
 alias svn-remove-repos='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -print`'
 ###############################################
 
-install-auto-fu
+#install-auto-fu
 
 ###############################################
 #rbenv設定
