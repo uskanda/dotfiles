@@ -319,6 +319,13 @@ if which tmux > /dev/null; then
     else
         tmux -2 new-session -s $WHOAMI
     fi
+    function show-current-dir-as-window-name() {
+        tmux set-window-option window-status-format " #I:${PWD:t} " > /dev/null
+    }
+
+    show-current-dir-as-window-name
+    add-zsh-hook chpwd show-current-dir-as-window-name
+
 else
     # One might want to do other things in this case, 
     # here I print my motd, but only on servers where 
