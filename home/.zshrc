@@ -296,9 +296,7 @@ if which tmux > /dev/null; then
     else
         tmux -2 new-session -s $WHOAMI
     fi
-fi
 else
-
     # One might want to do other things in this case, 
     # here I print my motd, but only on servers where 
     # one exists
