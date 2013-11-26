@@ -135,7 +135,6 @@ if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
   gem
   git
   git-flow
-  github
   heroku
   npm
   osx
@@ -148,6 +147,8 @@ EOBUNDLES
 
   antigen-apply
 fi
+
+source ~/.zsh/cdd/cdd
 
 #######################################################
 #cdの設定
@@ -357,12 +358,6 @@ source ~/.zsh/completion.zsh
 ###############################################
 
 
-###############################################
-#cdd - screen の別WINDOWのカレントディレクトリに移動する zsh スクリプト
-#http://d.hatena.ne.jp/secondlife/20080218/1203303528
-###############################################
-source ~/.zsh/scripts/cdd
-###############################################
 
 ###############################################
 #その他関数
@@ -381,7 +376,7 @@ alias beeps='echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sleep 1;echo "\a";sle
 alias svn-remove-repos='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -print`'
 ###############################################
 
-#install-auto-fu
+install-auto-fu
 
 ###############################################
 #rbenv設定
