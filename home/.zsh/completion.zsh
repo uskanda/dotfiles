@@ -66,7 +66,27 @@ EOT
     }
     bindkey-advice-before "^G" afu+cancel
     bindkey-advice-before "^[" afu+cancel
-    bindkey-advice-before "^J" afu+cancel afu+accept-line
+
+    function afu+accept-line-or-do-enter() {
+    if [ -n "$BUFFER" ]; then
+        zle afu+accept-line
+        return 0
+    fi
+    echo
+    ls
+    # ls_abbrev
+    if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
+        echo
+        echo -e "\e[0;33m--- git status ---\e[0m"
+        git status -sb
+    fi
+    zle reset-prompt
+    return 0
+    }
+    zle -N afu+accept-line-or-do-enter
+    bindkey -M afu "^M" afu+accept-line-or-do-enter
+    bindkey -M afu "^J" afu+accept-line-or-do-enter
+    bindkey-advice-before "^J" afu+cancel afu+accept-line-or-do-enter
 
     # delete unambiguous prefix when accepting line
     function afu+delete-unambiguous-prefix () {
