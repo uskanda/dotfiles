@@ -73,7 +73,7 @@ EOT
         return 0
     fi
     echo
-    ls
+    ls -a
     # ls_abbrev
     if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
         echo
