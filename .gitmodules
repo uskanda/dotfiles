@@ -7,3 +7,6 @@
 [submodule "home/.zsh/zaw"]
 	path = home/.zsh/zaw
 	url = https://github.com/zsh-users/zaw.git
+[submodule "home/.zsh/zsh-completions"]
+	path = home/.zsh/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git

@@ -1,4 +1,4 @@
-fpath=(~/.zsh/zsh_completion ${fpath})
+fpath=(~/.zsh/zsh-completions/src ${fpath})
 
 #######################################################
 #環境変数設定
@@ -128,15 +128,9 @@ if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
   # Bundles from the default app.
   antigen-bundles <<EOBUNDLES
   autojump
-  brew
-  bundler
-  git
-  git-flow
   heroku
   npm
   osx
-  rbenv
-  ruby
   urltools
   zsh-users/zsh-syntax-highlighting
 EOBUNDLES
