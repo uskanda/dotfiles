@@ -196,7 +196,6 @@ alias pd='popd'
 alias psa='ps aux'
 alias em='emacs'
 alias p=$PAGER
-alias less='lv'
 
 #######################################################
 #OS別の設定
@@ -218,6 +217,8 @@ case $OSTYPE in
     alias emacsstart='command emacs'
     ;;
   darwin*)
+    #export VIMRUNTIME=/Applications/MacVim.app/Contents/Resources/vim/runtime/
+    alias less='/Applications/MacVim.app/Contents/Resources/vim/runtime/macros/less.sh'
     alias ls='ls -G'
     alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
     alias v='mvim'
