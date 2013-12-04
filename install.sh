@@ -16,3 +16,7 @@ if which bundle > /dev/null; then
 else
     gem install bundler
 fi
+
+# diff-highlight
+# Installed by git, make symbolic link to PATHed dir
+ln -s /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight /usr/local/bin/
