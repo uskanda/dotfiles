@@ -1,4 +1,8 @@
+#######################################################
+# ##zsh-completionsの読み込み
+#``````````````````````````````````````````````````````
 fpath=(~/.zsh/zsh-completions/src ${fpath})
+#``````````````````````````````````````````````````````
 
 #######################################################
 #環境変数設定
@@ -12,7 +16,6 @@ export DROPBOXDIR=$HOME/Dropbox
 
 #Environments for Ruby
 export RSPEC=true
-export RSENSE_HOME='/Users/uskanda/Configs/.emacs.d/ext/rsense'
 
 #補完設定のおまじない
 autoload -U compinit
