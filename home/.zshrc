@@ -313,7 +313,9 @@ compdef -d rake
 if which tmux > /dev/null; then
     WHOAMI=$(whoami)
     if tmux has-session -t $WHOAMI 2>/dev/null; then
-        tmux -2 attach-session -t $WHOAMI
+        if [ $SHLVL = 1 ]; then
+            tmux -2 attach-session -t $WHOAMI
+        fi
     else
         tmux -2 new-session -s $WHOAMI
     fi
