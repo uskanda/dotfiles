@@ -388,7 +388,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 if [[ -f ~/.nodebrew/nodebrew ]]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
-    nodebrew use v0.11.9
+    nodebrew use v0.11.9 > /dev/null
 fi
 
 ###-begin-npm-completion-###
