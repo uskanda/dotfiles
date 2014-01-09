@@ -199,6 +199,7 @@ alias pd='popd'
 alias psa='ps aux'
 alias em='emacs'
 alias p=$PAGER
+alias agp='ag --pager="less -R"'
 
 #######################################################
 #OS別の設定
