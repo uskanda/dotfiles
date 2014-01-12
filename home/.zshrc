@@ -1,7 +1,7 @@
 #######################################################
 # ##zsh-completionsの読み込み
 #``````````````````````````````````````````````````````
-fpath=(~/.zsh/zsh-completions/src ${fpath})
+fpath=(~/.zsh/zsh-completions-selected ${fpath})
 #``````````````````````````````````````````````````````
 
 #######################################################
@@ -199,7 +199,7 @@ alias pd='popd'
 alias psa='ps aux'
 alias em='emacs'
 alias p=$PAGER
-alias less='lv'
+alias agp='ag --pager="less -R"'
 
 #######################################################
 #OS別の設定
@@ -221,6 +221,8 @@ case $OSTYPE in
     alias emacsstart='command emacs'
     ;;
   darwin*)
+    #export VIMRUNTIME=/Applications/MacVim.app/Contents/Resources/vim/runtime/
+    alias less='/Applications/MacVim.app/Contents/Resources/vim/runtime/macros/less.sh'
     alias ls='ls -G'
     alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
     alias v='mvim'
@@ -312,7 +314,9 @@ compdef -d rake
 if which tmux > /dev/null; then
     WHOAMI=$(whoami)
     if tmux has-session -t $WHOAMI 2>/dev/null; then
-        tmux -2 attach-session -t $WHOAMI
+        if [ $SHLVL = 1 ]; then
+            tmux -2 attach-session -t $WHOAMI
+        fi
     else
         tmux -2 new-session -s $WHOAMI
     fi
@@ -387,7 +391,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 if [[ -f ~/.nodebrew/nodebrew ]]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
-    nodebrew use v0.11.9
+    nodebrew use v0.11.9 > /dev/null
 fi
 
 ###-begin-npm-completion-###
