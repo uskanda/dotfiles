@@ -399,11 +399,8 @@ alias svn-remove-repos='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -pri
 
 install-auto-fu
 
-###############################################
-#rbenv設定
-###############################################
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-###############################################
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
 
 if [[ -f ~/.nodebrew/nodebrew ]]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
