@@ -17,3 +17,6 @@
 [submodule "anyenv-plugins/anyenv-update"]
 	path = anyenv-plugins/anyenv-update
 	url = https://github.com/znz/anyenv-update.git
+[submodule "anyenv-plugins/anyenv-git"]
+	path = anyenv-plugins/anyenv-git
+	url = https://github.com/znz/anyenv-git.git
