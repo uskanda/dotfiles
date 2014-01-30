@@ -13,3 +13,6 @@
 [submodule "home/.anyenv"]
 	path = home/.anyenv
 	url = https://github.com/riywo/anyenv.git
+[submodule "anyenv-plugins/anyenv-update"]
+	path = anyenv-plugins/anyenv-update
+	url = https://github.com/znz/anyenv-update.git
