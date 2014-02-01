@@ -1,22 +1,23 @@
-tap 'phinze/cask'
-brew 'brew-cask'
-brew 'mongodb'
-brew 'mysql'
-brew 'ag'
-brew 'zsh'
-brew 'git'
-brew 'git-flow'
-brew 'hub'
-brew 'autojump'
-brew 'the-silver-searcher'
-brew 'w3m'
-brew 'wget'
-brew 'openssl'
-brew 'readline'
-brew 'autoconf'
-cask 'google-chrome'
-cask 'sourcetree'
-cask 'alfred'
-cask 'dropbox'
-cask 'onepassword'
-cask 'xbench'
+tap phinze/cask
+update
+upgrade
+install brew-cask | true
+install mongodb | true 
+install mysql | true 
+install ag | true 
+install zsh | true 
+install git | true 
+install git-flow | true 
+install hub | true 
+install autojump | true 
+install w3m | true 
+install wget | true 
+install openssl | true 
+install readline | true 
+install autoconf | true 
+cask install google-chrome | true 
+cask install sourcetree | true 
+cask install alfred | true 
+cask install dropbox | true 
+cask install onepassword | true 
+cask install xbench | true 
