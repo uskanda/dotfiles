@@ -15,6 +15,7 @@ install wget | true
 install openssl | true 
 install readline | true 
 install autoconf | true 
+install gawk | true 
 cask install google-chrome | true 
 cask install sourcetree | true 
 cask install alfred | true 
