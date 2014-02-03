@@ -21,3 +21,5 @@ cask install alfred
 cask install dropbox 
 cask install onepassword 
 cask install xbench 
+cask install virtualbox
+cask install firefox
