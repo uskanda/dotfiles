@@ -1,24 +1,23 @@
-tap phinze/cask
 update
 upgrade
-install brew-cask | true
-install mongodb | true 
-install mysql | true 
-install ag | true 
-install zsh | true 
-install git | true 
-install git-flow | true 
-install hub | true 
-install autojump | true 
-install w3m | true 
-install wget | true 
-install openssl | true 
-install readline | true 
-install autoconf | true 
-install gawk | true 
-cask install google-chrome | true 
-cask install sourcetree | true 
-cask install alfred | true 
-cask install dropbox | true 
-cask install onepassword | true 
-cask install xbench | true 
+install phinze/cask/brew-cask
+install mongodb 
+install mysql 
+install ag 
+install zsh 
+install git 
+install git-flow 
+install hub 
+install autojump 
+install w3m 
+install wget 
+install openssl 
+install readline 
+install autoconf 
+install gawk 
+cask install google-chrome
+cask install sourcetree 
+cask install alfred 
+cask install dropbox 
+cask install onepassword 
+cask install xbench 
