@@ -15,6 +15,7 @@ install openssl
 install readline 
 install autoconf 
 install gawk 
+install cmigemo
 cask install google-chrome
 cask install sourcetree 
 cask install alfred 
