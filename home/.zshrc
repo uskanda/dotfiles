@@ -14,6 +14,17 @@ export TEXINPUTS=$HOME/Documents/bibtex/:$TEXINPUTS
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export DROPBOXDIR=$HOME/Dropbox
 
+# anyenv
+if [ -d ${HOME}/.anyenv ] ; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init -)"
+    for D in `find $HOME/.anyenv/envs -type d -d 1`
+    do
+        export PATH="$D/shims:$PATH"
+    done
+
+fi
+
 #Environments for Ruby
 export RSPEC=true
 
@@ -398,8 +409,7 @@ alias svn-remove-repos='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -pri
 
 install-auto-fu
 
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init -)"
+
 
 if [[ -f ~/.nodebrew/nodebrew ]]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
