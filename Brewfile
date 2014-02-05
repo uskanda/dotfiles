@@ -23,4 +23,5 @@ cask install dropbox
 cask install onepassword 
 cask install xbench 
 cask install virtualbox
+cask install vagrant
 cask install firefox
