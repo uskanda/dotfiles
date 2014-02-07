@@ -25,3 +25,4 @@ cask install xbench
 cask install virtualbox
 cask install vagrant
 cask install firefox
+cask install magican
