@@ -27,3 +27,4 @@ cask install vagrant
 cask install firefox
 cask install magican
 cask install wireshark
+cask install vlc
