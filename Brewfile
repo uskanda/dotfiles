@@ -31,3 +31,4 @@ cask install vlc
 cask install keyremap4macbook
 cask install omnigraffle
 cask install path-finder
+cask install things
