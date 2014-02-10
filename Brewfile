@@ -29,3 +29,4 @@ cask install magican
 cask install wireshark
 cask install vlc
 cask install keyremap4macbook
+cask install omnigraffle
