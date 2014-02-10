@@ -28,3 +28,4 @@ cask install firefox
 cask install magican
 cask install wireshark
 cask install vlc
+cask install keyremap4macbook
