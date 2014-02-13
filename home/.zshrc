@@ -13,6 +13,7 @@ export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
 export TEXINPUTS=$HOME/Documents/bibtex/:$TEXINPUTS
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export DROPBOXDIR=$HOME/Dropbox
+export DOCKER_HOST=localhost
 
 # anyenv
 if [ -d ${HOME}/.anyenv ] ; then

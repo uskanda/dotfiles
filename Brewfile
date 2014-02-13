@@ -16,6 +16,7 @@ install readline
 install autoconf 
 install gawk 
 install cmigemo
+install boot2docker
 cask install google-chrome
 cask install sourcetree 
 cask install alfred 
