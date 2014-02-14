@@ -17,6 +17,7 @@ install autoconf
 install gawk 
 install cmigemo
 install boot2docker
+install android-sdk
 install thoughtbot/formulae/gitsh
 cask install google-chrome
 cask install sourcetree 
