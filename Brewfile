@@ -36,3 +36,4 @@ cask install omnigraffle
 cask install path-finder
 cask install things
 cask install synergy
+cask install eclipse-ide
