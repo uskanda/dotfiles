@@ -1,3 +1,12 @@
+homesick_unix_repo=$HOME/.homesick/repos/unix-rc/
+cd $homesick_unix_repo
+
+if [ ! -L $homesick_unix_repo/home/.anyenv/plugins ]; then
+  echo "setting up anyenv plugins..."
+  ln -s $homesick_unix_repo/anyenv-plugins/ $homesick_unix_repo/home/.anyenv/plugins
+else
+  echo "anyenv plugins are already symlinked"
+fi
 
 for xenv in rbenv ndenv pyenv
 do
