@@ -12,7 +12,6 @@ export PAGER=lv
 export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
 export TEXINPUTS=$HOME/Documents/bibtex/:$TEXINPUTS
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-export DROPBOXDIR=$HOME/Dropbox
 export DOCKER_HOST=localhost
 
 # anyenv
@@ -21,7 +20,7 @@ if [ -d ${HOME}/.anyenv ] ; then
     eval "$(anyenv init -)"
     for D in `find $HOME/.anyenv/envs -type d -d 1`
     do
-        export PATH="$D/shims:$PATH"
+        export PATH=$D/shims:$PATH
     done
 
 fi
@@ -277,15 +276,6 @@ case $OSTYPE in
     ;;
 esac
 #######################################################
-
-###########################################################
-#for Dropbox
-###########################################################
-function drop() {mv $* $DROPBOXDIR}
-function dropcp() {cp $* $DROPBOXDIR}
-alias dropcd='cd $DROPBOXDIR'
-alias d='dropcd'
-###########################################################
 
 ###########################################################
 #for Typo
