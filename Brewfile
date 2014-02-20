@@ -19,6 +19,7 @@ install cmigemo
 install boot2docker
 install android-sdk
 install thoughtbot/formulae/gitsh
+install mosh
 cask install google-chrome
 cask install sourcetree 
 cask install alfred 
