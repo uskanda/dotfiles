@@ -37,3 +37,4 @@ cask install path-finder
 cask install things
 cask install synergy
 cask install eclipse-ide
+cask install gyazo
