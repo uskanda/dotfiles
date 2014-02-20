@@ -18,9 +18,9 @@ export DOCKER_HOST=localhost
 if [ -d ${HOME}/.anyenv ] ; then
     export PATH="$HOME/.anyenv/bin:$PATH"
     eval "$(anyenv init -)"
-    for D in `find $HOME/.anyenv/envs -type d -d 1`
+    for XENVDIR in `find $HOME/.anyenv/envs -type d -d 1`
     do
-        export PATH=$D/shims:$PATH
+        export PATH=$XENVDIR/shims:$PATH
     done
 
 fi
@@ -302,7 +302,6 @@ alias -g S='| sed'
 alias -g A='| awk'
 alias -g B=';echo "\a"'
 alias -g F='| tail -f'
-alias -g D=$DROPBOXDIR
 ##################################################
 
 ###########################################################
