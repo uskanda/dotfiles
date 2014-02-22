@@ -18,6 +18,11 @@ do
   fi
 done
 
+source ~/.zshrc
+
+rbenv install 2.1.0-dev
+pyenv install 3.3.3
+
 # Bundler
 # RubyGems Manager
 if which bundle > /dev/null; then
@@ -36,5 +41,7 @@ fi
 
 for command in adb ag android brew bundle cap coffee git-flow jq knife middleman nvm node rails tmuxinator vagrant
 do
-  ln -s ~/.homesick/repos/unix-rc/home/.zsh/zsh-completions/src/_$command ~/.homesick/repos/unix-rc/home/.zsh/zsh-completions-selected/
+  if [ -L ~/.homesick/repos/unix-rc/home/.zsh/zsh-completions/src/_$command ]; then
+    ln -s ~/.homesick/repos/unix-rc/home/.zsh/zsh-completions/src/_$command ~/.homesick/repos/unix-rc/home/.zsh/zsh-completions-selected/
+  fi
 done
