@@ -21,7 +21,8 @@ done
 source ~/.zshrc
 
 rbenv install 2.1.0-dev
-pyenv install 3.3.3
+pyenv install 2.7.5
+pip install --allow-external percol --allow-unverified percol percol
 
 # Bundler
 # RubyGems Manager
