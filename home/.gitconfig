@@ -1,0 +1,5 @@
+[core]
+	editor = vim -c \"set fenc=utf-8\"
+[user]
+	email = uskanda@gmail.com
+	name = Yusuke Kanda
