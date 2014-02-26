@@ -1,5 +1,6 @@
 [core]
 	editor = vim -c \"set fenc=utf-8\"
+    excludesfile = ~/.gitignore
 [user]
 	email = uskanda@gmail.com
 	name = Yusuke Kanda
