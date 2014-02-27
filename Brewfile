@@ -8,6 +8,7 @@ install zsh
 install git 
 install git-flow 
 install hub 
+install tig 
 install autojump 
 install w3m 
 install wget 
