@@ -1,0 +1,8 @@
+:verbose: true
+:sources:
+- http://bundler-api.herokuapp.com
+:update_sources: true
+:backtrace: false
+:bulk_threshold: 1000
+:benchmark: false
+gem: --no-ri --no-rdoc
