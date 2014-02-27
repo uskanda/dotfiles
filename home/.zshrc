@@ -216,6 +216,8 @@ alias tailf='tail -f'
 alias follow='tail -f'
 
 #その他のエイリアス・関数
+alias g="git"
+alias gi="git"
 alias where="command -v"
 alias du="du -h"
 alias df="df -h"
