@@ -23,6 +23,7 @@ source ~/.zshrc
 rbenv install 2.1.0-dev
 pyenv install 2.7.5
 pip install --allow-external percol --allow-unverified percol percol
+pip install --user git+git://github.com/Lokaltog/powerline
 
 # Bundler
 # RubyGems Manager
