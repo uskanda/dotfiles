@@ -25,6 +25,9 @@ if [ -d ${HOME}/.anyenv ] ; then
 
 fi
 
+if [ -d ${HOME}/.local/bin ] ; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
 #Environments for Ruby
 export RSPEC=true
 
@@ -406,3 +409,7 @@ alias svn-remove-repos='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -pri
 ###############################################
 
 install-auto-fu
+
+if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
+    source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+fi
