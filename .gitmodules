@@ -17,3 +17,6 @@
 [submodule "anyenv-plugins/anyenv-git"]
 	path = anyenv-plugins/anyenv-git
 	url = https://github.com/znz/anyenv-git.git
+[submodule "powerline-daemon"]
+	path = powerline-daemon
+	url = https://github.com/kovidgoyal/powerline-daemon
