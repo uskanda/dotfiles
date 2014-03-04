@@ -79,6 +79,7 @@ EOT
         echo
         echo -e "\e[0;33m--- git status ---\e[0m"
         git status -sb
+        git --no-pager log -10 --oneline --decorate
     fi
     zle reset-prompt
     return 0
