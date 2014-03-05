@@ -22,6 +22,7 @@ install android-sdk
 install thoughtbot/formulae/gitsh
 install mosh
 install coreutils
+install atool
 cask install google-chrome
 cask install sourcetree 
 cask install alfred 
