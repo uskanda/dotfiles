@@ -23,6 +23,7 @@ install thoughtbot/formulae/gitsh
 install mosh
 install coreutils
 install atool
+install reattach-to-user-namespace
 cask install google-chrome
 cask install sourcetree 
 cask install alfred 
