@@ -1,4 +1,10 @@
 #######################################################
+# ##有効にするとzshrc読み込み時のプロファイルを取得
+#``````````````````````````````````````````````````````
+# zmodload zsh/zprof
+#``````````````````````````````````````````````````````
+
+#######################################################
 # ##zsh-completionsの読み込み
 #``````````````````````````````````````````````````````
 fpath=(~/.zsh/zsh-completions-selected ${fpath})
@@ -162,7 +168,6 @@ if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
   antigen-bundles <<EOBUNDLES
   autojump
   heroku
-  npm
   osx
   urltools
   zsh-users/zsh-syntax-highlighting
@@ -425,3 +430,10 @@ _powerline_tmux_set_columns
 [[ "$PROMPT_COMMAND" == "_powerline_prompt" ]] ||
     POWERLINE_OLD_PROMPT_COMMAND="$PROMPT_COMMAND"
 export PROMPT_COMMAND="_powerline¥_prompt"
+
+
+#######################################################
+# ##有効にするとzshrc読み込み時のプロファイルを取得
+#``````````````````````````````````````````````````````
+# zprof
+#``````````````````````````````````````````````````````
