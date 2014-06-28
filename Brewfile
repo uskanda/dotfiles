@@ -16,10 +16,7 @@ install openssl
 install readline 
 install autoconf 
 install gawk 
-install cmigemo
-install boot2docker
 install android-sdk
-install thoughtbot/formulae/gitsh
 install mosh
 install coreutils
 install atool
