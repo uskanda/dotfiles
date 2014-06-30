@@ -21,6 +21,7 @@ install mosh
 install coreutils
 install atool
 install lv
+install tmux
 install reattach-to-user-namespace
 cask install google-chrome
 cask install sourcetree 
