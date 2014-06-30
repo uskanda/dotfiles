@@ -20,6 +20,7 @@ install android-sdk
 install mosh
 install coreutils
 install atool
+install lv
 install reattach-to-user-namespace
 cask install google-chrome
 cask install sourcetree 
@@ -40,3 +41,5 @@ cask install things
 cask install synergy
 cask install eclipse-ide
 cask install gyazo
+cask install iterm2
+cask install onyx
