@@ -374,10 +374,10 @@ source ~/.zsh/completion.zsh
 ###############################################
 
 ###############################################
-# load percol sources
+# load peco sources
 ###############################################
-for f (~/.zsh/percol-sources/*) source "${f}"
-bindkey '^r' percol-select-history
+for f (~/.zsh/peco-sources/*) source "${f}"
+bindkey '^r' peco-select-history
 ###############################################
 
 
