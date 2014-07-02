@@ -22,3 +22,5 @@
     fhf = flow hotfix finish
     fhp = flow hotfix publish
     fs  = flow support
+[url "git@github.com:"]
+	pushinsteadof = https://github.com/
