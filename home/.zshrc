@@ -93,6 +93,10 @@ bindkey "\\ep" history-beginning-search-backward-end
 bindkey "\\en" history-beginning-search-forward-end
 #######################################################
 
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ":chpwd:*" recent-dirs-max 1000
+
 #######################################################
 ## ターミナルの設定
 #######################################################
