@@ -23,6 +23,8 @@ install atool
 install lv
 install tmux
 install reattach-to-user-namespace
+tap peco/peco
+install peco
 cask install google-chrome
 cask install sourcetree 
 cask install alfred 
