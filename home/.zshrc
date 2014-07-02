@@ -382,6 +382,8 @@ source ~/.zsh/completion.zsh
 ###############################################
 for f (~/.zsh/peco-sources/*) source "${f}"
 bindkey '^r' peco-select-history
+bindkey '^x^x' peco-cdr
+
 ###############################################
 
 
