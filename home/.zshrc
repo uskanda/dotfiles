@@ -72,3 +72,34 @@ autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ":chpwd:*" recent-dirs-max 1000
 
+
+#######################################################
+#プロンプトの設定。
+#現在は左のプロンプトにディレクトリ、
+#右にユーザ名とマシン名表示
+#######################################################
+autoload colors
+colors
+  PROMPT="%{${fg[green]}%}%/%%%{${reset_color}%} "
+  PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
+#  RPROMPT="[%n@%m]"
+  SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+  [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+    PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
+
+autoload -Uz vcs_info
+
+# 表示フォーマットの指定
+# %b ブランチ情報
+# %a アクション名(mergeなど)
+zstyle ':vcs_info:*' formats '[%b]'
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
+# バージョン管理されているディレクトリにいれば表示，そうでなければ非表示
+RPROMPT="%1(v|%F{green}%1v%f|)"
+#######################################################
