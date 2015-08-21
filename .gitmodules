@@ -1,22 +1,9 @@
-[submodule "home/.zsh/antigen"]
-	path = home/.zsh/antigen
-	url = https://github.com/zsh-users/antigen.git
-[submodule "home/.zsh/cdd"]
-	path = home/.zsh/cdd
-	url = https://github.com/m4i/cdd.git
 [submodule "home/.zsh/zsh-completions"]
 	path = home/.zsh/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
-[submodule "home/.anyenv"]
-	path = home/.anyenv
-	url = https://github.com/riywo/anyenv.git
-    ignore = untracked
-[submodule "anyenv-plugins/anyenv-update"]
-	path = anyenv-plugins/anyenv-update
-	url = https://github.com/znz/anyenv-update.git
-[submodule "anyenv-plugins/anyenv-git"]
-	path = anyenv-plugins/anyenv-git
-	url = https://github.com/znz/anyenv-git.git
+[submodule "home/.zsh/prezto"]
+	path = home/.zsh/prezto
+	url = https://github.com/sorin-ionescu/prezto.git
 [submodule "powerline-daemon"]
 	path = powerline-daemon
 	url = https://github.com/kovidgoyal/powerline-daemon
