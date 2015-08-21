@@ -4,6 +4,3 @@
 [submodule "home/.zsh/prezto"]
 	path = home/.zsh/prezto
 	url = https://github.com/sorin-ionescu/prezto.git
-[submodule "powerline-daemon"]
-	path = powerline-daemon
-	url = https://github.com/kovidgoyal/powerline-daemon
