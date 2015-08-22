@@ -1,6 +1,0 @@
-[submodule "home/.zsh/zsh-completions"]
-	path = home/.zsh/zsh-completions
-	url = https://github.com/zsh-users/zsh-completions.git
-[submodule "home/.zprezto"]
-	path = home/.zprezto
-	url = https://github.com/sorin-ionescu/prezto.git
