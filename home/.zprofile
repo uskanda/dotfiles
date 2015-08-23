@@ -75,5 +75,13 @@ fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
 
+#
+# Options
+#
+setopt IGNOREEOF
+
+#
+# Powerline
+#
 powerline-daemon -q
 . ~/.zsh/scripts/powerline.zsh
