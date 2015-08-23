@@ -74,3 +74,6 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
+
+powerline-daemon -q
+. ~/.zsh/scripts/powerline.zsh
