@@ -83,5 +83,16 @@ setopt IGNOREEOF
 #
 # Powerline
 #
-powerline-daemon -q
-. ~/.zsh/scripts/powerline.zsh
+if type powerline >/dev/null 2>&1; then
+  powerline-daemon -q
+  . ~/.zsh/scripts/powerline.zsh
+else
+  autoload colors
+  colors
+    PROMPT="%{${fg[green]}%}%/%%%{${reset_color}%} "
+    PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
+  #  RPROMPT="[%n@%m]"
+    SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+      PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
+fi
