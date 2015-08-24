@@ -16,6 +16,10 @@
     ca = commit -a
     d = diff
     dc = diff --cached
+    pl = pull
+    pul = pull
+    ps = push
+    pus = push
     ff  = flow feature
     ffl = flow feature list
     ffs = flow feature start
