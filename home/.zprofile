@@ -81,6 +81,81 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 setopt IGNOREEOF
 
 #
+# Alias
+#
+alias l='ls'
+alias la="ls -A"
+alias lf="ls -F"
+alias ll="ls -l"
+alias lal="ls -Al"
+alias ltr="ls -ltr"
+alias laltr="ls -altr"
+
+alias f="tail -f"
+alias F="tail -F"
+alias h="head -n 30"
+alias t="tail -n 30"
+alias g="git"
+alias gi="git"
+alias where="command -v"
+alias du="du -h"
+alias df="df -h"
+alias su="su -l"
+alias rmdir='rm -rf'
+alias psa='ps aux'
+alias p=$PAGER
+alias agp='ag --pager="less -R"'
+
+#OS Specific
+case $OSTYPE in
+  linux*)
+    alias ls='ls --color'
+    ;;
+  darwin*)
+    alias ls='ls -G'
+    alias v='mvim'
+    alias mvim='mvim --remote-tab-silent'
+    alias o='open'
+    alias oa='open -a'
+    alias vlc="open -a VLC"
+    alias pv="open -a Preview"
+    alias preview="open -a Preview"
+    alias keynote="open -a Keynote"
+    alias pf="open -a \"Path Finder\""
+    alias tac="gtac"
+    alias -s gif=preview
+    alias -s jpg=preview
+    alias -s jpeg=preview
+    alias -s png=preview
+    alias -s bmp=preview
+    alias -s pdf=preview
+    ;;
+esac
+
+#for Typo
+alias dc='cd'
+alias bc='cd'
+alias les='less'
+
+# Global alias
+alias -g L='| lv'
+alias -g P='| $PAGER'
+alias -g H='| head -n 30'
+alias -g Hn='| head -n'
+alias -g T='| tail -n 30'
+alias -g Tn='| tail -n'
+alias -g G='| grep'
+alias -g Ge='| grep -e'
+alias -g Gv='| grep -v'
+alias -g W='| wc'
+alias -g S='| sed'
+alias -g A='| awk'
+alias -g B=';echo "\a"'
+alias -g F='| tail -f'
+alias -g X='| xargs'
+
+
+#
 # Powerline
 #
 if type powerline >/dev/null 2>&1; then
