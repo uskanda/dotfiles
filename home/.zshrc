@@ -21,15 +21,16 @@ fi
 
 #
 # zsh-autosuggestions
+# disable now..
 #
-if [ -f ~/.zsh/zsh-autosuggestions/autosuggestions.zsh ]; then
-    source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
-
-    zle-line-init() {
-        zle autosuggest-start
-    }
-    zle -N zle-line-init
-fi
+#if [ -f ~/.zsh/zsh-autosuggestions/autosuggestions.zsh ]; then
+#    source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
+#
+#    zle-line-init() {
+#        zle autosuggest-start
+#    }
+#   zle -N zle-line-init
+#fi
 
 #
 # cdd
