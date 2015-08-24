@@ -39,6 +39,9 @@ bindkey '^M' do_enter
 
 chpwd() {
     ls_abbrev_with_git
+    if [[ -n "$TMUX_PANE" ]];then
+      tmux set-window-option window-status-format " #I ${PWD:t} " > /dev/null
+    fi
 }
 ls_abbrev_with_git() {
     if [[ ! -r $PWD ]]; then
