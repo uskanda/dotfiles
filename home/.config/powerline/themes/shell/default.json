@@ -6,7 +6,7 @@
 				"priority": 10
 			},
 			{
-				"function": "powerline.segments.common.env.user('uskanda')",
+				"function": "powerline.segments.common.env.user",
 				"priority": 30
 			},
 			{

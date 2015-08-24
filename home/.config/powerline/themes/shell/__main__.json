@@ -5,6 +5,11 @@
 				"only_if_ssh": true
 			}
 		},
+		"user": {
+			"args": {
+				"hide_user": "uskanda"
+			}
+		},
 		"cwd": {
 			"args": {
 				"dir_limit_depth": 5
