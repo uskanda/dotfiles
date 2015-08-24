@@ -1,6 +1,3 @@
-[submodule "home/.zprezto"]
-	path = home/.zprezto
-	url = https://github.com/sorin-ionescu/prezto.git
 [submodule "home/.zsh/cdd"]
 	path = home/.zsh/cdd
 	url = https://github.com/m4i/cdd.git
