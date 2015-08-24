@@ -20,6 +20,18 @@ if [ -f ~/.enhancd/zsh/enhancd.zsh ]; then
 fi
 
 #
+# zsh-autosuggestions
+#
+if [ -f ~/.zsh/zsh-autosuggestions/autosuggestions.zsh ]; then
+    source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
+
+    zle-line-init() {
+        zle autosuggest-start
+    }
+    zle -N zle-line-init
+fi
+
+#
 # cdd
 #
 if [ -f ~/.zsh/cdd/cdd ]; then
