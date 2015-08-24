@@ -14,10 +14,15 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # enhancd
-if [ -f "/Users/uskanda/.enhancd/zsh/enhancd.zsh" ]; then
-    source "/Users/uskanda/.enhancd/zsh/enhancd.zsh"
+if [ -f ~/.enhancd/zsh/enhancd.zsh ]; then
+    source ~/.enhancd/zsh/enhancd.zsh
     export ENHANCD_FILTER="fzf-tmux"
 fi
+
+#
+# cdd
+#
+
 
 #
 # chpwd and enter 
