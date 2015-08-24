@@ -82,3 +82,7 @@ ls_abbrev_with_git() {
     fi
 }
 
+# zprof
+#if (which zprof > /dev/null) ;then
+#  zprof | less
+#fi
