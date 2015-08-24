@@ -22,6 +22,12 @@ fi
 #
 # cdd
 #
+if [ -f ~/.zsh/cdd/cdd ]; then
+    source ~/.zsh/cdd/cdd
+    typeset -ga chpwd_functions
+    chpwd_functions+=_cdd_chpwd
+fi
+
 
 
 #
