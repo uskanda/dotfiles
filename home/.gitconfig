@@ -9,6 +9,13 @@
     st = status
     ss = status -s
     sh = show
+    a = add
+    co = checkout
+    ci = commit
+    cia = commit --amend
+    ca = commit -a
+    d = diff
+    dc = diff --cached
     ff  = flow feature
     ffl = flow feature list
     ffs = flow feature start
