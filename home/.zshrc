@@ -21,8 +21,11 @@ fi
 
 #
 # zsh-autosuggestions
-# disable now..
+# now disable.
 #
+# グループ名に空文字列を指定すると，マッチ対象のタグ名がグループ名に使われる。
+# したがって，すべての マッチ種別を別々に表示させたいなら以下のようにする
+zstyle ':completion:*' group-name ''
 #if [ -f ~/.zsh/zsh-autosuggestions/autosuggestions.zsh ]; then
 #    source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
 #
@@ -31,6 +34,20 @@ fi
 #    }
 #   zle -N zle-line-init
 #fi
+
+
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+zstyle ':completion:*:messages' format $YELLOW'%d'$DEFAULT
+zstyle ':completion:*:warnings' format $RED'No matches for:'$YELLOW' %d'$DEFAULT
+zstyle ':completion:*:descriptions' format $YELLOW'completing %B%d%b'$DEFAULT
+zstyle ':completion:*:corrections' format $YELLOW'%B%d '$RED'(errors: %e)%b'$DEFAULT
+zstyle ':completion:*:options' description 'yes'
+if [ -f ~/.zsh/auto-fu.zsh ]; then
+    source ~/.zsh/auto-fu.zsh
+    zle-line-init () {auto-fu-init;}; zle -N zle-line-init
+    zle -N zle-keymap-select auto-fu-zle-keymap-select
+fi
 
 #
 # cdd

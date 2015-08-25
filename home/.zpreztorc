@@ -31,8 +31,8 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
-  'syntax-highlighting' \
-  'completion'
+  'completion' \
+  'syntax-highlighting' 
 
 #
 # Editor
