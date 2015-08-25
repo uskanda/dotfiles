@@ -84,7 +84,7 @@ setopt IGNOREEOF
 # Alias
 #
 alias l='ls'
-alias la="ls -A"
+alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
 alias lal="ls -Al"
