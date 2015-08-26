@@ -36,9 +36,9 @@ zstyle ':completion:*' group-name ''
 #fi
 
 
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
-zstyle ':completion:*:messages' format $YELLOW'%d'$DEFAULT
+#zstyle ':completion:*' verbose yes
+zstyle ':completion:*' completer _expand _oldlist _complete _match _prefix _approximate _list _history
+#zstyle ':completion:*:messages' format $YELLOW'%d'$DEFAULT
 zstyle ':completion:*:warnings' format $RED'No matches for:'$YELLOW' %d'$DEFAULT
 zstyle ':completion:*:descriptions' format $YELLOW'completing %B%d%b'$DEFAULT
 zstyle ':completion:*:corrections' format $YELLOW'%B%d '$RED'(errors: %e)%b'$DEFAULT
@@ -46,7 +46,6 @@ zstyle ':completion:*:options' description 'yes'
 if [ -f ~/.zsh/auto-fu.zsh ]; then
     source ~/.zsh/auto-fu.zsh
     zle-line-init () {auto-fu-init;}; zle -N zle-line-init
-    zle -N zle-keymap-select auto-fu-zle-keymap-select
 fi
 
 #
@@ -77,6 +76,9 @@ function do_enter() {
 }
 zle -N do_enter
 bindkey '^M' do_enter
+if [ -f ~/.zsh/auto-fu.zsh ]; then
+bindkey -M afu '^M' do_enter
+fi
 
 chpwd() {
     ls_abbrev_with_git
