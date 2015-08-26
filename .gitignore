@@ -3,4 +3,6 @@ home/.zsh/cdd_pwd_list*
 home/.zsh/auto-fu.*
 home/.zsh/zsh-completions-selected/*
 home/.config
+home/.vim/bundle
+home/.vimrc.local
 Gemfile.lock
