@@ -124,7 +124,9 @@ ls_abbrev_with_git() {
     if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
         echo
         echo -e "\e[0;33m--- git status ---\e[0m"
-        git status -sb
+        unbuffer git status -sb | head -n 1
+        unbuffer git status -s | git column
+        git --no-pager log -5 --oneline --decorate
     fi
 }
 
