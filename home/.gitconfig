@@ -4,6 +4,8 @@
 [user]
 	email = uskanda@gmail.com
 	name = Yusuke Kanda
+[ghq]
+    root = ~/Sources
 [alias]
     s = status
     st = status
