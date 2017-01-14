@@ -7,9 +7,6 @@
 [submodule "home/.zprezto"]
 	path = home/.zprezto
 	url = https://github.com/uskanda/prezto
-[submodule "home/.vim/bundle/neobundle.vim"]
-	path = home/.vim/bundle/neobundle.vim
-	url = https://github.com/Shougo/neobundle.vim
 [submodule "home/.anyenv"]
 	path = home/.anyenv
 	url = https://github.com/riywo/anyenv
