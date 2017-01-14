@@ -12,6 +12,7 @@ fi
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPTS="--reverse --inline-info"
 
 # enhancd
 if [ -f ~/.enhancd/zsh/enhancd.zsh ]; then

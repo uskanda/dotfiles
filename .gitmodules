@@ -10,3 +10,9 @@
 [submodule "home/.vim/bundle/neobundle.vim"]
 	path = home/.vim/bundle/neobundle.vim
 	url = https://github.com/Shougo/neobundle.vim
+[submodule "home/.anyenv"]
+	path = home/.anyenv
+	url = https://github.com/riywo/anyenv
+[submodule "home/.config/nvim/dein.vim"]
+	path = home/.config/nvim/dein.vim
+	url = https://github.com/Shougo/dein.vim

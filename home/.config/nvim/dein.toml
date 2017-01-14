@@ -1,0 +1,28 @@
+[[plugins]]
+repo = 'Shougo/vimproc'
+
+  [plugins.build]
+    windows = 'tools\\update-dll-mingw'
+    cygwin  = 'make -f make_cygwin.mak'
+    mac     = 'make -f make_mac.mak'
+    linux   = 'make'
+    unix    = 'gmake'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'tomtom/tcomment_vim'
+
+[[plugins]]
+repo = '907th/vim-auto-save'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
