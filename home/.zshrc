@@ -17,8 +17,8 @@ export FZF_TMUX=1
 export FZF_CTRL_R_OPTS='--exact'
 
 # enhancd
-if [ -f ~/.enhancd/zsh/enhancd.zsh ]; then
-    source ~/.enhancd/zsh/enhancd.zsh
+if [ -f ~/.enhancd/init.sh ]; then
+    source ~/.enhancd/init.sh
     export ENHANCD_FILTER="fzf-tmux"
 fi
 
