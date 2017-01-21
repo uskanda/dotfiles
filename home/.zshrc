@@ -13,6 +13,8 @@ fi
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS="--reverse --inline-info"
+export FZF_TMUX=1
+export FZF_CTRL_R_OPTS='--exact'
 
 # enhancd
 if [ -f ~/.enhancd/zsh/enhancd.zsh ]; then
