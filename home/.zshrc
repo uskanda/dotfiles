@@ -1,47 +1,19 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+#zmodload zsh/zprof && zprof
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# Install zplug if not exist
+if [[ ! -d ~/.zplug ]];then
+    git clone https://github.com/b4b4r07/zplug ~/.zplug
 fi
+source ~/.zplug/init.zsh
 
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS="--reverse --inline-info"
-export FZF_TMUX=1
-export FZF_CTRL_R_OPTS='--exact'
+zplug "b4b4r07/enhancd", use:init.sh
+zplug "b4b4r07/peco-tmux.sh", as:command, use:'(*).sh', rename-to:'$1'
+zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-# enhancd
-if [ -f ~/.enhancd/init.sh ]; then
-    source ~/.enhancd/init.sh
-    export ENHANCD_FILTER="fzf-tmux"
-fi
 
-#
-# zsh-autosuggestions
-# now disable.
-#
-# グループ名に空文字列を指定すると，マッチ対象のタグ名がグループ名に使われる。
-# したがって，すべての マッチ種別を別々に表示させたいなら以下のようにする
 zstyle ':completion:*' group-name ''
-#if [ -f ~/.zsh/zsh-autosuggestions/autosuggestions.zsh ]; then
-#    source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
-#
-#    zle-line-init() {
-#        zle autosuggest-start
-#    }
-#   zle -N zle-line-init
-#fi
-
-
-#zstyle ':completion:*' verbose yes
 zstyle ':completion:*' completer _expand _oldlist _complete _match _prefix _approximate _list _history
-#zstyle ':completion:*:messages' format $YELLOW'%d'$DEFAULT
 zstyle ':completion:*:warnings' format $RED'No matches for:'$YELLOW' %d'$DEFAULT
 zstyle ':completion:*:descriptions' format $YELLOW'completing %B%d%b'$DEFAULT
 zstyle ':completion:*:corrections' format $YELLOW'%B%d '$RED'(errors: %e)%b'$DEFAULT
@@ -51,6 +23,17 @@ if [ -f ~/.zsh/auto-fu.zsh ]; then
     zle-line-init () {auto-fu-init;}; zle -N zle-line-init
 fi
 
+# Install zplug plugins
+if ! zplug check --verbose; then
+	printf "Install zplug plugins? [y/N]: "
+	if read -q; then
+		echo; zplug install
+	fi
+fi
+zplug load
+
+ENHANCD_FILTER="peco-tmux"
+
 #
 # cdd
 #
@@ -59,8 +42,6 @@ if [ -f ~/.zsh/cdd/cdd ]; then
     typeset -ga chpwd_functions
     chpwd_functions+=_cdd_chpwd
 fi
-
-
 
 #
 # chpwd and enter 
@@ -133,7 +114,140 @@ ls_abbrev_with_git() {
     fi
 }
 
-# zprof
-#if (which zprof > /dev/null) ;then
-#  zprof | less
+#
+# Powerline
+#
+#if type powerline >/dev/null 2>&1; then
+#  powerline-daemon -q
+#  . ~/.zsh/scripts/powerline.zsh
+#else
+#  autoload colors
+#  colors
+#    PROMPT="%{${fg[green]}%}%/%%%{${reset_color}%} "
+#    PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
+#  #  RPROMPT="[%n@%m]"
+#    SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+#    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+#      PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 #fi
+
+export TERM='xterm-256color'
+
+#
+#
+# Editors
+#
+export EDITOR='vim'
+export VISUAL='vim'
+export PAGER='less'
+
+#
+# Temporary Files
+#
+if [[ ! -d "$TMPDIR" ]]; then
+  export TMPDIR="/tmp/$LOGNAME"
+  mkdir -p -m 700 "$TMPDIR"
+fi
+
+TMPPREFIX="${TMPDIR%/}/zsh"
+
+#History Settings
+HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"       # The path to the history file.
+HISTSIZE=30000  
+SAVEHIST=30000 
+setopt BANG_HIST
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_VERIFY
+setopt HIST_BEEP
+
+#Directory Settings
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS 
+setopt PUSHD_SILENT
+setopt PUSHD_TO_HOME
+setopt CDABLE_VARS
+setopt AUTO_NAME_DIRS
+setopt MULTIOS
+setopt EXTENDED_GLOB
+
+# Alias
+alias l='ls'
+alias la="ls -a"
+alias lf="ls -F"
+alias ll="ls -l"
+alias lal="ls -Al"
+alias ltr="ls -ltr"
+alias laltr="ls -altr"
+
+alias f="tail -f"
+alias F="tail -F"
+alias h="head -n 30"
+alias t="tail -n 30"
+alias g="git"
+alias gi="git"
+alias where="command -v"
+alias du="du -h"
+alias df="df -h"
+alias su="su -l"
+alias rmdir='rm -rf'
+alias psa='ps aux'
+alias p=$PAGER
+
+#OS Specific
+case $OSTYPE in
+  linux*)
+    alias ls='ls --color'
+    ;;
+  darwin*)
+    alias ls='ls -G'
+    alias v='mvim'
+    alias mvim='mvim --remote-tab-silent'
+    alias o='open'
+    alias oa='open -a'
+    alias vlc="open -a VLC"
+    alias preview="open -a Preview"
+    alias keynote="open -a Keynote"
+    alias tac="gtac"
+    alias -s gif=preview
+    alias -s jpg=preview
+    alias -s jpeg=preview
+    alias -s png=preview
+    alias -s bmp=preview
+    alias -s pdf=preview
+    ;;
+esac
+
+#for Typo
+alias dc='cd'
+alias bc='cd'
+alias les='less'
+
+# Global alias
+alias -g L='| lv'
+alias -g P='| $PAGER'
+alias -g H='| head -n 30'
+alias -g Hn='| head -n'
+alias -g T='| tail -n 30'
+alias -g Tn='| tail -n'
+alias -g G='| grep'
+alias -g Ge='| grep -e'
+alias -g Gv='| grep -v'
+alias -g W='| wc'
+alias -g S='| sed'
+alias -g A='| awk'
+alias -g B=';echo "\a"'
+alias -g F='| tail -f'
+alias -g X='| xargs'
+
+if (which zprof > /dev/null) ;then
+#  zprof | less
+fi
