@@ -33,6 +33,8 @@ fi
 zplug load
 
 ENHANCD_FILTER="peco-tmux"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history)
 
 #
 # cdd
