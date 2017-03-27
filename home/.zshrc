@@ -1,5 +1,13 @@
 #zmodload zsh/zprof && zprof
 
+if $LIGHTWEIGHT_MODE; then
+  echo -e "\e[33m-----Run zsh as lightweight mode-----\e[m"
+  autoload -Uz colors
+  colors
+  PROMPT="%F{green}[%d]%k "
+  return 
+fi
+
 # Install zplug if not exist
 if [[ ! -d ~/.zplug ]];then
     git clone https://github.com/b4b4r07/zplug ~/.zplug
