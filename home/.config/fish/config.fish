@@ -5,10 +5,10 @@ if not type -q fisher
   fish -c "fisher"
 end
 
-source ~/.config/fish/config_local.fish
-
 set -U FZF_TMUX
 set -U fish_prompt_pwd_dir_length 4
+
+source ~/.config/fish/config_local.fish
 
 abbr l 'ls'
 abbr la "ls -a"

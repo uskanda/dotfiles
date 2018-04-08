@@ -61,10 +61,6 @@
     "vim.statusBarColors": {
         "normal": ["#8FBCBB", "#434C5E"],
         "insert": "#BF616A",
-        "visual": "#B48EAD",
-        "visualline": "#B48EAD",
-        "visualblock": "#A3BE8C",
-        "replace": "#D08770"
     },
     "workbench.colorCustomizations": {
         "statusBar.background": "#8FBCBB",
