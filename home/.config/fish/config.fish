@@ -5,10 +5,28 @@ if not type -q fisher
   fish -c "fisher"
 end
 
-set -U fish_prompt_pwd_dir_length 4
 source ~/.config/fish/config_local.fish
 
-set -U FZF_TMUX 1
+set -U FZF_TMUX
+set -U fish_prompt_pwd_dir_length 4
+
+abbr l 'ls'
+abbr la "ls -a"
+abbr lf "ls -F"
+abbr ll "ls -l"
+abbr lal "ls -Al"
+abbr ltr "ls -ltr"
+abbr laltr "ls -altr"
+abbr f "tail -f"
+abbr F "tail -F"
+abbr h "head -n 30"
+abbr t "tail -n 30"
+abbr g "git"
+abbr gi "git"
+abbr where "command -v"
+abbr du "du -h"
+abbr df "df -h"
+abbr su "su -l"
 
 function do_enter
   set -l query (commandline)
