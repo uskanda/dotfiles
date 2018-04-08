@@ -21,11 +21,9 @@ function do_enter
     echo
     ls
     if test (git rev-parse --is-inside-work-tree 2> /dev/null)
-      echo
       echo -e "\e[0;33m--- git status ---\e[0m"
-     unbuffer git status -sb | head -n 1
-     unbuffer git status -s | git column
-     git --no-pager log -5 --oneline --decorate
+      git status -sb
+      git --no-pager log -5 --oneline --decorate
     end
   end
   commandline -f repaint
