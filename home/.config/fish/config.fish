@@ -5,7 +5,7 @@ if not type -q fisher
   fish -c "fisher"
 end
 
-set -U FZF_TMUX
+set -U FZF_TMUX 1
 set -U fish_prompt_pwd_dir_length 4
 
 source ~/.config/fish/config_local.fish
@@ -47,8 +47,5 @@ function do_enter
   commandline -f repaint
 end
 
-function fish_user_key_bindings
-  bind \cm do_enter
-end
 
 #不服だがfunctions/completionsはfishermanにくれてやる
