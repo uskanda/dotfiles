@@ -1,7 +1,4 @@
 function fish_user_key_bindings
-    ### My Settings ###
-    bind \cm do_enter
-
     ### fzf ###
     if test "$FZF_LEGACY_KEYBINDINGS" -eq 1
         bind \ct '__fzf_find_file'

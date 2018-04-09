@@ -28,24 +28,14 @@ abbr du "du -h"
 abbr df "df -h"
 abbr su "su -l"
 
-function do_enter
-  set -l query (commandline)
-
-  if test -n $query
-    echo
-    eval $query
-    commandline ''
-  else
-    echo
-    ls
-    if test (git rev-parse --is-inside-work-tree 2> /dev/null)
-      echo -e "\e[0;33m--- git status ---\e[0m"
-      git status -sb
-      git --no-pager log -5 --oneline --decorate
+function done_enter --on-event fish_postexec
+    if test -z "$argv"
+        ls
+        if git rev-parse --is-inside-work-tree ^/dev/null
+            echo -e "\e[0;33m--- git status ---\e[0m"
+            git status -sb
+            git --no-pager log -5 --oneline --decorate
+        end
     end
-  end
-  commandline -f repaint
 end
 
-
-#不服だがfunctions/completionsはfishermanにくれてやる
