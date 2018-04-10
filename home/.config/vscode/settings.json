@@ -1,7 +1,8 @@
 {
     "vim.easymotion": true,
     "vim.incsearch": true,
-    "vim.useSystemClipboard": true,
+    //本当はtrueにしたいが、trueにするとx, ddあたりが重くなる
+    "vim.useSystemClipboard": false,
     "vim.useCtrlKeys": true,
     "vim.hlsearch": true,
     "vim.insertModeKeyBindings": [
@@ -41,7 +42,6 @@
     "vim.leader": "<space>",
     "vim.handleKeys": {
         "<C-a>": false,
-        "<C-f>": false
     },
     "workbench.iconTheme": "material-icon-theme",
     "files.autoSave": "afterDelay",
