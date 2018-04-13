@@ -27,6 +27,18 @@ abbr where "command -v"
 abbr du "du -h"
 abbr df "df -h"
 abbr su "su -l"
+abbr c "code"
+gabbr L "| less"
+gabbr H "| head"
+gabbr T "| tail"
+gabbr F "| tail -f"
+gabbr G "| grep"
+gabbr GE "| grep -e"
+gabbr GV "| grep -v"
+gabbr W "| wc"
+gabbr S "| sed"
+gabbr A "| awk"
+gabbr X "| xargs"
 
 function done_enter --on-event fish_postexec
     if test -z "$argv"
@@ -38,4 +50,3 @@ function done_enter --on-event fish_postexec
         end
     end
 end
-
