@@ -1,0 +1,4 @@
+cd ~/bin/
+wget https://raw.githubusercontent.com/b4b4r07/peco-tmux.sh/master/peco-tmux.sh
+mv peco-tmux.sh peco-tmux
+chmod 777 peco-tmux
