@@ -1,10 +1,11 @@
 # install fisherman if fisher command is missing
 if not type -q fisher
   echo "fisherman does not exist. install now."
-  curl -s -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
+  curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
   fish -c "fisher"
 end
 
+set -x PATH /opt/homebrew/bin $PATH
 set -U FZF_TMUX 1
 set -U fish_prompt_pwd_dir_length 4
 
@@ -28,17 +29,6 @@ abbr du "du -h"
 abbr df "df -h"
 abbr su "su -l"
 abbr c "code"
-gabbr L "| less"
-gabbr H "| head"
-gabbr T "| tail"
-gabbr F "| tail -f"
-gabbr G "| grep"
-gabbr GE "| grep -e"
-gabbr GV "| grep -v"
-gabbr W "| wc"
-gabbr S "| sed"
-gabbr A "| awk"
-gabbr X "| xargs"
 
 function done_enter --on-event fish_postexec
     if test -z "$argv"
