@@ -26,7 +26,4 @@ function fish_user_key_bindings
     set -q FZF_COMPLETE
     and bind \t '__fzf_complete'
     ### fzf ###
-    ### global-abbreviation ###
-    bind ' ' '__gabbr_expand; commandline -i " "'
-    ### global-abbreviation ###
 end
