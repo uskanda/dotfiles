@@ -30,15 +30,20 @@ abbr df "df -h"
 abbr su "su -l"
 abbr c "code"
 
-function done_enter --on-event fish_postexec
-    if test -z "$argv"
+function done_enter
+    if test -z (commandline)
+        echo
+        echo -e "\e[0;33m--- ls ---\e[0m"
         ls
-        if git rev-parse --is-inside-work-tree ^/dev/null
+        if git rev-parse --is-inside-work-tree > /dev/null 2>&1
             echo -e "\e[0;33m--- git status ---\e[0m"
             git status -sb
             git --no-pager log -5 --oneline --decorate
         end
+    else
+        commandline -f execute
     end
+    commandline -f repaint
 end
 
 source "$HOME/.homesick/repos/homeshick/homeshick.fish"
