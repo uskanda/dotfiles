@@ -40,3 +40,5 @@ function done_enter --on-event fish_postexec
         end
     end
 end
+
+source "$HOME/.homesick/repos/homeshick/homeshick.fish"
