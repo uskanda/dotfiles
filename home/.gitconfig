@@ -37,3 +37,5 @@
     fs  = flow support
 [url "git@github.com:"]
 	pushinsteadof = https://github.com/
+[http]
+	sslVerify = false

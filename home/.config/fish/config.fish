@@ -1,10 +1,3 @@
-# install fisherman if fisher command is missing
-if not type -q fisher
-  echo "fisherman does not exist. install now."
-  curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
-  fish -c "fisher"
-end
-
 set -x PATH /opt/homebrew/bin $PATH
 set -U FZF_TMUX 1
 set -U fish_prompt_pwd_dir_length 4
@@ -46,4 +39,3 @@ function done_enter
     commandline -f repaint
 end
 
-source "$HOME/.homesick/repos/homeshick/homeshick.fish"
