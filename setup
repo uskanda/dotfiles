@@ -4,7 +4,7 @@ cd $HOME/dotfiles
 # install chezmoi
 # check if chezmoi is already installed
 echo "Installing chezmoi..."
-if command -v chezmoi &> /dev/null;っｊthen
+if command -v chezmoi &> /dev/null; then
     echo "chezmoi is already installed. Installation skipped."
 else
     cd $HOME
@@ -18,7 +18,17 @@ chezmoi init --source="$HOME/dotfiles" --apply
 
 #install zsh and zinit
 echo "Installing Zsh and Zinit..."
-sudo apt install zsh -y
+# check if zsh is already installed
+if command -v zsh &> /dev/null; then
+    echo "Zsh is already installed. Installation skipped."
+else
+    echo "Zsh is NOT installed."
+    echo "Installing Zsh..."
+    # install zsh
+    sudo apt update
+    sudo apt install -y zsh
+    echo "done."
+fi
 
 ## check if zinit is already installed
 if command -v zinit >/dev/null 2>&1 \
@@ -29,6 +39,7 @@ else
   echo "zinit is NOT installed."
   echo "Installing Zinit..."
   bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+  echo "done."
 fi
 
 #change default shell to zsh
@@ -38,4 +49,17 @@ if [ "$SHELL" = "$(which zsh)" ]; then
 else
     echo "Changing default shell to Zsh..."
     chsh -s $(which zsh)
+    echo "done."
+fi
+
+# install starship
+echo "Installing Starship..."
+# check if starship is already installed
+if command -v starship &> /dev/null; then
+    echo "Starship is already installed. Installation skipped."
+else
+    echo "Starship is NOT installed."
+    echo "Installing Starship..."
+    curl -sS https://starship.rs/install.sh | sh
+    echo "done."
 fi
