@@ -1,6 +1,13 @@
 uskanda's dotfiles
 ============================
 
+作業中
+
+このディレクトリ全体はChezmoi管理下である。
+Chezmoiのネーミングルールに反するものは無視されるのでセットアップスクリプトなどもここにそのまま置く。
+
+WSL2(Ubuntu)/Ubuntu/MacOSは
+
 installation
 -----------------------------
 ### Windows
