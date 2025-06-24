@@ -29,3 +29,8 @@ ToDo
 * モダンなzshをさぐる まだohmyzshやpreztoとかなのか
 * シェル関連 Starship
 * 他Rustベースプロダクト
+
+学び
+-----------------------------
+* chezmoiってsymlinkでなくてコピーなのね
+* コピー先ファイルの変更はchezmoi addで再反映する

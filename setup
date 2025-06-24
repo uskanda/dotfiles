@@ -1,0 +1,41 @@
+#!/bin/bash
+cd $HOME/dotfiles
+
+# install chezmoi
+# check if chezmoi is already installed
+echo "Installing chezmoi..."
+if command -v chezmoi &> /dev/null;っｊthen
+    echo "chezmoi is already installed. Installation skipped."
+else
+    cd $HOME
+    sh -c "$(curl -fsLS get.chezmoi.io/lb)"
+    cd $HOME/dotfiles
+fi
+
+# init chezmoi
+echo "Initializing chezmoi..."
+chezmoi init --source="$HOME/dotfiles" --apply
+
+#install zsh and zinit
+echo "Installing Zsh and Zinit..."
+sudo apt install zsh -y
+
+## check if zinit is already installed
+if command -v zinit >/dev/null 2>&1 \
+   || [ -d "$HOME/.local/share/zinit/zinit.git" ] \
+   || [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
+  echo "zinit is already installed. Installation skipped."
+else
+  echo "zinit is NOT installed."
+  echo "Installing Zinit..."
+  bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+fi
+
+#change default shell to zsh
+# check if zsh is already the default shell
+if [ "$SHELL" = "$(which zsh)" ]; then
+    echo "Zsh is already the default shell. No changes made."
+else
+    echo "Changing default shell to Zsh..."
+    chsh -s $(which zsh)
+fi
