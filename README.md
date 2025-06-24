@@ -14,7 +14,13 @@ installation
 * Powershellを管理者権限で実行
 
 > Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-> ./setup.ps1ss
+> ./setup.ps1
+
+### Ubuntu, WSL
+
+```bash
+./setup
+```
 
 リニューアル点
 -----------------------------
@@ -26,11 +32,15 @@ ToDo
 * Terminal Multiplexer選定 Zellijってなんぞや
 * ターミナルエミュレータ選定 Alacrittyかなあ
 * シェル zsh出戻り
-* モダンなzshをさぐる まだohmyzshやpreztoとかなのか
-* シェル関連 Starship
+* Starshipプロンプトブラッシュアップ
 * 他Rustベースプロダクト
 
 学び
 -----------------------------
 * chezmoiってsymlinkでなくてコピーなのね
 * コピー先ファイルの変更はchezmoi addで再反映する
+
+このdotfiles/setupで対象にしないこと
+-----------------------------
+* Nerd Fonts適用のフォントのビルド・インストール
+  現在はUDEV Gothicを使ってみている
