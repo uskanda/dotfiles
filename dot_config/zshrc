@@ -25,3 +25,5 @@ zinit light-mode for \
 
 zinit light zsh-users/zsh-completions
 zinit light zdharma-continuum/fast-syntax-highlighting
+
+eval "$(starship init zsh)"
