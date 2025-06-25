@@ -11,7 +11,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "done."
     else
         echo "Homebrew is already installed. Updating Homebrew..."
-        homebrew update
+        brew update
         echo "done."
     fi
 fi
