@@ -47,7 +47,7 @@ chezmoi init --source="$HOME/dotfiles" --apply
 echo "Installing Zsh and Zinit..."
 # check if zsh is already installed
 if command -v zsh &> /dev/null; then
-    echo "Zsh is already installed. Installation skipped."
+    echo "Zsh is already installed. Installation skipped. if you use MacOS, your default zsh is may not latest version."
 else
     echo "Zsh is NOT installed."
     echo "Installing Zsh..."
