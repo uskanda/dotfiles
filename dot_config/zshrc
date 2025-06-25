@@ -25,5 +25,9 @@ zinit light-mode for \
 
 zinit light zsh-users/zsh-completions
 zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light marlonrichert/zsh-autocomplete
 
 eval "$(starship init zsh)"
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"

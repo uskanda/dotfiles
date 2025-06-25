@@ -119,3 +119,29 @@ else
     curl -sS https://starship.rs/install.sh | sh
     echo "done."
 fi
+
+# install Atuin
+echo "Installing Atuin..."
+# check if atuin is already installed
+if command -v atuin &> /dev/null; then
+    echo "Atuin is already installed. Installation skipped."
+else
+    echo "Atuin is NOT installed."
+    echo "Installing Atuin..."
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "Detected macOS. Installing Atuin using Homebrew..."
+        if ! command -v brew &> /dev/null; then
+            echo "Homebrew is not installed. Please install Homebrew first."
+            exit 1
+        fi
+        brew install atuin
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo "Detected Linux. Installing Atuin curl..."
+        bash <(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)
+    else
+        echo "Unsupported OS. Please install Atuin manually."
+        exit 1
+    fi
+    echo "done."
+fi
+        
