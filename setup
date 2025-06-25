@@ -1,6 +1,33 @@
 #!/bin/bash
 cd $HOME/dotfiles
 
+# MacならHomebrewをインストール
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Detected macOS. Installing Homebrew..."
+    if ! command -v brew &> /dev/null; then
+        echo "Homebrew is not installed. Installing Homebrew..."
+        # Install Homebrew
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo "done."
+    else
+        echo "Homebrew is already installed. Updating Homebrew..."
+        homebrew update
+        echo "done."
+    fi
+fi
+
+# Update apt package list
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo "Detected Linux. Updating package list..."
+    if ! command -v apt &> /dev/null; then
+        echo "apt is not available. Please update your package list manually."
+        exit 1
+    fi
+    # Update package list
+    sudo apt update
+    echo "done."
+fi
+
 # install chezmoi
 # check if chezmoi is already installed
 echo "Installing chezmoi..."
@@ -16,7 +43,7 @@ fi
 echo "Initializing chezmoi..."
 chezmoi init --source="$HOME/dotfiles" --apply
 
-#install zsh and zinit
+# install zsh and zinit
 echo "Installing Zsh and Zinit..."
 # check if zsh is already installed
 if command -v zsh &> /dev/null; then
@@ -25,24 +52,49 @@ else
     echo "Zsh is NOT installed."
     echo "Installing Zsh..."
     # install zsh
-    sudo apt update
-    sudo apt install -y zsh
-    echo "done."
+    # OSがUbuntu or Macかチェック
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # Macの場合
+        echo "Detected macOS. Installing Zsh using Homebrew..."
+        if ! command -v brew &> /dev/null; then
+            echo "Homebrew is not installed. Please install Homebrew first."
+            exit 1
+        fi
+        brew install zsh
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linuxの場合
+        echo "Detected Linux. Installing Zsh using apt..."
+        if ! command -v apt &> /dev/null; then
+            echo "apt is not available. Please install Zsh manually."
+            exit 1
+        fi
+        # Update package list and install zsh
+        echo "Updating package list and installing Zsh..."
+        # Use sudo to install zsh
+        if ! command -v sudo &> /dev/null; then
+            echo "sudo is not available. Please install Zsh manually."
+            exit 1
+        fi
+        # Update package list and install zsh
+        echo "Installing Zsh..." 
+        sudo apt install -y zsh
+        echo "done."
+    fi
 fi
 
-## check if zinit is already installed
+# check if zinit is already installed
 if command -v zinit >/dev/null 2>&1 \
    || [ -d "$HOME/.local/share/zinit/zinit.git" ] \
    || [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
-  echo "zinit is already installed. Installation skipped."
+    echo "zinit is already installed. Installation skipped."
 else
-  echo "zinit is NOT installed."
-  echo "Installing Zinit..."
-  bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
-  echo "done."
+    echo "zinit is NOT installed."
+    echo "Installing Zinit..."
+    bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+    echo "done."
 fi
 
-#change default shell to zsh
+# change default shell to zsh
 # check if zsh is already the default shell
 if [ "$SHELL" = "$(which zsh)" ]; then
     echo "Zsh is already the default shell. No changes made."
