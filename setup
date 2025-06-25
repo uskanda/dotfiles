@@ -36,6 +36,10 @@ if command -v chezmoi &> /dev/null; then
 else
     cd $HOME
     sh -c "$(curl -fsLS get.chezmoi.io/lb)"
+    # add chezmoi default bin directory to PATH
+    if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+        export PATH="$HOME/.local/bin:$PATH"
+    fi
     cd $HOME/dotfiles
 fi
 
