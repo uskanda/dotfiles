@@ -26,6 +26,7 @@ zinit light-mode for \
 zinit light zsh-users/zsh-completions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light marlonrichert/zsh-autocomplete
+zinit load agkozak/zsh-z
 
 eval "$(starship init zsh)"
 . "$HOME/.atuin/bin/env"
@@ -56,3 +57,16 @@ function cd() {
   fi
 }
 
+# exec ls if the buffer is empty
+# This function will execute `ls` if the command line is empty when you press Enter.
+function accept-line-or-ls() {
+  if [[ -z $BUFFER ]]; then
+    ls
+    echo
+    zle reset-prompt
+  else
+    zle accept-line
+  fi
+}
+zle -N accept-line-or-ls
+bindkey '^M' accept-line-or-ls
