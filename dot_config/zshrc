@@ -31,7 +31,10 @@ zinit load agkozak/zsh-z
 eval "$(starship init zsh)"
 . "$HOME/.atuin/bin/env"
 
+# Atuinの自動バインドを無効化し、Ctrl-rだけAtuinに割り当てる
+export ATUIN_NOBIND="1"
 eval "$(atuin init zsh)"
+bindkey '^R' atuin-search
 
 # set up ls aliases with color support
 if ls --color=auto . >/dev/null 2>&1; then
