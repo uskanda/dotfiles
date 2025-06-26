@@ -29,15 +29,17 @@ installation
 
 ToDo
 -----------------------------
+* xcode-select --installの追加
 * Terminal Multiplexer選定 Zellijってなんぞや
 * ターミナルエミュレータ選定 Alacrittyかなあ
-* シェル zsh出戻り
 * Starshipプロンプトブラッシュアップ
 * 他Rustベースプロダクト
 * atuin違うかもな... fzfベースも考える
 * zoxide or z
 * bat
 * delta new git diff
+* brewfileの追加
+* aptは...まあええか？
 
 学び
 -----------------------------
@@ -47,7 +49,9 @@ ToDo
 このdotfiles/setupで対象にしないこと
 -----------------------------
 * Nerd Fonts適用のフォントのビルド・インストール
-  現在はUDEV Gothicを使ってみている
+  現在はUDEV Gothicを使っており、Nerd Fonts適用のUDEV Gothicを使う前提
+* アプリケーション側で同期設定のあるアプリ
+  * VSCode
 
 やったけど未反映
 ---------------------
