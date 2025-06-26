@@ -44,3 +44,8 @@ ToDo
 -----------------------------
 * Nerd Fonts適用のフォントのビルド・インストール
   現在はUDEV Gothicを使ってみている
+
+やったけど未反映
+---------------------
+brew tap daipeihust/tap
+brew install im-select
