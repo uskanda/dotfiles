@@ -34,6 +34,10 @@ ToDo
 * シェル zsh出戻り
 * Starshipプロンプトブラッシュアップ
 * 他Rustベースプロダクト
+* atuin違うかもな... fzfベースも考える
+* zoxide or z
+* bat
+* delta new git diff
 
 学び
 -----------------------------
