@@ -6,3 +6,14 @@ args = ["-d", "Ubuntu"]
 normal = { family = "UDEV Gothic NF", style = "Regular" }
 bold = { family = "UDEV Gothic NF", style = "Bold" }
 italic = { family = "UDEV Gothic NF", style = "Italic" }
+
+[mouse]
+bindings = [
+  { mouse = "Right", action = "Paste" }
+]
+
+[keyboard]
+bindings = [
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+  { key = "V", mods = "Control|Shift", action = "Paste" }
+]
