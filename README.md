@@ -6,7 +6,7 @@ uskanda's dotfiles
 このディレクトリ全体はChezmoi管理下である。
 Chezmoiのネーミングルールに反するものは無視されるのでセットアップスクリプトなどもここにそのまま置く。
 
-WSL2(Ubuntu)/Ubuntu/MacOSは
+WSL2(Ubuntu)/Ubuntu/MacOS対応予定。
 
 installation
 -----------------------------
@@ -24,14 +24,14 @@ installation
 
 リニューアル点
 -----------------------------
-* fishをやめてzshベースで再検討
+* fishをやめてzshベースで再構成
 * dotfiles管理をhomeshickからchezmoiへ移行
 
 ToDo
 -----------------------------
 * xcode-select --installの追加
-* Terminal Multiplexer選定 Zellijってなんぞや
-* ターミナルエミュレータ選定 Alacrittyかなあ
+* Terminal Multiplexer選定 Zellij、prefix連打でペイン動くのできないっぽい？
+* ターミナルエミュレータ選定 Alacritty or Wezterm Wezterm寄り
 * Starshipプロンプトブラッシュアップ
 * 他Rustベースプロダクト
 * atuin違うかもな... fzfベースも考える
@@ -40,6 +40,8 @@ ToDo
 * delta new git diff
 * brewfileの追加
 * aptは...まあええか？
+* wezterm muxまわり設定
+* im-select VSCode vi mode IME設定
 
 学び
 -----------------------------
