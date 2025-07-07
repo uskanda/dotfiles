@@ -1,4 +1,12 @@
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+# CopilotやAIエージェント用の最低限の設定
+if [[ "$AGENT_MODE" == "1" ]]; then
+  export PS1='$ '   # プロンプト超シンプルに
+  unalias -a        # すべてのalias無効
+  # ここに、余計な機能をoffにする処理
+  return
+fi
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
