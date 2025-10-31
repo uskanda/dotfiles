@@ -37,7 +37,7 @@ zinit light marlonrichert/zsh-autocomplete
 zinit load agkozak/zsh-z
 
 eval "$(starship init zsh)"
-. "$HOME/.atuin/bin/env"
+# . "$HOME/.atuin/bin/env"
 
 # Atuinの自動バインドを無効化し、Ctrl-rだけAtuinに割り当てる
 export ATUIN_NOBIND="1"
@@ -81,3 +81,6 @@ function accept-line-or-ls() {
 }
 zle -N accept-line-or-ls
 bindkey '^M' accept-line-or-ls
+
+# Added by Windsurf
+export PATH="/Users/kanda/.codeium/windsurf/bin:$PATH"
