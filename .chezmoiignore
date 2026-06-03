@@ -17,3 +17,6 @@ README.md
 .claude/statsig/
 .claude/history.jsonl
 .claude/ide/
+# plugins は known_marketplaces.json のみ追跡。マーケットプレイスの
+# clone（巨大・キャッシュ相当）は追跡しない。
+.claude/plugins/marketplaces/

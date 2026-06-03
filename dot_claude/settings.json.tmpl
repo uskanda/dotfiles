@@ -12,7 +12,47 @@
 */ -}}
 {{- $model := dig "claude" "model" "claude-sonnet-4-6" . -}}
 {
-  "model": {{ $model | quote }},
+  "agentPushNotifEnabled": true,
+  "cleanupPeriodDays": 30,
   "includeCoAuthoredBy": true,
-  "cleanupPeriodDays": 30
+  "model": {{ $model | quote }},
+  "permissions": {
+    "additionalDirectories": [
+      "/tmp"
+    ],
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh auth *)",
+      "Bash(gh repo *)",
+      "Bash(crontab -l)",
+      "Bash(ls -la)",
+      "Bash(cat MEMORY.md)",
+
+      "Bash(../venv/bin/pyinfra *)",
+      "Bash(venv/bin/pyinfra *)",
+
+      "Bash(venv/bin/python -m py_compile *)",
+
+      "Bash(venv/bin/python -c ' *)",
+      "Bash(../venv/bin/python -)",
+      "Bash(venv/bin/pip install *)",
+      "Bash(venv/bin/pip freeze *)",
+
+      "Bash(apt-cache *)",
+      "Bash(apt-get download *)",
+      "Bash(dpkg -L fonts-noto-cjk)",
+      "Bash(dpkg-deb -c *)",
+      "Bash(fc-list*)",
+      "Bash(grep -iE *)",
+
+      "Bash(command -v chezmoi)",
+      "Bash(chezmoi --version)",
+      "Bash(chezmoi source-path *)",
+
+      "Read(//etc/**)",
+      "Read(//usr/share/fonts/**)",
+      "Read(//tmp/**)"
+    ]
+  },
+  "theme": "auto"
 }
