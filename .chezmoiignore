@@ -2,3 +2,18 @@ setup
 setup.ps1
 win_main_apps.json
 README.md
+
+# === Claude Code (~/.claude) ===
+# Allowlist 方針: 自分で書いた設定だけを追跡し、
+# 認証情報・セッション履歴・ランタイム状態は絶対に含めない。
+# パターンはターゲットパス（$HOME からの相対）で評価される。
+# `chezmoi add ~/.claude` 時にもこの無視リストが適用されることを確認済み
+# （マッチしたものは "ignoring ..." と表示され、ソースに取り込まれない）。
+.claude/.credentials.json
+.claude/settings.local.json
+.claude/projects/
+.claude/todos/
+.claude/shell-snapshots/
+.claude/statsig/
+.claude/history.jsonl
+.claude/ide/
