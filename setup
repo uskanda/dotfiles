@@ -144,4 +144,19 @@ else
     fi
     echo "done."
 fi
+
+# (Optional) VOICEVOX engine for claude-notify TTS notifications.
+# Off by default — it is a ~1.8GB download. Enable with: INSTALL_VOICEVOX=1 ./setup
+# Without it, claude-notify falls back to the macOS `say` voice.
+if [[ "${INSTALL_VOICEVOX:-0}" == "1" && "$OSTYPE" == "darwin"* ]]; then
+    echo "Installing VOICEVOX engine (optional)..."
+    if command -v install-voicevox-engine &> /dev/null; then
+        install-voicevox-engine
+    else
+        "$HOME/.local/bin/install-voicevox-engine"
+    fi
+    echo "done."
+else
+    echo "Skipping VOICEVOX engine install (set INSTALL_VOICEVOX=1 to enable)."
+fi
         

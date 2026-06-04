@@ -1,0 +1,140 @@
+#!/usr/bin/env bash
+# install-voicevox-engine: download & install the VOICEVOX engine and run it as a
+# background LaunchAgent (macOS). Idempotent — safe to re-run.
+#
+# The engine exposes an HTTP API on localhost:50021 that `claude-notify` uses for
+# TTS. This is OPTIONAL: without it, claude-notify falls back to the macOS `say`
+# voice.
+#
+# Usage:
+#   install-voicevox-engine            # install + start
+#   install-voicevox-engine uninstall  # stop + remove
+#
+# Override via env:
+#   VOICEVOX_ENGINE_VERSION  default: 0.25.2
+#   VOICEVOX_ENGINE_DIR      default: ~/Applications/voicevox_engine
+#   VOICEVOX_PORT            default: 50021
+set -euo pipefail
+
+VERSION="${VOICEVOX_ENGINE_VERSION:-0.25.2}"
+PORT="${VOICEVOX_PORT:-50021}"
+INSTALL_DIR="${VOICEVOX_ENGINE_DIR:-$HOME/Applications/voicevox_engine}"
+LABEL="com.voicevox.engine"
+PLIST="$HOME/Library/LaunchAgents/${LABEL}.plist"
+
+if [[ "$(uname)" != "Darwin" ]]; then
+  echo "This installer supports macOS only." >&2
+  exit 1
+fi
+
+uninstall() {
+  echo "Stopping and removing VOICEVOX engine..."
+  launchctl unload "$PLIST" 2>/dev/null || true
+  rm -f "$PLIST"
+  rm -rf "$INSTALL_DIR"
+  echo "Done."
+}
+
+if [[ "${1:-}" == "uninstall" ]]; then
+  uninstall
+  exit 0
+fi
+
+# Already running? nothing to do.
+if curl -sf --max-time 2 "http://localhost:${PORT}/version" >/dev/null 2>&1; then
+  echo "VOICEVOX engine already running on :${PORT}. Nothing to do."
+  exit 0
+fi
+
+case "$(uname -m)" in
+  arm64)  ARCH="arm64" ;;
+  x86_64) ARCH="x64" ;;
+  *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+esac
+
+ASSET="voicevox_engine-macos-${ARCH}-${VERSION}.7z.001"
+URL="https://github.com/VOICEVOX/voicevox_engine/releases/download/${VERSION}/${ASSET}"
+
+# 7zz (sevenzip) is required to extract the release archive.
+if ! command -v 7zz >/dev/null 2>&1; then
+  if command -v brew >/dev/null 2>&1; then
+    echo "Installing sevenzip (provides 7zz)..."
+    brew install sevenzip
+  else
+    echo "7zz not found and Homebrew unavailable. Install p7zip/sevenzip first." >&2
+    exit 1
+  fi
+fi
+
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+
+echo "Downloading ${ASSET} (~1.8GB)... this can take a while."
+curl -L --fail --retry 3 --retry-delay 5 -o "$TMP/engine.7z.001" "$URL"
+
+echo "Extracting..."
+7zz x -y -o"$TMP/extract" "$TMP/engine.7z.001" >/dev/null
+
+# Locate the `run` executable inside the extracted tree (folder name varies).
+RUN_BIN="$(find "$TMP/extract" -maxdepth 4 -type f -name run | head -1)"
+if [[ -z "$RUN_BIN" ]]; then
+  echo "Could not find the engine 'run' binary after extraction." >&2
+  exit 1
+fi
+SRC_DIR="$(dirname "$RUN_BIN")"
+
+echo "Installing to ${INSTALL_DIR}..."
+rm -rf "$INSTALL_DIR"
+mkdir -p "$INSTALL_DIR"
+# Copy the engine payload (use ditto to preserve macOS attributes/permissions).
+ditto "$SRC_DIR" "$INSTALL_DIR"
+chmod +x "$INSTALL_DIR/run"
+# Clear quarantine so launchd can start it without Gatekeeper prompts.
+xattr -dr com.apple.quarantine "$INSTALL_DIR" 2>/dev/null || true
+
+echo "Writing LaunchAgent ${PLIST}..."
+mkdir -p "$(dirname "$PLIST")"
+cat > "$PLIST" <<PLISTEOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>${LABEL}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>${INSTALL_DIR}/run</string>
+        <string>--host</string>
+        <string>127.0.0.1</string>
+        <string>--port</string>
+        <string>${PORT}</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>${INSTALL_DIR}</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>${HOME}/Library/Logs/voicevox-engine.log</string>
+    <key>StandardErrorPath</key>
+    <string>${HOME}/Library/Logs/voicevox-engine.log</string>
+</dict>
+</plist>
+PLISTEOF
+
+echo "Loading LaunchAgent..."
+launchctl unload "$PLIST" 2>/dev/null || true
+launchctl load "$PLIST"
+
+echo "Waiting for the engine to come up on :${PORT}..."
+for _ in $(seq 1 60); do
+  if curl -sf --max-time 2 "http://localhost:${PORT}/version" >/dev/null 2>&1; then
+    echo "VOICEVOX engine is up on :${PORT}."
+    exit 0
+  fi
+  sleep 2
+done
+
+echo "Engine did not respond within the timeout. Check ${HOME}/Library/Logs/voicevox-engine.log" >&2
+exit 1

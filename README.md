@@ -112,6 +112,36 @@ chezmoi apply ~/.claude
 > `~/.claude/settings.json` を上書きするため、初回は必ず `chezmoi diff` で確認し、
 > 自分の設定を取り込んでから運用すること。
 
+VOICEVOX エンジン（任意）
+-----------------------------
+`claude-notify`（Claude Code の Stop/Notification フック）は、`localhost:50021` で
+VOICEVOX エンジンが動いていれば日本語 TTS で読み上げる。エンジンが無い場合は
+macOS 標準の `say` 音声へ自動フォールバックするため、**インストールは任意**。
+
+約 1.8GB のダウンロードを伴うため、`./setup` ではデフォルト無効。有効化するには:
+
+```bash
+INSTALL_VOICEVOX=1 ./setup        # setup の一部として
+# もしくは単体で（冪等・再実行可）
+install-voicevox-engine           # ~/.local/bin に配置済み
+install-voicevox-engine uninstall # 停止して削除
+```
+
+インストーラ（`dot_local/bin/executable_install-voicevox-engine`）の挙動:
+
+* エンジン（macOS arm64/x64）を GitHub Releases から取得し `7zz` で展開
+* `~/Applications/voicevox_engine/` に配置
+* `~/Library/LaunchAgents/com.voicevox.engine.plist` を生成し `launchctl` で常駐起動
+  （`KeepAlive` 付き＝ログイン時/異常終了時に自動復帰）
+* 既に `:50021` が応答していれば何もしない
+
+発話者は `claude-notify` の `VOICEVOX_SPEAKER`（既定 `8` = 春日部つむぎ）で切替。
+インストール済みスタイルの一覧は次で確認できる:
+
+```bash
+curl -s http://localhost:50021/speakers | python3 -m json.tool
+```
+
 学び
 -----------------------------
 * chezmoiってsymlinkでなくてコピーなのね

@@ -8,11 +8,11 @@
 #
 # VoiceVox settings (override via env):
 #   VOICEVOX_URL     default: http://localhost:50021
-#   VOICEVOX_SPEAKER default: 3 (ずんだもん)
+#   VOICEVOX_SPEAKER default: 8 (春日部つむぎ)
 
 MESSAGE="${1:-完了しました}"
 VOICEVOX_URL="${VOICEVOX_URL:-http://localhost:50021}"
-VOICEVOX_SPEAKER="${VOICEVOX_SPEAKER:-3}"
+VOICEVOX_SPEAKER="${VOICEVOX_SPEAKER:-8}"
 
 voicevox_speak() {
   local text="$1"
