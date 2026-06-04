@@ -15,7 +15,12 @@
 # speak for genuine confirmation requests and stay silent for the known noise.
 
 KIND="${1:-}"
-BIN_DIR="$HOME/.local/bin"
+# Resolve sibling scripts relative to THIS file rather than $HOME. When ~/.claude
+# is bind-mounted from the Mac into a devcontainer, settings.json carries the
+# Mac's absolute hook path (/Users/<me>/.local/bin/claude-notify-hook), but $HOME
+# inside the container differs (/home/vscode). Self-locating keeps claude-notify
+# and claude-notify-nag findable in both places.
+BIN_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
 NOTIFY="$BIN_DIR/claude-notify"
 NAG="$BIN_DIR/claude-notify-nag"
 
