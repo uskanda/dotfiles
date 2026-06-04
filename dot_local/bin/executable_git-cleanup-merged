@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# git-cleanup-merged: Delete local branches already merged into origin/develop
+#
+# Usage:
+#   git cleanup-merged          # list and delete
+#   git cleanup-merged -n       # dry-run (list only)
+#   git cleanup-merged staging  # use a different base branch
+
+set -euo pipefail
+
+DRY_RUN=false
+TARGET="develop"
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -n|--dry-run) DRY_RUN=true; shift ;;
+    *) TARGET="$1"; shift ;;
+  esac
+done
+
+git fetch origin "$TARGET" --quiet
+
+merged=$(git branch --merged "origin/$TARGET" \
+  | grep -vE '^\*|^[[:space:]]*(main|master|develop|staging)[[:space:]]*$' \
+  | sed 's/^[[:space:]]*//' \
+  | grep -v '^$' || true)
+
+if [[ -z "$merged" ]]; then
+  echo "削除対象のブランチはありません。"
+  exit 0
+fi
+
+echo "削除対象ブランチ (base: origin/$TARGET):"
+while IFS= read -r branch; do
+  echo "  - $branch"
+done <<< "$merged"
+
+if $DRY_RUN; then
+  exit 0
+fi
+
+echo ""
+echo "$merged" | xargs git branch -d
+echo "削除完了。"
