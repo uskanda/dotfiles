@@ -17,6 +17,7 @@ README.md
 .claude/statsig/
 .claude/history.jsonl
 .claude/ide/
-# plugins は known_marketplaces.json のみ追跡。マーケットプレイスの
-# clone（巨大・キャッシュ相当）は追跡しない。
-.claude/plugins/marketplaces/
+# plugins/ 配下は Claude Code がランタイムで書き換えるため追跡しない。
+# known_marketplaces.json も Claude Code が lastUpdated/installLocation を
+# 更新し続けるため管理対象外とする。
+.claude/plugins/

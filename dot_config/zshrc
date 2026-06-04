@@ -1,5 +1,10 @@
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
+# antigravity: バイナリが存在する場合のみ PATH に追加
+if [ -x "$HOME/.antigravity/antigravity/bin/antigravity" ]; then
+  export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+fi
+
 # windsurf: バイナリが存在する場合のみ PATH に追加
 if [ -x "$HOME/.codeium/windsurf/bin/windsurf" ]; then
   export PATH="$HOME/.codeium/windsurf/bin:$PATH"
