@@ -39,17 +39,30 @@ voicevox_speak() {
     "${VOICEVOX_URL}/audio_query?text=${encoded}&speaker=${VOICEVOX_SPEAKER}") || return 1
 
   local tmp
-  tmp=$(mktemp /tmp/voicevox_XXXXXX.wav)
-  # shellcheck disable=SC2064
-  trap "rm -f '$tmp'" RETURN
+  tmp=$(mktemp /tmp/voicevox_XXXXXX.wav) || return 1
 
-  curl -sf --max-time "$VOICEVOX_QUERY_TIMEOUT" -X POST \
+  if ! curl -sf --max-time "$VOICEVOX_QUERY_TIMEOUT" -X POST \
     -H "Content-Type: application/json" \
     -d "$query" \
     "${VOICEVOX_URL}/synthesis?speaker=${VOICEVOX_SPEAKER}" \
-    -o "$tmp" || return 1
+    -o "$tmp"; then
+    rm -f "$tmp"
+    return 1
+  fi
 
+  # No (or empty) audio -> let the caller fall back to `say`.
+  if [ ! -s "$tmp" ]; then
+    rm -f "$tmp"
+    return 1
+  fi
+
+  # We have real VoiceVox audio. Commit to it and return success regardless of
+  # afplay's exit status: once we've played (or attempted to play) the synthesized
+  # WAV, falling back to `say` would speak the message a second time. A flaky
+  # afplay exit must NOT trigger the `|| say` path.
   afplay "$tmp"
+  rm -f "$tmp"
+  return 0
 }
 
 # --- Remote (devcontainer/SSH) routing --------------------------------------
