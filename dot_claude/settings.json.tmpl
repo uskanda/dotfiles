@@ -2,7 +2,7 @@
   ~/.claude/settings.json (user 設定) — chezmoi 管理。
   端末差分が出やすい値は chezmoi のデータ経由で上書きする。
 
-  既定値: model = "claude-opus-4-8"
+  既定値: model = "claude-opus-4-8[1m]"  （[1m] = 1M コンテキストウィンドウ）
   端末固有の上書き: ~/.config/chezmoi/chezmoi.toml に以下を書く
 
       [data.claude]
@@ -10,7 +10,7 @@
 
   `dig` で未設定時に既定値へフォールバックするため、データ未定義でも安全に描画される。
 */ -}}
-{{- $model := dig "claude" "model" "claude-opus-4-8" . -}}
+{{- $model := dig "claude" "model" "claude-opus-4-8[1m]" . -}}
 {{- $hook := printf "%s/.local/bin/claude-notify-hook" .chezmoi.homeDir -}}
 {
   "agentPushNotifEnabled": true,
@@ -49,6 +49,7 @@
     ]
   },
   "includeCoAuthoredBy": true,
+  "inputNeededNotifEnabled": true,
   "model": {{ $model | quote }},
   "remoteControlAtStartup": true,
   "permissions": {
