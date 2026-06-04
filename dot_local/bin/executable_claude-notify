@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# claude-notify: TTS/sound notification for Claude Code Stop/Notification hooks.
+#
+# Usage: claude-notify [message]
+#
+# macOS: VoiceVox (localhost:50021) → say (built-in TTS)
+# Linux: terminal bell → paplay → aplay
+#
+# VoiceVox settings (override via env):
+#   VOICEVOX_URL     default: http://localhost:50021
+#   VOICEVOX_SPEAKER default: 3 (ずんだもん)
+
+MESSAGE="${1:-完了しました}"
+VOICEVOX_URL="${VOICEVOX_URL:-http://localhost:50021}"
+VOICEVOX_SPEAKER="${VOICEVOX_SPEAKER:-3}"
+
+voicevox_speak() {
+  local text="$1"
+
+  local encoded
+  encoded=$(python3 -c \
+    "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" \
+    "$text" 2>/dev/null) || return 1
+
+  local query
+  query=$(curl -sf --max-time 3 -X POST \
+    "${VOICEVOX_URL}/audio_query?text=${encoded}&speaker=${VOICEVOX_SPEAKER}") || return 1
+
+  local tmp
+  tmp=$(mktemp /tmp/voicevox_XXXXXX.wav)
+  # shellcheck disable=SC2064
+  trap "rm -f '$tmp'" RETURN
+
+  curl -sf --max-time 10 -X POST \
+    -H "Content-Type: application/json" \
+    -d "$query" \
+    "${VOICEVOX_URL}/synthesis?speaker=${VOICEVOX_SPEAKER}" \
+    -o "$tmp" || return 1
+
+  afplay "$tmp"
+}
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  # macOS: try VoiceVox first, fall back to built-in say
+  voicevox_speak "$MESSAGE" 2>/dev/null || say "$MESSAGE"
+else
+  # Linux / SSH / devcontainer:
+  # 1. Terminal bell (VSCode: terminal.integrated.enableBell: true で音が鳴る)
+  printf '\a'
+  # 2. PulseAudio
+  if command -v paplay >/dev/null 2>&1; then
+    paplay /usr/share/sounds/freedesktop/stereo/complete.oga 2>/dev/null && exit 0
+  fi
+  # 3. ALSA
+  if command -v aplay >/dev/null 2>&1; then
+    aplay /usr/share/sounds/alsa/Front_Center.wav 2>/dev/null && exit 0
+  fi
+fi

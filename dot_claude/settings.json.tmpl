@@ -11,9 +11,32 @@
   `dig` で未設定時に既定値へフォールバックするため、データ未定義でも安全に描画される。
 */ -}}
 {{- $model := dig "claude" "model" "claude-opus-4-8" . -}}
+{{- $notify := printf "%s/.local/bin/claude-notify" .chezmoi.homeDir -}}
 {
   "agentPushNotifEnabled": true,
   "cleanupPeriodDays": 30,
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": {{ printf "%s '確認をお願いします'" $notify | quote }}
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": {{ printf "%s '完了しました'" $notify | quote }}
+          }
+        ]
+      }
+    ]
+  },
   "includeCoAuthoredBy": true,
   "model": {{ $model | quote }},
   "permissions": {
