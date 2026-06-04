@@ -12,6 +12,7 @@
 */ -}}
 {{- $model := dig "claude" "model" "claude-opus-4-8" . -}}
 {{- $notify := printf "%s/.local/bin/claude-notify" .chezmoi.homeDir -}}
+{{- $nag := printf "%s/.local/bin/claude-notify-nag" .chezmoi.homeDir -}}
 {
   "agentPushNotifEnabled": true,
   "cleanupPeriodDays": 30,
@@ -22,6 +23,20 @@
           {
             "type": "command",
             "command": {{ printf "%s '確認をお願いします'" $notify | quote }}
+          },
+          {
+            "type": "command",
+            "command": {{ printf "%s start '確認をお願いします'" $nag | quote }}
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": {{ printf "%s stop" $nag | quote }}
           }
         ]
       }
@@ -29,6 +44,10 @@
     "Stop": [
       {
         "hooks": [
+          {
+            "type": "command",
+            "command": {{ printf "%s stop" $nag | quote }}
+          },
           {
             "type": "command",
             "command": {{ printf "%s '完了しました'" $notify | quote }}

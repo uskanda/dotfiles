@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# claude-notify-nag: repeat a TTS reminder until the user responds.
+#
+# Wired into Claude Code hooks:
+#   Notification     -> claude-notify-nag start "確認をお願いします"
+#   UserPromptSubmit -> claude-notify-nag stop
+#   Stop             -> claude-notify-nag stop
+#
+# `start` launches a detached background loop that re-speaks MESSAGE every
+# INTERVAL seconds (default 600 = 10 min). `stop` kills it. The first utterance
+# is handled by the separate `claude-notify` hook, so the loop sleeps first.
+#
+# The hook JSON on stdin is parsed for session_id so concurrent Claude sessions
+# each get their own loop (pidfile namespaced per session).
+#
+# Env:
+#   CLAUDE_NAG_INTERVAL  seconds between reminders (default 600)
+
+ACTION="${1:-}"
+MESSAGE="${2:-確認をお願いします}"
+INTERVAL="${CLAUDE_NAG_INTERVAL:-600}"
+NOTIFY="$HOME/.local/bin/claude-notify"
+
+# Namespace the pidfile by session_id from the hook JSON payload (if any).
+SESSION=""
+if [ ! -t 0 ]; then
+  STDIN="$(cat 2>/dev/null || true)"
+  if [ -n "$STDIN" ]; then
+    SESSION="$(printf '%s' "$STDIN" | python3 -c 'import json,sys
+try:
+    print(json.load(sys.stdin).get("session_id",""))
+except Exception:
+    pass' 2>/dev/null || true)"
+  fi
+fi
+PIDFILE="/tmp/claude-notify-nag-${SESSION:-default}.pid"
+
+stop_loop() {
+  [ -f "$PIDFILE" ] || return 0
+  local pid
+  pid="$(cat "$PIDFILE" 2>/dev/null || true)"
+  if [ -n "$pid" ]; then
+    pkill -P "$pid" 2>/dev/null || true   # kill the sleeping child first
+    kill "$pid" 2>/dev/null || true
+  fi
+  rm -f "$PIDFILE"
+}
+
+case "$ACTION" in
+  start)
+    stop_loop   # never run more than one loop per session
+    nohup bash -c '
+      while true; do
+        sleep '"$INTERVAL"'
+        "'"$NOTIFY"'" "'"$MESSAGE"'"
+      done
+    ' >/dev/null 2>&1 &
+    echo $! > "$PIDFILE"
+    disown 2>/dev/null || true
+    ;;
+  stop)
+    stop_loop
+    ;;
+  *)
+    echo "usage: claude-notify-nag {start|stop} [message]" >&2
+    exit 1
+    ;;
+esac
