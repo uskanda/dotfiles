@@ -23,6 +23,14 @@ if [[ "$AGENT_MODE" == "1" ]]; then
   return
 fi
 
+# SSH 経由で Linux にログインした対話シェルでは tmux を自動起動する
+# (AI 用シェルは上の AGENT_MODE ブロックで return 済みなので対象外)
+if [[ -o interactive ]] && [[ "$OSTYPE" == linux* ]] && [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]] && command -v tmux >/dev/null; then
+  # 既存セッションがあれば attach、なければ新規作成。tmux 終了後はログアウトする
+  tmux attach 2>/dev/null || tmux new-session
+  exit
+fi
+
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
