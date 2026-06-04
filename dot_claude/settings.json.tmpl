@@ -15,6 +15,7 @@
 {
   "agentPushNotifEnabled": true,
   "cleanupPeriodDays": 30,
+  "effortLevel": "xhigh",
   "hooks": {
     "Notification": [
       {
@@ -58,6 +59,7 @@
       "Bash(git *)",
       "Bash(gh auth *)",
       "Bash(gh repo *)",
+      "Bash(glab auth *)",
       "Bash(crontab -l)",
       "Bash(ls -la)",
       "Bash(cat MEMORY.md)",
@@ -83,9 +85,17 @@
       "Bash(chezmoi --version)",
       "Bash(chezmoi source-path *)",
 
+      "Bash(openspec --help)",
+      "Bash(openspec show *)",
+      "Bash(openspec archive *)",
+      "Bash(openspec validate *)",
+
       "Read(//etc/**)",
       "Read(//usr/share/fonts/**)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Read(//home/vscode/.claude/skills/mr/**)",
+      "Read(//home/vscode/.claude/skills/mr-staging/**)",
+      "Read(//home/vscode/.claude/skills/mr-qa/**)"
     ]
   },
   "theme": "auto"
