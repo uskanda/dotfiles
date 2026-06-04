@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# claude-notify-hook: dispatcher for Claude Code TTS notification hooks.
+#
+# Reads the hook JSON payload on stdin and decides what to speak. The repo name
+# (basename of the git toplevel for the hook's cwd) is prefixed to each message.
+#
+# Wiring (see ~/.claude/settings.json):
+#   Notification     -> claude-notify-hook notification
+#   UserPromptSubmit -> claude-notify-hook stop
+#   Stop             -> claude-notify-hook done
+#
+# Why a dispatcher: the Notification hook fires for several notification_type
+# values (permission_prompt, idle_prompt, auth_success, elicitation_*). Speaking
+# on all of them causes "確認をお願いします" to go off while merely idle. We only
+# speak for genuine confirmation requests and stay silent for the known noise.
+
+KIND="${1:-}"
+BIN_DIR="$HOME/.local/bin"
+NOTIFY="$BIN_DIR/claude-notify"
+NAG="$BIN_DIR/claude-notify-nag"
+
+# Slurp the hook JSON from stdin once (hooks always receive it piped).
+STDIN=""
+[ -t 0 ] || STDIN="$(cat 2>/dev/null || true)"
+
+json_field() {
+  printf '%s' "$STDIN" | python3 -c 'import json,sys
+try:
+    print(json.load(sys.stdin).get(sys.argv[1],""))
+except Exception:
+    pass' "$1" 2>/dev/null
+}
+
+NTYPE="$(json_field notification_type)"
+CWD="$(json_field cwd)"
+
+# Repo name = basename of the git toplevel for the hook cwd (empty if none).
+repo_name() {
+  local top
+  top="$(git -C "${CWD:-$PWD}" rev-parse --show-toplevel 2>/dev/null)"
+  [ -n "$top" ] && basename "$top"
+}
+
+case "$KIND" in
+  notification)
+    # Stay silent for the noisy/non-confirmation notification types. Anything
+    # else (permission_prompt, elicitation_dialog, unknown/empty) speaks + nags.
+    case "$NTYPE" in
+      idle_prompt|auth_success|elicitation_complete|elicitation_response)
+        : # silent
+        ;;
+      *)
+        repo="$(repo_name)"
+        msg="${repo:+${repo}の}確認をお願いします"
+        "$NOTIFY" "$msg"
+        printf '%s' "$STDIN" | "$NAG" start "$msg"
+        ;;
+    esac
+    ;;
+  stop)
+    # User submitted a prompt -> they responded; stop nagging. No speech.
+    printf '%s' "$STDIN" | "$NAG" stop
+    ;;
+  done)
+    # Assistant turn finished -> stop any nag, then announce completion.
+    printf '%s' "$STDIN" | "$NAG" stop
+    repo="$(repo_name)"
+    "$NOTIFY" "${repo:+${repo}の}作業が完了しました"
+    ;;
+  *)
+    echo "usage: claude-notify-hook {notification|stop|done}" >&2
+    exit 1
+    ;;
+esac
