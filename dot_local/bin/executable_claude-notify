@@ -8,8 +8,13 @@
 #   案1 Mac daemon (host.docker.internal / reverse SSH tunnel) → 案2 ntfy → bell
 #
 # VoiceVox settings (override via env):
-#   VOICEVOX_URL     default: http://localhost:50021
-#   VOICEVOX_SPEAKER default: 8 (春日部つむぎ)
+#   VOICEVOX_URL          default: http://localhost:50021
+#   VOICEVOX_SPEAKER      default: 8 (春日部つむぎ)
+#   VOICEVOX_QUERY_TIMEOUT default: 20 (sec) — per-request timeout for both
+#                          audio_query and synthesis. Must cover the cold-start
+#                          model load (~13s for a fresh speaker); too low
+#                          silently falls back to `say`. Capped so a wildly
+#                          overloaded host falls back instead of hanging.
 
 # Load optional transport config (案1/案2). Empty values disable that path.
 [ -f "$HOME/.config/claude-notify/config.env" ] && . "$HOME/.config/claude-notify/config.env"
@@ -17,6 +22,7 @@
 MESSAGE="${1:-完了しました}"
 VOICEVOX_URL="${VOICEVOX_URL:-http://localhost:50021}"
 VOICEVOX_SPEAKER="${VOICEVOX_SPEAKER:-8}"
+VOICEVOX_QUERY_TIMEOUT="${VOICEVOX_QUERY_TIMEOUT:-20}"
 
 voicevox_speak() {
   local text="$1"
@@ -26,8 +32,10 @@ voicevox_speak() {
     "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" \
     "$text" 2>/dev/null) || return 1
 
+  # Cold start loads the speaker model on first use (~13s); allow for it so we
+  # don't time out and silently fall back to `say`.
   local query
-  query=$(curl -sf --max-time 3 -X POST \
+  query=$(curl -sf --max-time "$VOICEVOX_QUERY_TIMEOUT" -X POST \
     "${VOICEVOX_URL}/audio_query?text=${encoded}&speaker=${VOICEVOX_SPEAKER}") || return 1
 
   local tmp
@@ -35,7 +43,7 @@ voicevox_speak() {
   # shellcheck disable=SC2064
   trap "rm -f '$tmp'" RETURN
 
-  curl -sf --max-time 10 -X POST \
+  curl -sf --max-time "$VOICEVOX_QUERY_TIMEOUT" -X POST \
     -H "Content-Type: application/json" \
     -d "$query" \
     "${VOICEVOX_URL}/synthesis?speaker=${VOICEVOX_SPEAKER}" \
