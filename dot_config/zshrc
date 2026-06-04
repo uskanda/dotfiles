@@ -60,12 +60,15 @@ zinit light marlonrichert/zsh-autocomplete
 zinit load agkozak/zsh-z
 
 eval "$(starship init zsh)"
-# . "$HOME/.atuin/bin/env"
 
-# Atuinの自動バインドを無効化し、Ctrl-rだけAtuinに割り当てる
-export ATUIN_NOBIND="1"
-eval "$(atuin init zsh)"
-bindkey '^R' atuin-search
+# Atuin: env を読み込んで PATH を通し、存在する場合のみ初期化
+[[ -f "$HOME/.atuin/bin/env" ]] && . "$HOME/.atuin/bin/env"
+if command -v atuin >/dev/null; then
+  # 自動バインドを無効化し、Ctrl-rだけAtuinに割り当てる
+  export ATUIN_NOBIND="1"
+  eval "$(atuin init zsh)"
+  bindkey '^R' atuin-search
+fi
 
 # set up ls aliases with color support
 if ls --color=auto . >/dev/null 2>&1; then
