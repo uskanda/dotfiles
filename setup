@@ -159,4 +159,16 @@ if [[ "${INSTALL_VOICEVOX:-0}" == "1" && "$OSTYPE" == "darwin"* ]]; then
 else
     echo "Skipping VOICEVOX engine install (set INSTALL_VOICEVOX=1 to enable)."
 fi
+
+# (Optional) Mac notify daemon so devcontainer/SSH sessions can play VOICEVOX
+# audio on this Mac. Off by default. Enable with: INSTALL_NOTIFY_DAEMON=1 ./setup
+if [[ "${INSTALL_NOTIFY_DAEMON:-0}" == "1" && "$OSTYPE" == "darwin"* ]]; then
+    echo "Installing claude-notify daemon (optional)..."
+    "$HOME/.local/bin/claude-notify-daemon" install
+    # ntfy subscriber self-skips until ~/.config/claude-notify/config.env is filled.
+    "$HOME/.local/bin/claude-notify-ntfy-sub" install
+    echo "done."
+else
+    echo "Skipping claude-notify daemon (set INSTALL_NOTIFY_DAEMON=1 to enable)."
+fi
         

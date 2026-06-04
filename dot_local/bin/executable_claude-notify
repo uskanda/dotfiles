@@ -4,11 +4,15 @@
 # Usage: claude-notify [message]
 #
 # macOS: VoiceVox (localhost:50021) → say (built-in TTS)
-# Linux: terminal bell → paplay → aplay
+# Linux (devcontainer/SSH): route to the Mac so you actually hear it —
+#   案1 Mac daemon (host.docker.internal / reverse SSH tunnel) → 案2 ntfy → bell
 #
 # VoiceVox settings (override via env):
 #   VOICEVOX_URL     default: http://localhost:50021
 #   VOICEVOX_SPEAKER default: 8 (春日部つむぎ)
+
+# Load optional transport config (案1/案2). Empty values disable that path.
+[ -f "$HOME/.config/claude-notify/config.env" ] && . "$HOME/.config/claude-notify/config.env"
 
 MESSAGE="${1:-完了しました}"
 VOICEVOX_URL="${VOICEVOX_URL:-http://localhost:50021}"
@@ -40,11 +44,60 @@ voicevox_speak() {
   afplay "$tmp"
 }
 
+# --- Remote (devcontainer/SSH) routing --------------------------------------
+
+in_container() {
+  [ -f /.dockerenv ] || [ -n "${REMOTE_CONTAINERS:-}" ] || [ -n "${DEVCONTAINER:-}" ] \
+    || [ -n "${CODESPACES:-}" ] \
+    || grep -qaE 'docker|containerd|kubepods' /proc/1/cgroup 2>/dev/null
+}
+
+in_ssh() {
+  [ -n "${SSH_CONNECTION:-}" ] || [ -n "${SSH_TTY:-}" ] || [ -n "${SSH_CLIENT:-}" ]
+}
+
+daemon_base_url() {
+  local port="${CLAUDE_NOTIFY_DAEMON_PORT:-50090}"
+  if [ -n "${CLAUDE_NOTIFY_DAEMON_URL:-}" ]; then
+    printf '%s' "${CLAUDE_NOTIFY_DAEMON_URL%/}"
+  elif in_container; then
+    printf 'http://host.docker.internal:%s' "$port"   # Colima/Docker host gateway
+  else
+    printf 'http://localhost:%s' "$port"               # SSH: RemoteForward 50090
+  fi
+}
+
+# 案1: POST the message to the Mac daemon (which synthesizes + plays locally).
+notify_via_daemon() {
+  local url body
+  url="$(daemon_base_url)"
+  body=$(MSG="$MESSAGE" SP="$VOICEVOX_SPEAKER" python3 -c \
+    'import json,os; print(json.dumps({"message":os.environ["MSG"],"speaker":os.environ["SP"]}))' \
+    2>/dev/null) || return 1
+  local hdr=(-H "Content-Type: application/json")
+  [ -n "${CLAUDE_NOTIFY_TOKEN:-}" ] && hdr+=(-H "X-Notify-Token: ${CLAUDE_NOTIFY_TOKEN}")
+  curl -sf --max-time 4 "${hdr[@]}" -d "$body" "${url}/notify" >/dev/null 2>&1
+}
+
+# 案2: publish to self-hosted ntfy. Skipped (returns 1) when not configured.
+notify_via_ntfy() {
+  [ -n "${CLAUDE_NTFY_URL:-}" ] && [ -n "${CLAUDE_NTFY_TOPIC:-}" ] || return 1
+  local auth=()
+  [ -n "${CLAUDE_NTFY_TOKEN:-}" ] && auth=(-H "Authorization: Bearer ${CLAUDE_NTFY_TOKEN}")
+  curl -sf --max-time 6 "${auth[@]}" -d "$MESSAGE" \
+    "${CLAUDE_NTFY_URL%/}/${CLAUDE_NTFY_TOPIC}" >/dev/null 2>&1
+}
+
 if [[ "$(uname)" == "Darwin" ]]; then
   # macOS: try VoiceVox first, fall back to built-in say
   voicevox_speak "$MESSAGE" 2>/dev/null || say "$MESSAGE"
 else
-  # Linux / SSH / devcontainer:
+  # Linux. In a devcontainer/SSH session, route audio to the Mac.
+  if in_container || in_ssh; then
+    notify_via_daemon && exit 0   # 案1
+    notify_via_ntfy && exit 0     # 案2 (skipped if ntfy unconfigured)
+  fi
+  # Local fallback (bare Linux host with its own speakers, or remote unreachable):
   # 1. Terminal bell (VSCode: terminal.integrated.enableBell: true で音が鳴る)
   printf '\a'
   # 2. PulseAudio

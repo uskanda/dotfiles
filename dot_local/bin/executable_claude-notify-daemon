@@ -1,0 +1,175 @@
+#!/usr/bin/env python3
+"""claude-notify-daemon: Mac-side TTS playback daemon for remote Claude Code.
+
+A devcontainer / SSH session cannot play audio where you can hear it, so the
+remote `claude-notify` POSTs the message text to this daemon running on the Mac.
+The daemon hands the text to the local `claude-notify`, which synthesizes via the
+local VOICEVOX engine (localhost:50021) and plays it with afplay.
+
+Subcommands:
+  serve       run the HTTP server (used by the LaunchAgent)
+  install     write + load the LaunchAgent (com.claude.notify-daemon)
+  uninstall   unload + remove the LaunchAgent
+
+HTTP API:
+  POST /notify   body: {"message": "...", "speaker": 8}   header: X-Notify-Token
+  GET  /health   -> 200 ok
+
+Config (optional ~/.config/claude-notify/config.env, KEY="value" lines):
+  CLAUDE_NOTIFY_TOKEN          shared secret; if set, /notify requires the header
+  CLAUDE_NOTIFY_DAEMON_BIND    bind address (default 0.0.0.0)
+  CLAUDE_NOTIFY_DAEMON_PORT    port (default 50090)
+
+Note: binding 0.0.0.0 exposes the daemon on the LAN (required so Colima
+containers can reach it via host.docker.internal). Set CLAUDE_NOTIFY_TOKEN.
+"""
+import json
+import os
+import subprocess
+import sys
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+HOME = os.path.expanduser("~")
+CONFIG_ENV = os.path.join(HOME, ".config", "claude-notify", "config.env")
+NOTIFY_BIN = os.path.join(HOME, ".local", "bin", "claude-notify")
+LABEL = "com.claude.notify-daemon"
+PLIST = os.path.join(HOME, "Library", "LaunchAgents", LABEL + ".plist")
+
+
+def load_config():
+    """Parse the optional config.env into os.environ (without overriding existing)."""
+    if not os.path.isfile(CONFIG_ENV):
+        return
+    with open(CONFIG_ENV) as fh:
+        for line in fh:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, val = line.partition("=")
+            key = key.strip()
+            val = val.strip().strip('"').strip("'")
+            os.environ.setdefault(key, val)
+
+
+def make_handler(token):
+    class Handler(BaseHTTPRequestHandler):
+        def _send(self, code, body=b""):
+            self.send_response(code)
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            if body:
+                self.wfile.write(body)
+
+        def do_GET(self):
+            if self.path == "/health":
+                self._send(200, b"ok\n")
+            else:
+                self._send(404)
+
+        def do_POST(self):
+            if self.path != "/notify":
+                self._send(404)
+                return
+            if token and self.headers.get("X-Notify-Token", "") != token:
+                self._send(403, b"forbidden\n")
+                return
+            length = int(self.headers.get("Content-Length", "0") or "0")
+            raw = self.rfile.read(length) if length else b"{}"
+            try:
+                data = json.loads(raw or b"{}")
+            except Exception:
+                self._send(400, b"bad json\n")
+                return
+            message = str(data.get("message", "")).strip()
+            if not message:
+                self._send(400, b"empty message\n")
+                return
+            env = os.environ.copy()
+            speaker = data.get("speaker")
+            if speaker is not None:
+                env["VOICEVOX_SPEAKER"] = str(speaker)
+            # Fire-and-forget so the remote client returns immediately.
+            try:
+                subprocess.Popen([NOTIFY_BIN, message], env=env,
+                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            except Exception as exc:  # noqa: BLE001
+                self._send(500, ("spawn failed: %s\n" % exc).encode())
+                return
+            self._send(200, b"queued\n")
+
+        def log_message(self, *args):  # silence access logging
+            pass
+
+    return Handler
+
+
+def serve():
+    load_config()
+    bind = os.environ.get("CLAUDE_NOTIFY_DAEMON_BIND", "0.0.0.0")
+    port = int(os.environ.get("CLAUDE_NOTIFY_DAEMON_PORT", "50090"))
+    token = os.environ.get("CLAUDE_NOTIFY_TOKEN", "")
+    httpd = ThreadingHTTPServer((bind, port), make_handler(token))
+    sys.stderr.write("claude-notify-daemon listening on %s:%d (auth=%s)\n"
+                     % (bind, port, "on" if token else "off"))
+    httpd.serve_forever()
+
+
+PLIST_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>{label}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>{script}</string>
+        <string>serve</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>{home}/Library/Logs/claude-notify-daemon.log</string>
+    <key>StandardErrorPath</key>
+    <string>{home}/Library/Logs/claude-notify-daemon.log</string>
+</dict>
+</plist>
+"""
+
+
+def install():
+    script = os.path.abspath(__file__)
+    os.makedirs(os.path.dirname(PLIST), exist_ok=True)
+    with open(PLIST, "w") as fh:
+        fh.write(PLIST_TEMPLATE.format(label=LABEL, script=script, home=HOME))
+    subprocess.run(["launchctl", "unload", PLIST],
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(["launchctl", "load", PLIST], check=True)
+    print("installed and loaded:", PLIST)
+
+
+def uninstall():
+    subprocess.run(["launchctl", "unload", PLIST],
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if os.path.exists(PLIST):
+        os.remove(PLIST)
+    print("uninstalled:", PLIST)
+
+
+def main():
+    cmd = sys.argv[1] if len(sys.argv) > 1 else "serve"
+    if cmd == "serve":
+        serve()
+    elif cmd == "install":
+        install()
+    elif cmd == "uninstall":
+        uninstall()
+    else:
+        sys.stderr.write("usage: claude-notify-daemon {serve|install|uninstall}\n")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

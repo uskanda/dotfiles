@@ -142,6 +142,51 @@ install-voicevox-engine uninstall # 停止して削除
 curl -s http://localhost:50021/speakers | python3 -m json.tool
 ```
 
+devcontainer / SSH からの発話（任意）
+-----------------------------
+devcontainer や SSH 先で Claude Code を動かしても、音声は**手元の Mac で再生**する必要が
+ある（リモート側にスピーカーは無い）。そこで Mac に通知デーモンを常駐させ、リモートの
+`claude-notify` がメッセージ本文だけを Mac に渡して、Mac 側で VOICEVOX 合成＋afplay する。
+
+```
+remote claude-notify ──案1──> Mac daemon(:50090) ──> VOICEVOX(:50021) + afplay
+                     └─案2──> ntfy(self-host) ──> Mac subscriber ──> 同上
+```
+
+* **案1（既定）**: Mac の `claude-notify-daemon` に直接 POST
+  * devcontainer (Colima): コンテナから `http://host.docker.internal:50090`（`192.168.5.2`）で到達。実測で確認済み
+  * SSH: `~/.ssh/config` の該当ホストに `RemoteForward 50090 127.0.0.1:50090` を足し、リモートからは `http://localhost:50090` に届く
+* **案2（フォールバック・後日）**: 案1 が届かない出先/別NW 用。セルフホスト ntfy 経由。
+  `CLAUDE_NTFY_URL` / `CLAUDE_NTFY_TOPIC` が**空なら何も送らずスキップ**（未構築でも無害）
+
+### セットアップ（Mac 受信側）
+
+```bash
+INSTALL_NOTIFY_DAEMON=1 ./setup     # setup の一部として（案1デーモンを常駐化）
+# もしくは単体で
+claude-notify-daemon install        # com.claude.notify-daemon を常駐起動
+claude-notify-daemon uninstall
+claude-notify-ntfy-sub install      # 案2の購読常駐（ntfy未設定なら自動でno-op）
+```
+
+### 設定値（秘密はリポジトリに入れない）
+
+`~/.config/claude-notify/config.env` は `config.env.tmpl` から生成され、値は各端末の
+`~/.config/chezmoi/chezmoi.toml` に書く（`settings.json` と同じ方式）:
+
+```toml
+[data.claudeNotify]
+token     = "長いランダム文字列"          # 案1の共有トークン（Mac/リモート両方に同値）
+ntfyUrl   = "https://ntfy.example.com"   # 案2（後日）。空なら案2スキップ
+ntfyTopic = "claude-xxxxxxxx"
+ntfyToken = ""
+```
+
+> ⚠️ デーモンは Colima から届くよう `0.0.0.0:50090` で待受するため**同一LANに公開される**。
+> 必ず `token` を設定すること（設定すると `/notify` に `X-Notify-Token` ヘッダを要求）。
+> トークンは Mac（受信）とリモート（送信）の両方の `chezmoi.toml` に同じ値を入れて
+> `chezmoi apply` し、Mac 側は `claude-notify-daemon install` で再読込する。
+
 学び
 -----------------------------
 * chezmoiってsymlinkでなくてコピーなのね

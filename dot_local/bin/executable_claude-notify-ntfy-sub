@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# claude-notify-ntfy-sub: Mac-side subscriber for 案2 (self-hosted ntfy fallback).
+#
+# Subscribes to the configured ntfy topic and speaks each incoming message via
+# the local claude-notify (VOICEVOX + afplay). This is the receiving end for
+# remote sessions that cannot reach the Mac daemon directly (出先 / 別NW).
+#
+# If CLAUDE_NTFY_URL / CLAUDE_NTFY_TOPIC are empty (= not configured yet), this
+# does nothing and exits 0, so the LaunchAgent stays dormant until you stand up
+# a self-hosted ntfy server and fill in ~/.config/claude-notify/config.env.
+#
+# Subcommands: run | install | uninstall
+
+CONFIG_ENV="$HOME/.config/claude-notify/config.env"
+NOTIFY="$HOME/.local/bin/claude-notify"
+LABEL="com.claude.notify-ntfy-sub"
+PLIST="$HOME/Library/LaunchAgents/${LABEL}.plist"
+
+[ -f "$CONFIG_ENV" ] && . "$CONFIG_ENV"
+
+run() {
+  if [ -z "${CLAUDE_NTFY_URL:-}" ] || [ -z "${CLAUDE_NTFY_TOPIC:-}" ]; then
+    echo "ntfy not configured (CLAUDE_NTFY_URL/TOPIC empty); nothing to do." >&2
+    exit 0
+  fi
+  local auth=()
+  [ -n "${CLAUDE_NTFY_TOKEN:-}" ] && auth=(-H "Authorization: Bearer ${CLAUDE_NTFY_TOKEN}")
+  local url="${CLAUDE_NTFY_URL%/}/${CLAUDE_NTFY_TOPIC}/json"
+  echo "subscribing to ${url}" >&2
+  # Stream the topic; each line is a JSON event. Speak 'message' events.
+  while true; do
+    curl -sN "${auth[@]}" "$url" | while IFS= read -r line; do
+      msg="$(printf '%s' "$line" | python3 -c 'import json,sys
+try:
+    e=json.load(sys.stdin)
+    if e.get("event")=="message" and e.get("message"):
+        print(e["message"])
+except Exception:
+    pass' 2>/dev/null)"
+      [ -n "$msg" ] && "$NOTIFY" "$msg"
+    done
+    sleep 5   # reconnect if the stream drops
+  done
+}
+
+write_plist() {
+  mkdir -p "$(dirname "$PLIST")"
+  cat > "$PLIST" <<PLISTEOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>${LABEL}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>${HOME}/.local/bin/claude-notify-ntfy-sub</string>
+        <string>run</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>${HOME}/Library/Logs/claude-notify-ntfy-sub.log</string>
+    <key>StandardErrorPath</key>
+    <string>${HOME}/Library/Logs/claude-notify-ntfy-sub.log</string>
+</dict>
+</plist>
+PLISTEOF
+}
+
+case "${1:-run}" in
+  run)
+    run
+    ;;
+  install)
+    write_plist
+    launchctl unload "$PLIST" 2>/dev/null || true
+    launchctl load "$PLIST"
+    echo "installed and loaded: $PLIST"
+    ;;
+  uninstall)
+    launchctl unload "$PLIST" 2>/dev/null || true
+    rm -f "$PLIST"
+    echo "uninstalled: $PLIST"
+    ;;
+  *)
+    echo "usage: claude-notify-ntfy-sub {run|install|uninstall}" >&2
+    exit 1
+    ;;
+esac
