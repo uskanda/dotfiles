@@ -19,7 +19,12 @@
 ACTION="${1:-}"
 MESSAGE="${2:-確認をお願いします}"
 INTERVAL="${CLAUDE_NAG_INTERVAL:-600}"
-NOTIFY="$HOME/.local/bin/claude-notify"
+# Self-locate claude-notify relative to THIS script, not $HOME. Under a devcontainer
+# bind-mount the Mac's ~/.local/bin is mounted at its absolute host path while $HOME
+# is /home/vscode, so "$HOME/.local/bin/claude-notify" does not exist in the container
+# and the repeat reminder fails silently. Mirrors the dispatcher's BIN_DIR logic.
+BIN_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
+NOTIFY="$BIN_DIR/claude-notify"
 
 # Namespace the pidfile by session_id from the hook JSON payload (if any).
 SESSION=""
