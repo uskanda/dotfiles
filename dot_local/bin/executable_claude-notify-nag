@@ -34,12 +34,22 @@ GRACE="${CLAUDE_NAG_GRACE:-3}"
 BIN_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
 NOTIFY="$BIN_DIR/claude-notify"
 
+# Resolve a Python 3 interpreter (python3 on macOS/Linux; python / `py -3` under
+# Git Bash on Windows, which has no `python3`).
+py() {
+  if command -v python3 >/dev/null 2>&1; then python3 "$@"
+  elif command -v python >/dev/null 2>&1; then python "$@"
+  elif command -v py >/dev/null 2>&1; then py -3 "$@"
+  else return 127
+  fi
+}
+
 # Namespace the pidfile by session_id from the hook JSON payload (if any).
 SESSION=""
 if [ ! -t 0 ]; then
   STDIN="$(cat 2>/dev/null || true)"
   if [ -n "$STDIN" ]; then
-    SESSION="$(printf '%s' "$STDIN" | python3 -c 'import json,sys
+    SESSION="$(printf '%s' "$STDIN" | py -c 'import json,sys
 try:
     print(json.load(sys.stdin).get("session_id",""))
 except Exception:

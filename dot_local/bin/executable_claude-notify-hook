@@ -24,12 +24,22 @@ BIN_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
 NOTIFY="$BIN_DIR/claude-notify"
 NAG="$BIN_DIR/claude-notify-nag"
 
+# Resolve a Python 3 interpreter. macOS/Linux have `python3`; Git Bash on Windows
+# usually does not, so fall back to `python` / `py -3`.
+py() {
+  if command -v python3 >/dev/null 2>&1; then python3 "$@"
+  elif command -v python >/dev/null 2>&1; then python "$@"
+  elif command -v py >/dev/null 2>&1; then py -3 "$@"
+  else return 127
+  fi
+}
+
 # Slurp the hook JSON from stdin once (hooks always receive it piped).
 STDIN=""
 [ -t 0 ] || STDIN="$(cat 2>/dev/null || true)"
 
 json_field() {
-  printf '%s' "$STDIN" | python3 -c 'import json,sys
+  printf '%s' "$STDIN" | py -c 'import json,sys
 try:
     print(json.load(sys.stdin).get(sys.argv[1],""))
 except Exception:

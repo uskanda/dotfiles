@@ -116,7 +116,9 @@ VOICEVOX エンジン（任意）
 -----------------------------
 `claude-notify`（Claude Code の Stop/Notification フック）は、`localhost:50021` で
 VOICEVOX エンジンが動いていれば日本語 TTS で読み上げる。エンジンが無い場合は
-macOS 標準の `say` 音声へ自動フォールバックするため、**インストールは任意**。
+OS 標準の TTS（macOS は `say`、Windows は SAPI5）へ自動フォールバックするため、
+**インストールは任意**。`install-voicevox-engine` は macOS 専用。Windows で声を
+統一したい場合は VOICEVOX アプリ（エンジンが `:50021` で起動）を各 PC に導入する。
 
 約 1.8GB のダウンロードを伴うため、`./setup` ではデフォルト無効。有効化するには:
 
@@ -186,6 +188,39 @@ ntfyToken = ""
 > 必ず `token` を設定すること（設定すると `/notify` に `X-Notify-Token` ヘッダを要求）。
 > トークンは Mac（受信）とリモート（送信）の両方の `chezmoi.toml` に同じ値を入れて
 > `chezmoi apply` し、Mac 側は `claude-notify-daemon install` で再読込する。
+> （Windows 受信側の既定待受は `127.0.0.1:50090`＝ローカル/SSH トンネル専用で LAN 非公開。）
+
+Windows での発話（env1 / env2 / env3）
+-----------------------------
+「目の前のマシン＝音を鳴らすシンク」という Mac と同じ原則で Windows でも鳴らす。
+発話の実体は Windows 共通の `claude-notify.ps1`（VOICEVOX→SAPI5）で、3 環境がこれを共有する。
+
+```
+env1 native Win (Git Bash) : hook → claude-notify(bash) → powershell.exe → claude-notify.ps1
+env2 WSL2                  : hook → claude-notify(bash, WSL検出) → powershell.exe(interop) → 〃
+env3 Win ← SSH ← Linux     : hook → claude-notify(bash, SSH検出) → :50090 POST → claude-notify-daemon → 〃
+```
+
+* **前提**: Claude Code が**フックを Git Bash で実行**できること（Git for Windows を導入。
+  見つからない場合は `CLAUDE_CODE_GIT_BASH_PATH` で明示）。`chezmoi apply` で
+  `~/.local/bin/`（＝`%USERPROFILE%\.local\bin`）にスクリプト一式を配置する。
+* **依存**: Git for Windows（`curl`/`base64`/`cygpath` 同梱）、**Python 3**（フック/デーモンの
+  JSON 処理。`python3` が無くても `python`/`py -3` を自動使用）。VOICEVOX は任意（無ければ SAPI）。
+* **env1（ネイティブ）**: `chezmoi apply` だけで完了。フックは Git Bash で動き、その場で発話。
+* **env2（WSL2）**: WSL 内で `chezmoi apply`。`claude-notify` が WSL を検出し `powershell.exe`
+  経由で Windows 側 `claude-notify.ps1` を起動（デーモン/ネットワーク不要）。
+  Win11 の WSLg なら `paplay` の通知音はそのまま Windows ミキサーへ流れる。
+* **env3（SSH 受信側＝Windows）**: サーバ側は無改修。Windows で受信デーモンを常駐し、
+  Windows の SSH 設定（`~/.ssh/config` か VSCode Remote-SSH）に
+  `RemoteForward 50090 127.0.0.1:50090` を足す。`token` はサーバ/Windows 両方の
+  `chezmoi.toml` に同値。**案2 の ntfy 購読はデーモンに内包**（起動項目 1 本で案1+案2）。
+
+```bat
+:: Windows（Git Bash でも cmd/PowerShell でも可）。Python が PATH にある前提。
+python %USERPROFILE%\.local\bin\claude-notify-daemon install    :: スタートアップ常駐＋起動
+python %USERPROFILE%\.local\bin\claude-notify-daemon uninstall  :: 解除
+```
+常駐は `%APPDATA%\…\Startup\claude-notify-daemon.vbs`（`pythonw` を隠し起動）。
 
 学び
 -----------------------------
