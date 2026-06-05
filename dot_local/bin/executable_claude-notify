@@ -4,8 +4,10 @@
 # Usage: claude-notify [message]
 #
 # macOS: VoiceVox (localhost:50021) → say (built-in TTS)
-# Linux (devcontainer/SSH): route to the Mac so you actually hear it —
-#   案1 Mac daemon (host.docker.internal / reverse SSH tunnel) → 案2 ntfy → bell
+# Windows (Git Bash): VoiceVox → SAPI5 via claude-notify.ps1 (powershell.exe)
+# WSL2: same claude-notify.ps1 on the Windows host via interop (no daemon needed)
+# Linux (devcontainer/SSH): route to the host so you actually hear it —
+#   案1 host daemon (host.docker.internal / reverse SSH tunnel) → 案2 ntfy → bell
 #
 # VoiceVox settings (override via env):
 #   VOICEVOX_URL          default: http://localhost:50021
@@ -18,6 +20,11 @@
 
 # Load optional transport config (案1/案2). Empty values disable that path.
 [ -f "$HOME/.config/claude-notify/config.env" ] && . "$HOME/.config/claude-notify/config.env"
+
+# Self-locate so the sibling claude-notify.ps1 (Windows speaker) is findable even
+# when ~/.local/bin lives at a different absolute path than at config time
+# (bind-mounts, WSL vs Windows home, etc.).
+BIN_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
 
 MESSAGE="${1:-完了しました}"
 VOICEVOX_URL="${VOICEVOX_URL:-http://localhost:50021}"
@@ -77,6 +84,55 @@ in_ssh() {
   [ -n "${SSH_CONNECTION:-}" ] || [ -n "${SSH_TTY:-}" ] || [ -n "${SSH_CLIENT:-}" ]
 }
 
+# --- Windows host routing (env1 native / env2 WSL2) --------------------------
+# On native Windows (Git Bash) and inside WSL2 the message is spoken on the
+# Windows host via PowerShell, which runs the shared claude-notify.ps1
+# (VOICEVOX -> SAPI). WSL2 reaches the Windows side through interop, so no daemon
+# or network hop is needed — the same primitive serves both.
+
+is_wsl() {
+  [ -n "${WSL_DISTRO_NAME:-}" ] && return 0
+  [ -n "${WSL_INTEROP:-}" ] && return 0
+  grep -qiE 'microsoft|wsl' /proc/sys/kernel/osrelease 2>/dev/null
+}
+
+# Convert a Unix path to a Windows path that powershell.exe can open.
+to_win_path() {
+  if command -v cygpath >/dev/null 2>&1; then
+    cygpath -w "$1" 2>/dev/null && return 0
+  fi
+  if command -v wslpath >/dev/null 2>&1; then
+    wslpath -w "$1" 2>/dev/null && return 0
+  fi
+  printf '%s' "$1"
+}
+
+# Speak $1 on the Windows host. base64(UTF-8) keeps Japanese intact across the
+# WSL/Git Bash -> Windows boundary. Returns non-zero if Windows is unreachable so
+# the caller can fall back to a bell.
+win_speak() {
+  command -v powershell.exe >/dev/null 2>&1 || return 1
+  local ps1 b64
+  ps1="$(to_win_path "$BIN_DIR/claude-notify.ps1")" || return 1
+  b64="$(printf '%s' "$1" | base64 | tr -d '\r\n')" || return 1
+  powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass \
+    -File "$ps1" -B64 "$b64" -Speaker "${VOICEVOX_SPEAKER}" >/dev/null 2>&1
+}
+
+# Bare-host local fallback: terminal bell, then PulseAudio/ALSA chimes if present.
+# (On Win11 WSLg, paplay routes to the Windows mixer, so the chime is audible even
+# when interop speech is unavailable.)
+local_fallback() {
+  printf '\a'
+  if command -v paplay >/dev/null 2>&1; then
+    paplay /usr/share/sounds/freedesktop/stereo/complete.oga 2>/dev/null && return 0
+  fi
+  if command -v aplay >/dev/null 2>&1; then
+    aplay /usr/share/sounds/alsa/Front_Center.wav 2>/dev/null && return 0
+  fi
+  return 0
+}
+
 daemon_base_url() {
   local port="${CLAUDE_NOTIFY_DAEMON_PORT:-50090}"
   if [ -n "${CLAUDE_NOTIFY_DAEMON_URL:-}" ]; then
@@ -109,24 +165,31 @@ notify_via_ntfy() {
     "${CLAUDE_NTFY_URL%/}/${CLAUDE_NTFY_TOPIC}" >/dev/null 2>&1
 }
 
-if [[ "$(uname)" == "Darwin" ]]; then
-  # macOS: try VoiceVox first, fall back to built-in say
-  voicevox_speak "$MESSAGE" 2>/dev/null || say "$MESSAGE"
-else
-  # Linux. In a devcontainer/SSH session, route audio to the Mac.
-  if in_container || in_ssh; then
-    notify_via_daemon && exit 0   # 案1
-    notify_via_ntfy && exit 0     # 案2 (skipped if ntfy unconfigured)
-  fi
-  # Local fallback (bare Linux host with its own speakers, or remote unreachable):
-  # 1. Terminal bell (VSCode: terminal.integrated.enableBell: true で音が鳴る)
-  printf '\a'
-  # 2. PulseAudio
-  if command -v paplay >/dev/null 2>&1; then
-    paplay /usr/share/sounds/freedesktop/stereo/complete.oga 2>/dev/null && exit 0
-  fi
-  # 3. ALSA
-  if command -v aplay >/dev/null 2>&1; then
-    aplay /usr/share/sounds/alsa/Front_Center.wav 2>/dev/null && exit 0
-  fi
-fi
+case "$(uname -s)" in
+  Darwin)
+    # macOS: try VoiceVox first, fall back to built-in say.
+    voicevox_speak "$MESSAGE" 2>/dev/null || say "$MESSAGE"
+    ;;
+  MINGW*|MSYS*|CYGWIN*)
+    # env1: native Windows (Git Bash). Speak locally via PowerShell.
+    win_speak "$MESSAGE" || printf '\a'
+    ;;
+  *)
+    # Linux family. Check container/SSH first so a WSL2-backed devcontainer (whose
+    # kernel also reports "microsoft") still routes to the host daemon rather than
+    # attempting interop that isn't available inside the container.
+    if in_container || in_ssh; then
+      # env3 / devcontainer: route audio to the host (Mac or Windows daemon).
+      notify_via_daemon && exit 0   # 案1
+      notify_via_ntfy && exit 0     # 案2 (skipped if ntfy unconfigured)
+      local_fallback                # remote unreachable
+    elif is_wsl; then
+      # env2: plain WSL2. Hand off to the Windows host via interop (no daemon/network).
+      win_speak "$MESSAGE" && exit 0
+      local_fallback                # WSLg chime as a last resort
+    else
+      # Bare Linux host with its own speakers.
+      local_fallback
+    fi
+    ;;
+esac
