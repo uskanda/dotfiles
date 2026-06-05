@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
-"""claude-notify-daemon: Mac-side TTS playback daemon for remote Claude Code.
+"""claude-notify-daemon: host-side TTS playback daemon for remote Claude Code.
 
 A devcontainer / SSH session cannot play audio where you can hear it, so the
-remote `claude-notify` POSTs the message text to this daemon running on the Mac.
-The daemon hands the text to the local `claude-notify`, which synthesizes via the
-local VOICEVOX engine (localhost:50021) and plays it with afplay.
+remote `claude-notify` POSTs the message text to this daemon running on the
+machine in front of you. The daemon plays it locally:
+  - macOS:   hands the text to `claude-notify` -> VOICEVOX (localhost:50021)/say
+  - Windows: hands the text to `claude-notify.ps1` -> VOICEVOX/SAPI5
+On Windows the daemon also runs the 案2 ntfy receiver in-process (when ntfy is
+configured) so a single startup item covers both transports.
 
 Subcommands:
-  serve       run the HTTP server (used by the LaunchAgent)
-  install     write + load the LaunchAgent (com.claude.notify-daemon)
-  uninstall   unload + remove the LaunchAgent
+  serve       run the HTTP server (macOS: LaunchAgent; Windows: Startup VBS)
+  install     macOS: write+load LaunchAgent; Windows: write Startup VBS + start
+  uninstall   macOS: unload+remove LaunchAgent; Windows: remove Startup VBS
 
 HTTP API:
   POST /notify   body: {"message": "...", "speaker": 8}   header: X-Notify-Token
@@ -23,17 +26,46 @@ Config (optional ~/.config/claude-notify/config.env, KEY="value" lines):
 Note: binding 0.0.0.0 exposes the daemon on the LAN (required so Colima
 containers can reach it via host.docker.internal). Set CLAUDE_NOTIFY_TOKEN.
 """
+import base64
 import json
 import os
 import subprocess
 import sys
+import threading
+import time
+import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 HOME = os.path.expanduser("~")
 CONFIG_ENV = os.path.join(HOME, ".config", "claude-notify", "config.env")
 NOTIFY_BIN = os.path.join(HOME, ".local", "bin", "claude-notify")
+# Windows speaker (shared with claude-notify.ps1): sits next to this script.
+NOTIFY_PS1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "claude-notify.ps1")
+IS_WINDOWS = os.name == "nt"
 LABEL = "com.claude.notify-daemon"
 PLIST = os.path.join(HOME, "Library", "LaunchAgents", LABEL + ".plist")
+
+
+def speak(message, speaker=None):
+    """Play `message` locally. On Windows this routes through claude-notify.ps1
+    (VOICEVOX -> SAPI); elsewhere it hands off to the claude-notify shell script
+    (VOICEVOX -> say / chime). Fire-and-forget so callers return immediately."""
+    message = str(message).strip()
+    if not message:
+        return
+    if IS_WINDOWS:
+        b64 = base64.b64encode(message.encode("utf-8")).decode("ascii")
+        args = ["powershell.exe", "-NoProfile", "-NonInteractive",
+                "-ExecutionPolicy", "Bypass", "-File", NOTIFY_PS1, "-B64", b64]
+        if speaker is not None:
+            args += ["-Speaker", str(speaker)]
+        subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    else:
+        env = os.environ.copy()
+        if speaker is not None:
+            env["VOICEVOX_SPEAKER"] = str(speaker)
+        subprocess.Popen([NOTIFY_BIN, message], env=env,
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 def load_config():
@@ -84,14 +116,9 @@ def make_handler(token):
             if not message:
                 self._send(400, b"empty message\n")
                 return
-            env = os.environ.copy()
-            speaker = data.get("speaker")
-            if speaker is not None:
-                env["VOICEVOX_SPEAKER"] = str(speaker)
             # Fire-and-forget so the remote client returns immediately.
             try:
-                subprocess.Popen([NOTIFY_BIN, message], env=env,
-                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                speak(message, data.get("speaker"))
             except Exception as exc:  # noqa: BLE001
                 self._send(500, ("spawn failed: %s\n" % exc).encode())
                 return
@@ -103,11 +130,52 @@ def make_handler(token):
     return Handler
 
 
+def ntfy_subscriber():
+    """案2 receiver, folded into the daemon on Windows so a single startup item
+    covers both 案1 (this HTTP server) and 案2 (ntfy). Streams the configured ntfy
+    topic and speaks each incoming message. No-op until ntfy is configured. Mac
+    keeps its separate claude-notify-ntfy-sub LaunchAgent, so this stays
+    Windows-only to avoid double playback."""
+    url = os.environ.get("CLAUDE_NTFY_URL", "").rstrip("/")
+    topic = os.environ.get("CLAUDE_NTFY_TOPIC", "")
+    token = os.environ.get("CLAUDE_NTFY_TOKEN", "")
+    if not url or not topic:
+        return
+    stream = "%s/%s/json" % (url, topic)
+    sys.stderr.write("claude-notify-daemon ntfy subscriber -> %s\n" % stream)
+    while True:
+        try:
+            req = urllib.request.Request(stream)
+            if token:
+                req.add_header("Authorization", "Bearer " + token)
+            with urllib.request.urlopen(req) as resp:
+                for raw in resp:
+                    line = raw.decode("utf-8", "ignore").strip()
+                    if not line:
+                        continue
+                    try:
+                        ev = json.loads(line)
+                    except Exception:
+                        continue
+                    if ev.get("event") == "message" and ev.get("message"):
+                        speak(str(ev["message"]))
+        except Exception:
+            pass
+        time.sleep(5)  # reconnect if the stream drops
+
+
 def serve():
     load_config()
-    bind = os.environ.get("CLAUDE_NOTIFY_DAEMON_BIND", "0.0.0.0")
+    # Windows only needs local (env1) + SSH RemoteForward-to-127.0.0.1 (env3), so
+    # default to loopback there — avoids LAN exposure and a Firewall prompt. macOS
+    # defaults to 0.0.0.0 because Colima containers reach it via host.docker.internal.
+    default_bind = "127.0.0.1" if IS_WINDOWS else "0.0.0.0"
+    bind = os.environ.get("CLAUDE_NOTIFY_DAEMON_BIND", default_bind)
     port = int(os.environ.get("CLAUDE_NOTIFY_DAEMON_PORT", "50090"))
     token = os.environ.get("CLAUDE_NOTIFY_TOKEN", "")
+    # On Windows, also run the 案2 ntfy receiver in-process (opt-in via config).
+    if IS_WINDOWS:
+        threading.Thread(target=ntfy_subscriber, daemon=True).start()
     httpd = ThreadingHTTPServer((bind, port), make_handler(token))
     sys.stderr.write("claude-notify-daemon listening on %s:%d (auth=%s)\n"
                      % (bind, port, "on" if token else "off"))
@@ -139,7 +207,46 @@ PLIST_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
 """
 
 
+# --- Windows autostart (Startup-folder VBS launcher) ------------------------
+# No LaunchAgent on Windows; instead drop a tiny .vbs in the per-user Startup
+# folder that launches `pythonw claude-notify-daemon serve` hidden at logon. This
+# needs no admin rights and no Task Scheduler.
+STARTUP_DIR = os.path.join(os.environ.get("APPDATA", ""), "Microsoft", "Windows",
+                           "Start Menu", "Programs", "Startup")
+STARTUP_VBS = os.path.join(STARTUP_DIR, "claude-notify-daemon.vbs")
+
+
+def _pythonw():
+    cand = os.path.join(os.path.dirname(sys.executable), "pythonw.exe")
+    return cand if os.path.exists(cand) else sys.executable
+
+
+def install_windows():
+    script = os.path.abspath(__file__)
+    cmd = '"%s" "%s" serve' % (_pythonw(), script)
+    os.makedirs(STARTUP_DIR, exist_ok=True)
+    with open(STARTUP_VBS, "w") as fh:
+        fh.write('CreateObject("WScript.Shell").Run "%s", 0, False\r\n'
+                 % cmd.replace('"', '""'))
+    # Launch now too (hidden) so it is live without a logout/login.
+    subprocess.Popen([_pythonw(), script, "serve"],
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    print("installed and started:", STARTUP_VBS)
+
+
+def uninstall_windows():
+    if os.path.exists(STARTUP_VBS):
+        os.remove(STARTUP_VBS)
+    # Best-effort: stop any running instance of this script.
+    subprocess.run(["taskkill", "/F", "/IM", "pythonw.exe"],
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    print("uninstalled:", STARTUP_VBS,
+          "\n(note: taskkill stops all pythonw.exe; restart other tools if needed)")
+
+
 def install():
+    if IS_WINDOWS:
+        return install_windows()
     script = os.path.abspath(__file__)
     os.makedirs(os.path.dirname(PLIST), exist_ok=True)
     with open(PLIST, "w") as fh:
@@ -151,6 +258,8 @@ def install():
 
 
 def uninstall():
+    if IS_WINDOWS:
+        return uninstall_windows()
     subprocess.run(["launchctl", "unload", PLIST],
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if os.path.exists(PLIST):

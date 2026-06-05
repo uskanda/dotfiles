@@ -9,6 +9,9 @@
 # does nothing and exits 0, so the LaunchAgent stays dormant until you stand up
 # a self-hosted ntfy server and fill in ~/.config/claude-notify/config.env.
 #
+# macOS only. On Windows the 案2 subscriber is folded into claude-notify-daemon
+# (one Startup item covers both transports), so this script is not used there.
+#
 # Subcommands: run | install | uninstall
 
 CONFIG_ENV="$HOME/.config/claude-notify/config.env"
