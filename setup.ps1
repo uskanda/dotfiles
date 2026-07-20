@@ -5,12 +5,16 @@
 #
 #   .\setup.ps1              # base setup only (Alacritty link)
 #   .\setup.ps1 -Fusion      # base setup + Autodesk Fusion 360 MCP bridge
+#   .\setup.ps1 -Voicevox    # base setup + VOICEVOX engine (claude-notify TTS)
 #   $env:INSTALL_FUSION=1; .\setup.ps1   # same, via env var
 #
 [CmdletBinding()]
 param(
     # Opt-in: also install the Autodesk Fusion 360 MCP bridge for Claude Code.
-    [switch]$Fusion
+    [switch]$Fusion,
+    # Opt-in: also install the VOICEVOX engine so claude-notify speaks with a
+    # VOICEVOX voice instead of falling back to the built-in SAPI5 voice.
+    [switch]$Voicevox
 )
 
 $ErrorActionPreference = 'Stop'
@@ -118,6 +122,19 @@ print("  registered fusion360 in ~/.claude.json")
     Write-Host "   2. Restart Claude Code so it loads the new MCP server."
 }
 
+# --- VOICEVOX engine (opt-in) -----------------------------------------------
+# Installs/starts the local VOICEVOX engine on :50021 so claude-notify speaks
+# with a VOICEVOX voice. Delegates to the dedicated installer (~1.8GB download).
+function Install-VoicevoxEngine {
+    Write-Host "== VOICEVOX engine ==" -ForegroundColor Cyan
+    $installer = "$env:USERPROFILE\.local\bin\install-voicevox-engine.ps1"
+    if (-not (Test-Path $installer)) {
+        Write-Host "  installer not found ($installer) — run 'chezmoi apply' first. Skipping." -ForegroundColor Yellow
+        return
+    }
+    & $installer
+}
+
 # --- run ---------------------------------------------------------------------
 Set-AlacrittyLink
 
@@ -125,4 +142,10 @@ if ($Fusion -or $env:INSTALL_FUSION -eq '1') {
     Install-FusionMcpBridge
 } else {
     Write-Host "Skipping Fusion 360 MCP bridge (use -Fusion or INSTALL_FUSION=1 to enable)." -ForegroundColor DarkGray
+}
+
+if ($Voicevox -or $env:INSTALL_VOICEVOX -eq '1') {
+    Install-VoicevoxEngine
+} else {
+    Write-Host "Skipping VOICEVOX engine (use -Voicevox or INSTALL_VOICEVOX=1 to enable)." -ForegroundColor DarkGray
 }
