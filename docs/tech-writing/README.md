@@ -10,13 +10,16 @@ Claude Code に日本語の技術文書・仕様書・ソースコメントを�
 3. [`rules/openspec-ja.md`](rules/openspec-ja.md) — OpenSpec 成果物向けの追加規約
 4. [`rules/code-comments-ja.md`](rules/code-comments-ja.md) — ソースコメント向けの追加規約
 5. [`survey.md`](survey.md) — 調査結果。出典とライセンス
+6. [`draft/`](draft/) — 提案どおりに組み立てた試作。試すための手順もここにある
 
 急ぐ場合は `proposal.md` の「6. 決めてほしいこと」だけ読めばよい。
+先に動かして判断したい場合は `draft/README.md` を読む。
 
 ## 状態
 
 議論用のドラフトである。skill としてはまだ導入していない。
-合意後に `dot_claude/skills/` へ配置する。
+`draft/install-draft-skill.sh` で `~/.claude/skills/` へ手動配置して試せる。
+合意後に `dot_claude/skills/` へ移す。
 
 ## このディレクトリの扱い
 
