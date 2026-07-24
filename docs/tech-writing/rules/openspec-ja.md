@@ -3,8 +3,8 @@
 対象読者: このリポジトリの管理者と、規約を読む Claude Code。
 前提知識: [`core-ja.md`](core-ja.md) の共通規約、OpenSpec の CLI と成果物の構成。
 
-skill `tech-writing-ja` の参照ファイル `references/openspec-ja.md` に入れる想定のドラフト。
-共通規約（`W-*`）に加えて適用する。ID は `OS-*` とする。
+skill `tech-writing-ja` の参照ファイル `references/openspec.md` に入れる想定のドラフト。共通規約（`W-*`）に加えて適用する。
+ID は `OS-*` とする。
 
 出典: [OpenSpec](https://github.com/Fission-AI/OpenSpec)（MIT）の
 `openspec/specs/openspec-conventions/spec.md` および `docs/concepts.md`。

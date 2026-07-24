@@ -3,7 +3,7 @@
 対象読者: このリポジトリの管理者と、規約を読む Claude Code。
 前提知識: [`core-ja.md`](core-ja.md) の共通規約、担当言語の標準的な文書化形式。
 
-skill `tech-writing-ja` の参照ファイル `references/code-comments-ja.md` に入れる想定のドラフト。
+skill `tech-writing-ja` の参照ファイル `references/code-comments.md` に入れる想定のドラフト。共通規約（`W-*`）に加えて適用する。
 ID は `C-*` とする。
 
 コメントは文書と条件が違う。**行数が限られ、コードと同時に腐る。**
