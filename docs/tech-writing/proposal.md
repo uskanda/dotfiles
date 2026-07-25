@@ -3,8 +3,9 @@
 対象読者: このリポジトリの管理者。
 前提知識: Claude Code の skill と CLAUDE.md、chezmoi によるこのリポジトリの運用。
 
-議論のたたき台。調査結果は [`survey.md`](survey.md)、規約本文のドラフトは [`rules/`](rules/) にある。
-本ファイルは**どこに何を置くか**と**決めてほしいこと**を扱う。
+本ファイルは**どこに何を置くか**と**何を決めたか**を扱う。
+調査結果は [`survey.md`](survey.md)、規約本文は
+[skill](../../dot_claude/skills/tech-writing-ja/) にある。
 
 ---
 
@@ -74,7 +75,7 @@
 第0層は「効かせる」ため、第1層は「正確に書かせる」ため、第2層は「検査する」ためにある。
 どれか一つでは目的を達しない。
 
-## 3. skill の分割案
+## 3. skill の分割（案C を採用）
 
 ### 案A: 単一 skill
 
@@ -95,7 +96,7 @@ tech-writing-ja/
 - 短所: 共通規約が3箇所に重複する。共通部分をファイルに切り出すと参照が2階層になり、
   Claude が部分読みする恐れがある（Anthropic は参照を1階層に保つよう推奨している）。
 
-### 案C: 執筆と校閲を分ける（**推奨**）
+### 案C: 執筆と校閲を分ける（**採用**）
 
 ```
 tech-writing-ja/          # 書くとき
@@ -111,118 +112,87 @@ doc-review-ja/            # 既存文書を直すとき（明示起動を想定�
 - コメント規約は文書 skill の参照ファイルに置きつつ、**要点だけ第0層にも置く**。
   コーディング中に skill が発火しない前提で設計する。
 
-推奨は案C。ただし第1段階では `tech-writing-ja` だけを作り、効果を見てから
-`doc-review-ja` を足すのが安全である。
+案C を採用した。`tech-writing-ja` のみ配置済みで、`doc-review-ja` は段階4で足す。
+効果を測る前に skill を増やさない。
 
 ## 4. 各層に置く内容
 
-### 第0層: `~/.claude/CLAUDE.md`（追記案・30行以内）
+### 第0層: `~/.claude/CLAUDE.md`
 
-```markdown
-## 日本語技術文書の規約
+追記する本文は [`CLAUDE.md.snippet.md`](CLAUDE.md.snippet.md) にある。16項目、30行以内。
+反映は手作業で行う。理由は §5 に書いた。
 
-詳細は skill `tech-writing-ja` にある。以下は常時適用する最小規約。
+### 第1層: `dot_claude/skills/tech-writing-ja/`
 
-- 文体は文書内で統一する。既定は常体（である調）。手順書と README は敬体でもよい。
-- 一文は90字以内、読点は3つまで。一文一義。
-- 次を書かない: 「〜することができる」「〜を行う」「〜となっている」「〜な形で」
-  「〜と思われる」「〜と考えられる」「まず初めに」。
-- 見出しの言い換えを直後の文に書かない。同じ事実を文書内で2回書かない。
-- 根拠のない三つ組（「保守性・可読性・拡張性が向上する」）を書かない。
-- 「簡単に」「単に」「もちろん」を書かない。絵文字と感嘆符を使わない。
-- 500字を超える文書は、冒頭に「対象読者」と「前提知識」を1〜3行で書く。
-  そこに無い専門用語は、初出時に言い換えるか、括弧で定義する。
-- 略語は初出で「正式名称（略語）」と書く。
-- 「上記」「下記」ではなく見出し名で参照する。「現在」「最新」ではなく版と日付で書く。
-- コメントは**なぜ**を書く。何をしているかはコードで表す。
-  コードを読めば分かることと、コメントアウトしたコードを残さない。
-- TODO には追跡先（issue 番号か担当）を必ず書く。
-- 出力する前に、意味を変えずに20%短くできないか試す。
-```
+配置済みである。実物を読む。
 
-### 第1層: `tech-writing-ja/SKILL.md`
+| ファイル | 役割 | 読ませる場面 |
+|---------|------|------------|
+| [`SKILL.md`](../../dot_claude/skills/tech-writing-ja/SKILL.md) | 規約本体（`W-*` 54項目）と自己校閲手順 | 発火時に必ず |
+| [`references/redundancy.md`](../../dot_claude/skills/tech-writing-ja/references/redundancy.md) | 冗長表現の置換表の全文 | 置換表の全文が要るとき |
+| [`references/terminology.md`](../../dot_claude/skills/tech-writing-ja/references/terminology.md) | 用語の扱いの全文（`W-406`〜`W-408`） | 用語集を作るとき、外来語の判断に迷うとき |
+| [`references/openspec.md`](../../dot_claude/skills/tech-writing-ja/references/openspec.md) | `OS-*` 30項目 | OpenSpec の成果物を書くとき |
+| [`references/code-comments.md`](../../dot_claude/skills/tech-writing-ja/references/code-comments.md) | `C-*` 27項目 | コメントと docstring を書くとき |
 
-```yaml
----
-name: tech-writing-ja
-description: 日本語で技術文書・仕様書・設計書・README・OpenSpec の成果物・
-  ソースコード内コメントを書くときの規約と自己校閲手順。冗長な言い回しを避け、
-  未定義の専門用語を残さないために使う。日本語の文書を書く、直す、レビューする
-  ときに適用する。
-allowed-tools: Read, Write, Edit, Grep, Glob, Bash
----
-```
+参照は1階層に保った。2階層にすると Claude が部分読みする。
 
-本体には次を置く。
+規約 ID の `W-108`（感嘆符と疑問符の禁止）は `W-209` に統合したため欠番である。
 
-1. 適用範囲と優先順位（W-000〜W-002）
-2. 文体（W-100〜W-109）
-3. 冗長の排除の要点と、置換表への参照
-4. 断定と根拠（W-300〜W-303）
-5. 用語（W-400〜W-408）— **最も詳しく書く節**
-6. 要求レベルの対応表（W-500〜W-501）
-7. 構造（W-600〜W-612）
-8. 自己校閲手順のチェックリスト（W-700〜W-702）
-9. 参照ファイルへの索引
+### 第2層: textlint（opt-in、未着手）
 
-参照ファイル（1階層のみ）:
+- 導入は opt-in とする。未導入の環境では `SKILL.md` §7 の grep で代替する
+- 設定はプロジェクトごとに `.textlintrc.json` を置く。dotfiles には共通設定を置かない
+- 推奨する最小構成は `SKILL.md` §9（W-800、W-801）にある
+- `PostToolUse` hook による自動実行は段階4で検討する
 
-| ファイル | 読ませる場面 |
-|---------|------------|
-| `references/redundancy.md` | 置換表の全文が要るとき |
-| `references/terminology.md` | 用語集を作るとき、外来語の判断に迷うとき |
-| `references/openspec.md` | OpenSpec の成果物を書くとき |
-| `references/code-comments.md` | コメントと docstring を書くとき |
-
-### 第2層: textlint（任意）
-
-- `dot_config/textlint/textlintrc.json` に推奨設定を置く
-- 導入は opt-in とする。このリポジトリの VOICEVOX と同じ扱いにする
-- Claude Code の `PostToolUse` hook で `*.md` の書き込み後に実行する
-
-## 5. ファイル構成案
+## 5. ファイル構成
 
 ```
-dot_claude/
-  skills/
-    tech-writing-ja/
-      SKILL.md
-      references/
-        redundancy.md
-        terminology.md
-        openspec.md
-        code-comments.md
-    doc-review-ja/          # 第2段階
-      SKILL.md
-  CLAUDE.md                 # 各自の環境で chezmoi add する（README 記載の運用）
-dot_config/
-  textlint/
-    textlintrc.json         # 第2段階
-docs/
-  tech-writing/             # 本ディレクトリ。chezmoi の適用対象外にする
+dot_claude/skills/tech-writing-ja/     # 配置済み
+├── SKILL.md
+└── references/{redundancy,terminology,openspec,code-comments}.md
+
+docs/tech-writing/                     # chezmoi の適用対象外
+├── README.md
+├── proposal.md                        # 本ファイル
+├── survey.md
+└── CLAUDE.md.snippet.md               # 手作業で追記する本文
+
+（未着手）
+dot_claude/skills/doc-review-ja/       # 段階4
 ```
 
-`docs/` は `~/docs/` に展開されてしまうため、`.chezmoiignore` に追加する。
+`docs/` は `~/docs/` に展開されるため `.chezmoiignore` に登録した。
 
-## 6. 決めてほしいこと
+### CLAUDE.md を自動で反映しない理由
 
-暫定で決めて先に進めた。異論があれば差し替える。
+`dot_claude/CLAUDE.md` をこのリポジトリに置くと、`chezmoi apply` が各端末の
+`~/.claude/CLAUDE.md` を**上書きする**。既存の記述を失う恐れがあるため、
+リポジトリには追記用の本文だけを置き、反映は各自が手で行う。
+このリポジトリの README にある allowlist 方針と同じ扱いである。
 
-| # | 論点 | 暫定の決定 | 代替案 |
-|---|------|-----------|--------|
-| 1 | 文体の既定 | 常体（である調）。手順書と README は敬体を許可 | 全面的に敬体 |
-| 2 | skill の分割 | 案C（執筆 + 校閲）。第1段階は執筆のみ | 案A（単一）、案B（用途別3つ） |
-| 3 | CLAUDE.md の分量 | 30行以内 | もっと削る／もっと載せる |
-| 4 | コメントの言語 | 既存に合わせる。混在なら日本語。公開 OSS は英語 | 常に英語 |
-| 5 | textlint の導入 | 第2段階で opt-in 導入 | 導入しない／最初から必須 |
-| 6 | skill 名 | `tech-writing-ja`（英語 kebab-case） | `nessun_dorma` に倣った命名 |
-| 7 | 置き場所 | `~/.claude`（全 project 共通） | project ごとの `.claude/` |
-| 8 | 「20%削減」の強制度 | 必須。できなければ理由を1行報告 | 推奨に留める |
-| 9 | 規約からの逸脱 | 規約 ID と理由を報告に書く | 報告不要 |
-| 10 | 適用対象に PR / issue / commit を含めるか | 含める（本文のみ。commit の1行目は既存の `commit` skill に従う） | 文書のみ |
+```bash
+$EDITOR ~/.claude/CLAUDE.md        # snippet の中身を末尾に追記する
+chezmoi add ~/.claude/CLAUDE.md    # ソースへ取り込む
+chezmoi diff                       # 差分を確認する
+```
 
-**特に判断を仰ぎたいのは 1、2、5** である。1 は全文書の見た目を決め、
-2 は今後の保守の形を決め、5 は追加の環境構築を伴う。
+## 6. 決定事項
+
+| # | 論点 | 決定 | 状態 |
+|---|------|------|------|
+| 1 | 文体の既定 | 常体（である調）。手順書と README は敬体を許可 | **決定** |
+| 2 | skill の分割 | 案C（執筆 + 校閲）。段階4まで執筆のみ | **決定** |
+| 5 | textlint の導入 | opt-in。未導入の環境では grep で代替する | **決定** |
+| 3 | CLAUDE.md の分量 | 30行以内（実装は16項目） | 暫定 |
+| 4 | コメントの言語 | 既存に合わせる。混在なら日本語。公開 OSS は英語 | 暫定 |
+| 6 | skill 名 | `tech-writing-ja`（英語 kebab-case） | 暫定 |
+| 7 | 置き場所 | `~/.claude`（全 project 共通） | 暫定 |
+| 8 | 「20%削減」の強制度 | 必須。できなければ理由を1行報告（W-211、W-701） | 暫定 |
+| 9 | 規約からの逸脱 | 規約 ID と理由を報告に書く（W-702） | 暫定 |
+| 10 | 適用対象に PR / issue / commit を含めるか | 含める（本文のみ。commit の1行目は既存の `commit` skill に従う） | 暫定 |
+
+暫定の6件は運用に支障がないため、段階3の測定結果を見てから確定する。
 
 ## 7. 未検証の事項
 
@@ -236,12 +206,20 @@ docs/
 
 ## 8. 進め方
 
-| 段階 | 作業 | 完了の判定 |
-|------|------|-----------|
-| 1 | 本提案の合意。論点 1、2、5 の決定 | 決定が本ファイルに反映されている |
-| 2 | CLAUDE.md 追記と `tech-writing-ja` skill の作成 | `chezmoi apply` が通る |
-| 3 | 効果の測定 | 文書を3本書かせ、人が手を入れた行数の割合を記録する |
-| 4 | `doc-review-ja` と textlint の追加 | 段階3の割合が下がる |
+| 段階 | 作業 | 完了の判定 | 状態 |
+|------|------|-----------|------|
+| 1 | 本提案の合意。論点 1、2、5 の決定 | 決定が §6 に反映されている | **完了** |
+| 2 | `tech-writing-ja` skill の配置 | `chezmoi apply` が通る | **完了** |
+| 3 | 効果の測定 | 文書を3本書かせ、人が手を入れた行数の割合を記録する | 未着手 |
+| 4 | `doc-review-ja` と textlint の追加 | 段階3の割合が下がる | 未着手 |
+
+段階2の残作業は `~/.claude/CLAUDE.md` への追記だけである。
+上書きの危険があるため自動化していない（§5 参照）。
 
 段階3の測定は、規約が目的（校閲を最小限にする）に効いているかを判定する唯一の手段である。
-規約を増やす前に必ず行う。
+規約を増やす前に必ず行う。記録する項目は次の4つとする。
+
+- skill が発火したか。しなかった場面はどれか
+- 人が手を入れた行数の割合
+- 守られなかった規約の ID
+- 逆に、規約が邪魔になった場面

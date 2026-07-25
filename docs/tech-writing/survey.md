@@ -113,7 +113,8 @@ OpenSpec 自身の規約（`openspec/specs/openspec-conventions/spec.md`）か�
 - 見出し文字列が要求の一意識別子になるため、正規化後に重複してはならない
 
 **重要な帰結**: 見出しとキーワードは OpenSpec のパーサが依存する構造であり、英語のまま維持しなければならない。
-日本語化してよいのは要求名と本文だけである。この線引きは `rules/openspec-ja.md` で明文化した。
+日本語化してよいのは要求名と本文だけである。この線引きは
+`dot_claude/skills/tech-writing-ja/references/openspec.md` で明文化した。
 
 ## 採らない、または注意して扱うもの
 

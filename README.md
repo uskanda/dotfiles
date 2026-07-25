@@ -112,6 +112,24 @@ chezmoi apply ~/.claude
 > `~/.claude/settings.json` を上書きするため、初回は必ず `chezmoi diff` で確認し、
 > 自分の設定を取り込んでから運用すること。
 
+### skill: tech-writing-ja（日本語技術文書の規約）
+
+Claude が生成する日本語の冗長さと、未定義の専門用語を減らすための規約。
+`dot_claude/skills/tech-writing-ja/` にある。`chezmoi apply` で反映される。
+
+* `SKILL.md` … 規約本体（`W-*` 54項目）と自己校閲手順
+* `references/redundancy.md` … 冗長表現の置換表
+* `references/terminology.md` … 用語の扱いと用語集の作り方（`W-406`〜`W-408`）
+* `references/openspec.md` … OpenSpec 成果物向け（`OS-*` 30項目）
+* `references/code-comments.md` … ソースコメント向け（`C-*` 27項目）
+
+skill は発火したときだけ効くため、常時効かせたい最小規約は `~/.claude/CLAUDE.md` へ
+手で追記する。追記する本文と手順は `docs/tech-writing/CLAUDE.md.snippet.md` にある。
+`CLAUDE.md` を自動反映しないのは、`chezmoi apply` が既存の記述を上書きするためである。
+
+検討の経緯、出典とライセンス、決定事項は `docs/tech-writing/` に残してある。
+textlint による機械検査は opt-in であり、まだ導入していない。
+
 VOICEVOX エンジン（任意）
 -----------------------------
 `claude-notify`（Claude Code の Stop/Notification フック）は、`localhost:50021` で

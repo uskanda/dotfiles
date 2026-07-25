@@ -52,7 +52,7 @@ chezmoi diff
 
 ## 外すときの目安
 
-段階3の測定（`../proposal.md` §8）で、次のどちらかが分かったら CLAUDE.md 側から外す。
+段階3の測定（[`proposal.md`](proposal.md) §8）で、次のどちらかが分かったら CLAUDE.md 側から外す。
 
 - skill が期待どおり発火しており、CLAUDE.md の記述が重複している
 - 特定の項目が守られていない。その項目は表現を変えるか skill 側へ移す
