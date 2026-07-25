@@ -23,7 +23,7 @@ hook(JSON) → claude-notify-hook → claude-notify-nag（grace/繰り返し）
 **Goals:**
 - SSH 先 / devcontainer から、ポート転送も自前サーバも無しに「手元の VOICEVOX で発話」を成立させる。
 - 同じ 1 通でスマホにも通知が届く（外出時は Telegram 通知だけで用が足りる）。
-- 既存 `voice` モードと排他選択でき、既定は現行動作（非破壊）。
+- 既存 `voice` モードと排他選択でき、既定は `telegram`（未配線端末は `voice` へフォールバックするので無音にはならない）。
 - 追加パッケージ無し（bash + curl + Python 3 標準ライブラリ）。
 - 秘密の置き場所は既存方式（`chezmoi.toml` の `[data.claudeNotify]` → `config.env`）に揃える。
 
@@ -79,9 +79,11 @@ hook(JSON) → claude-notify-hook → claude-notify-nag（grace/繰り返し）
 - 2 行目のマーカーで「Claude Code 由来か」を判定する。人間の雑談や他アプリの投稿を誤って読み上げない防壁であり、将来 `kind` で挙動を分けるための拡張点でもある。`#claude_notify` をハッシュタグにしてあるので Telegram 側の検索・フィルタでも使える。
 - `parse_mode` は指定しない。Markdown/HTML パースを有効にすると、リポジトリ名に `_` や `*` が含まれた瞬間に 400 で送信失敗する。
 
-### D4: モードは `CLAUDE_NOTIFY_MODE`（`voice` | `telegram`、既定 `voice`）
+### D4: モードは `CLAUDE_NOTIFY_MODE`（`telegram` | `voice`、既定 `telegram`）
 
-- 置き場所は既存様式に合わせて `~/.config/claude-notify/config.env`（`chezmoi.toml` の `[data.claudeNotify] mode`）。端末ごとに切り替わるのが自然（Mac は `voice`、devcontainer は `telegram` など）。
+- 置き場所は既存様式に合わせて `~/.config/claude-notify/config.env`（`chezmoi.toml` の `[data.claudeNotify] mode`）。端末ごとに上書きできる。
+- **既定は `telegram`**。Telegram 経路が「どの環境でも同じ手順で動く」唯一の経路なので、これを標準に据え、手元で直接鳴らしたい端末だけ `mode = "voice"` で opt-out する。既定を `voice` にしておくと、通知が欲しい環境（SSH / devcontainer）ほど毎回追加設定が要るという逆転が起きる。
+- 既定変更の副作用として「Telegram を配線していない端末が無音になる」ため、`telegram` かつトークン / チャット ID が空のときだけ `voice` へフォールバックする（警告 1 行付き）。厳密な択一（未設定ならベルのみ）にすると、`chezmoi apply` した瞬間に全端末が黙るため実用に耐えない。逆に「設定済みだが送信失敗」では `voice` へ落とさない（リモートでは案1/案2 を無駄に叩いてフックが遅くなるだけ）。
 - **`config.env` は `${VAR:-...}` 形式で出力する**。現行の `config.env` は `KEY="value"` で無条件代入しており、`. config.env` が既存の環境変数を踏み潰す。一時的な切り戻し（`CLAUDE_NOTIFY_MODE=voice claude-notify ...`）とデバッグを成立させるため、新規キーは環境変数優先で書き出す。
 - 不正値は `voice` として扱い警告のみ。通知系スクリプトがフックを失敗させてはならないため、どの失敗経路でも終了コードは 0。
 
@@ -108,7 +110,8 @@ Windows の停止処理は PID ファイル方式にする。既存 `claude-noti
 ## Risks / Trade-offs
 
 - **[最大リスク] チャンネル自動転送が受信 Bot に届かない可能性** → 実装着手前に curl だけで実機検証する（tasks 1.x）。成立しなければ案 B（Telethon 受信）へ差し替える。設計上、送信側の仕様（D3/D4/D5）と受信側の受理条件以外は共通なので、差し替え範囲は受信常駐 1 本に閉じる。
-- **通知内容が Telegram のサーバを経由する** → 本文はリポジトリ名・ホスト名・セッション ID 先頭 8 文字・固定文言のみに限定（`telegram-notify-send` の要件）。プロンプトやツール出力は送らない。それでも「どのリポジトリでいつ作業したか」は Telegram 上に残るため、`voice` モードを既定に据えたまま opt-in とする。
+- **既定変更で既存端末の経路が切り替わる** → 未配線端末は `voice` へフォールバックするため無音にはならない。ただし「Telegram を配線した端末は以後ローカルで喋らなくなる」ので、README に `mode = "voice"` での固定手順とロールバック手順を明記する。
+- **通知内容が Telegram のサーバを経由する** → 本文はリポジトリ名・ホスト名・セッション ID 先頭 8 文字・固定文言のみに限定（`telegram-notify-send` の要件）。プロンプトやツール出力は送らない。それでも「どのリポジトリでいつ作業したか」は Telegram 上に残る。既定が `telegram` である以上これは全端末に及ぶため、README のセキュリティ節で明示し、嫌な端末は `mode = "voice"` で opt-out できるようにする。
 - **送信 Bot トークンをリモートにも置く** → 権限はチャンネル投稿のみ。受信 Bot トークンは手元だけに置き、漏洩範囲を分離する（D2）。チャンネルは非公開にする。
 - **フック終端が最大 5 秒ブロックする**（`CLAUDE_TELEGRAM_TIMEOUT`） → 既存の案1 経路（4 秒）と同程度。回線不調時の体感悪化が許容できなければ、この値を下げるか将来的に非同期送信へ変更する。
 - **同一受信トークンの二重ポーリングで 409** → マシンごとに受信 Bot を分ける運用をドキュメント化し、常駐側は 409 を検知したらバックオフして警告を残す。
@@ -120,8 +123,8 @@ Windows の停止処理は PID ファイル方式にする。既存 `claude-noti
 1. **実機検証（実装前）**: BotFather で送信 Bot・受信 Bot を作成、非公開チャンネルとディスカッショングループを作成して連携、送信 Bot をチャンネル管理者、受信 Bot をグループへ（プライバシーモード無効）。curl で `sendMessage`（チャンネル宛）→ `getUpdates`（受信 Bot）を叩き、`is_automatic_forward` / `sender_chat` 付きで取得できることを確認する。
 2. 失敗した場合は design を更新し、受信側を案 B（Telethon）に差し替える。送信側仕様と設定キーはそのまま流用する。
 3. 実装は「設定 → 送信側 → 受信側 → setup 結線 → ドキュメント」の順。各段階で `voice` モードの回帰（Mac ローカル発話、devcontainer の案1）を確認する。
-4. 展開は端末ごとに `chezmoi.toml` の `mode` を切り替えるだけ。ロールバックは `mode = "voice"` に戻して `chezmoi apply`（受信常駐は残っていても、送信が止まれば発話しない）。常駐を消すなら `claude-notify-telegram-bot uninstall`。
-5. 既存端末は `mode` 未設定 = `voice` なので、`chezmoi apply` しても挙動は変わらない。
+4. 展開は「手元マシンに受信常駐を入れる → 各端末の `chezmoi.toml` に送信トークンとチャット ID を入れて `chezmoi apply`」の順。`mode` は既定 `telegram` なので通常は書かない。ロールバックは `mode = "voice"` を書いて `chezmoi apply`（受信常駐は残っていても、送信が止まれば発話しない）。常駐を消すなら `claude-notify-telegram-bot uninstall`。
+5. 既存端末は `mode` 未設定でも `telegram` になる。トークン未投入の間は `voice` へフォールバックするため無音にはならず、配線した端末から順に Telegram 経路へ移る（段階移行が可能）。
 
 ## Open Questions
 

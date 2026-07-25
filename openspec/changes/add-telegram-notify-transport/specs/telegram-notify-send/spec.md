@@ -33,16 +33,31 @@
 - **WHEN** `api.telegram.org` へ到達できずタイムアウトする
 - **THEN** `CLAUDE_TELEGRAM_TIMEOUT` 秒で打ち切られ、リトライは行われない
 
-### Requirement: 失敗時と未設定時のフォールバック
-送信が失敗した場合、または `CLAUDE_TELEGRAM_BOT_TOKEN` / `CLAUDE_TELEGRAM_CHAT_ID` が空の場合、`claude-notify` はローカルフォールバック（端末ベル、可能なら通知音）のみを行い、`voice` 経路（VOICEVOX / say / 案1 / 案2）へ切り替えてはならない（SHALL NOT）。いずれの場合もフックを壊さないため終了コード 0 で終了しなければならない（SHALL）。
+### Requirement: 送信失敗時のフォールバック
+送信設定が投入済みで送信が失敗した場合、`claude-notify` はローカルフォールバック（端末ベル、可能なら通知音）のみを行い、`voice` 経路（VOICEVOX / say / 案1 / 案2）へ切り替えてはならない（SHALL NOT）。フックを壊さないため終了コード 0 で終了しなければならない（SHALL）。
 
 #### Scenario: 送信失敗
 - **WHEN** `telegram` モードでネットワークが切れている状態で通知が発生する
 - **THEN** ベルのみが鳴り、終了コードは 0、Claude Code の turn は妨げられない
 
-#### Scenario: 未設定端末
-- **WHEN** `CLAUDE_NOTIFY_MODE=telegram` だがトークンが空
-- **THEN** 送信は試みられず、stderr に 1 行の警告を出し、ベルのみで終了コード 0 になる
+#### Scenario: API がエラーを返す
+- **WHEN** チャット ID 誤りなどで `sendMessage` が 400 を返す
+- **THEN** リトライせずベルのみで終了コード 0 になり、stderr に 1 行の警告が残る
+
+### Requirement: 未設定端末は voice へフォールバックする
+既定モードが `telegram` であるため、`CLAUDE_TELEGRAM_BOT_TOKEN` または `CLAUDE_TELEGRAM_CHAT_ID` が空の端末（＝まだ Telegram を配線していない端末）では、`claude-notify` は stderr に 1 行の警告を出した上で `voice` 経路へフォールバックしなければならない（SHALL）。この場合も終了コードは 0 でなければならない（SHALL）。
+
+#### Scenario: 未配線の Mac
+- **WHEN** `CLAUDE_NOTIFY_MODE` 未設定（＝既定 `telegram`）でトークンが空の Mac で通知が発生する
+- **THEN** 送信は試みられず、警告 1 行の後に従来どおり VOICEVOX（不在時は `say`）で発話される
+
+#### Scenario: 未配線の devcontainer
+- **WHEN** 同じ状態の devcontainer で通知が発生する
+- **THEN** `voice` 経路として案1（デーモン）→案2（ntfy）→ベルの順に試行される
+
+#### Scenario: 設定済みなら択一を守る
+- **WHEN** トークンとチャット ID が投入済みの端末で通知が発生する
+- **THEN** Telegram 送信のみが行われ、送信の成否に依らず `voice` 経路は実行されない
 
 ### Requirement: telegram モードでは nag を繰り返さない
 `telegram` モードでは `claude-notify-nag start` は grace（`CLAUDE_NAG_GRACE`、既定 3 秒）後に 1 回だけ送信して終了しなければならない（SHALL）。`CLAUDE_NAG_INTERVAL` による繰り返し送信を行ってはならない（SHALL NOT）。`claude-notify-nag stop` は grace 中の 1 回目を取り消せなければならない（SHALL）。

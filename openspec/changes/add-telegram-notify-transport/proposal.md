@@ -6,13 +6,14 @@ Telegram Bot API を経路にすると、ポート転送も自前サーバも無
 
 ## What Changes
 
-- 通知経路を選ぶ設定 `CLAUDE_NOTIFY_MODE`（`voice` | `telegram`、既定 `voice`）を追加する。どちらか一方のみが動作し、既定は現行動作そのままで非破壊。
+- 通知経路を選ぶ設定 `CLAUDE_NOTIFY_MODE`（`telegram` | `voice`、**既定 `telegram`**）を追加する。どちらか一方のみが動作する。**BREAKING**: 既定が `telegram` なので、`chezmoi apply` した既存端末は Telegram 経路へ切り替わる。従来どおり手元で直接発話したい端末は `[data.claudeNotify] mode = "voice"` を明示する。
+- 既定変更で無音になるのを防ぐため、`telegram` かつ Telegram の送信設定（トークン / チャット ID）が空の端末は、警告を 1 行出した上で `voice` 経路へフォールバックする（＝未配線端末は従来どおり鳴る）。
 - `telegram` モードでは `claude-notify` はローカル発話を一切行わず、Telegram へ 1 通だけ送信する（送信本文の 1 行目が「発話される文」になる契約）。
 - 新規常駐 `claude-notify-telegram-bot`（macOS / Windows）を追加する。Telegram を長ポーリングし、**Claude Code 由来と判定できたメッセージだけ**を既存の発話経路（`claude-notify` → VOICEVOX / `claude-notify.ps1` → VOICEVOX→SAPI5）に渡す。
 - リレー構成は「送信 Bot が非公開チャンネルへ投稿 → Telegram が連携ディスカッショングループへ自動転送 → グループ内の受信 Bot が読む」を採用する（Bot は他 Bot / 自分自身の送信メッセージを `getUpdates` で受信できないため、単一 Bot の往復では成立しない）。送信用と受信用で **Bot を 2 つに分離**し、リモートには「チャンネルへ投稿する権限しかないトークン」だけを置く。
 - `telegram` モードでは nag（10 分毎の再催促）を無効化する。ただし turn 終了時の「確認をお願いします」を抑制する grace 遅延（既定 3 秒）は維持し、Telegram への無駄な 1 通を防ぐ。
 - `setup` / `setup.ps1` に opt-in の受信常駐インストール（`INSTALL_TELEGRAM_BOT=1` / `-TelegramBot`）、`config.env.tmpl` に設定キー、README に構成図・手順・トラブルシュートを追加する。
-- 既存の `voice` モード（macOS `say` フォールバック、Windows interop、案1 デーモン、案2 ntfy）はコードも既定値も変更しない。
+- 既存の `voice` モードの経路選択ロジック（macOS `say` フォールバック、Windows interop、案1 デーモン、案2 ntfy）はコードを変更しない。変わるのは「どのモードが既定か」だけ。
 
 ## Capabilities
 
