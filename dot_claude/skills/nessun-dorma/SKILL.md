@@ -1,5 +1,5 @@
 ---
-name: nessun_dorma
+name: nessun-dorma
 description: ユーザーは少なくとも3時間はチャットに応答できません。以下のルールに従って自律的に開発を進めてください。
 allowed-tools: Bash, Read, Write, Edit, Grep, Glob, Agent, TodoWrite
 ---

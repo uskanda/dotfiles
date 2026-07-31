@@ -1,5 +1,5 @@
 ---
-name: merge_develop
+name: merge-develop
 description: developのリモートの変更をpullした後、今いるブランチにその変更をマージしてください。可能であればfast-forwardでマージしてください。
 allowed-tools: Bash, AskUserQuestion
 ---
