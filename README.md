@@ -101,6 +101,29 @@ model = "claude-opus-4-8"
 
 `dig` で未設定時は既定値にフォールバックするため、データ未定義の端末でも安全に描画される。
 
+### リポジトリのホスティング判定（SessionStart フック）
+
+`mr` / `mr-main` / `mr-qa` / `mr-staging` / `fix-ci` のスキルは GitLab（`glab`）と
+GitHub（`gh`）の両方に対応している。どちらを使うかをスキル呼び出しのたびに判定するのは
+冗長なので、**セッション開始時に一度だけ**判定して Claude に前提知識として渡す。
+
+* 実体: `dot_local/bin/executable_claude-hosting-hook` → `~/.local/bin/claude-hosting-hook`
+* 結線: `settings.json` の `hooks.SessionStart`（stdout がそのままセッションの文脈に入る）
+* 出力: `<repo-hosting>` ブロック（リポジトリ・remote・ホスト・プラットフォーム・使う CLI）
+* 判定順（先勝ち）:
+  1. `origin`（無ければ最初の remote）のホスト名が既知（`github.com` / `gitlab.com` 等）
+  2. ホスト名に `github` / `gitlab` を含む（GitHub Enterprise・セルフホスト GitLab）
+  3. `gh` / `glab` の CLI 設定（`hosts.yml` / `config.yml`）に登録済みのホスト
+  4. リポジトリに `.github/workflows/` か `.gitlab-ci.yml` がある
+  * どれにも当たらなければ「不明」と出力し、スキル側で判定させる
+* git リポジトリでない場合・remote が無い場合は**何も出力しない**（無害）
+* 前提: 通知フックと同じく、Windows では Claude Code が**フックを Git Bash で実行**できること
+* 単体確認:
+  ```bash
+  claude-hosting-hook --plain [DIR]   # github | gitlab | unknown
+  claude-hosting-hook [DIR]           # Claude に渡る文脈そのものを表示
+  ```
+
 ### 反映手順（apply）
 
 ```bash

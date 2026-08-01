@@ -1,0 +1,178 @@
+#!/usr/bin/env bash
+# claude-hosting-hook: SessionStart hook that tells Claude whether the working
+# repository is hosted on GitHub or GitLab.
+#
+# Wiring (see ~/.claude/settings.json):
+#   SessionStart -> claude-hosting-hook
+#
+# Why: /mr, /mr-qa, /mr-staging, /mr-main, /fix-ci and /release all have to know
+# which CLI to drive (`glab` vs `gh`). Re-deriving that inside every skill burns
+# a turn and duplicates the same logic in six places, so resolve it once per
+# session and hand Claude the answer as context. The skills keep a one-line
+# fallback for sessions that start without this hook (devcontainer, CI, etc).
+#
+# Standalone use:
+#   claude-hosting-hook --plain [DIR]   # prints: github | gitlab | unknown
+#
+# Detection order (first hit wins):
+#   1. origin (or the first remote) host name is a known GitHub/GitLab host
+#   2. host name merely contains "github" / "gitlab" (self-hosted convention)
+#   3. host is registered in the gh / glab CLI config (Enterprise / self-hosted)
+#   4. repository contains .github/workflows/ or .gitlab-ci.yml
+#   otherwise "unknown" -> the skill decides at run time.
+
+MODE=context
+DIR=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --plain) MODE=plain ;;
+    -h|--help) sed -n '2,21p' "$0"; exit 0 ;;
+    *) DIR="$1" ;;
+  esac
+  shift
+done
+
+# Resolve a Python 3 interpreter. macOS/Linux have `python3`; Git Bash on Windows
+# usually does not, so fall back to `python` / `py -3`.
+py() {
+  if command -v python3 >/dev/null 2>&1; then python3 "$@"
+  elif command -v python >/dev/null 2>&1; then python "$@"
+  elif command -v py >/dev/null 2>&1; then py -3 "$@"
+  else return 127
+  fi
+}
+
+# The hook payload carries the session cwd; prefer it over $PWD, which can point
+# elsewhere when ~/.claude is bind-mounted into a devcontainer.
+if [ -z "$DIR" ] && [ "$MODE" = context ] && [ ! -t 0 ]; then
+  STDIN="$(cat 2>/dev/null || true)"
+  DIR="$(printf '%s' "$STDIN" | py -c 'import json,sys
+try:
+    print(json.load(sys.stdin).get("cwd",""))
+except Exception:
+    pass' 2>/dev/null)"
+fi
+
+TOP="$(git -C "${DIR:-$PWD}" rev-parse --show-toplevel 2>/dev/null)"
+if [ -z "$TOP" ]; then
+  [ "$MODE" = plain ] && echo unknown
+  exit 0
+fi
+
+# origin if it exists, else whatever remote comes first.
+remote_url() {
+  local r
+  git -C "$TOP" remote get-url origin 2>/dev/null && return 0
+  r="$(git -C "$TOP" remote 2>/dev/null | head -n1)"
+  [ -n "$r" ] && git -C "$TOP" remote get-url "$r" 2>/dev/null
+}
+
+# Host part of a git remote URL. Handles scheme://[user@]host[:port]/path and the
+# scp-like git@host:path form; prints nothing for local-path remotes.
+host_of() {
+  local u="$1"
+  case "$u" in
+    *://*) u="${u#*://}"; u="${u#*@}"; printf '%s' "${u%%[:/]*}" ;;
+    *@*:*) u="${u#*@}"; printf '%s' "${u%%:*}" ;;
+    *) printf '' ;;
+  esac
+}
+
+# Windows CLIs keep their config under %APPDATA%; emit a bash-usable path.
+appdata() {
+  [ -n "${APPDATA:-}" ] || return 0
+  if command -v cygpath >/dev/null 2>&1; then cygpath -u "$APPDATA"; else printf '%s' "$APPDATA"; fi
+}
+
+# Both gh's hosts.yml and glab's config.yml key their host entries by hostname,
+# so the same "^  <host>:" probe works for either.
+host_in_cli_config() {
+  local host="$1" f pat
+  pat="^[[:space:]]*${host//./\\.}:"
+  for f in "${@:2}"; do
+    [ -f "$f" ] && grep -qiE "$pat" "$f" 2>/dev/null && return 0
+  done
+  return 1
+}
+
+URL="$(remote_url)"
+if [ -z "$URL" ]; then
+  [ "$MODE" = plain ] && echo unknown
+  exit 0
+fi
+
+HOST="$(host_of "$URL")"
+PLATFORM=unknown
+REASON=""
+
+case "$HOST" in
+  github.com|www.github.com|ssh.github.com)
+    PLATFORM=github; REASON="既知のホスト名" ;;
+  gitlab.com|www.gitlab.com|altssh.gitlab.com)
+    PLATFORM=gitlab; REASON="既知のホスト名" ;;
+  *github*)
+    PLATFORM=github; REASON="ホスト名に github を含む（GitHub Enterprise とみなす）" ;;
+  *gitlab*)
+    PLATFORM=gitlab; REASON="ホスト名に gitlab を含む（セルフホスト GitLab とみなす）" ;;
+esac
+
+XDG="${XDG_CONFIG_HOME:-$HOME/.config}"
+AD="$(appdata)"
+if [ "$PLATFORM" = unknown ] && [ -n "$HOST" ]; then
+  if host_in_cli_config "$HOST" "$XDG/gh/hosts.yml" "$HOME/.config/gh/hosts.yml" \
+       ${AD:+"$AD/GitHub CLI/hosts.yml"}; then
+    PLATFORM=github; REASON="gh CLI の設定に登録済みのホスト"
+  elif host_in_cli_config "$HOST" "$XDG/glab-cli/config.yml" "$HOME/.config/glab-cli/config.yml" \
+       ${AD:+"$AD/glab-cli/config.yml"}; then
+    PLATFORM=gitlab; REASON="glab CLI の設定に登録済みのホスト"
+  fi
+fi
+
+if [ "$PLATFORM" = unknown ]; then
+  if [ -d "$TOP/.github/workflows" ] && [ ! -f "$TOP/.gitlab-ci.yml" ]; then
+    PLATFORM=github; REASON="リポジトリに .github/workflows/ がある"
+  elif [ -f "$TOP/.gitlab-ci.yml" ] && [ ! -d "$TOP/.github/workflows" ]; then
+    PLATFORM=gitlab; REASON="リポジトリに .gitlab-ci.yml がある"
+  fi
+fi
+
+if [ "$MODE" = plain ]; then
+  echo "$PLATFORM"
+  exit 0
+fi
+
+case "$PLATFORM" in
+  github)
+    LABEL="GitHub"; CLI='`gh`'; TERM_="Pull Request (PR)" ;;
+  gitlab)
+    LABEL="GitLab"; CLI='`glab`'; TERM_="Merge Request (MR)" ;;
+  *)
+    LABEL="不明"; CLI="不明"; TERM_="不明" ;;
+esac
+
+cat <<EOF
+<repo-hosting>
+作業リポジトリのホスティング判定結果（セッション開始時に自動判定・スキル実行前の前提知識）:
+
+- リポジトリ: $TOP
+- remote: $URL
+- ホスト: ${HOST:-（ローカルパス）}
+- プラットフォーム: **$LABEL**${REASON:+（判定根拠: $REASON）}
+- 使うCLI: $CLI ／ 用語: $TERM_
+EOF
+
+if [ "$PLATFORM" = unknown ]; then
+  cat <<'EOF'
+
+判定できなかったため、MR/PR・CI・リリース系のスキルを実行する際は
+`git remote -v` や `gh repo view` / `glab repo view` の疎通で自分で判定すること。
+</repo-hosting>
+EOF
+else
+  cat <<EOF
+
+mr / mr-main / mr-qa / mr-staging / fix-ci / release などのスキルでは、この判定結果を
+前提に $LABEL 側の手順のみを実行し、判定をやり直さないこと。
+</repo-hosting>
+EOF
+fi
