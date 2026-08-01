@@ -18,9 +18,11 @@ allowed-tools: Bash, Read, Edit, Write, Grep, Glob
 
 ## ホスティング判定
 
-1. `git remote get-url origin`（無ければ他の remote）を確認し、ホストが GitHub か GitLab かを判定する。
-   - URL が引数で渡された場合は、そのドメインから判定してもよい。
+1. セッション冒頭に注入される `<repo-hosting>` の判定結果をそのまま使う（再判定は不要）。
+2. `<repo-hosting>` が無いセッションでのみ、`git remote get-url origin`（無ければ他の remote）
+   を確認してホストが GitHub か GitLab かを判定する。
    - GitLab はセルフホストの場合があるため、ドメインだけで決めず remote URL とも突き合わせる。
+3. 引数で**別リポジトリの** URL が渡された場合は、そのドメインからの判定を優先する。
 
 ## GitLab の場合
 
