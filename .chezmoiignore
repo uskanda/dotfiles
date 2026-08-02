@@ -2,6 +2,9 @@ setup
 setup.ps1
 win_main_apps.json
 README.md
+# OpenSpec の変更管理ディレクトリ。リポジトリ内のドキュメントであり
+# $HOME に配布するものではないので追跡対象から外す。
+openspec
 
 # === Claude Code (~/.claude) ===
 # Allowlist 方針: 自分で書いた設定だけを追跡し、
