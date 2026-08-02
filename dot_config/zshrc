@@ -107,3 +107,14 @@ function accept-line-or-ls() {
 }
 zle -N accept-line-or-ls
 bindkey '^M' accept-line-or-ls
+
+# スリープ復帰や SSH 切断で TUI アプリ (vim/tmux/less 等) が終了処理を飛ばすと、
+# マウストラッキング (1000/1002/1003/1006) やフォーカスレポート (1004) が端末に
+# 残り、以後マウス操作が [I や [<0;12;34M のような文字列として入力されてしまう。
+# プロンプトのたびに解除しておけば、次のプロンプトで自動復旧する。
+# ブラケットペースト (2004) は zsh 自身が管理しているので触らない。
+function reset-terminal-reporting() {
+  printf '\e[?1000l\e[?1002l\e[?1003l\e[?1004l\e[?1006l'
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd reset-terminal-reporting
