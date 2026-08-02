@@ -1,0 +1,20 @@
+# 改行コードの固定。
+#
+# core.autocrlf=true の Windows 端末で clone すると、属性を持たないファイルは CRLF で
+# 展開される（実測: この属性を入れる前は dot_local/bin のスクリプトが全行 CRLF だった）。
+# Git for Windows の bash は CRLF のスクリプトを許容するのでネイティブ環境では動くが、
+#   - 同じチェックアウトを WSL / Linux / macOS 側の bash から実行すると ^M で落ちる
+#   - chezmoi はソースの中身をそのままターゲットへ書き出すため、POSIX 側へ配られる
+#     スクリプトや設定ファイルに ^M が残る
+# ため、シェルスクリプト類は端末の設定によらず LF に固定する。
+#
+# 後勝ちなので、CRLF を保ちたい拡張子は最後に書く。
+
+dot_local/bin/*   text eol=lf
+setup             text eol=lf
+*.sh              text eol=lf
+
+# PowerShell 5.1 は LF のみのヒアストリング（@'...'@）で問題が出ることがあるため CRLF。
+*.ps1             text eol=crlf
+*.bat             text eol=crlf
+*.cmd             text eol=crlf
