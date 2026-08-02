@@ -2,6 +2,8 @@ setup
 setup.ps1
 win_main_apps.json
 README.md
+# リポジトリ自身のドキュメント。$HOME へは展開しない。
+docs/
 
 # === Claude Code (~/.claude) ===
 # Allowlist 方針: 自分で書いた設定だけを追跡し、
