@@ -21,3 +21,13 @@ README.md
 # known_marketplaces.json も Claude Code が lastUpdated/installLocation を
 # 更新し続けるため管理対象外とする。
 .claude/plugins/
+
+# === VSCode ユーザー設定 ===
+# 実体は .chezmoitemplates/vscode-settings.json 一本。反映先が OS ごとに違うので
+# 薄いラッパを 3 つ置き、現在の OS 以外のものをここで除外する。
+#   macOS   ~/Library/Application Support/Code/User/settings.json
+#   Linux   ~/.config/Code/User/settings.json
+#   Windows ~/AppData/Roaming/Code/User/settings.json
+{{ if ne .chezmoi.os "darwin" }}Library/Application Support/Code/{{ end }}
+{{ if ne .chezmoi.os "linux" }}.config/Code/{{ end }}
+{{ if ne .chezmoi.os "windows" }}AppData/{{ end }}

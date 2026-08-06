@@ -1,0 +1,217 @@
+{{- /*
+  VSCode ユーザー設定の実体（全 OS 共通）。chezmoi の共有テンプレート。
+
+  反映先は OS ごとに違うため、実体はここに一本化し、各 OS 用の薄いラッパから
+  {{ template "vscode-settings.json" . }} で取り込む：
+
+      macOS   Library/Application Support/Code/User/settings.json.tmpl
+      Linux   dot_config/Code/User/settings.json.tmpl
+      Windows AppData/Roaming/Code/User/settings.json.tmpl
+
+  ラッパ以外の OS 分は .chezmoiignore が除外する。
+
+  端末ごとに有無が変わる値は lookPath / stat で存在確認してから出力する。
+  見つからない端末ではそのキー自体を出さず、VSCode の既定動作に任せる。
+  形式は JSONC（コメントと末尾カンマが使える）。パスは toJson でエスケープ
+  するので、Windows のバックスラックスが入っても壊れない。
+*/ -}}
+{{- $docker := lookPath "docker" -}}
+{{- $dockerCompose := lookPath "docker-compose" -}}
+{{- $imSelect := lookPath "im-select" -}}
+{{- /* 社用 Zscaler 証明書。2 ファイルは同一内容だが、参照している設定が別々なので
+       それぞれ実在を確認して出す。 */ -}}
+{{- $zscalerCert := printf "%s/.config/certs/ZscalerRootCertificate-2048-SHA256.crt" .chezmoi.homeDir -}}
+{{- $zscalerCertOsx := printf "%s/.config/certs/zscaler-root-ca.crt" .chezmoi.homeDir -}}
+{
+  "bracket-pair-colorizer-2.depreciation-notice": false,
+  "editor.accessibilitySupport": "off",
+  "editor.fontFamily": "\"UDEV Gothic NF\",'Source Han Code JP', Menlo, Monaco, 'Courier New', monospace",
+  "editor.snippetSuggestions": "top",
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on",
+  "editor.editContext": false,
+  "explorer.confirmDelete": false,
+  "files.autoSave": "afterDelay",
+  "git.ignoreLegacyWarning": true,
+  "gitlens.advanced.messages": {
+    "suppressGitMissingWarning": true,
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "scm.alwaysShowActions": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "vim.insertModeKeyBindings": [
+    {
+      "after": ["<Esc>"],
+      "before": ["j", "j"],
+    },
+  ],
+  "vim.statusBarColorControl": true,
+{{- if and $imSelect (eq .chezmoi.os "darwin") }}
+  // im-select がある macOS でのみ IME 自動切替を有効化する。
+  // defaultIM は macOS の Google 日本語入力の ID なので他 OS へは配らない。
+  "vim.autoSwitchInputMethod.enable": true,
+  "vim.autoSwitchInputMethod.obtainIMCmd": {{ $imSelect | toJson }},
+  "vim.autoSwitchInputMethod.switchIMCmd": {{ printf "%s {im}" $imSelect | toJson }},
+  "vim.autoSwitchInputMethod.defaultIM": "com.google.inputmethod.Japanese.Roman",
+{{- else }}
+  "vim.autoSwitchInputMethod.enable": false,
+{{- end }}
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "update.showReleaseNotes": false,
+  "terminal.integrated.fontSize": 13,
+  "workbench.startupEditor": "none",
+  "redhat.telemetry.enabled": true,
+  "git.openRepositoryInParentFolders": "never",
+  "git.autofetch": true,
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f",
+    "statusBar.foreground": "#ffffff",
+    "statusBar.debuggingForeground": "#ffffff"
+  },
+  "git.confirmSync": false,
+  "geminicodeassist.updateChannel": "Insiders",
+  "python.analysis.typeCheckingMode": "basic",
+  "explorer.confirmDragAndDrop": false,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.shellIntegration.enabled": false,
+  "git.enableSmartCommit": true,
+  "material-icon-theme.folders.associations": {
+    "config": "tools", // configフォルダにtoolsアイコン
+    "resources": "app", // resourcesフォルダにappアイコン
+    "private": "lock", // privateフォルダにロックアイコン
+  },
+  "workbench.iconTheme": "material-icon-theme",
+
+  //環境変数設定。エージェント利用時に.zshrcを制御する
+  "terminal.integrated.env.osx": {
+    "AGENT_MODE": "1",
+{{- if stat $zscalerCertOsx }}
+    // Node は "~" を展開しないため絶対パスで渡す（元は "~/..." で無効だった）。
+    // 証明書が無い端末ではキーごと省略する。
+    "NODE_EXTRA_CA_CERTS": {{ $zscalerCertOsx | toJson }},
+{{- end }}
+  },
+  "terminal.integrated.env.linux": {
+    "AGENT_MODE": "1",
+  },
+  "terminal.integrated.env.windows": {
+    "AGENT_MODE": "1",
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "remote.SSH.remotePlatform": {
+    "192.168.0.82": "linux",
+  },
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "gitlens.ai.model": "openai:gpt-5-mini",
+  "gitlens.ai.vscode.model": "cerebras:cerebras",
+  "github.copilot.chat.customOAIModels": {},
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true,
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  // 自動承認は「コマンド名として意味のあるもの」だけを残す方針。
+  // UI からの誤登録で溜まったシェル片（"true" / "do" / "done" / "set" / "for" /
+  // "[[" / "/dev/null" 等）は、全端末に配ると承認範囲を無意味に広げるので入れない。
+  "chat.tools.terminal.autoApprove": {
+    "psql": true,
+    "npx": true,
+    "npm install": true,
+    "pnpm": true,
+    "ps": true,
+    "jq": true,
+    "sed": true,
+    "timeout": true,
+    "bash -n /workspace/scripts/run-dev.sh": {
+      "approve": true,
+      "matchCommandLine": true,
+    },
+  },
+  "makefile.configureOnOpen": false,
+  "chat.agent.maxRequests": 50,
+  "remote.autoForwardPortsSource": "hybrid",
+  "gitlens.views.scm.grouped.views": {
+    "commits": true,
+    "branches": false,
+    "remotes": true,
+    "stashes": true,
+    "tags": true,
+    "worktrees": true,
+    "contributors": true,
+    "fileHistory": false,
+    "repositories": true,
+    "searchAndCompare": false,
+    "launchpad": false,
+  },
+  "chat.agent.thinking.collapsedTools": "all",
+  "chat.tools.terminal.autoReplyToPrompts": true,
+  "claudeCode.preferredLocation": "sidebar",
+  "claudeCode.initialPermissionMode": "acceptEdits",
+  "claudeCode.respectGitIgnore": false,
+  "gitlens.views.branches.files.layout": "tree",
+  "gitlens.views.scm.grouped.hiddenViews": {
+    "commits": true,
+    "worktrees": false,
+    "branches": false,
+    "remotes": false,
+    "stashes": false,
+    "tags": true,
+    "contributors": true,
+    "repositories": true,
+    "fileHistory": false,
+    "launchpad": false,
+    "searchAndCompare": false,
+  },
+{{- if stat $zscalerCert }}
+  // 社用 Zscaler 証明書がある端末だけ渡す。無い端末で存在しないパスを
+  // 指すと Node が起動時に警告を出すため、キーごと省略する。
+  "claudeCode.environmentVariables": [
+    {
+      "name": "NODE_EXTRA_CA_CERTS",
+      "value": {{ $zscalerCert | toJson }},
+    },
+  ],
+{{- end }}
+  "accessibility.signals.terminalBell": {
+    "sound": "on",
+  },
+  "cSpell.enabledNotifications": {
+    "Lines too Long": false,
+    "Maximum Word Length Exceeded": false,
+    "Average Word Length too Long": false,
+  },
+  "react-native-tools.showUserTips": false,
+  "python.analysis.userFileIndexingLimit": 200,
+  "workbench.editor.enablePreview": false,
+  "vscode-office.openOutline": true,
+  "chat.disableAIFeatures": true,
+  "gitlens.gitCommands.skipConfirmations": [
+    "fetch:command",
+    "stash-push:command",
+    "switch:command",
+  ],
+  "extensions.ignoreRecommendations": true,
+{{- if $docker }}
+
+  // Dev Containers が docker を PATH 探索せず絶対パスで叩くようにする。
+  // VSCode 起動時のシェル環境解決（10秒でタイムアウト）が失敗すると PATH が
+  // /usr/bin:/bin:/usr/sbin:/sbin だけになり `spawn docker ENOENT` で
+  // devcontainer が開けなくなるため、その依存を切っている。
+  // 値は apply 時の lookPath 結果なので端末ごとに正しい絶対パスになる。
+  "dev.containers.dockerPath": {{ $docker | toJson }},
+{{- end }}
+{{- if $dockerCompose }}
+  "dev.containers.dockerComposePath": {{ $dockerCompose | toJson }},
+{{- end }}
+}
