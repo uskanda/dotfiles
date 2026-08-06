@@ -17,7 +17,10 @@ installation
 > ./setup.ps1
 
 `setup.ps1` は既定では Alacritty 本体の winget インストールと設定リンクだけを行う。
-本体は `winget list` で導入済みか確認してから入れるので、再実行しても無駄な処理は走らない。
+本体は未導入なら `winget install`、導入済みなら `winget upgrade` で最新に追従する
+（`-Winget` の一括 import は `--no-upgrade` だが、このリポジトリが設定を配っている
+Alacritty だけは例外として上げる）。**Alacritty 起動中はアップグレードをスキップする** —
+MSI が実行中のターミナルを閉じてしまうため、更新したいときは一度終了してから再実行する。
 重い処理は Unix 版 `setup` の `INSTALL_*` と同じく opt-in：
 
 ```powershell

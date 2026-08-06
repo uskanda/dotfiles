@@ -22,33 +22,56 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# --- Alacritty: install the terminal itself ----------------------------------
+# --- Alacritty: install the terminal itself, and keep it current -------------
 # Part of the base setup, not the -Winget bulk import: the config this repo
 # manages is useless without the terminal, and it is a small, quick install.
 # Alacritty.Alacritty is in win_main_apps.json too, so -Winget also covers it —
-# doing it here just keeps a bare `.\setup.ps1` self-contained.
+# doing it here just keeps a bare `.\setup.ps1` self-contained. That bulk import
+# runs --no-upgrade, but this one does upgrade: the terminal this repo actually
+# configures is worth keeping on the latest version.
 function Install-Alacritty {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
         Write-Host "Alacritty: winget not found — install the terminal manually. Skipping install." -ForegroundColor Yellow
         return
     }
-    # `winget list --exact` exits non-zero when nothing matches, so it doubles
-    # as the installed check that keeps this step idempotent.
-    $null = winget list --id Alacritty.Alacritty --exact --accept-source-agreements
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "Alacritty: already installed." -ForegroundColor Green
-        return
-    }
-    Write-Host "Alacritty: installing via winget ..."
+
     $wingetArgs = @(
-        'install', '--id', 'Alacritty.Alacritty', '--exact', '--silent',
+        '--id', 'Alacritty.Alacritty', '--exact', '--silent',
         '--accept-source-agreements', '--accept-package-agreements'
     )
-    & winget @wingetArgs
+
+    # `winget list --exact` exits non-zero when nothing matches, so it doubles
+    # as the installed check.
+    $null = winget list --id Alacritty.Alacritty --exact --accept-source-agreements
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "Alacritty: winget install exited with $LASTEXITCODE — install it manually. Linking the config anyway." -ForegroundColor Yellow
+        Write-Host "Alacritty: installing via winget ..."
+        & winget install @wingetArgs
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "Alacritty: winget install exited with $LASTEXITCODE — install it manually. Linking the config anyway." -ForegroundColor Yellow
+        } else {
+            Write-Host "Alacritty: installed." -ForegroundColor Green
+        }
+        return
+    }
+
+    # setup.ps1 may well have been launched from Alacritty itself. The MSI would
+    # close the running terminal mid-setup, so leave the upgrade for next time.
+    if (Get-Process alacritty -ErrorAction SilentlyContinue) {
+        Write-Host "Alacritty: installed, but running right now — skipping the upgrade so the installer cannot close this terminal. Quit Alacritty and re-run to update." -ForegroundColor Yellow
+        return
+    }
+
+    # `winget upgrade` is its own check: a no-op exiting 0x8A15002B
+    # (UPDATE_NOT_APPLICABLE) when the installed version is already the latest.
+    Write-Host "Alacritty: installed — checking for a newer version ..."
+    & winget upgrade @wingetArgs
+    $UpdateNotApplicable = -1978335189  # 0x8A15002B
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Alacritty: upgraded." -ForegroundColor Green
+    } elseif ($LASTEXITCODE -eq $UpdateNotApplicable) {
+        Write-Host "Alacritty: already up to date." -ForegroundColor Green
     } else {
-        Write-Host "Alacritty: installed." -ForegroundColor Green
+        Write-Host "Alacritty: winget upgrade exited with $LASTEXITCODE — check it manually. Linking the config anyway." -ForegroundColor Yellow
     }
 }
 
@@ -228,3 +251,9 @@ if ($Voicevox -or $env:INSTALL_VOICEVOX -eq '1') {
 } else {
     Write-Host "Skipping VOICEVOX engine (use -Voicevox or INSTALL_VOICEVOX=1 to enable)." -ForegroundColor DarkGray
 }
+
+# Every winget non-zero above is deliberately handled and reported as a warning
+# (e.g. "already up to date" is 0x8A15002B), so do not let it leak out as this
+# script's exit status. Real failures throw under $ErrorActionPreference='Stop'
+# and never reach this line.
+exit 0
