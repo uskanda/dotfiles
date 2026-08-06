@@ -57,10 +57,23 @@ chezmoi edit ~/.some-file
 
 [dot_config/zshrc](dot_config/zshrc) の冒頭近くに `AGENT_MODE=1` のときだけ走る短絡処理があり、`PS1='$ '` を設定し `unalias -a` した上で、zinit / starship / atuin / カスタム `cd` / `accept-line-or-ls` バインドの読み込み前に `return` する。これは意図的な設計で、AI エージェントのシェルにはプラグインなし・プロンプト解析で事故らない・ビルトインを上書きしない素の環境を渡したいため。zshrc に新しい対話機能を足すときは必ず `AGENT_MODE` ガードの**下**に置き、エージェントセッションに漏れないようにすること。
 
+## WezTerm と ssh ラッパー
+
+ターミナルエミュレータは WezTerm。設定は [dot_wezterm.lua](dot_wezterm.lua) 1 本で、`wezterm.target_triple` を見て macOS / Windows を分岐する（chezmoi は 1 ソース → 1 宛先なので、`.chezmoitemplates` ではなくファイル内分岐で解決している）。Windows では `default_domain` を WSL domain に向けてあり、PowerShell は `Ctrl+Shift+D` のランチャか `wezterm start --domain local -- powershell.exe` で出す。
+
+[dot_config/shell/ssh-window.sh](dot_config/shell/ssh-window.sh) は、対話ログイン目的の `ssh` を `wezterm cli spawn --new-window` で別ウィンドウへ飛ばす zsh 関数。[dot_config/zshrc](dot_config/zshrc) の末尾から source している。**判定ロジックは OS 共通で、差分は spawn コマンドの組み立てだけに閉じ込める**方針。触るときの注意:
+
+- **`wezterm cli` を叩く前に `builtin cd` でランタイムディレクトリへ移ること。** WezTerm 20240203 の Windows 版は gui ソケットを相対パスで開くため、cwd がそこでないと接続できない。そして [dot_config/zshrc](dot_config/zshrc) の独自 `cd` は移動後に `ls` を出力するので、コマンド置換の中で素の `cd` を呼ぶと出力が値に混入して壊れる。`builtin` を外さないこと。
+- ラッパーは「壊れても ssh が使えなくならない」ことが最優先。判定に迷う場合・spawn に失敗した場合は必ず `command ssh "$@"` にフォールバックする。
+- **`exit_behavior` はグローバル設定なので触らない。** `'CloseOnCleanExit'` にすると ssh の失敗は読めるようになるが、zsh の `exit` は直前のコマンドの終了ステータスを返すため、通常のシェルペインまで残るようになる（実測済み）。失敗した ssh ウィンドウを残す仕事は、spawn するコマンドを `sh -c` で包んで終了コード 255（= ssh 自身のエラー）のときだけキー待ちすることで実現している。
+- spawn に渡す `sh -c` のスクリプト文字列に**シングルクォートを含めないこと**。zsh → `wezterm.exe`(Windows) → `wsl.exe` → `sh` と 2 回境界を越える。空白・二重引用符・日本語が保たれることは検証済み。
+- WSL では WezTerm の環境変数（`WEZTERM_UNIX_SOCKET` / `WEZTERM_PANE`）が Windows 側から渡ってこない（検証済み）。tmux の環境変数を引き直す処理は macOS 経路でのみ意味を持つ。
+- 詳細と無効化方法（`SSH_NO_NEW_WINDOW=1`）は [README.md](README.md) の「WezTerm」節。
+
 ## プラットフォーム別の構成
 
 - [setup](setup) (bash) — Ubuntu/WSL/macOS 用。`$OSTYPE` で分岐して `brew` と `apt` を使い分ける。
-- [setup.ps1](setup.ps1) — Windows 専用。Alacritty 本体を winget で入れた上で、設定を `%APPDATA%\alacritty` にシンボリックリンクとして配置する。本体は未導入なら install、導入済みなら upgrade で最新に追従する（Alacritty 起動中は MSI がそのターミナルを閉じるためスキップ）。管理者 Powershell 必須。重い処理は Unix 版 `setup` の `INSTALL_*` と同じく opt-in（`-Winget` / `-Fusion` / `-Voicevox`、または `INSTALL_WINGET=1` 等）。
+- [setup.ps1](setup.ps1) — Windows 専用。`Install-Terminal` で WezTerm と Alacritty を winget から入れる（未導入なら install、導入済みなら upgrade。対象ターミナルが起動中は MSI がそれを閉じてしまうためスキップ）。Alacritty だけは設定を `%APPDATA%\alacritty` にシンボリックリンクする必要がある。WezTerm は `%USERPROFILE%\.wezterm.lua` を直接読むので chezmoi が置いたままでよく、存在チェックのみ。管理者 Powershell 必須。重い処理は Unix 版 `setup` の `INSTALL_*` と同じく opt-in（`-Winget` / `-Fusion` / `-Voicevox`、または `INSTALL_WINGET=1` 等）。
   > ⚠️ **このファイルに日本語コメントを書かないこと**。Windows PowerShell 5.1 は BOM なし `.ps1` を ANSI（日本語環境では CP932）として読むため、UTF-8 の日本語がバイト単位で誤解釈され、CP932 の 2 バイト対が行末のバッククォート等を飲み込んでパースエラーになる。コメントは英語（ASCII）で書く。文字列内の `—` は後続がスペースなら実害がないので既存箇所はそのまま。
 - [dot_Brewfile](dot_Brewfile) — macOS 用パッケージ一覧（wezterm / karabiner-elements などの GUI cask も含む）。
 - [win_main_apps.json](win_main_apps.json) — Windows アプリ一覧（`winget export` の出力）。`setup.ps1 -Winget` が `winget import` で流し込む Brewfile 相当。`--no-upgrade --ignore-unavailable` 付きなので再実行は冪等（未導入のものだけ入る）。一覧の更新は `winget export -o .\win_main_apps.json` を手動で実行する。

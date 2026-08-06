@@ -16,11 +16,14 @@ installation
 > Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 > ./setup.ps1
 
-`setup.ps1` は既定では Alacritty 本体の winget インストールと設定リンクだけを行う。
-本体は未導入なら `winget install`、導入済みなら `winget upgrade` で最新に追従する
-（`-Winget` の一括 import は `--no-upgrade` だが、このリポジトリが設定を配っている
-Alacritty だけは例外として上げる）。**Alacritty 起動中はアップグレードをスキップする** —
-MSI が実行中のターミナルを閉じてしまうため、更新したいときは一度終了してから再実行する。
+`setup.ps1` は既定ではターミナル本体（WezTerm と Alacritty）の winget インストールと
+設定の配置だけを行う。本体は未導入なら `winget install`、導入済みなら `winget upgrade`
+で最新に追従する（`-Winget` の一括 import は `--no-upgrade` だが、このリポジトリが設定を
+配っているターミナルだけは例外として上げる）。**対象ターミナルが起動中はアップグレードを
+スキップする** — MSI が実行中のターミナルを閉じてしまうため、更新したいときは一度終了
+してから再実行する。Alacritty は `%APPDATA%\alacritty` へシンボリックリンクを張るが、
+WezTerm は `%USERPROFILE%\.wezterm.lua` を直接読むので chezmoi が置いたままでよく、
+リンクは不要（存在チェックだけ行う）。
 重い処理は Unix 版 `setup` の `INSTALL_*` と同じく opt-in：
 
 ```powershell
@@ -56,7 +59,6 @@ ToDo
 -----------------------------
 * xcode-select --installの追加
 * Terminal Multiplexer選定 Zellij、prefix連打でペイン動くのできないっぽい？
-* ターミナルエミュレータ選定 Alacritty or Wezterm Wezterm寄り
 * Starshipプロンプトブラッシュアップ
 * 他Rustベースプロダクト
 * atuin違うかもな... fzfベースも考える
@@ -65,8 +67,100 @@ ToDo
 * delta new git diff
 * brewfileの追加
 * aptは...まあええか？
-* wezterm muxまわり設定
 * im-select VSCode vi mode IME設定
+
+WezTerm
+-----------------------------
+ターミナルエミュレータは WezTerm に寄せた（Alacritty の設定も当面残してある）。
+設定は [dot_wezterm.lua](dot_wezterm.lua) の 1 本で、`wezterm.target_triple` を見て
+OS ごとに分岐する。反映先は macOS / Windows とも `~/.wezterm.lua`。
+
+### 起動先の切り替え（Windows）
+
+既定は WSL。`wezterm.default_wsl_domains()` が `wsl -l -v` から `WSL:<distro>` という
+domain を自動生成し、`default_domain` をそこに向けている（`WSL:Ubuntu` が無い端末では
+先頭の WSL domain にフォールバックするので、distro 名が違っても壊れない）。
+
+PowerShell や cmd を出したいときは:
+
+* `Ctrl+Shift+D` — ランチャを開いて WSL / PowerShell / Command Prompt から選ぶ
+* CLI から直接指定する:
+
+```powershell
+wezterm start                                    # 既定 = WSL
+wezterm start --domain local -- powershell.exe   # PowerShell
+```
+
+### ssh を別ウィンドウで開く
+
+**対話ログイン目的の `ssh` を実行すると、その場ではなく WezTerm の新規ウィンドウで
+ssh が始まる。** ローカルの tmux はそのまま使いつつ、リモートでも tmux を使うため、
+そのまま繋ぐと nested tmux になってしまう。「1 OS ウィンドウ = 1 リモートホスト」を
+保つのが狙い。呼び出し元のペインは即座にプロンプトへ戻る。
+
+実体は [dot_config/shell/ssh-window.sh](dot_config/shell/ssh-window.sh) の zsh 関数で、
+[dot_config/zshrc](dot_config/zshrc) から source している。macOS と WSL2 で同じ 1 本を
+共有し、OS 差分は spawn コマンドの組み立てだけに閉じ込めてある。
+
+**捕まえないもの**（意図的）:
+
+* `git` / `rsync` / `scp` / `ansible` が内部で呼ぶ ssh
+  — シェル関数は対話的にコマンドラインを解釈するときにしか効かず、`execve` で直接
+  呼ばれる ssh には届かない。副作用ではなく設計上の利点。
+* `ssh host uptime` のようなリモートコマンド実行
+* `-N` `-W` `-O` `-f` `-T` `-G` `-Q` `-V` `-s` を含む非対話用途
+  （ポートフォワード、ProxyCommand、設定ダンプなど）
+
+判定に少しでも迷ったらその場実行にフォールバックする。`wezterm` が無い端末
+（ssh 先の Linux など）でも素の ssh として動く。
+
+無効化・調整:
+
+```bash
+SSH_NO_NEW_WINDOW=1 ssh host   # 1 回だけその場で実行
+export SSH_NO_NEW_WINDOW=1     # そのシェルでは常にその場で実行
+unset -f ssh                   # ラッパー自体を外す
+
+export SSH_WINDOW_DOMAIN='WSL:Debian'          # spawn 先 domain を上書き
+export SSH_WINDOW_RUNTIME_DIR="$HOME/..."      # WezTerm ランタイムディレクトリを上書き
+```
+
+### Windows 固有の注意: `wezterm cli` は cwd に依存する
+
+WezTerm 20240203 の Windows 版は gui ソケットを**相対パスで**開きにいくため、
+`wezterm cli` はランタイムディレクトリ（`%USERPROFILE%\.local\share\wezterm`）を
+カレントディレクトリにしていないと接続できない。別の場所から実行すると 2 秒ほど
+リトライしたあと次のエラーで死ぬ:
+
+```
+ERROR wezterm > failed to connect to Socket("gui-sock-<pid>"): ...; terminating
+```
+
+`ssh-window.sh` は `wezterm cli` を叩く直前に subshell で `builtin cd` してこれを回避
+している。WSL からだと Windows 側の `%USERPROFILE%` を指す必要があり、Windows の
+ユーザー名は WSL のそれと一致しないため `cmd.exe` で実際に引いてキャッシュしている。
+
+> ⚠️ ここで `cd` ではなく **`builtin cd`** を使うこと。[dot_config/zshrc](dot_config/zshrc)
+> の独自 `cd` は移動後に `ls` を出力するので、コマンド置換の中で素の `cd` を呼ぶと
+> ディレクトリ一覧が値に混入してパスが壊れる。
+
+### 失敗した ssh ウィンドウだけを残す仕組み
+
+接続に失敗したときウィンドウが即座に消えるとエラーを読めない。WezTerm には
+`exit_behavior = 'CloseOnCleanExit'` があるが、これは**全ペインに効いてしまう**。
+zsh の `exit` は直前のコマンドの終了ステータスをそのまま返すため、これを入れると
+「失敗したコマンドの直後に `exit` した通常のシェル」までペインが残る（実測で確認）。
+
+そこで `exit_behavior` は既定の `'Close'` のままにし、ssh ウィンドウ側だけで面倒を見る。
+spawn するコマンドを `sh -c 'ssh "$@"; 255 ならキー待ち'` の形にしてあり、
+
+* **ssh 自身のエラー（終了コード 255）** — 名前解決失敗・接続拒否・認証失敗など
+  → メッセージを出してキー入力を待つ。ウィンドウが残るのでエラーが読める
+* **それ以外** — リモートで普通にログアウトした場合など。直前のコマンドが失敗して
+  いてもそのまま閉じる
+
+`ssh` はリモートコマンドの終了ステータスをそのまま返し、自分自身のエラーのときだけ
+255 を返す（ssh(1)）。この性質をそのまま判定に使っている。
 
 Claude Code 設定 (~/.claude)
 -----------------------------

@@ -3,7 +3,7 @@
 # Run after `chezmoi apply`. Optional components are opt-in, mirroring the
 # INSTALL_VOICEVOX / INSTALL_NOTIFY_DAEMON flags in the Unix `setup` script.
 #
-#   .\setup.ps1              # base setup only (Alacritty install + config link)
+#   .\setup.ps1              # base setup only (terminal install + config link)
 #   .\setup.ps1 -Winget      # base setup + winget packages (win_main_apps.json)
 #   .\setup.ps1 -Fusion      # base setup + Autodesk Fusion 360 MCP bridge
 #   .\setup.ps1 -Voicevox    # base setup + VOICEVOX engine (claude-notify TTS)
@@ -22,56 +22,67 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# --- Alacritty: install the terminal itself, and keep it current -------------
-# Part of the base setup, not the -Winget bulk import: the config this repo
-# manages is useless without the terminal, and it is a small, quick install.
-# Alacritty.Alacritty is in win_main_apps.json too, so -Winget also covers it —
-# doing it here just keeps a bare `.\setup.ps1` self-contained. That bulk import
-# runs --no-upgrade, but this one does upgrade: the terminal this repo actually
-# configures is worth keeping on the latest version.
-function Install-Alacritty {
+# --- Terminals: install them, and keep them current --------------------------
+# Part of the base setup, not the -Winget bulk import: the configs this repo
+# manages are useless without the terminal, and these are small, quick installs.
+# Both ids are in win_main_apps.json too, so -Winget also covers them — doing it
+# here just keeps a bare `.\setup.ps1` self-contained. That bulk import runs
+# --no-upgrade, but this one does upgrade: the terminals this repo actually
+# configures are worth keeping on the latest version.
+function Install-Terminal {
+    param(
+        # winget package id, e.g. 'wez.wezterm'.
+        [Parameter(Mandatory)][string]$Id,
+        # Human-readable name used in the log lines.
+        [Parameter(Mandatory)][string]$Name,
+        # Process names to check before upgrading. setup.ps1 may well have been
+        # launched from the terminal being upgraded, and the MSI would close it
+        # mid-setup, so the upgrade is skipped while it is running.
+        [string[]]$ProcessName = @()
+    )
+
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-        Write-Host "Alacritty: winget not found — install the terminal manually. Skipping install." -ForegroundColor Yellow
+        Write-Host "${Name}: winget not found — install the terminal manually. Skipping install." -ForegroundColor Yellow
         return
     }
 
     $wingetArgs = @(
-        '--id', 'Alacritty.Alacritty', '--exact', '--silent',
+        '--id', $Id, '--exact', '--silent',
         '--accept-source-agreements', '--accept-package-agreements'
     )
 
     # `winget list --exact` exits non-zero when nothing matches, so it doubles
     # as the installed check.
-    $null = winget list --id Alacritty.Alacritty --exact --accept-source-agreements
+    $null = winget list --id $Id --exact --accept-source-agreements
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "Alacritty: installing via winget ..."
+        Write-Host "${Name}: installing via winget ..."
         & winget install @wingetArgs
         if ($LASTEXITCODE -ne 0) {
-            Write-Host "Alacritty: winget install exited with $LASTEXITCODE — install it manually. Linking the config anyway." -ForegroundColor Yellow
+            Write-Host "${Name}: winget install exited with $LASTEXITCODE — install it manually. Continuing with the config anyway." -ForegroundColor Yellow
         } else {
-            Write-Host "Alacritty: installed." -ForegroundColor Green
+            Write-Host "${Name}: installed." -ForegroundColor Green
         }
         return
     }
 
-    # setup.ps1 may well have been launched from Alacritty itself. The MSI would
-    # close the running terminal mid-setup, so leave the upgrade for next time.
-    if (Get-Process alacritty -ErrorAction SilentlyContinue) {
-        Write-Host "Alacritty: installed, but running right now — skipping the upgrade so the installer cannot close this terminal. Quit Alacritty and re-run to update." -ForegroundColor Yellow
-        return
+    foreach ($p in $ProcessName) {
+        if (Get-Process $p -ErrorAction SilentlyContinue) {
+            Write-Host "${Name}: installed, but running right now — skipping the upgrade so the installer cannot close this terminal. Quit it and re-run to update." -ForegroundColor Yellow
+            return
+        }
     }
 
     # `winget upgrade` is its own check: a no-op exiting 0x8A15002B
     # (UPDATE_NOT_APPLICABLE) when the installed version is already the latest.
-    Write-Host "Alacritty: installed — checking for a newer version ..."
+    Write-Host "${Name}: installed — checking for a newer version ..."
     & winget upgrade @wingetArgs
     $UpdateNotApplicable = -1978335189  # 0x8A15002B
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "Alacritty: upgraded." -ForegroundColor Green
+        Write-Host "${Name}: upgraded." -ForegroundColor Green
     } elseif ($LASTEXITCODE -eq $UpdateNotApplicable) {
-        Write-Host "Alacritty: already up to date." -ForegroundColor Green
+        Write-Host "${Name}: already up to date." -ForegroundColor Green
     } else {
-        Write-Host "Alacritty: winget upgrade exited with $LASTEXITCODE — check it manually. Linking the config anyway." -ForegroundColor Yellow
+        Write-Host "${Name}: winget upgrade exited with $LASTEXITCODE — check it manually. Continuing with the config anyway." -ForegroundColor Yellow
     }
 }
 
@@ -90,6 +101,21 @@ function Set-AlacrittyLink {
     # Symlink needs Developer Mode or an elevated shell.
     New-Item -ItemType SymbolicLink -Path $dst -Target $src | Out-Null
     Write-Host "Alacritty: linked $dst -> $src" -ForegroundColor Green
+}
+
+# --- WezTerm: nothing to link, just check the config landed ------------------
+# Unlike Alacritty, WezTerm reads %USERPROFILE%\.wezterm.lua directly, and that
+# is exactly where chezmoi writes dot_wezterm.lua. So there is no symlink step —
+# only a check that `chezmoi apply` has been run, because without that config
+# there is no WSL default domain and the ssh-window wrapper
+# (~/.config/shell/ssh-window.sh) has nothing to spawn into.
+function Test-WezTermConfig {
+    $cfg = "$env:USERPROFILE\.wezterm.lua"
+    if (Test-Path $cfg) {
+        Write-Host "WezTerm: config in place ($cfg)" -ForegroundColor Green
+    } else {
+        Write-Host "WezTerm: config not found ($cfg) — run 'chezmoi apply' first." -ForegroundColor Yellow
+    }
 }
 
 # --- winget packages (opt-in) ------------------------------------------------
@@ -231,8 +257,13 @@ function Install-VoicevoxEngine {
 }
 
 # --- run ---------------------------------------------------------------------
-Install-Alacritty
+Install-Terminal -Id 'Alacritty.Alacritty' -Name 'Alacritty' -ProcessName 'alacritty'
 Set-AlacrittyLink
+
+# wezterm-gui.exe is the process that actually holds a window open; wezterm.exe
+# is the CLI front-end. Check both so an open terminal is never killed by the MSI.
+Install-Terminal -Id 'wez.wezterm' -Name 'WezTerm' -ProcessName 'wezterm-gui', 'wezterm'
+Test-WezTermConfig
 
 if ($Winget -or $env:INSTALL_WINGET -eq '1') {
     Install-WingetPackages

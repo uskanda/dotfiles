@@ -107,3 +107,8 @@ function accept-line-or-ls() {
 }
 zle -N accept-line-or-ls
 bindkey '^M' accept-line-or-ls
+
+# 対話ログイン目的の ssh を WezTerm の別ウィンドウで開くラッパー。
+# WezTerm が無い環境（リモートホスト等）では素の ssh にフォールバックする。
+# 無効化: SSH_NO_NEW_WINDOW=1 ssh host
+[[ -f "$HOME/.config/shell/ssh-window.sh" ]] && source "$HOME/.config/shell/ssh-window.sh"
