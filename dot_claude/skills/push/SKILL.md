@@ -29,7 +29,20 @@ allowed-tools: Bash, Read, Grep, Glob, AskUserQuestion, Skill
 
 ### 3. push 先ブランチが protected か判定する
 
-`git remote get-url origin` のホスト名で判定方法を切り替える。判定に使ったのが API かフォールバックかを、後の報告で必ず明示すること。
+判定は次の優先順位で行う。判定に使った根拠（プロジェクト指示 / API / ブランチ名フォールバック）を、後の報告で必ず明示すること。
+
+**優先度 1: プロジェクト指示の明記を最優先する**
+
+`CLAUDE.md`（およびリポジトリ内の同等のプロジェクト指示）に、対象ブランチの保護状況が明記されている場合は**それに従い、API 判定もフォールバックも行わない**。
+
+- 例: 「`master` にブランチ保護はかかっておらず直接 push してよい」→ **not-protected** と確定して手順 4-B へ
+- 例: 「`main` は保護されているので直接 push しないこと」→ **protected** と確定して手順 4-A へ
+
+これはヒューリスティックによる誤判定（`master` などの名前を機械的に protected 扱いしてしまう）を防ぐためで、明記がある限りユーザーへの確認も不要。
+
+**優先度 2: ホストの API で判定する**
+
+`git remote get-url origin` のホスト名で判定方法を切り替える。
 
 **GitHub の場合**（`gh` が認証済みであること）:
 
@@ -54,9 +67,9 @@ print('protected' if any(fnmatch.fnmatch(b,n) for n in rules) else 'not-protecte
 "
 ```
 
-**API で判定できない場合のフォールバック**:
+**優先度 3: API で判定できない場合のフォールバック**
 
-`gh` / `glab` が未認証、ネットワーク不通、ホストが GitHub/GitLab のいずれでもない、など API 判定に失敗したときは、**ブランチ名で判定する**:
+プロジェクト指示に明記がなく、かつ `gh` / `glab` が未認証、ネットワーク不通、ホストが GitHub/GitLab のいずれでもない、など API 判定にも失敗したときは、**ブランチ名で判定する**:
 
 - `main` / `master` / `develop` / `qa` / `staging` / `production` / `release/*` に一致 → protected とみなす
 - それ以外 → protected でないとみなす
@@ -93,7 +106,7 @@ print('protected' if any(fnmatch.fnmatch(b,n) for n in rules) else 'not-protecte
 - `git status -sb` で上流との差分が解消されたことを確認する
 - 以下を明示して報告する:
   - push したブランチ名（新規作成した場合はその旨）
-  - protected 判定の結果と判定方法（API / ブランチ名によるフォールバック）
+  - protected 判定の結果と判定根拠（プロジェクト指示の明記 / API / ブランチ名によるフォールバック）
   - 作成したコミット（`git log --oneline -3`）
 
 ## 注意
