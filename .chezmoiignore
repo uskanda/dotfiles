@@ -26,6 +26,13 @@ CLAUDE.md
 # 更新し続けるため管理対象外とする。
 .claude/plugins/
 
+# === Windows 専用スクリプト ===
+# PowerShell 版は Windows でしか使わないので他 OS へは配らない。
+{{ if ne .chezmoi.os "windows" }}
+.local/bin/claude-notify.ps1
+.local/bin/install-voicevox-engine.ps1
+{{ end }}
+
 # === VSCode ユーザー設定 ===
 # 実体は .chezmoitemplates/vscode-settings.json 一本。反映先が OS ごとに違うので
 # 薄いラッパを 3 つ置き、現在の OS 以外のものをここで除外する。
