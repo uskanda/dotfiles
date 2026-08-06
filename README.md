@@ -132,6 +132,21 @@ export SSH_WINDOW_RUNTIME_DIR="$HOME/..."      # WezTerm ランタイムディ�
 SSH_WINDOW_DEBUG=1 ssh host
 ```
 
+### 自己診断
+
+新しい端末でこの仕掛けが本当に動くかは
+[ssh-window-selftest](dot_local/bin/executable_ssh-window-selftest) で確認できる。
+判定ロジック・環境の解決結果を出したうえで、実際に 1 回ウィンドウを開いて
+エラーが読めることまで確かめ、開いたウィンドウは自分で閉じる。
+
+```bash
+ssh-window-selftest
+```
+
+判定ロジックと環境だけ見たいときは `ssh-window-selftest --dry`。
+**とくに macOS で最初に使うときはこれを流すこと**（実装は Windows / WSL2 でのみ
+実機確認しており、macOS 側は未検証のため）。
+
 ### Windows 固有の注意: `wezterm cli` は cwd に依存する
 
 WezTerm 20240203 の Windows 版は gui ソケットを**相対パスで**開きにいくため、
