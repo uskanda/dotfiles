@@ -6,6 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 [chezmoi](https://www.chezmoi.io/) で管理する個人用 dotfiles。対象は WSL2 (Ubuntu) / Ubuntu / macOS。Windows は [setup.ps1](setup.ps1) で別扱い。以前の homeshick + fish 構成をリニューアルした経緯があり、現構成は zsh + zinit + starship + atuin。
 
+## ブランチ運用
+
+メインブランチは `master`（GitHub: `uskanda/dotfiles`）。**`master` に GitHub のブランチ保護はかかっておらず、直接コミット・直接 push してよい**。個人用 dotfiles なので、通常の変更は feature ブランチや PR を経由せず `master` に直接積む。
+
+`/push` スキルは `gh` が未認証の端末では protected 判定を**ブランチ名のヒューリスティックにフォールバック**するため、このリポジトリの `master` を protected と誤判定して新規ブランチ作成を提案してくる。実際は unprotected なので、そのまま `master` にコミットして push すればよい。
+
+`legacy-2015` / `legacy-2025` は旧構成のアーカイブで、触らない。`claude/*` は Claude Code が作った作業ブランチ。
+
 ## Chezmoi の命名規則（重要）
 
 Chezmoi はファイル名のプレフィックスで配置先や挙動を決めるため、命名を崩すと黙って別の場所に展開される。
