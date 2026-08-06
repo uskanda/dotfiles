@@ -16,6 +16,27 @@ installation
 > Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 > ./setup.ps1
 
+`setup.ps1` は既定では Alacritty 設定のリンクだけを行う。重い処理は Unix 版 `setup` の
+`INSTALL_*` と同じく opt-in：
+
+```powershell
+./setup.ps1 -Winget     # win_main_apps.json のアプリを winget で一括インストール
+./setup.ps1 -Fusion     # Fusion 360 MCP ブリッジ
+./setup.ps1 -Voicevox   # VOICEVOX エンジン（約 1.8GB）
+$env:INSTALL_WINGET=1; ./setup.ps1   # 環境変数でも指定可
+```
+
+#### Windows アプリ一覧（Brewfile 相当）
+
+[win_main_apps.json](win_main_apps.json) が `winget export` のスナップショット。
+`-Winget` を付けると `winget import --no-upgrade --ignore-unavailable` で流し込む。
+`--no-upgrade` により既にインストール済みのものは触らないので、再実行しても安全。
+アプリを増減したら、次のコマンドで一覧を取り直してコミットする：
+
+```powershell
+winget export -o .\win_main_apps.json
+```
+
 ### Ubuntu, WSL
 
 ```bash
