@@ -2,6 +2,10 @@ setup
 setup.ps1
 win_main_apps.json
 README.md
+# このリポジトリ自体の説明書であって $HOME に置くものではない。
+# 除外しないと ~/CLAUDE.md として展開され、全プロジェクト共通の
+# Claude Code 指示として読まれてしまう。
+CLAUDE.md
 
 # === Claude Code (~/.claude) ===
 # Allowlist 方針: 自分で書いた設定だけを追跡し、

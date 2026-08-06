@@ -14,7 +14,11 @@ Chezmoi はファイル名のプレフィックスで配置先や挙動を決め
 - `symlink_dot_foo.tmpl` → テンプレートをレンダリングした先へ `~/.foo` からシンボリックリンクを張る。[symlink_dot_zshrc.tmpl](symlink_dot_zshrc.tmpl) により `~/.zshrc` は `~/.config/zshrc` へのシンボリックリンクになっており、`chezmoi apply` を再実行しなくても zsh 設定を直接編集できる。
 - `private_foo` → パーミッションを厳しく（0600 相当）。[dot_config/atuin/private_config.toml](dot_config/atuin/private_config.toml) で使用。
 - `*.tmpl` → Go テンプレートとしてレンダリング（`{{ .chezmoi.homeDir }}` 等の chezmoi 変数が使える）。
-- [.chezmoiignore](.chezmoiignore) に列挙されたファイル（`setup`、`setup.ps1`、`win_main_apps.json`、`README.md`）は `$HOME` に展開されず、ソースディレクトリにのみ存在する。
+- [.chezmoiignore](.chezmoiignore) に列挙されたファイル（`setup`、`setup.ps1`、`win_main_apps.json`、`README.md`）は `$HOME` に展開されず、ソースディレクトリにのみ存在する。このファイル自身も **Go テンプレートとして評価される**ので、`{{ if ne .chezmoi.os "darwin" }}` で OS ごとに除外対象を変えられる。
+- 先頭にドットが付かないディレクトリ（[Library/](Library/)、[AppData/](AppData/)）はそのまま `~/Library/`、`~/AppData/` になる。macOS/Windows 固有の置き場所はこれで表現している。
+- [.chezmoitemplates/](.chezmoitemplates/) は共有テンプレート置き場。`{{ template "名前" . }}` で他のテンプレートから呼ぶ。**同じ内容を OS ごとに違う場所へ配りたいとき**に使う（chezmoi は 1 ソース → 複数宛先ができないため、実体をここに置き、宛先ごとの薄いラッパから呼んで、現在の OS 以外を `.chezmoiignore` で落とす）。[VSCode の settings.json](.chezmoitemplates/vscode-settings.json) がこの形。
+
+> ⚠️ `chezmoi add --autotemplate` は使わないこと。値の一致だけを見て機械的に置換するため、XML の `/` を全部 `{{ .chezmoi.pathSeparator }}` にしたり、`StartInterval` の `20` を `{{ .chezmoi.gid }}`（gid=20 と偶然一致）に化けさせたりする。テンプレート化は手書きで、必要な箇所だけ行う。
 
 Chezmoi の設定 ([dot_config/chezmoi/chezmoi.toml.tmpl](dot_config/chezmoi/chezmoi.toml.tmpl)) で `sourceDir = ~/dotfiles` としているため、デフォルトの `~/.local/share/chezmoi` ではなくこのリポジトリ自体がソースになっている。
 
@@ -51,3 +55,5 @@ chezmoi edit ~/.some-file
 - [setup.ps1](setup.ps1) — Windows 専用。Alacritty 設定を `%APPDATA%\alacritty` にシンボリックリンクとして配置する。管理者 Powershell 必須。
 - [dot_Brewfile](dot_Brewfile) — macOS 用パッケージ一覧（wezterm / karabiner-elements などの GUI cask も含む）。
 - [win_main_apps.json](win_main_apps.json) — Windows アプリ一覧。現状どのスクリプトからも使われていない。
+- VSCode の `settings.json` は 3 OS 分のラッパ + 共有テンプレート構成。端末ごとに有無が変わる値（docker / im-select / 社用証明書）は `lookPath` と `stat` で存在確認してから出力し、無ければキーごと省略する。詳細は [README.md](README.md) の「VSCode ユーザー設定」。
+- Colima 関連（`dot_colima/`、`Library/LaunchAgents/com.user.colima-*`、`executable_dot_wakeup`）は macOS 専用。colima 本体の自動起動は [dot_Brewfile](dot_Brewfile) の `start_service: true` が担い、生成される `homebrew.mxcl.colima.plist` は chezmoi では追跡しない。
