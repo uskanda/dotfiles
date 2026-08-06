@@ -4,12 +4,15 @@
 # INSTALL_VOICEVOX / INSTALL_NOTIFY_DAEMON flags in the Unix `setup` script.
 #
 #   .\setup.ps1              # base setup only (Alacritty link)
+#   .\setup.ps1 -Winget      # base setup + winget packages (win_main_apps.json)
 #   .\setup.ps1 -Fusion      # base setup + Autodesk Fusion 360 MCP bridge
 #   .\setup.ps1 -Voicevox    # base setup + VOICEVOX engine (claude-notify TTS)
 #   $env:INSTALL_FUSION=1; .\setup.ps1   # same, via env var
 #
 [CmdletBinding()]
 param(
+    # Opt-in: also install every app listed in win_main_apps.json via winget.
+    [switch]$Winget,
     # Opt-in: also install the Autodesk Fusion 360 MCP bridge for Claude Code.
     [switch]$Fusion,
     # Opt-in: also install the VOICEVOX engine so claude-notify speaks with a
@@ -34,6 +37,45 @@ function Set-AlacrittyLink {
     # Symlink needs Developer Mode or an elevated shell.
     New-Item -ItemType SymbolicLink -Path $dst -Target $src | Out-Null
     Write-Host "Alacritty: linked $dst -> $src" -ForegroundColor Green
+}
+
+# --- winget packages (opt-in) ------------------------------------------------
+# The Windows counterpart of dot_Brewfile: installs everything listed in
+# win_main_apps.json, which is a `winget export` snapshot. That file is
+# .chezmoiignore'd (it never lands in $HOME), so read it from $PSScriptRoot —
+# i.e. the dotfiles repo this script was run from.
+# Refresh the list with:  winget export -o .\win_main_apps.json
+function Install-WingetPackages {
+    Write-Host "== winget packages ==" -ForegroundColor Cyan
+
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+        Write-Host "  winget not found — install 'App Installer' from the Microsoft Store first. Skipping." -ForegroundColor Yellow
+        return
+    }
+
+    $importFile = Join-Path $PSScriptRoot 'win_main_apps.json'
+    if (-not (Test-Path $importFile)) {
+        Write-Host "  package list not found ($importFile) — skipping." -ForegroundColor Yellow
+        return
+    }
+
+    Write-Host "  importing $importFile ..."
+    # --no-upgrade keeps re-runs idempotent: install what is missing, leave
+    # already-installed versions alone. --ignore-unavailable stops one stale
+    # package id from aborting the whole import.
+    $wingetArgs = @(
+        'import', '--import-file', $importFile,
+        '--accept-package-agreements', '--accept-source-agreements',
+        '--no-upgrade', '--ignore-unavailable'
+    )
+    & winget @wingetArgs
+    # Skipped/already-installed packages can still yield a non-zero exit code,
+    # so warn instead of aborting the rest of setup.
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "  winget import exited with $LASTEXITCODE — check the output above for packages that need attention." -ForegroundColor Yellow
+    } else {
+        Write-Host "  winget import done." -ForegroundColor Green
+    }
 }
 
 # --- Autodesk Fusion 360 MCP bridge (opt-in) --------------------------------
@@ -137,6 +179,12 @@ function Install-VoicevoxEngine {
 
 # --- run ---------------------------------------------------------------------
 Set-AlacrittyLink
+
+if ($Winget -or $env:INSTALL_WINGET -eq '1') {
+    Install-WingetPackages
+} else {
+    Write-Host "Skipping winget packages (use -Winget or INSTALL_WINGET=1 to enable)." -ForegroundColor DarkGray
+}
 
 if ($Fusion -or $env:INSTALL_FUSION -eq '1') {
     Install-FusionMcpBridge
