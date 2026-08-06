@@ -2,6 +2,10 @@ setup
 setup.ps1
 win_main_apps.json
 README.md
+# このリポジトリ自体の説明書であって $HOME に置くものではない。
+# 除外しないと ~/CLAUDE.md として展開され、全プロジェクト共通の
+# Claude Code 指示として読まれてしまう。
+CLAUDE.md
 
 # === Claude Code (~/.claude) ===
 # Allowlist 方針: 自分で書いた設定だけを追跡し、
@@ -21,3 +25,31 @@ README.md
 # known_marketplaces.json も Claude Code が lastUpdated/installLocation を
 # 更新し続けるため管理対象外とする。
 .claude/plugins/
+
+# === Windows 専用スクリプト ===
+# PowerShell 版は Windows でしか使わないので他 OS へは配らない。
+{{ if ne .chezmoi.os "windows" }}
+.local/bin/claude-notify.ps1
+.local/bin/install-voicevox-engine.ps1
+{{ end }}
+
+# === VSCode ユーザー設定 ===
+# 実体は .chezmoitemplates/vscode-settings.json 一本。反映先が OS ごとに違うので
+# 薄いラッパを 3 つ置き、現在の OS 以外のものをここで除外する。
+#   macOS   ~/Library/Application Support/Code/User/settings.json
+#   Linux   ~/.config/Code/User/settings.json
+#   Windows ~/AppData/Roaming/Code/User/settings.json
+{{ if ne .chezmoi.os "darwin" }}Library/Application Support/Code/{{ end }}
+{{ if ne .chezmoi.os "linux" }}.config/Code/{{ end }}
+{{ if ne .chezmoi.os "windows" }}AppData/{{ end }}
+
+# === colima の docker.sock 復旧まわり（macOS 専用）===
+# LaunchAgent 2 本 + 実体スクリプト。lima の docker.sock forward が落ちる問題への
+# 対処なので、macOS 以外には配らない。
+# なお colima 本体の自動起動 plist (homebrew.mxcl.colima) は brew services の
+# 生成物であり、dot_Brewfile の `start_service: true` が面倒を見るため追跡しない。
+{{ if ne .chezmoi.os "darwin" }}
+Library/LaunchAgents/
+.colima/
+.wakeup
+{{ end }}

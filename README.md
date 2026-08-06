@@ -135,6 +135,96 @@ chezmoi apply ~/.claude
 > `~/.claude/settings.json` を上書きするため、初回は必ず `chezmoi diff` で確認し、
 > 自分の設定を取り込んでから運用すること。
 
+VSCode ユーザー設定
+-----------------------------
+`settings.json` の反映先は OS ごとに違うが、chezmoi は 1 つのソースを複数の宛先へ
+配れない。そこで**実体を共有テンプレートに一本化し、OS ごとの薄いラッパから
+呼ぶ**構成にしている。現在の OS 以外のラッパは [.chezmoiignore](.chezmoiignore) が除外する。
+
+| ソース                                              | 反映先                                          | OS      |
+| --------------------------------------------------- | ----------------------------------------------- | ------- |
+| `.chezmoitemplates/vscode-settings.json`            | （実体。直接は配られない）                      | 共通    |
+| `Library/Application Support/Code/User/settings.json.tmpl` | `~/Library/Application Support/Code/User/settings.json` | macOS   |
+| `dot_config/Code/User/settings.json.tmpl`           | `~/.config/Code/User/settings.json`             | Linux   |
+| `AppData/Roaming/Code/User/settings.json.tmpl`      | `~/AppData/Roaming/Code/User/settings.json`     | Windows |
+
+ラッパの中身は `{{ template "vscode-settings.json" . }}` の 1 行だけ。設定を変えるときは
+**実体側だけ**を編集する。
+
+### 端末差の吸収
+
+端末ごとに有無が変わる値は、`lookPath` / `stat` で存在を確認してから出力する。
+見つからない端末では**キーごと省略**して VSCode の既定動作に委ねるので、
+docker も im-select も無い素の Linux/Windows でも壊れない。
+パスは `toJson` でエスケープするため、Windows のバックスラッシュも安全。
+
+| 値                              | 判定             | 無いとき                              |
+| ------------------------------- | ---------------- | ------------------------------------- |
+| `dev.containers.dockerPath`     | `lookPath docker` | キーを出さない（VSCode 既定の `docker`） |
+| `dev.containers.dockerComposePath` | `lookPath docker-compose` | 同上                          |
+| `vim.autoSwitchInputMethod.*`   | `lookPath im-select` かつ macOS | `enable: false`（`defaultIM` が macOS 固有の IME ID のため） |
+| `claudeCode.environmentVariables` | Zscaler 証明書の `stat` | キーを出さない                  |
+| `terminal.integrated.env.osx` の `NODE_EXTRA_CA_CERTS` | Zscaler 証明書の `stat` | キーを出さない |
+
+`NODE_EXTRA_CA_CERTS` は元々 `~/.config/certs/...` と書かれていたが、**Node は `~` を
+展開しない**ので効いていなかった。テンプレート側で絶対パスに展開している。
+
+> ⚠️ **公開リポジトリである**ことに注意。`chat.tools.terminal.autoApprove` は UI からの
+> 誤登録でシェル片（`true` / `do` / `[[` など）や認証情報らしき文字列が溜まりやすい。
+> ソースには**コマンド名として意味のあるものだけ**を残すこと。
+
+> ⚠️ VSCode は UI で設定を変えるたびに `settings.json` を書き換える。chezmoi はコピー
+> 管理なので、**UI で変えた内容は次の `chezmoi apply` で巻き戻る**。UI で変えたら
+> `chezmoi add` ではなく、実体テンプレート側に手で反映すること
+> （ラッパ経由なので `chezmoi add` すると展開後の JSON でラッパが潰れる）。
+
+### なぜ docker の絶対パスを固定するのか
+
+VSCode は起動時にログインシェルを起こして PATH を取り込むが、これは **10 秒で
+タイムアウト**する。失敗すると PATH が `/usr/bin:/bin:/usr/sbin:/sbin` だけになり、
+Homebrew 配下の `docker` が見えず Dev Containers が `spawn docker ENOENT` で落ちる。
+実際にこの Mac では起動ログ 10 回中 2 回で失敗しており、いずれも colima の VM が
+起動・停止で負荷をかけていた時刻と一致した。絶対パス固定でこの依存を切っている。
+
+Colima（macOS）
+-----------------------------
+Docker Desktop は使わず [Colima](https://github.com/abiosoft/colima) + 素の Docker CLI。
+[dot_Brewfile](dot_Brewfile) の `brew "colima", start_service: true` により、
+`brew bundle` を流すとログイン時に colima を自動起動する LaunchAgent
+（`homebrew.mxcl.colima.plist`）が登録される。**この plist は brew services の生成物
+なので chezmoi では追跡しない**（Homebrew の prefix が端末で変わるため）。
+
+### docker.sock 復旧まわり（macOS 専用）
+
+colima の lima は `docker.sock` の Unix ソケット forward を **VM 起動時に一度しか**
+張らず、スリープ復帰やネットワーク変化で SSH マスタが張り直されると、この forward
+だけが失われる（TCP ポートは復旧するのに）。結果、ソケットファイルは残るのに誰も
+受けていない状態になり、ホストから docker が無応答になる。VM 内のコンテナは無傷。
+
+対処として 2 本の LaunchAgent を常駐させている。macOS 以外へは配られない。
+
+| ソース                                                        | 反映先                                                  | 役割                                       |
+| ------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------ |
+| `dot_colima/executable_managed-docker-tunnel.sh`              | `~/.colima/managed-docker-tunnel.sh`                    | lima に頼らず自前で `docker.sock` を所有する SSH トンネル |
+| `dot_colima/executable_wake-fix-docker.sh`                    | `~/.colima/wake-fix-docker.sh`                          | 死活監視して非破壊で再フォワード（冪等）   |
+| `Library/LaunchAgents/com.user.colima-docker-tunnel.plist.tmpl`   | `~/Library/LaunchAgents/com.user.colima-docker-tunnel.plist`   | 上記トンネルを `KeepAlive` で常駐         |
+| `Library/LaunchAgents/com.user.colima-docker-watchdog.plist.tmpl` | `~/Library/LaunchAgents/com.user.colima-docker-watchdog.plist` | 20 秒ごとに死活チェック                   |
+| `executable_dot_wakeup`                                       | `~/.wakeup`                                             | sleepwatcher のウェイクフック（下記）      |
+
+plist は `{{ .chezmoi.homeDir }}` だけをテンプレート化した**手書き**である。
+`chezmoi add --autotemplate` は XML の `/` を軒並み `{{ .chezmoi.pathSeparator }}` に
+置換し、さらに `StartInterval` の `20` を（gid=20 との偶然一致で）`{{ .chezmoi.gid }}` に
+化けさせるので**使ってはいけない**。
+
+`~/.wakeup` は sleepwatcher のフックだが、sleepwatcher 自体は常駐させていない
+（`brew services start sleepwatcher` で有効化）。現状はウォッチドッグの 20 秒
+ポーリングだけで復旧している。
+
+```bash
+launchctl list | grep colima      # 登録状況
+tail -f ~/.colima/tunnel-events.log   # トンネルの切断・再接続ログ
+```
+
 VOICEVOX エンジン（任意）
 -----------------------------
 `claude-notify`（Claude Code の Stop/Notification フック）は、`localhost:50021` で

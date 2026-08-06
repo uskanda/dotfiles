@@ -40,6 +40,14 @@ qaブランチと現在のブランチの差分に含まれるすべての変更
 
 ### GitLab の場合
 
+**注意**: プロジェクトによっては**マージ時のソースブランチ削除が既定ON**（例: `at/chime/alex`）。
+その場合、無効化には次の2点に注意する:
+
+1. `glab mr merge` に `--remove-source-branch` を付けないだけでは不十分（既定ONのため）。
+2. `glab mr update <MR_ID> --remove-source-branch=false` は**環境によって反映されない**（実行後も MR の `force_remove_source_branch` が `true` のまま残ることを確認済み）。このフラグを信用してそのままマージすると、qaマージでソースブランチが削除される。
+
+このため下記手順では、**GitLab API で確実に無効化し、マージ前に必ず検証（`force_remove_source_branch` が `false` であること）してからマージする**。検証で `false` にできない場合は**マージせず中断**し、ユーザーに報告すること。
+
 1. マージリクエストを作成する:
    ```
    glab mr create \
@@ -49,11 +57,29 @@ qaブランチと現在のブランチの差分に含まれるすべての変更
      --description "<生成した説明文>" \
      --yes
    ```
-2. 作成されたMRのID（URLの末尾の数字）を取得する
-3. 5秒待つ: `sleep 5`
-4. auto-mergeを有効にする（**`--remove-source-branch` は付けない**＝ソースブランチを残す）:
+2. 作成されたMRのID（URLの末尾の数字）を取得する。以降のAPI呼び出し用に、origin のURLからプロジェクトパスをURLエンコードして変数化する:
+   ```
+   PROJ=$(git remote get-url origin | sed -E 's#^(https?://[^/]+/|git@[^:]+:|ssh://git@[^/]+/)##; s#\.git$##' | sed 's#/#%2F#g')
+   ```
+3. **ソースブランチ削除を GitLab API で確実に無効化する**（`glab mr update --remove-source-branch=false` は反映されないことがあるため API を使う）:
+   ```
+   glab api --method PUT "projects/$PROJ/merge_requests/<MR_ID>" -f "remove_source_branch=false"
+   ```
+4. **検証ゲート（必須）**: MR の `force_remove_source_branch` が `false` になっていることを確認する:
+   ```
+   glab api "projects/$PROJ/merge_requests/<MR_ID>" \
+     | python3 -c "import sys,json;print(json.load(sys.stdin).get('force_remove_source_branch'))"
+   ```
+   - 出力が `False` の場合のみ次のマージ手順へ進む。
+   - `True`（またはエラー）の場合は**マージを実行せず中断**し、ユーザーに報告する。そのままマージするとソースブランチが削除されるため、絶対にマージしないこと。
+5. 5秒待つ: `sleep 5`
+6. auto-mergeを有効にする（**`--remove-source-branch` は付けない**＝ソースブランチを残す）:
    ```
    glab mr merge <MR_ID> --auto-merge --yes
+   ```
+7. マージ後、ソースブランチが `origin` に残っていることを確認する:
+   ```
+   git ls-remote --heads origin "$(git branch --show-current)"
    ```
 
 ### GitHub の場合
