@@ -270,6 +270,16 @@ ssh() {
   # 想定外の出力が混ざっても壊れないよう、先頭の数字だけを取り出す。
   pane_id="${pane_id%%[!0-9]*}"
 
+  # domain 指定で失敗したときの保険 (macOS / Linux 限定)。設定が古くて unix
+  # domain がまだ無い、といったケースでも既定 domain で開き直せば繋がる。
+  # WSL では絶対にやらないこと: domain を外すと Windows 側の ssh.exe が起動して
+  # しまい、WSL の ~/.ssh/config も鍵も参照されない。その場実行の方がまだ正しい。
+  if [ -z "$pane_id" ] && [ "$__ssh_window_platform" != 'wsl' ]; then
+    pane_id="$(__ssh_window_cli cli spawn --new-window \
+      -- env WEZTERM_SSH_WINDOW=1 /bin/sh -c "$hold" ssh-window "$@")"
+    pane_id="${pane_id%%[!0-9]*}"
+  fi
+
   # spawn できなかった (mux が落ちている / domain 名が違う 等) ならその場で実行。
   # ここで詰まらせないことが最優先。
   if [ -z "$pane_id" ]; then

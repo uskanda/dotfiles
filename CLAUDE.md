@@ -67,6 +67,7 @@ chezmoi edit ~/.some-file
 - ラッパーは「壊れても ssh が使えなくならない」ことが最優先。判定に迷う場合・spawn に失敗した場合は必ず `command ssh "$@"` にフォールバックする。
 - **`exit_behavior` はグローバル設定なので触らない。** `'CloseOnCleanExit'` にすると ssh の失敗は読めるようになるが、zsh の `exit` は直前のコマンドの終了ステータスを返すため、通常のシェルペインまで残るようになる（実測済み）。失敗した ssh ウィンドウを残す仕事は、spawn するコマンドを `sh -c` で包んで終了コード 255（= ssh 自身のエラー）のときだけキー待ちすることで実現している。
 - spawn に渡す `sh -c` のスクリプト文字列に**シングルクォートを含めないこと**。zsh → `wezterm.exe`(Windows) → `wsl.exe` → `sh` と 2 回境界を越える。空白・二重引用符・日本語が保たれることは検証済み。
+- **WSL では `--domain-name` を外して spawn しないこと。** domain を外すと Windows 側の `ssh.exe` が起動し、WSL の `~/.ssh/config` も鍵も参照されない。domain 指定で失敗したときに domain 無しで開き直すフォールバックは macOS / Linux 経路にのみ入れてある（そちらは既定 domain もローカルなので安全）。
 - WSL では WezTerm の環境変数（`WEZTERM_UNIX_SOCKET` / `WEZTERM_PANE`）が Windows 側から渡ってこない（検証済み）。tmux の環境変数を引き直す処理は macOS 経路でのみ意味を持つ。
 - 詳細と無効化方法（`SSH_NO_NEW_WINDOW=1`）は [README.md](README.md) の「WezTerm」節。
 
