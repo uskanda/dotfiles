@@ -16,8 +16,9 @@ installation
 > Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 > ./setup.ps1
 
-`setup.ps1` は既定では Alacritty 設定のリンクだけを行う。重い処理は Unix 版 `setup` の
-`INSTALL_*` と同じく opt-in：
+`setup.ps1` は既定では Alacritty 本体の winget インストールと設定リンクだけを行う。
+本体は `winget list` で導入済みか確認してから入れるので、再実行しても無駄な処理は走らない。
+重い処理は Unix 版 `setup` の `INSTALL_*` と同じく opt-in：
 
 ```powershell
 ./setup.ps1 -Winget     # win_main_apps.json のアプリを winget で一括インストール

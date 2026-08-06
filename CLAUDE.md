@@ -60,7 +60,7 @@ chezmoi edit ~/.some-file
 ## プラットフォーム別の構成
 
 - [setup](setup) (bash) — Ubuntu/WSL/macOS 用。`$OSTYPE` で分岐して `brew` と `apt` を使い分ける。
-- [setup.ps1](setup.ps1) — Windows 専用。Alacritty 設定を `%APPDATA%\alacritty` にシンボリックリンクとして配置する。管理者 Powershell 必須。重い処理は Unix 版 `setup` の `INSTALL_*` と同じく opt-in（`-Winget` / `-Fusion` / `-Voicevox`、または `INSTALL_WINGET=1` 等）。
+- [setup.ps1](setup.ps1) — Windows 専用。Alacritty 本体を winget で入れた上で、設定を `%APPDATA%\alacritty` にシンボリックリンクとして配置する（本体は `winget list` で導入済みか確認してからなので冪等）。管理者 Powershell 必須。重い処理は Unix 版 `setup` の `INSTALL_*` と同じく opt-in（`-Winget` / `-Fusion` / `-Voicevox`、または `INSTALL_WINGET=1` 等）。
   > ⚠️ **このファイルに日本語コメントを書かないこと**。Windows PowerShell 5.1 は BOM なし `.ps1` を ANSI（日本語環境では CP932）として読むため、UTF-8 の日本語がバイト単位で誤解釈され、CP932 の 2 バイト対が行末のバッククォート等を飲み込んでパースエラーになる。コメントは英語（ASCII）で書く。文字列内の `—` は後続がスペースなら実害がないので既存箇所はそのまま。
 - [dot_Brewfile](dot_Brewfile) — macOS 用パッケージ一覧（wezterm / karabiner-elements などの GUI cask も含む）。
 - [win_main_apps.json](win_main_apps.json) — Windows アプリ一覧（`winget export` の出力）。`setup.ps1 -Winget` が `winget import` で流し込む Brewfile 相当。`--no-upgrade --ignore-unavailable` 付きなので再実行は冪等（未導入のものだけ入る）。一覧の更新は `winget export -o .\win_main_apps.json` を手動で実行する。

@@ -3,7 +3,7 @@
 # Run after `chezmoi apply`. Optional components are opt-in, mirroring the
 # INSTALL_VOICEVOX / INSTALL_NOTIFY_DAEMON flags in the Unix `setup` script.
 #
-#   .\setup.ps1              # base setup only (Alacritty link)
+#   .\setup.ps1              # base setup only (Alacritty install + config link)
 #   .\setup.ps1 -Winget      # base setup + winget packages (win_main_apps.json)
 #   .\setup.ps1 -Fusion      # base setup + Autodesk Fusion 360 MCP bridge
 #   .\setup.ps1 -Voicevox    # base setup + VOICEVOX engine (claude-notify TTS)
@@ -21,6 +21,36 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+
+# --- Alacritty: install the terminal itself ----------------------------------
+# Part of the base setup, not the -Winget bulk import: the config this repo
+# manages is useless without the terminal, and it is a small, quick install.
+# Alacritty.Alacritty is in win_main_apps.json too, so -Winget also covers it —
+# doing it here just keeps a bare `.\setup.ps1` self-contained.
+function Install-Alacritty {
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+        Write-Host "Alacritty: winget not found — install the terminal manually. Skipping install." -ForegroundColor Yellow
+        return
+    }
+    # `winget list --exact` exits non-zero when nothing matches, so it doubles
+    # as the installed check that keeps this step idempotent.
+    $null = winget list --id Alacritty.Alacritty --exact --accept-source-agreements
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Alacritty: already installed." -ForegroundColor Green
+        return
+    }
+    Write-Host "Alacritty: installing via winget ..."
+    $wingetArgs = @(
+        'install', '--id', 'Alacritty.Alacritty', '--exact', '--silent',
+        '--accept-source-agreements', '--accept-package-agreements'
+    )
+    & winget @wingetArgs
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Alacritty: winget install exited with $LASTEXITCODE — install it manually. Linking the config anyway." -ForegroundColor Yellow
+    } else {
+        Write-Host "Alacritty: installed." -ForegroundColor Green
+    }
+}
 
 # --- Alacritty: point %APPDATA%\alacritty at the chezmoi-managed config ------
 function Set-AlacrittyLink {
@@ -178,6 +208,7 @@ function Install-VoicevoxEngine {
 }
 
 # --- run ---------------------------------------------------------------------
+Install-Alacritty
 Set-AlacrittyLink
 
 if ($Winget -or $env:INSTALL_WINGET -eq '1') {
