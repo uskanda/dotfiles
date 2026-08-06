@@ -125,6 +125,13 @@ export SSH_WINDOW_DOMAIN='WSL:Debian'          # spawn 先 domain を上書き
 export SSH_WINDOW_RUNTIME_DIR="$HOME/..."      # WezTerm ランタイムディレクトリを上書き
 ```
 
+別ウィンドウが開かずその場で実行されてしまうときは、`SSH_WINDOW_DEBUG=1` を付けると
+`wezterm cli` に渡している引数と、握りつぶしているエラーがそのまま出る。
+
+```bash
+SSH_WINDOW_DEBUG=1 ssh host
+```
+
 ### Windows 固有の注意: `wezterm cli` は cwd に依存する
 
 WezTerm 20240203 の Windows 版は gui ソケットを**相対パスで**開きにいくため、

@@ -14,6 +14,8 @@
 # 端末ごとの調整:
 #   SSH_WINDOW_DOMAIN       spawn 先の WezTerm domain 名を上書き
 #   SSH_WINDOW_RUNTIME_DIR  WezTerm のランタイムディレクトリを上書き (下の解説を参照)
+#   SSH_WINDOW_DEBUG=1      wezterm cli のコマンドラインとエラーを表示する
+#                           （別ウィンドウが開かず、その場実行に落ちるときの原因調査用）
 #
 # 捕まえないもの (仕様):
 #   - git / rsync / scp / ansible が内部で呼ぶ ssh
@@ -160,14 +162,22 @@ __ssh_window_resolve_runtime() {
     return 0
   fi
 
-  local win_home dir=''
+  local win_home dir='' cmd_exe=''
   if [ "$__ssh_window_platform" = 'wsl' ]; then
+    # PATH interop が切られている環境向けに、wezterm.exe と同様フルパスも見る。
+    if command -v cmd.exe >/dev/null 2>&1; then
+      cmd_exe='cmd.exe'
+    elif [ -x '/mnt/c/Windows/System32/cmd.exe' ]; then
+      cmd_exe='/mnt/c/Windows/System32/cmd.exe'
+    fi
     # cwd が /mnt/c 配下でないと cmd.exe が UNC 警告を出すので移動してから叩く。
     # コマンド置換は subshell なので cd は呼び出し元に漏れない。
     # zshrc の cd は ls を吐くため必ず builtin を使う。ここを素の cd にすると
     # ディレクトリ一覧が win_home に混入してパスが壊れる。
-    win_home="$(builtin cd /mnt/c 2>/dev/null; cmd.exe /c 'echo %USERPROFILE%' 2>/dev/null | tr -d '\r\n')"
-    [ -n "$win_home" ] && dir="$(wslpath -u "$win_home" 2>/dev/null)/.local/share/wezterm"
+    if [ -n "$cmd_exe" ]; then
+      win_home="$(builtin cd /mnt/c 2>/dev/null; "$cmd_exe" /c 'echo %USERPROFILE%' 2>/dev/null | tr -d '\r\n')"
+      [ -n "$win_home" ] && dir="$(wslpath -u "$win_home" 2>/dev/null)/.local/share/wezterm"
+    fi
   else
     # macOS には XDG_RUNTIME_DIR が無いので既定は ~/.local/share/wezterm。
     dir="${XDG_RUNTIME_DIR:-$HOME/.local/share}/wezterm"
@@ -201,7 +211,15 @@ __ssh_window_cli() {
     # 明示するので、WEZTERM_PANE から現在の domain を推測させる必要はない。
     unset WEZTERM_PANE
 
-    "$__ssh_window_wezterm" "$@" 2>/dev/null
+    # 平常時は wezterm cli のエラーを握りつぶす。GUI を起動していない端末で
+    # ssh を叩くたびに警告が出ると邪魔なため。原因を追いたいときは
+    # SSH_WINDOW_DEBUG=1 を付けると素通しになる。
+    if [ -n "${SSH_WINDOW_DEBUG:-}" ]; then
+      printf 'ssh-window: %s %s (cwd=%s)\n' "$__ssh_window_wezterm" "$*" "$PWD" >&2
+      "$__ssh_window_wezterm" "$@"
+    else
+      "$__ssh_window_wezterm" "$@" 2>/dev/null
+    fi
   )
 }
 
