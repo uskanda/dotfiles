@@ -135,13 +135,8 @@
       "Skill(mr-qa)",
       "Skill(mr-qa:*)",
 
-      "Bash(shellcheck scripts/shift_ticket_reference_id.sh)",
       "Bash(grep -rn -E \"mypy|ruff\" .gitlab-ci.yml .github)",
       "Bash(find /workspace -maxdepth 3 -name \".pre-commit-config.yaml\")",
-      "Bash(rm -rf frontend/src/components/ui/.claude && echo \"deleted\" && git status --porcelain)",
-      "Bash(ls /Users/kanda/Repos/autoquarantine 2>/dev/null && echo \"---EXISTS---\" || echo \"---NOT ACCESSIBLE---\")",
-      "Bash(timeout 30 glab api \"projects/:id/issues/386/notes\")",
-      "Bash(OPENSPEC_TELEMETRY=0 openspec status --change \"record-log-added-history\")",
       "Bash(cat /proc/1/cgroup 2>/dev/null | head -5; echo \"--- env ---\"; env | grep -iE \"remote|codespace|devcontainer|container|CLAUDE|ANTHROPIC\" | sed 's/\\\\\\(KEY|TOKEN|SECRET\\\\\\)=.*/\\\\1=REDACTED/I')",
 
       "Read(//etc/**)",
@@ -149,7 +144,6 @@
       "Read(//usr/share/fonts/**)",
       "Read(//tmp/**)",
       "Read(//proc/1/**)",
-      "Read(//Users/kanda/Repos/**)",
       "Read(//home/vscode/.claude/**)"
     ]
   },
