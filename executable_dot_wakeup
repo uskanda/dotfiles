@@ -1,0 +1,5 @@
+#!/bin/bash
+# スリープ復帰時に colima の docker.sock フォワードを自動復旧する。
+# 本体は ~/.colima/wake-fix-docker.sh（死活判定→非破壊で再フォワード）。
+# sleepwatcherをブロックしないようバックグラウンド実行する。
+"$HOME/.colima/wake-fix-docker.sh" &

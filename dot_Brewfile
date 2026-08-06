@@ -18,7 +18,10 @@ brew "markdown"
 brew "rsync"
 brew "curl"
 # Container runtime: Colima + standalone Docker CLI (Docker Desktop は使わない)
-brew "colima"
+# start_service: ログイン時に colima を自動起動する LaunchAgent
+# (~/Library/LaunchAgents/homebrew.mxcl.colima.plist) を brew services が生成する。
+# この plist は brew の生成物なので chezmoi では追跡しない。
+brew "colima", start_service: true
 brew "docker"
 brew "docker-compose"
 brew "docker-buildx"

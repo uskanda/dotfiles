@@ -31,3 +31,14 @@ README.md
 {{ if ne .chezmoi.os "darwin" }}Library/Application Support/Code/{{ end }}
 {{ if ne .chezmoi.os "linux" }}.config/Code/{{ end }}
 {{ if ne .chezmoi.os "windows" }}AppData/{{ end }}
+
+# === colima の docker.sock 復旧まわり（macOS 専用）===
+# LaunchAgent 2 本 + 実体スクリプト。lima の docker.sock forward が落ちる問題への
+# 対処なので、macOS 以外には配らない。
+# なお colima 本体の自動起動 plist (homebrew.mxcl.colima) は brew services の
+# 生成物であり、dot_Brewfile の `start_service: true` が面倒を見るため追跡しない。
+{{ if ne .chezmoi.os "darwin" }}
+Library/LaunchAgents/
+.colima/
+.wakeup
+{{ end }}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.user.colima-docker-tunnel</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>{{ .chezmoi.homeDir }}/.colima/managed-docker-tunnel.sh</string>
+    </array>
+    <key>KeepAlive</key>
+    <true/>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+    <key>StandardErrorPath</key>
+    <string>{{ .chezmoi.homeDir }}/.colima/docker-tunnel.err.log</string>
+    <key>StandardOutPath</key>
+    <string>{{ .chezmoi.homeDir }}/.colima/docker-tunnel.out.log</string>
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>
