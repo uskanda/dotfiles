@@ -302,6 +302,54 @@ VSCode ユーザー設定
 ラッパの中身は `{{ template "vscode-settings.json" . }}` の 1 行だけ。設定を変えるときは
 **実体側だけ**を編集する。
 
+### VSCode の Settings Sync との分担
+
+**`settings.json` は chezmoi が持ち、拡張機能と UI State は VSCode の Settings Sync に
+任せる**、という分担にしている。
+
+| 対象                                    | 持ち主          |
+| --------------------------------------- | --------------- |
+| `settings.json`                         | **chezmoi**     |
+| 拡張機能                                | Settings Sync   |
+| UI State（最近開いた項目・レイアウト等）| Settings Sync   |
+| keybindings / snippets / tasks          | 実体が無いので現状どちらでもない |
+
+理由は、**Settings Sync が `settings.json` を OS をまたいでそのまま運んでしまう**から。
+端末ごとに違う値（docker の絶対パス、社用証明書のパス）まで配られてしまい、実際に
+macOS の `/opt/homebrew/bin/docker` や `/Users/<user>/.config/certs/...` が Windows 側の
+`settings.json` に流れ込んでいた。この出し分けは chezmoi のテンプレートが
+`lookPath` / `stat` でやっている仕事なので、そちらに寄せる。
+
+逆に**拡張機能はどの端末でも同じ**で、端末差を吸収する必要がない。Settings Sync の
+自動インストールの方が手間が少ないので、そのまま任せている。
+
+#### 切り替え手順（端末ごとに 1 回）
+
+1. **先に差分を確認する。** その端末の `settings.json` にしか無い設定があると、
+   chezmoi に寄せた時点で失われる。残したいものがあれば
+   [.chezmoitemplates/vscode-settings.json](.chezmoitemplates/vscode-settings.json) へ手で移す。
+
+   ```bash
+   chezmoi diff ~/Library/Application\ Support/Code/User/settings.json   # macOS
+   ```
+
+   VSCode はキーの順序を勝手に変えるので diff は素直に読めない。**キー名の増減**だけ見ればよい。
+
+2. コマンドパレット（`Ctrl+Shift+P` / `Cmd+Shift+P`）→ **`Settings Sync: Configure...`**
+   → **`Settings` のチェックだけ外す**。他（Extensions / UI State など）は残す。
+
+3. chezmoi 版で上書きし直す。
+
+   ```bash
+   chezmoi apply --force ~/Library/Application\ Support/Code/User/settings.json
+   ```
+
+#### 保険
+
+万が一 Settings Sync の `Settings` が再び有効になっても事故が再発しないよう、
+テンプレート冒頭で `settingsSync.ignoredSettings` に**端末ごとに値が変わるキー**を
+列挙している。テンプレートが `lookPath` / `stat` で出し分けているキーと同じ顔ぶれ。
+
 ### 端末差の吸収
 
 端末ごとに有無が変わる値は、`lookPath` / `stat` で存在を確認してから出力する。

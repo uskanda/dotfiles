@@ -23,6 +23,25 @@
 {{- $zscalerCert := printf "%s/.config/certs/ZscalerRootCertificate-2048-SHA256.crt" .chezmoi.homeDir -}}
 {{- $zscalerCertOsx := printf "%s/.config/certs/zscaler-root-ca.crt" .chezmoi.homeDir -}}
 {
+  // === 同期の分担 ===
+  // settings.json は chezmoi が持つ。VSCode の Settings Sync 側では
+  // 「Settings」のチェックを外すこと（拡張機能と UI State は Sync に任せる）。
+  // 手順は README の「VSCode ユーザー設定」を参照。
+  //
+  // 下は保険。Settings Sync が再び有効化されても、端末ごとに値が変わるキーだけは
+  // 運ばれないようにする。これを入れる前は macOS の /opt/homebrew のパスや
+  // NODE_EXTRA_CA_CERTS が Windows 側の settings.json に流れ込んでいた。
+  // ここに挙げるのは、このテンプレートが lookPath / stat で出し分けているキー。
+  "settingsSync.ignoredSettings": [
+    "dev.containers.dockerPath",
+    "dev.containers.dockerComposePath",
+    "terminal.integrated.env.osx",
+    "claudeCode.environmentVariables",
+    "vim.autoSwitchInputMethod.obtainIMCmd",
+    "vim.autoSwitchInputMethod.switchIMCmd",
+    "vim.autoSwitchInputMethod.defaultIM",
+  ],
+
   "bracket-pair-colorizer-2.depreciation-notice": false,
   "editor.accessibilitySupport": "off",
   "editor.fontFamily": "\"UDEV Gothic NF\",'Source Han Code JP', Menlo, Monaco, 'Courier New', monospace",
