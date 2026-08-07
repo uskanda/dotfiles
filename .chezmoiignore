@@ -25,6 +25,18 @@ CLAUDE.md
 # known_marketplaces.json も Claude Code が lastUpdated/installLocation を
 # 更新し続けるため管理対象外とする。
 .claude/plugins/
+# Claude Code が実行時に書くキャッシュ。設定ではないので追跡しない。
+# （中身を確認したうえで除外している。ユーザーが書いた設定は tui や
+#   extraKnownMarketplaces のように追跡対象に残してある）
+.claude/mcp-needs-auth-cache.json
+.claude/stats-cache.json
+
+# === ~/.local/bin に置かれるインストーラ由来のバイナリ ===
+# 自分で書いたスクリプトだけを追跡する方針なので、各端末のインストーラが置く
+# 実行ファイルは明示的に外す。ディレクトリ単位で `chezmoi add ~/.local/bin` を
+# 叩いたときに巻き込んでコミットしてしまう事故を防ぐ。
+.local/bin/chezmoi
+.local/bin/claude
 
 # === Windows 専用スクリプト ===
 # PowerShell 版は Windows でしか使わないので他 OS へは配らない。
