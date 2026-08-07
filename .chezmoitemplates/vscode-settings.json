@@ -47,9 +47,11 @@
   ],
   "vim.statusBarColorControl": true,
 {{- if and $imSelect (eq .chezmoi.os "darwin") }}
-  // im-select がある macOS でのみ IME 自動切替を有効化する。
+  // IME 自動切替は現在 OFF。入力中に切り替わるのが煩わしいため全端末で無効にしている。
+  // 戻したくなったら enable を true にするだけでよいので、im-select がある macOS では
+  // obtainIMCmd / switchIMCmd / defaultIM の配線だけ残しておく。
   // defaultIM は macOS の Google 日本語入力の ID なので他 OS へは配らない。
-  "vim.autoSwitchInputMethod.enable": true,
+  "vim.autoSwitchInputMethod.enable": false,
   "vim.autoSwitchInputMethod.obtainIMCmd": {{ $imSelect | toJson }},
   "vim.autoSwitchInputMethod.switchIMCmd": {{ printf "%s {im}" $imSelect | toJson }},
   "vim.autoSwitchInputMethod.defaultIM": "com.google.inputmethod.Japanese.Roman",
