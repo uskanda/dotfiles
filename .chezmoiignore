@@ -30,6 +30,7 @@ CLAUDE.md
 #   extraKnownMarketplaces のように追跡対象に残してある）
 .claude/mcp-needs-auth-cache.json
 .claude/stats-cache.json
+.claude/.last-cleanup
 
 # === ~/.local/bin に置かれるインストーラ由来のバイナリ ===
 # 自分で書いたスクリプトだけを追跡する方針なので、各端末のインストーラが置く
@@ -37,6 +38,8 @@ CLAUDE.md
 # 叩いたときに巻き込んでコミットしてしまう事故を防ぐ。
 .local/bin/chezmoi
 .local/bin/claude
+# Windows の Python ランチャ (python3.10.exe 等)。他の .exe も同様に追跡しない。
+.local/bin/*.exe
 
 # === Windows 専用スクリプト ===
 # PowerShell 版は Windows でしか使わないので他 OS へは配らない。
