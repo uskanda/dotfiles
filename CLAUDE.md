@@ -57,6 +57,10 @@ chezmoi edit ~/.some-file
 
 [dot_config/zshrc](dot_config/zshrc) の冒頭近くに `AGENT_MODE=1` のときだけ走る短絡処理があり、`PS1='$ '` を設定し `unalias -a` した上で、zinit / starship / atuin / カスタム `cd` / `accept-line-or-ls` バインドの読み込み前に `return` する。これは意図的な設計で、AI エージェントのシェルにはプラグインなし・プロンプト解析で事故らない・ビルトインを上書きしない素の環境を渡したいため。zshrc に新しい対話機能を足すときは必ず `AGENT_MODE` ガードの**下**に置き、エージェントセッションに漏れないようにすること。
 
+境界の引き方は「PATH を通すだけのものは上、対話の挙動を変えるものは下」。pyenv / nvm / pnpm / antigravity / windsurf はガードより**上**にあり、エージェント用シェルからも `node` や `python` が見える。逆に ssh ラッパー・alias・zle バインドはガードより下に置く。
+
+> ⚠️ nvm や pnpm のインストーラは各端末の zshrc へ直接追記してくる。放置すると端末ごとに乖離し、`chezmoi apply` で消える事故になる（実際に WSL 端末で発生）。見つけたら存在チェック付き・`$HOME` 化してリポジトリ側へ取り込むこと。
+
 ## WezTerm と ssh ラッパー
 
 ターミナルエミュレータは WezTerm。設定は [dot_wezterm.lua](dot_wezterm.lua) 1 本で、`wezterm.target_triple` を見て macOS / Windows を分岐する（chezmoi は 1 ソース → 1 宛先なので、`.chezmoitemplates` ではなくファイル内分岐で解決している）。Windows では `default_domain` を WSL domain に向けてあり、PowerShell は `Ctrl+Shift+D` のランチャか `wezterm start --domain local -- powershell.exe` で出す。
