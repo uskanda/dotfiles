@@ -20,7 +20,9 @@ local is_windows = wezterm.target_triple:find 'windows' ~= nil
 -- font_with_fallback にしておくと、UDEV Gothic NF が入っていない端末でも
 -- 起動時に落ちずに既定フォントへ落ちる。
 config.font = wezterm.font_with_fallback { 'UDEV Gothic NF', 'Menlo', 'Consolas' }
-config.hide_tab_bar_if_only_one_tab = true
+-- タブが 1 枚でもタブバーを出す。ssh ウィンドウはタブ 1 枚なので、隠すと
+-- ssh-window.sh が付けた "ssh: <host>" というタブタイトルが見えなくなる。
+config.hide_tab_bar_if_only_one_tab = false
 
 -- 右クリックでペースト（Ctrl+Shift+C / Ctrl+Shift+V は WezTerm の既定なので不要）
 config.mouse_bindings = {
@@ -30,6 +32,23 @@ config.mouse_bindings = {
     action = act.PasteFrom 'Clipboard',
   },
 }
+
+-- ---------------------------------------------------------------------------
+-- OS ウィンドウのタイトル
+-- ---------------------------------------------------------------------------
+-- ssh-window.sh は spawn したタブに `wezterm cli set-tab-title` で
+-- "ssh: <host>" を付ける。それをそのまま OS ウィンドウのタイトルにも出すことで、
+-- Windows のタスクバーや Alt+Tab、macOS の Mission Control でどのウィンドウが
+-- どのホストなのかが分かるようにする。
+-- タブタイトルが未設定のウィンドウ（通常のシェル等）は、走っているプログラムの
+-- タイトルをそのまま使う。
+wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
+  local title = tab.tab_title
+  if title == nil or title == '' then
+    title = tab.active_pane.title
+  end
+  return title
+end)
 
 -- ---------------------------------------------------------------------------
 -- ペインを閉じる条件
