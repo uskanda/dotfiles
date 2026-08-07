@@ -34,20 +34,41 @@ config.mouse_bindings = {
 }
 
 -- ---------------------------------------------------------------------------
--- OS ウィンドウのタイトル
+-- タブ / OS ウィンドウのタイトル
 -- ---------------------------------------------------------------------------
 -- ssh-window.sh は spawn したタブに `wezterm cli set-tab-title` で
 -- "ssh: <host>" を付ける。それをそのまま OS ウィンドウのタイトルにも出すことで、
 -- Windows のタスクバーや Alt+Tab、macOS の Mission Control でどのウィンドウが
 -- どのホストなのかが分かるようにする。
--- タブタイトルが未設定のウィンドウ（通常のシェル等）は、走っているプログラムの
--- タイトルをそのまま使う。
-wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
+local function title_for(tab)
   local title = tab.tab_title
-  if title == nil or title == '' then
-    title = tab.active_pane.title
+  if title ~= nil and title ~= '' then
+    return title   -- set-tab-title で明示されたもの（= "ssh: <host>"）が最優先
   end
-  return title
+
+  local p = tab.active_pane
+  if p == nil then return 'WezTerm' end
+
+  -- Windows 側からは WSL の中で動いているプロセスが見えず、ペインのタイトルが
+  -- wslhost.exe（interop のホストプロセス名）になってしまう。素の状態では
+  -- どのウィンドウも wslhost.exe と表示されて役に立たないので、ドメイン名で
+  -- 判定して WSL と出す。
+  if p.domain_name ~= nil and p.domain_name:match '^WSL:' then
+    return 'WSL'
+  end
+
+  return p.title or 'WezTerm'
+end
+
+wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
+  return title_for(tab)
+end)
+
+-- タブバー側も揃える。片方だけ wslhost.exe のままだとちぐはぐになる。
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  local width = max_width - 2
+  if width < 1 then width = 1 end
+  return ' ' .. wezterm.truncate_right(title_for(tab), width) .. ' '
 end)
 
 -- ---------------------------------------------------------------------------
