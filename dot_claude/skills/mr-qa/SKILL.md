@@ -9,6 +9,13 @@ allowed-tools: Bash
 現在の作業ブランチを `origin` にpushし、そのブランチから `qa` ブランチへの
 マージリクエスト（GitLab）またはプルリクエスト（GitHub）を作成してください。
 
+> **旧 `mr-staging` スキルはこのスキルに統合済み（削除済み）。**
+> `staging` ブランチは Issue #349 で `qa` にリネームされ、もう存在しない。
+> また旧スキルの `develop → staging` という流れ自体が現行フローでは無効で、`qa` は
+> リリースごとに `develop` から reset して再生成される（MR で develop を流し込まない）。
+> qa 向け MR / PR は常に **feature ブランチ → qa**、すなわち本スキルの形になる。
+> `develop → main` のリリース MR は `mr-main` を使う。
+
 **重要**: pushしたソースブランチは削除しないこと。QA確認後に develop などへ進めるため、
 ブランチを残す。GitLab では `glab mr merge` に `--remove-source-branch` を、
 GitHub では `gh pr merge` に `--delete-branch` を**付けない**こと。
