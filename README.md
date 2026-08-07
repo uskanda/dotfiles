@@ -102,6 +102,12 @@ ssh が始まる。** ローカルの tmux はそのまま使いつつ、リモ�
 [dot_config/zshrc](dot_config/zshrc) から source している。macOS と WSL2 で同じ 1 本を
 共有し、OS 差分は spawn コマンドの組み立てだけに閉じ込めてある。
 
+開いたウィンドウには `ssh: <host>` というタブタイトルが付き、`format-window-title`
+イベントで **OS ウィンドウのタイトルにも同じものが出る**。Windows のタスクバーや
+Alt+Tab、macOS の Mission Control でどれがどのホストか判別できる。タブが 1 枚でも
+タブバーを出す設定にしてあるのは、ssh ウィンドウがタブ 1 枚だからで、隠すと
+このタイトルが画面上のどこにも出なくなるため。
+
 **捕まえないもの**（意図的）:
 
 * `git` / `rsync` / `scp` / `ansible` が内部で呼ぶ ssh
