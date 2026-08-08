@@ -20,9 +20,11 @@ local is_windows = wezterm.target_triple:find 'windows' ~= nil
 -- font_with_fallback にしておくと、UDEV Gothic NF が入っていない端末でも
 -- 起動時に落ちずに既定フォントへ落ちる。
 config.font = wezterm.font_with_fallback { 'UDEV Gothic NF', 'Menlo', 'Consolas' }
--- タブが 1 枚でもタブバーを出す。ssh ウィンドウはタブ 1 枚なので、隠すと
--- ssh-window.sh が付けた "ssh: <host>" というタブタイトルが見えなくなる。
-config.hide_tab_bar_if_only_one_tab = false
+-- タブが 1 枚のときはタブバーを隠す。ssh ウィンドウはタブ 1 枚なので
+-- ssh-window.sh が付けた "ssh: <host>" がタブバーからは見えなくなるが、
+-- 下の format-window-title で OS ウィンドウのタイトルにも同じ文字列を出して
+-- いるため、タイトルバー / タスクバー / Alt+Tab では引き続き判別できる。
+config.hide_tab_bar_if_only_one_tab = true
 
 -- 右クリックでペースト（Ctrl+Shift+C / Ctrl+Shift+V は WezTerm の既定なので不要）
 config.mouse_bindings = {
