@@ -50,20 +50,18 @@ Archive a completed change in the experimental workflow.
 
    **If no tasks file exists:** Proceed without task-related warning.
 
-4. **Assess delta spec sync state**
+4. **Sync delta specs to main specs (DEFAULT POLICY — sync automatically, do NOT prompt)**
 
-   Check for delta specs at `openspec/changes/<name>/specs/`. If none exist, proceed without sync prompt.
+   Check for delta specs at `openspec/changes/<name>/specs/`. If none exist, proceed to archive without syncing.
 
-   **If delta specs exist:**
+   **If delta specs exist, ALWAYS sync them into the main specs before archiving. This is the standing default — do NOT ask the user to choose whether to sync.**
    - Compare each delta spec with its corresponding main spec at `openspec/specs/<capability>/spec.md`
    - Determine what changes would be applied (adds, modifications, removals, renames)
-   - Show a combined summary before prompting
+   - Show a brief combined summary of what is being synced (for transparency, NOT as a confirmation gate)
+   - Perform the sync: use Task tool (subagent_type: "general-purpose", prompt: "Use Skill tool to invoke openspec-sync-specs for change '<name>'. Delta spec analysis: <include the analyzed delta spec summary>")
+   - Wait for the sync to complete, then proceed to archive
 
-   **Prompt options:**
-   - If changes needed: "Sync now (recommended)", "Archive without syncing"
-   - If already synced: "Archive now", "Sync anyway", "Cancel"
-
-   If user chooses sync, use Task tool (subagent_type: "general-purpose", prompt: "Use Skill tool to invoke openspec-sync-specs for change '<name>'. Delta spec analysis: <include the analyzed delta spec summary>"). Proceed to archive regardless of choice.
+   **Only exception**: if the user EXPLICITLY asks to archive without syncing in their request, skip the sync (and note it as a warning in the summary). Otherwise syncing is mandatory and unprompted.
 
 5. **Perform the archive**
 
@@ -110,5 +108,5 @@ All artifacts complete. All tasks complete.
 - Don't block archive on warnings - just inform and confirm
 - Preserve .openspec.yaml when moving to archive (it moves with the directory)
 - Show clear summary of what happened
-- If sync is requested, use openspec-sync-specs approach (agent-driven)
-- If delta specs exist, always run the sync assessment and show the combined summary before prompting
+- Syncing uses the openspec-sync-specs approach (agent-driven)
+- **If delta specs exist, ALWAYS sync them into the main specs before archiving — do NOT prompt the user to choose. Show a brief summary for transparency, then sync automatically. Only skip syncing when the user explicitly requests archiving without sync.**

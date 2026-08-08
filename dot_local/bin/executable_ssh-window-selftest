@@ -1,0 +1,126 @@
+#!/usr/bin/env zsh
+# ssh-window-selftest — ~/.config/shell/ssh-window.sh の自己診断
+#
+# 端末を移ったとき（特に macOS 側で初めて使うとき）に、ssh を別ウィンドウで
+# 開く仕掛けがその環境で本当に動くのかを 1 コマンドで確かめる。
+#
+#   ssh-window-selftest          # 判定ロジック + 環境 + 実際に 1 回 spawn する
+#   ssh-window-selftest --dry    # 実際の spawn はせず、判定ロジックと環境だけ見る
+#
+# 実 spawn テストでは、解決できないホスト名へ ssh して WezTerm の新規ウィンドウが
+# 開くことを確認し、エラーが読めることを確かめてから自動で閉じる。
+# 手元に残るものは無い。
+
+emulate -L zsh
+setopt no_nomatch
+
+WRAP="$HOME/.config/shell/ssh-window.sh"
+DRY=0
+[[ "${1:-}" == '--dry' ]] && DRY=1
+
+pass=0 fail=0
+ok()   { pass=$((pass+1)); print -r -- "  ok   $1" }
+ng()   { fail=$((fail+1)); print -r -- "  NG   $1" }
+head1() { print -r -- ""; print -r -- "== $1 ==" }
+
+head1 'ラッパーの読み込み'
+if [[ ! -f "$WRAP" ]]; then
+  ng "$WRAP が無い。chezmoi apply を実行したか確認する"
+  exit 1
+fi
+source "$WRAP"
+if [[ "$(whence -w ssh 2>/dev/null)" == 'ssh: function' ]]; then
+  ok 'ssh がシェル関数として定義されている'
+else
+  ng 'ssh が関数になっていない'
+fi
+
+head1 '環境の判定結果'
+print -r -- "  platform : ${__ssh_window_platform:-(未対応)}"
+print -r -- "  wezterm  : ${__ssh_window_wezterm:-(見つからない)}"
+print -r -- "  domain   : ${__ssh_window_domain:-(なし)}"
+if [[ -z "$__ssh_window_wezterm" ]]; then
+  ng 'wezterm が見つからないので、常にその場実行になる'
+else
+  ok 'wezterm バイナリを解決できた'
+fi
+if __ssh_window_resolve_runtime; then
+  print -r -- "  runtime  : $__ssh_window_runtime"
+  ok 'ランタイムディレクトリを解決できた'
+else
+  print -r -- "  runtime  : (解決できず)"
+  ng 'ランタイムディレクトリを解決できなかった (SSH_WINDOW_RUNTIME_DIR で指定できる)'
+fi
+
+head1 '判定ロジック (別ウィンドウで開くべきか)'
+check() {  # check <spawn|inplace> <ssh の引数...>
+  local want="$1"; shift
+  local got
+  if __ssh_window_parse "$@"; then got=spawn; else got=inplace; fi
+  if [[ "$got" == "$want" ]]; then ok "$got   : ssh $*"; else ng "期待 $want / 実際 $got : ssh $*"; fi
+}
+check spawn   host
+check spawn   user@host
+check spawn   -p 2222 host
+check spawn   -p2222 host
+check spawn   -J bastion host
+check spawn   -o StrictHostKeyChecking=no host
+check spawn   -t host
+check spawn   -i /path/to/key -p 2222 host
+check inplace host uptime
+check inplace -N -L 8080:localhost:80 host
+check inplace -G host
+check inplace -T host
+check inplace -W host:22 bastion
+check inplace -O check host
+check inplace -V
+check inplace --help
+check inplace
+
+if (( DRY )); then
+  head1 '結果'
+  print -r -- "  pass=$pass fail=$fail  (--dry のため実 spawn はしていない)"
+  (( fail == 0 ))
+  exit $?
+fi
+
+head1 '実際に別ウィンドウを開いてみる'
+if [[ -z "$__ssh_window_wezterm" ]]; then
+  print -r -- '  wezterm が無いのでスキップ'
+else
+  local -r target='ssh-window-selftest.invalid'
+  local before after
+  before=$(__ssh_window_cli cli list --format json 2>/dev/null | grep -c '"pane_id"')
+  # tty が無い状態で走らせるとラッパーは必ずその場実行に落ちるので、そこも見る
+  if [[ ! -t 0 || ! -t 1 ]]; then
+    print -r -- '  注意: 端末に繋がっていないため、ラッパーは仕様どおりその場実行に落ちる'
+  fi
+  # ここでリダイレクトしないこと。stdout を /dev/null に向けると [ -t 1 ] が
+  # 偽になり、ラッパーが仕様どおりその場実行に落ちてテストにならない。
+  ssh -o ConnectTimeout=2 "$target"
+  sleep 4
+  after=$(__ssh_window_cli cli list --format json 2>/dev/null | grep -c '"pane_id"')
+  if [[ "$after" -gt "$before" ]]; then
+    ok "新しいウィンドウが開いた (ペイン $before -> $after)"
+    local id txt closed=0
+    for id in ${(f)"$(__ssh_window_cli cli list --format json 2>/dev/null | grep '"pane_id"' | grep -o '[0-9]\+')"}; do
+      txt=$(__ssh_window_cli cli get-text --pane-id "$id" 2>/dev/null)
+      if [[ "$txt" == *"$target"* ]]; then
+        if [[ "$txt" == *255* ]]; then
+          ok 'ウィンドウにエラーが表示され、閉じずに残っている'
+        else
+          ng 'ウィンドウは開いたがエラー表示を確認できなかった'
+        fi
+        __ssh_window_cli cli kill-pane --pane-id "$id" >/dev/null 2>&1
+        closed=1
+      fi
+    done
+    (( closed )) && print -r -- '  (テストで開いたウィンドウは閉じた)'
+  else
+    ng "ウィンドウが開かなかった (ペイン $before -> $after)。SSH_WINDOW_DEBUG=1 ssh host で原因を見る"
+  fi
+fi
+
+head1 '結果'
+print -r -- "  pass=$pass fail=$fail"
+(( fail == 0 ))

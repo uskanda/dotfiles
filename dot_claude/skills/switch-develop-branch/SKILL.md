@@ -1,5 +1,5 @@
 ---
-name: develop_branch
+name: switch-develop-branch
 description: developブランチに切り替えて最新の状態に更新してください。
 allowed-tools: Bash
 ---

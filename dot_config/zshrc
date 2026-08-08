@@ -15,6 +15,24 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 command -v pyenv >/dev/null && eval "$(pyenv init - zsh)"
 
+# nvm: インストールされている場合のみ読み込む
+# (元は nvm のインストーラが各端末の zshrc に直接書き込んでいたものを、
+#  存在チェック付きに直してここへ集約した)
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+
+# pnpm: グローバルインストール先 (eas / tsc など) を PATH に通す。
+# pnpm 本体は nvm 配下の node に同梱されているので、ここで見るのは
+# `pnpm add -g` の出力先だけ。ディレクトリがある端末でのみ有効。
+export PNPM_HOME="$HOME/.local/share/pnpm"
+if [[ -d "$PNPM_HOME" ]] && [[ ":$PATH:" != *":$PNPM_HOME:"* ]]; then
+  export PATH="$PNPM_HOME:$PATH"
+fi
+
+# pyenv / nvm / pnpm はいずれも PATH を通すだけなので AGENT_MODE ガードより上に置く。
+# エージェント用シェルでも node や python が見えている方が都合がよい。
+
 # CopilotやAIエージェント用の最低限の設定
 if [[ "$AGENT_MODE" == "1" ]]; then
   export PS1='$ '   # プロンプト超シンプルに
@@ -118,3 +136,8 @@ function reset-terminal-reporting() {
 }
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd reset-terminal-reporting
+
+# 対話ログイン目的の ssh を WezTerm の別ウィンドウで開くラッパー。
+# WezTerm が無い環境（リモートホスト等）では素の ssh にフォールバックする。
+# 無効化: SSH_NO_NEW_WINDOW=1 ssh host
+[[ -f "$HOME/.config/shell/ssh-window.sh" ]] && source "$HOME/.config/shell/ssh-window.sh"
