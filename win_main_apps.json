@@ -68,6 +68,12 @@
 				},
 				{
 					"PackageIdentifier" : "Microsoft.VisualStudioCode"
+				},
+				{
+					"PackageIdentifier" : "Anthropic.ClaudeCode"
+				},
+				{
+					"PackageIdentifier" : "SST.opencode"
 				}
 			],
 			"SourceDetails" : 
