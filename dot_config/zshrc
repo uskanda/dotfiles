@@ -41,12 +41,33 @@ if [[ "$AGENT_MODE" == "1" ]]; then
   return
 fi
 
-# SSH 経由で Linux にログインした対話シェルでは tmux を自動起動する
-# (AI 用シェルは上の AGENT_MODE ブロックで return 済みなので対象外)
-if [[ -o interactive ]] && [[ "$OSTYPE" == linux* ]] && [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]] && command -v tmux >/dev/null; then
-  # 既存セッションがあれば attach、なければ新規作成。tmux 終了後はログアウトする
-  tmux attach 2>/dev/null || tmux new-session
-  exit
+# Linux の対話シェルでは tmux を自動起動する。
+# セッションの永続化（ウィンドウを閉じても作業が残り、次回 attach で戻れる）と
+# tmux 側のウィンドウ/ペイン管理が目的なので、SSH 経由に限らずローカルでも起動する。
+#
+# macOS ローカルは対象外。WezTerm 自身の mux とタブで完結しており、ssh-window.sh が
+# 「1 OS ウィンドウ = 1 リモートホスト」を作る前提なので、手前で tmux を挟むと
+# リモート側の tmux と nested になる。
+#
+# 除外する経路:
+#   AGENT_MODE=1   上のブロックで return 済み（AI 用シェル）
+#   CLAUDECODE     Claude Code が起こすシェル。tmux を挟むと出力の取り回しが壊れる
+#   TERM_PROGRAM   VSCode 統合ターミナルは自前でタブを持ち、シェル統合も壊れる
+#   TERM=dumb      エディタ内シェルや tramp のような端末機能なしの経路
+#   TMUX           既に tmux の中（nested 防止）
+# 一時的に切りたいときは ZSH_NO_TMUX=1 zsh
+if [[ -o interactive ]] && [[ "$OSTYPE" == linux* ]] && [[ -z "$TMUX" ]] \
+   && [[ -z "$ZSH_NO_TMUX" ]] && [[ -z "$CLAUDECODE" ]] \
+   && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM" != "dumb" ]] \
+   && command -v tmux >/dev/null; then
+  # -A は「同名セッションがあれば attach、なければ新規作成」。attach と new-session を
+  # || で繋ぐより、どのセッションに入るかが決定的になる。
+  # tmux が正常終了（detach / 最後のウィンドウを閉じる）したらシェルも終わらせて
+  # ウィンドウを閉じる。起動自体に失敗したときは素のシェルへ落とす — exit を無条件に
+  # 書くと、tmux が動かない環境でログインできなくなる。
+  if tmux new-session -A -s main; then
+    exit
+  fi
 fi
 
 ### Added by Zinit's installer

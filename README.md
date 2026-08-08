@@ -194,6 +194,46 @@ spawn するコマンドを `sh -c 'ssh "$@"; 255 ならキー待ち'` の形に
 `ssh` はリモートコマンドの終了ステータスをそのまま返し、自分自身のエラーのときだけ
 255 を返す（ssh(1)）。この性質をそのまま判定に使っている。
 
+tmux
+-----
+
+**Linux の対話シェルを開くと自動で tmux に入る。** WSL をローカルで開いた場合も対象。
+セッションの永続化（ウィンドウを閉じても作業が残り、次に開いたとき同じ状態に戻る）と、
+tmux 側でのウィンドウ / ペイン管理が目的。
+
+実体は [dot_config/zshrc](dot_config/zshrc) の `AGENT_MODE` ガード直下にある数行で、
+`tmux new-session -A -s main` を実行する（`-A` = 同名セッションがあれば attach、
+なければ新規作成）。入るセッションは常に `main` の 1 つなので、どの端末から開いても
+同じ状態に戻る。tmux を抜けるとシェルも終了してウィンドウが閉じる。
+
+macOS ローカルは対象外。WezTerm 自身の mux とタブで完結しており、上記の
+「1 OS ウィンドウ = 1 リモートホスト」の手前で tmux を挟むとリモート側と
+nested tmux になるため。
+
+設定は [dot_config/tmux/tmux.conf](dot_config/tmux/tmux.conf) → `~/.config/tmux/tmux.conf`。
+prefix は `C-b` ではなく **`C-j`**、マウス操作 on、履歴 50000 行。分割は `prefix |`
+（横）/ `prefix -`（縦）で、ペイン移動は `prefix h/j/k/l`。`prefix r` で再読み込み。
+
+### 自動起動しない経路
+
+| 条件 | 理由 |
+| ---- | ---- |
+| `AGENT_MODE=1` | AI エージェント用シェル。上のブロックで `return` 済み |
+| `CLAUDECODE` が設定済み | Claude Code が起こすシェル。tmux を挟むと出力の取り回しが壊れる |
+| `TERM_PROGRAM=vscode` | VSCode 統合ターミナルは自前でタブを持ち、シェル統合も壊れる |
+| `TERM=dumb` | エディタ内シェルや tramp など端末機能のない経路 |
+| `$TMUX` が設定済み | 既に tmux の中（nested 防止） |
+| macOS | 上記のとおり対象外 |
+
+一時的に切りたいときは `ZSH_NO_TMUX=1 zsh`。
+
+> tmux が `~/.config/tmux/tmux.conf` を読むのは **3.1 以降**。それより古い tmux の
+> ホストでは既定設定のままになる。prefix が `C-b` のままなら `tmux -V` を疑う。
+
+> WezTerm には tmux は無い。WezTerm が持つのは自前の mux で tmux とは別実装なので、
+> tmux は接続先（WSL / リモート）に 1 つあるだけ。ウィンドウを閉じるときの確認
+> ダイアログも tmux ではなく WezTerm のもの（`window_close_confirmation` の既定値）。
+
 Claude Code 設定 (~/.claude)
 -----------------------------
 Claude Code のユーザー設定を chezmoi で複数端末に共有する。
