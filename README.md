@@ -35,13 +35,21 @@ $env:INSTALL_WINGET=1; ./setup.ps1   # 環境変数でも指定可
 
 #### Windows アプリ一覧（Brewfile 相当）
 
-[win_main_apps.json](win_main_apps.json) が `winget export` のスナップショット。
+[win_main_apps.json](win_main_apps.json) が `winget export` の書式で書いた**手入れ済みの一覧**。
 `-Winget` を付けると `winget import --no-upgrade --ignore-unavailable` で流し込む。
 `--no-upgrade` により既にインストール済みのものは触らないので、再実行しても安全。
-アプリを増減したら、次のコマンドで一覧を取り直してコミットする：
+
+> ⚠️ **`winget export -o .\win_main_apps.json` で上書きしないこと。** このファイルは
+> 生の export ではなく、そこから「自分で入れたいアプリ」だけを残した一覧。実際に
+> 取り直すと 22 件 → 83 件に膨れ、VCRedist / WindowsAppRuntime / .NET ランタイム /
+> VCLibs といった**依存で勝手に入ったものが大量に混ざる**（実測）。それを `import`
+> すると新品の PC に不要なランタイムまで撒くことになる。
+
+アプリを増減したいときは、**該当の `PackageIdentifier` を手で足し引きする**のが基本。
+一覧を眺めて拾いたい場合は、別ファイルへ吐いてから差分を見る：
 
 ```powershell
-winget export -o .\win_main_apps.json
+winget export -o $env:TEMP\winget-now.json     # 作業用。リポジトリには上書きしない
 ```
 
 ### Ubuntu, WSL
@@ -352,6 +360,65 @@ chezmoi apply ~/.claude
 > ⚠️ `settings.json.tmpl` は雛形。`chezmoi apply` すると既存の
 > `~/.claude/settings.json` を上書きするため、初回は必ず `chezmoi diff` で確認し、
 > 自分の設定を取り込んでから運用すること。
+
+独自コマンド（`~/.local/bin`）
+-----------------------------
+このリポジトリが配る自作コマンドは全部 [dot_local/bin/](dot_local/bin/) に置き、
+`chezmoi apply` で `~/.local/bin`（Windows なら `%USERPROFILE%\.local\bin`）へ展開する。
+**ここに置けば全 OS で名前だけで呼べる**のが基盤の目的で、新しいコマンドを足すときに
+PATH をいじる必要はない。
+
+| OS                | PATH を通しているもの                                                      |
+| ----------------- | -------------------------------------------------------------------------- |
+| WSL / Linux / mac | [dot_config/zshrc](dot_config/zshrc) 冒頭の `export PATH="$HOME/.local/bin:$PATH"` |
+| Windows           | [dot_config/powershell/profile.ps1](dot_config/powershell/profile.ps1)（`setup.ps1` が読ませる） |
+
+Unix 側は `AGENT_MODE` ガードより**上**にあり、エージェント用シェルからも見える。
+
+### Windows で PowerShell プロファイルを噛ませる仕組み
+
+PowerShell が実際に読むのは `$PROFILE.CurrentUserAllHosts` だが、これは Documents 配下
+＝**ローカライズされ、しばしば OneDrive に移設される**パス（この端末では
+`%USERPROFILE%\OneDrive\ドキュメント\WindowsPowerShell\profile.ps1`）。chezmoi は
+1 ソース → 1 固定宛先なので、この値を apply 時に解決できない。そこで:
+
+1. chezmoi が実体を `~/.config/powershell/profile.ps1` に置く（＝リポジトリ管理下）
+2. `setup.ps1` の `Install-PowerShellProfile` が、実プロファイルへ
+   `. "$env:USERPROFILE\.config\powershell\profile.ps1"` の 1 行を**追記**する
+
+シンボリックリンクではなく追記にしてあるのは、開発者モード／管理者権限が要らず
+OneDrive の同期とも相性が良いため。既に該当行があれば何もしない（冪等）。実プロファイルに
+端末固有の行が入っていても上書きせず残す。`pwsh`（PowerShell 7）が入っていれば
+そちらの `PowerShell\profile.ps1` にも同じ行を入れる。
+
+> 反映には**新しいシェルを開く**必要がある。今のセッションに効かせるなら
+> `. $PROFILE.CurrentUserAllHosts`。
+
+### `chezmoi-merge`
+
+`claude` を起動して [chezmoi-merge スキル](dot_claude/skills/chezmoi-merge/SKILL.md)
+（pull → 突合 → apply → push）を走らせるだけのラッパ。どの OS でも同じ名前で叩ける。
+
+```bash
+chezmoi-merge              # 対話セッションを開いて /chezmoi-merge を投げる
+chezmoi-merge "tmux だけ"  # 初回プロンプトに補足を足す
+```
+
+* 実体は 2 本。[dot_local/bin/executable_chezmoi-merge](dot_local/bin/executable_chezmoi-merge)（bash）と
+  [dot_local/bin/chezmoi-merge.ps1](dot_local/bin/chezmoi-merge.ps1)（PowerShell）。
+  やることは同じで、`chezmoi source-path` へ移動してから `claude "/chezmoi-merge"` を exec する。
+  cwd を source-path にするのはスキルがそこ基準で動くのと、リポジトリの `CLAUDE.md` を
+  読ませるため。
+* **Windows でも `.ps1` を打つ必要はない。** `.PS1` は `PATHEXT` に無いが、PowerShell の
+  コマンド解決は PATH 上の `.ps1` を拡張子なしで拾う（cmd.exe は拾わないので、そちらでは
+  `chezmoi-merge.ps1` とフルネームで打つ）。ファイル名から拡張子自体は落とせない
+  （shebang が無く、解決が拡張子ベースのため）。
+* **対話セッションで起動する。** スキルが項目ごとにユーザーの判断を仰ぐ設計なので、
+  `-p` / `--print` を足さないこと。
+* `chezmoi` か `claude` が見つからなければ 127 で止まり、導入方法を出す。
+  Windows で `claude` が無いとき **WSL の `claude` にはフォールバックしない**：
+  WSL 側の chezmoi は `/home/<user>` を管理するので、Windows のプロファイルではなく
+  WSL の dotfiles を同期してしまい、意図と逆になる。
 
 VSCode ユーザー設定
 -----------------------------

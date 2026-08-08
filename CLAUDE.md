@@ -72,6 +72,40 @@ chezmoi edit ~/.some-file
 - **`exit` を無条件に書かないこと。** tmux の起動に失敗したときは素のシェルへ落とす必要がある（`if tmux ...; then exit; fi` の形）。無条件 `exit` だと tmux が動かない環境でログインできなくなる。
 - 設定ファイルは [dot_config/tmux/tmux.conf](dot_config/tmux/tmux.conf) → `~/.config/tmux/tmux.conf`。この置き場所を読むのは **tmux 3.1 以降**。それより古い tmux のホストでは読まれず既定設定になるので、prefix が `C-b` のままなら真っ先にバージョンを疑う（`tmux -V`）。
 
+## 独自コマンドと PATH（`~/.local/bin`）
+
+自作コマンドの置き場は [dot_local/bin/](dot_local/bin/) 一箇所で、`chezmoi apply` により
+`~/.local/bin`（Windows は `%USERPROFILE%\.local\bin`）へ展開される。**ここに置けば全 OS で
+名前だけで呼べる**のが設計意図なので、コマンドを増やすときに PATH をいじる必要はない。
+
+PATH を通しているのは 2 箇所だけ:
+
+- **WSL / Linux / macOS** — [dot_config/zshrc](dot_config/zshrc) 1 行目の
+  `export PATH="$HOME/.local/bin:$PATH"`。`AGENT_MODE` ガードより上（PATH を通すだけなので）。
+- **Windows** — [dot_config/powershell/profile.ps1](dot_config/powershell/profile.ps1)。
+  PowerShell が実際に読む `$PROFILE.CurrentUserAllHosts` は Documents 配下で、
+  ローカライズ＋ OneDrive 移設を受けるパス。chezmoi は 1 ソース → 1 固定宛先なので
+  apply 時にこれを解決できない。そこで実体を `~/.config/powershell/profile.ps1` に置き、
+  [setup.ps1](setup.ps1) の `Install-PowerShellProfile` が実プロファイルへ dot-source の
+  1 行を**追記**する（symlink ではないので開発者モード不要・OneDrive 同期と無干渉、
+  かつ端末固有の行を消さない）。
+
+触るときの注意:
+
+- **Windows 版は `.ps1` 拡張子を落とせない**（shebang が無く、コマンド解決が拡張子ベース）。
+  ただし PowerShell は PATH 上の `.ps1` を拡張子なしで解決するため、`chezmoi-merge` と
+  打てば動く（`.PS1` は `PATHEXT` に無いが PowerShell 独自に見に行く。cmd.exe は不可）。
+  命名は既存に合わせ、bash 版は `executable_` 付き・PowerShell 版は付けない
+  （`.ps1` に実行ビットは不要なため。`claude-notify.ps1` 等と同じ）。
+- **`.ps1` は `.chezmoiignore` の windows ガードに入れる。** 他 OS に配っても無害だが、
+  既存の `claude-notify.ps1` / `install-voicevox-engine.ps1` と方針を揃える。
+- Windows 用ラッパから **WSL のコマンドへフォールバックしない。** WSL 側の chezmoi は
+  `/home/<user>` を管理するので、Windows のプロファイルではなく WSL の dotfiles を
+  操作してしまう。見つからなければ 127 で止めて導入方法を出す。
+
+`chezmoi-merge` はこの基盤の最初の利用例（bash 版 + PowerShell 版の対）。詳細は
+[README.md](README.md) の「独自コマンド（`~/.local/bin`）」節。
+
 ## WezTerm と ssh ラッパー
 
 ターミナルエミュレータは WezTerm。設定は [dot_wezterm.lua](dot_wezterm.lua) 1 本で、`wezterm.target_triple` を見て macOS / Windows を分岐する（chezmoi は 1 ソース → 1 宛先なので、`.chezmoitemplates` ではなくファイル内分岐で解決している）。Windows では `default_domain` を WSL domain に向けてあり、PowerShell は `Ctrl+Shift+D` のランチャか `wezterm start --domain local -- powershell.exe` で出す。
@@ -90,8 +124,9 @@ chezmoi edit ~/.some-file
 
 - [setup](setup) (bash) — Ubuntu/WSL/macOS 用。`$OSTYPE` で分岐して `brew` と `apt` を使い分ける。
 - [setup.ps1](setup.ps1) — Windows 専用。`Install-Terminal` で WezTerm と Alacritty を winget から入れる（未導入なら install、導入済みなら upgrade。対象ターミナルが起動中は MSI がそれを閉じてしまうためスキップ）。Alacritty だけは設定を `%APPDATA%\alacritty` にシンボリックリンクする必要がある。WezTerm は `%USERPROFILE%\.wezterm.lua` を直接読むので chezmoi が置いたままでよく、存在チェックのみ。管理者 Powershell 必須。重い処理は Unix 版 `setup` の `INSTALL_*` と同じく opt-in（`-Winget` / `-Fusion` / `-Voicevox`、または `INSTALL_WINGET=1` 等）。
-  > ⚠️ **このファイルに日本語コメントを書かないこと**。Windows PowerShell 5.1 は BOM なし `.ps1` を ANSI（日本語環境では CP932）として読むため、UTF-8 の日本語がバイト単位で誤解釈され、CP932 の 2 バイト対が行末のバッククォート等を飲み込んでパースエラーになる。コメントは英語（ASCII）で書く。文字列内の `—` は後続がスペースなら実害がないので既存箇所はそのまま。
+  > ⚠️ **`.ps1` に日本語コメントを書かないこと**（`setup.ps1` に限らず、このリポジトリが配る `.ps1` すべて）。Windows PowerShell 5.1 は BOM なし `.ps1` を ANSI（日本語環境では CP932）として読むため、UTF-8 の日本語がバイト単位で誤解釈され、CP932 の 2 バイト対が行末のバッククォート等を飲み込んでパースエラーになる。コメントは英語（ASCII）で書く。文字列内の `—` は後続がスペースなら実害がないので既存箇所はそのまま。
 - [dot_Brewfile](dot_Brewfile) — macOS 用パッケージ一覧（wezterm / karabiner-elements などの GUI cask も含む）。
-- [win_main_apps.json](win_main_apps.json) — Windows アプリ一覧（`winget export` の出力）。`setup.ps1 -Winget` が `winget import` で流し込む Brewfile 相当。`--no-upgrade --ignore-unavailable` 付きなので再実行は冪等（未導入のものだけ入る）。一覧の更新は `winget export -o .\win_main_apps.json` を手動で実行する。
+- [win_main_apps.json](win_main_apps.json) — Windows アプリ一覧（`winget export` の書式だが**中身は手入れ済みの抜粋**）。`setup.ps1 -Winget` が `winget import` で流し込む Brewfile 相当。`--no-upgrade --ignore-unavailable` 付きなので再実行は冪等（未導入のものだけ入る）。
+  > ⚠️ **`winget export -o .\win_main_apps.json` で上書きしないこと。** 生の export は 22 件 → 83 件に膨れ、VCRedist / WindowsAppRuntime / .NET ランタイム / VCLibs など依存で入ったものを大量に含む（実測）。それを `import` すると新品の PC に不要なランタイムを撒く。増減は `PackageIdentifier` を手で足し引きする。参照したいときだけ `winget export -o $env:TEMP\winget-now.json` と別ファイルへ吐く。
 - VSCode の `settings.json` は 3 OS 分のラッパ + 共有テンプレート構成。端末ごとに有無が変わる値（docker / im-select / 社用証明書）は `lookPath` と `stat` で存在確認してから出力し、無ければキーごと省略する。詳細は [README.md](README.md) の「VSCode ユーザー設定」。
 - Colima 関連（`dot_colima/`、`Library/LaunchAgents/com.user.colima-*`、`executable_dot_wakeup`）は macOS 専用。colima 本体の自動起動は [dot_Brewfile](dot_Brewfile) の `start_service: true` が担い、生成される `homebrew.mxcl.colima.plist` は chezmoi では追跡しない。
