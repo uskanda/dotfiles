@@ -153,11 +153,26 @@
       "Bash(find /workspace -maxdepth 3 -name \".pre-commit-config.yaml\")",
       "Bash(cat /proc/1/cgroup 2>/dev/null | head -5; echo \"--- env ---\"; env | grep -iE \"remote|codespace|devcontainer|container|CLAUDE|ANTHROPIC\" | sed 's/\\\\\\(KEY|TOKEN|SECRET\\\\\\)=.*/\\\\1=REDACTED/I')",
 
+      "Bash(systemctl is-enabled *)",
+      "Bash(systemctl is-active *)",
+      "Bash(sudo ls -la /var/spool/cron/crontabs/)",
+
+      "Bash(lscpu)",
+      "Bash(lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,UUID)",
+      "Bash(mount)",
+      "Bash(pvs)",
+      "Bash(vgs)",
+      "Bash(sudo pvs)",
+      "Bash(sudo vgs)",
+      "Bash(sudo lvs)",
+
       "Read(//etc/**)",
       "Read(//usr/lib/**)",
       "Read(//usr/share/fonts/**)",
       "Read(//tmp/**)",
       "Read(//proc/1/**)",
+      "Read(//sys/devices/system/cpu/**)",
+      "Read(//var/spool/cron/crontabs/**)",
       "Read(//home/vscode/.claude/**)"
     ]
   },
