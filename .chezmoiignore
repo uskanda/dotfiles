@@ -44,9 +44,14 @@ CLAUDE.md
 
 # === Windows 専用スクリプト ===
 # PowerShell 版は Windows でしか使わないので他 OS へは配らない。
+# chezmoi-merge は Unix 版（executable_chezmoi-merge）と対で、中身は同じことをする。
+# .config/powershell/profile.ps1 は ~/.local/bin を PATH に通す土台で、
+# setup.ps1 の Install-PowerShellProfile が実プロファイルから source する。
 {{ if ne .chezmoi.os "windows" }}
 .local/bin/claude-notify.ps1
 .local/bin/install-voicevox-engine.ps1
+.local/bin/chezmoi-merge.ps1
+.config/powershell/
 {{ end }}
 
 # === VSCode ユーザー設定 ===

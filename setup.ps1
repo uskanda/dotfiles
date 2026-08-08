@@ -118,6 +118,53 @@ function Test-WezTermConfig {
     }
 }
 
+# --- PowerShell profile: load the chezmoi-managed one ------------------------
+# This is what puts %USERPROFILE%\.local\bin on PATH, i.e. what makes this
+# repo's own commands (chezmoi-merge, ...) runnable by name in PowerShell. The
+# zsh side gets it for free from dot_config/zshrc; Windows needs this step.
+#
+# Why a shim instead of letting chezmoi write the profile directly: PowerShell
+# loads $PROFILE.CurrentUserAllHosts, which sits under Documents - a path that
+# is localized and often relocated into OneDrive. chezmoi maps one source path
+# to one fixed target and cannot resolve that at apply time, so chezmoi writes
+# ~/.config/powershell/profile.ps1 and this appends a dot-source line pointing
+# at it. A plain file rather than a symlink: no Developer Mode needed, and
+# OneDrive syncs it cleanly.
+function Install-PowerShellProfile {
+    $src = "$env:USERPROFILE\.config\powershell\profile.ps1"
+    if (-not (Test-Path $src)) {
+        Write-Host "PowerShell profile: source not found ($src) - run 'chezmoi apply' first. Skipping." -ForegroundColor Yellow
+        return
+    }
+
+    # Single-quoted so $env:USERPROFILE is written literally and expands when the
+    # profile is dot-sourced, not now.
+    $line = '. "$env:USERPROFILE\.config\powershell\profile.ps1"'
+
+    # setup.ps1 runs under Windows PowerShell 5.1, so $PROFILE points at the 5.1
+    # profile. PowerShell 7 uses the sibling 'PowerShell' directory under the
+    # same Documents root - wire it too, but only if pwsh is actually installed.
+    $targets = @($PROFILE.CurrentUserAllHosts)
+    if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+        $targets += ($PROFILE.CurrentUserAllHosts -replace '\\WindowsPowerShell\\', '\PowerShell\')
+    }
+
+    foreach ($dst in ($targets | Select-Object -Unique)) {
+        $dir = Split-Path $dst -Parent
+        if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
+
+        if ((Test-Path $dst) -and (Select-String -Path $dst -SimpleMatch '.config\powershell\profile.ps1' -Quiet)) {
+            Write-Host "PowerShell profile: already wired ($dst)" -ForegroundColor Green
+            continue
+        }
+        # Append, never overwrite: this profile may hold machine-local lines that
+        # are deliberately not in the repo.
+        Add-Content -Path $dst -Value $line -Encoding utf8
+        Write-Host "PowerShell profile: sourcing $src from $dst" -ForegroundColor Green
+        Write-Host "  Open a new PowerShell (or run: . `$PROFILE.CurrentUserAllHosts) to pick it up." -ForegroundColor DarkGray
+    }
+}
+
 # --- winget packages (opt-in) ------------------------------------------------
 # The Windows counterpart of dot_Brewfile: installs everything listed in
 # win_main_apps.json, which is a `winget export` snapshot. That file is
@@ -264,6 +311,8 @@ Set-AlacrittyLink
 # is the CLI front-end. Check both so an open terminal is never killed by the MSI.
 Install-Terminal -Id 'wez.wezterm' -Name 'WezTerm' -ProcessName 'wezterm-gui', 'wezterm'
 Test-WezTermConfig
+
+Install-PowerShellProfile
 
 if ($Winget -or $env:INSTALL_WINGET -eq '1') {
     Install-WingetPackages
