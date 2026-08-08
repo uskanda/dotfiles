@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# chezmoi-merge: Claude Code を起動して chezmoi-merge スキルを走らせる。
+#
+# Usage:
+#   chezmoi-merge              # 対話セッションを開き /chezmoi-merge を投げる
+#   chezmoi-merge "<補足>"     # 初回プロンプトに補足を足す
+#
+# Windows(PowerShell) 版は同じディレクトリの chezmoi-merge.ps1。両者は同じ
+# 「source-path へ移動して /chezmoi-merge で対話セッションを開く」ことをする。
+#
+# スキル本体 (dot_claude/skills/chezmoi-merge/SKILL.md) は項目ごとにユーザーの
+# 判断を仰ぐ設計なので、意図的に対話セッションで起動する。`-p` / `--print` を
+# 足すと決定を待てないまま片側へ倒れるので付けないこと。
+
+set -euo pipefail
+
+die() {
+  echo "chezmoi-merge: $*" >&2
+  exit 127
+}
+
+command -v chezmoi >/dev/null 2>&1 ||
+  die "chezmoi が見つかりません。dotfiles の ./setup を先に実行してください。"
+command -v claude >/dev/null 2>&1 ||
+  die "claude CLI が見つかりません。https://docs.claude.com/en/docs/claude-code/setup を参照。"
+
+# スキルは source-path 基準で動く。ここを cwd にしておくとリポジトリの
+# CLAUDE.md も読まれ、chezmoi の命名規則やブランチ運用が前提として入る。
+repo="$(chezmoi source-path)"
+cd "$repo" || die "chezmoi source-path ($repo) へ移動できません。"
+
+prompt="/chezmoi-merge"
+if [ "$#" -gt 0 ]; then
+  prompt="$prompt $*"
+fi
+
+exec claude "$prompt"
