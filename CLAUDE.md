@@ -63,13 +63,14 @@ chezmoi edit ~/.some-file
 
 ## tmux の自動起動
 
-[dot_config/zshrc](dot_config/zshrc) の `AGENT_MODE` ガード直下に、**Linux の対話シェルで `tmux new-session -A -s main` を exec する**ブロックがある。SSH 経由に限らず WSL ローカルでも起動する（セッションの永続化とウィンドウ管理が目的で、これはローカルでも欲しいため）。macOS は対象外 — WezTerm 自身の mux とタブで完結しており、`ssh-window.sh` の「1 OS ウィンドウ = 1 リモートホスト」の手前で tmux を挟むとリモート側と nested になる。
+[dot_config/zshrc](dot_config/zshrc) の `AGENT_MODE` ガード直下に、**Linux の対話シェルで tmux へ入る**ブロックがある。SSH 経由に限らず WSL ローカルでも起動する（セッションの永続化とウィンドウ管理が目的で、これはローカルでも欲しいため）。macOS は対象外 — WezTerm 自身の mux とタブで完結しており、`ssh-window.sh` の「1 OS ウィンドウ = 1 リモートホスト」の手前で tmux を挟むとリモート側と nested になる。
 
 判定を触るときの注意:
 
 - **WezTerm には tmux は無い。** WezTerm が持つのは自前の mux（タブ/ペイン/ウィンドウ）で、tmux とは別実装。`tmux -CC` 連携は使っていない。つまり tmux は接続先（WSL / リモート）に 1 つあるだけで、「WezTerm 側の tmux」は存在しない。ウィンドウを閉じるときの確認ダイアログは tmux ではなく WezTerm の `window_close_confirmation`（未設定なので既定の `AlwaysPrompt`）。
 - **除外経路を削らないこと。** `CLAUDECODE` / `TERM_PROGRAM=vscode` / `TERM=dumb` はいずれも、tmux を挟むと壊れる経路。`SSH_CONNECTION` 条件を外して適用範囲が全対話シェルに広がったぶん、これらのガードが実質的な安全弁になっている。
 - **`exit` を無条件に書かないこと。** tmux の起動に失敗したときは素のシェルへ落とす必要がある（`if tmux ...; then exit; fi` の形）。無条件 `exit` だと tmux が動かない環境でログインできなくなる。
+- **入るセッションはセッション名で決め打ちしない。** かつては `tmux new-session -A -s main` だったが、これは `main` という名前のセッションしか見ないため、素の `tmux` で作られた `0` のようなセッションが残っている端末では別途 `main` が作られてしまう（実際に発生）。現在は `tmux list-sessions` の一覧から「未 attach 優先 → 最終利用が新しい順」で 1 つ選んで attach し、1 つも無いときだけ `new-session -A -s main` に落ちる。`-A -s main` のフォールバックは、attach 対象が直前に消えたときの取りこぼし防止も兼ねている。
 - 設定ファイルは [dot_config/tmux/tmux.conf](dot_config/tmux/tmux.conf) → `~/.config/tmux/tmux.conf`。この置き場所を読むのは **tmux 3.1 以降**。それより古い tmux のホストでは読まれず既定設定になるので、prefix が `C-b` のままなら真っ先にバージョンを疑う（`tmux -V`）。
 
 ## 独自コマンドと PATH（`~/.local/bin`）
