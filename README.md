@@ -512,6 +512,17 @@ lmstudio-to-opencode --all         # LM Studio の全モデル
 * 内部では `lmstudio-to-ollama --print-ref`（標準出力にモデル ref だけを返し、
   取り込み済みならエラーにせず ref を返す）と `--list-paths` を使う。
 
+### opencode の設定ファイル（Windows のみ）
+
+生成された設定 [dot_config/opencode/opencode.jsonc](dot_config/opencode/opencode.jsonc) も
+chezmoi 管理下に置いてある。ただし**配るのは Windows だけ**で、[.chezmoiignore](.chezmoiignore)
+の windows ガードに `.config/opencode/` を入れてある。登録しているモデル名も焼き込んだ
+コンテキストも、この機体の GPU（RX 9070 XT / VRAM 15.9GB）で実測して決めた値なので、
+別マシンにそのまま配っても意味がないため。
+
+`ollama-to-opencode` はこのファイルを書き換えるので、実行後は
+`chezmoi add ~/.config/opencode/opencode.jsonc` でリポジトリへ戻すこと。
+
 VSCode ユーザー設定
 -----------------------------
 `settings.json` の反映先は OS ごとに違うが、chezmoi は 1 つのソースを複数の宛先へ
