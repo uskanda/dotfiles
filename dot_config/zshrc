@@ -60,11 +60,23 @@ if [[ -o interactive ]] && [[ "$OSTYPE" == linux* ]] && [[ -z "$TMUX" ]] \
    && [[ -z "$ZSH_NO_TMUX" ]] && [[ -z "$CLAUDECODE" ]] \
    && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM" != "dumb" ]] \
    && command -v tmux >/dev/null; then
-  # -A は「同名セッションがあれば attach、なければ新規作成」。attach と new-session を
-  # || で繋ぐより、どのセッションに入るかが決定的になる。
+  # 既存セッションがあればそこへ入り、1 つも無いときだけ新規作成する。名前が `main` の
+  # ものだけを見る（-A -s main）と、`tmux` を素で叩いて出来た `0` のようなセッションが
+  # 残っていても別途 `main` が作られてしまうため、名前で決め打ちせず一覧から選ぶ。
+  # 選び方は「未 attach を優先 → その中で最終利用が新しいもの」。前半で複数端末から
+  # 開いても別々のセッションに散り、後半でどれに入るかが決定的になる。全部 attach 済み
+  # なら最後に使ったものへ相乗り（＝画面が同期する）が、ここで新規作成すると開くたびに
+  # セッションが増えていくので許容する。
   # tmux が正常終了（detach / 最後のウィンドウを閉じる）したらシェルも終わらせて
   # ウィンドウを閉じる。起動自体に失敗したときは素のシェルへ落とす — exit を無条件に
   # 書くと、tmux が動かない環境でログインできなくなる。
+  _tmux_target=$(tmux list-sessions -F '#{session_attached} #{session_activity} #{session_name}' 2>/dev/null \
+    | sort -k1,1n -k2,2nr | head -n1 | cut -d' ' -f3-)
+  if [[ -n "$_tmux_target" ]] && tmux attach-session -t "$_tmux_target"; then
+    exit
+  fi
+  # attach 先が無い / 直前に消えた場合はここに落ちてくる。
+  unset _tmux_target
   if tmux new-session -A -s main; then
     exit
   fi
