@@ -103,9 +103,26 @@ PATH を通しているのは 2 箇所だけ:
   `/home/<user>` を管理するので、Windows のプロファイルではなく WSL の dotfiles を
   操作してしまう。見つからなければ 127 で止めて導入方法を出す。
 
-この基盤の利用例は `chezmoi-merge` と `lmstudio-to-ollama`。どちらも bash 版 +
-PowerShell 版の対で、判定ロジックを揃えて差分を最小にしてある。詳細は
+この基盤の利用例は `chezmoi-merge` と、LM Studio → Ollama → opencode を繋ぐ 3 本
+（`lmstudio-to-ollama` / `ollama-to-opencode` / `lmstudio-to-opencode`）。いずれも
+bash 版 + PowerShell 版の対で、判定ロジックを揃えて差分を最小にしてある。詳細は
 [README.md](README.md) の「独自コマンド（`~/.local/bin`）」節。
+
+ローカル LLM 系を触るときの注意（実測で踏んだもの）:
+
+- **`.ps1` でネイティブコマンドの stderr をリダイレクトしないこと**（`2>$null` 等）。
+  Windows PowerShell 5.1 はリダイレクトされた stderr 行を `NativeCommandError` に包むため、
+  `$ErrorActionPreference = 'Stop'` だと終了ステータス 0 でも例外になる。
+  `ollama stop`（未ロード時）で実際に落ちた。読み捨てたいときは事前に状態を見て呼ばない。
+- **PowerShell の配列スプラッティングは位置引数になる。** `@($x, '-Switch')` を
+  `& script @args` に渡すと `-Switch` が 2 つ目の位置引数として渡り、束縛に失敗する。
+  名前付きで渡すならハッシュテーブルスプラッティングを使う。
+- **`$args` は CmdletBinding 付きスクリプトでは予約名**なので変数として使わない。
+- **bash で `[ cond ] && cmd` を文として書かない。** 条件が偽だと戻り値 1 が文の値になり
+  `set -e` で落ちる。`if ... fi` にする。
+- **opencode の設定はコンテキスト長を「モデル名のタグ」に焼き込む方式**にしてある。
+  OpenAI 互換エンドポイントに `num_ctx` を渡す口が無いため。`OLLAMA_CONTEXT_LENGTH` を
+  全体に設定する案は、VRAM に収まらないモデルを CPU へ追い出すので採らない。
 
 ## WezTerm と ssh ラッパー
 

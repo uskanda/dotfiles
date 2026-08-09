@@ -462,6 +462,56 @@ content-addressed（`manifests` + `sha256-<digest>` という名の blob）で�
 > 増減に埋もれる。確認は `fsutil hardlink list <blob>`（Windows）／`stat -c %i`（Unix）で
 > **同一 inode / File ID か**を見る。
 
+### `ollama-to-opencode`
+
+ローカルの Ollama モデルを [opencode](https://opencode.ai/) から使えるようにする。
+
+```bash
+ollama-to-opencode                    # ローカルのモデルと現在の登録状況
+ollama-to-opencode gpt-oss-20b-mxfp4  # プローブ → 焼き込み → 登録 → 疎通確認
+ollama-to-opencode a b --default a
+```
+
+モデルごとに 4 つのことをする:
+
+1. **100% GPU に載る最大コンテキストを実測**する（学習長から半分ずつ下げて試す。
+   `--ctx` / `-Ctx` で指定すれば省略）
+2. それを `<model>:<tag>`（例 `gpt-oss-20b-mxfp4:128k`）に `ollama create` で
+   **焼き込む**。blob を共有するのでディスクは増えない
+3. `~/.config/opencode/opencode.json(c)` の `provider.ollama` に登録し、
+   `baseURL` を `http://localhost:11434/v1` に向ける
+4. その `/v1` 経由で 1 回投げて**疎通確認**する
+
+> **なぜコンテキストをモデルに焼き込むのか。** opencode は OpenAI 互換
+> エンドポイント経由で Ollama を叩くが、この API には `num_ctx` を渡す場所が無い。
+> 指定が無いと Ollama は VRAM から既定値を決め（16GB カードで 4096）、opencode の
+> システムプロンプトだけで約 9.4k トークンあるため**切り捨てられる**。エージェントの
+> 挙動が壊れるうえ、プロンプトキャッシュが毎ターン無効化されて再プリフィルが走る。
+> `OLLAMA_CONTEXT_LENGTH` を全体に設定するのは誤った手で、その値を VRAM に収められない
+> 大きいモデルまで CPU へ追い出してしまう（実測で `qwen3.6-27b` が該当）。
+
+* 設定ファイルは**マージ**する。既存の他プロバイダやキーは残し、書き込み前に
+  `.bak` へ退避する（コメントは保持されない）。JSONC のコメントと末尾カンマは
+  文字列を認識しながら除去するので、`"https://example.com//x"` のような値も壊れない。
+* 実測例（RX 9070 XT / VRAM 15.9GB）: `gemma-4-12b-it-q4_k_m` は 262144 で 8.3GB・100% GPU、
+  `gpt-oss-20b-mxfp4` は自身の上限 131072 で 11GB・100% GPU、`qwen3.6-27b-q4_k_m` は
+  16384 でも CPU へこぼれる。コンテキストを 8k→256k に変えても生成速度は変わらなかった。
+
+### `lmstudio-to-opencode`
+
+LM Studio のモデルを opencode で使える状態まで一気に持っていくオーケストレータ。
+中身は上の 2 つを順に呼ぶだけで、どちらも単体で使える。
+
+```bash
+lmstudio-to-opencode qwen3.6-27b   # 取り込み → 設定 → 疎通確認
+lmstudio-to-opencode --all         # LM Studio の全モデル
+```
+
+* `--ctx` / `--no-verify` / `--force` は下位コマンドへそのまま渡す。オプションを
+  二重管理しないため、自分で解釈するのは `--all` / `--default` / `--list` だけ。
+* 内部では `lmstudio-to-ollama --print-ref`（標準出力にモデル ref だけを返し、
+  取り込み済みならエラーにせず ref を返す）と `--list-paths` を使う。
+
 VSCode ユーザー設定
 -----------------------------
 `settings.json` の反映先は OS ごとに違うが、chezmoi は 1 つのソースを複数の宛先へ
