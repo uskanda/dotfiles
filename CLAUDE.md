@@ -103,7 +103,8 @@ PATH を通しているのは 2 箇所だけ:
   `/home/<user>` を管理するので、Windows のプロファイルではなく WSL の dotfiles を
   操作してしまう。見つからなければ 127 で止めて導入方法を出す。
 
-`chezmoi-merge` はこの基盤の最初の利用例（bash 版 + PowerShell 版の対）。詳細は
+この基盤の利用例は `chezmoi-merge` と `lmstudio-to-ollama`。どちらも bash 版 +
+PowerShell 版の対で、判定ロジックを揃えて差分を最小にしてある。詳細は
 [README.md](README.md) の「独自コマンド（`~/.local/bin`）」節。
 
 ## WezTerm と ssh ラッパー

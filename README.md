@@ -420,6 +420,48 @@ chezmoi-merge "tmux だけ"  # 初回プロンプトに補足を足す
   WSL 側の chezmoi は `/home/<user>` を管理するので、Windows のプロファイルではなく
   WSL の dotfiles を同期してしまい、意図と逆になる。
 
+### `lmstudio-to-ollama`
+
+LM Studio がダウンロード済みの GGUF を Ollama 側にも登録する。
+
+```bash
+lmstudio-to-ollama                 # LM Studio の一覧と、付く ollama 名を表示
+lmstudio-to-ollama qwen3.6-27b     # パスの部分一致で 1 つ選んで取り込む
+lmstudio-to-ollama gpt-oss -n gpt-oss:20b
+```
+
+**なぜラッパが要るか。** Ollama は `.gguf` の入ったディレクトリを読めない。モデル置き場は
+content-addressed（`manifests` + `sha256-<digest>` という名の blob）で、LM Studio の
+`~/.lmstudio/models/<publisher>/<repo>/*.gguf` を `OLLAMA_MODELS` に指しても認識しない。
+唯一の入り口は Modelfile の `FROM` に `.gguf` を書いて `ollama create` する経路だが、
+**これはファイルをコピーする** — 20GB のモデルなら 20GB を二重に持つことになる。
+
+そこでこのコマンドは 2 段階でやる:
+
+1. `ollama create` で取り込む（ここで一度コピーされる）
+2. できた blob を LM Studio 側のファイルへの**ハードリンクに差し替える**
+
+同一ファイルシステム・同一実体になるので、ディスク消費は 1 つぶん。ハードリンクは
+「同じ実体に付いた 2 つ目の名前」なので、あとで `ollama rm` しても LM Studio のモデルは
+道連れにならず、逆に LM Studio 側を消しても Ollama から使い続けられる。
+
+* 実体は 2 本。[dot_local/bin/executable_lmstudio-to-ollama](dot_local/bin/executable_lmstudio-to-ollama)（bash）と
+  [dot_local/bin/lmstudio-to-ollama.ps1](dot_local/bin/lmstudio-to-ollama.ps1)（PowerShell）。
+* LM Studio のモデル置き場は移動できるので、`settings.json` の `downloadsFolder` を読む。
+  `LMSTUDIO_MODELS_DIR` / `OLLAMA_MODELS` で上書きできる。
+* **`mmproj-*.gguf`（vision projector）は非対応。** Modelfile から紐づける手段が無く、
+  取り込んでもテキスト専用になるため一覧から外してある。
+* ハードリンク化は best-effort。別ボリューム・サイズ不一致・`ln` 失敗などで少しでも
+  怪しければ**コピーのまま残す**（それでも動く）。最初からコピーで欲しいときは `--copy` / `-Copy`。
+* Windows で実測（Bonsai-27B-Q1_0 / 3.54GB）: `create` に 29.8 秒＋コピー 3.55GB、
+  差し替え後は `fsutil file queryfileid` が LM Studio 側と同一 File ID を返し、
+  サーバ再起動後の推論も通った。チャットテンプレートは GGUF メタデータから引き継がれる。
+  bash 版は WSL 上でスタブを使った動作確認まで（実モデルでの検証は Windows 版のみ）。
+
+> ⚠️ 空き容量の増減で二重取りの有無を判断しないこと。稼働中の Windows では他要因の
+> 増減に埋もれる。確認は `fsutil hardlink list <blob>`（Windows）／`stat -c %i`（Unix）で
+> **同一 inode / File ID か**を見る。
+
 VSCode ユーザー設定
 -----------------------------
 `settings.json` の反映先は OS ごとに違うが、chezmoi は 1 つのソースを複数の宛先へ
