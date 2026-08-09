@@ -1,0 +1,237 @@
+#!/usr/bin/env bash
+# lmstudio-to-ollama: LM Studio がダウンロード済みの GGUF を Ollama に登録する。
+#
+# Usage:
+#   lmstudio-to-ollama                  # LM Studio の一覧と、付く ollama 名を表示
+#   lmstudio-to-ollama qwen3.6-27b      # パスの部分一致で 1 つ選んで取り込む
+#   lmstudio-to-ollama /path/to/x.gguf  # パス直指定
+#   lmstudio-to-ollama gpt-oss -n gpt-oss:20b
+#   lmstudio-to-ollama gpt-oss --copy   # ハードリンク化せずコピーのまま残す
+#
+# Windows(PowerShell) 版は同じディレクトリの lmstudio-to-ollama.ps1。
+#
+# なぜ 2 段階か: Ollama は .gguf の入ったディレクトリを読めない。モデル置き場は
+# content-addressed (manifests + sha256-<digest> という名の blob) なので、
+# LM Studio の ~/.lmstudio/models/<publisher>/<repo>/*.gguf を OLLAMA_MODELS に
+# 指しても認識しない。取り込み口は Modelfile の FROM に .gguf を書いて
+# `ollama create` する経路だけで、これは**ファイルをコピーする**。20GB の
+# モデルなら 20GB を二重に持つことになる。
+#
+# そこで: 取り込む → できたばかりの blob を LM Studio 側へのハードリンクに
+# 差し替える。同一ファイルシステム・同一実体・ディスク消費は 1 つぶん。
+# ハードリンクは「同じ実体に付いた 2 つ目の名前」なので、あとで `ollama rm` して
+# も LM Studio のモデルは道連れにならないし、その逆も同じ。
+#
+# Windows で実測した挙動 (Bonsai-27B-Q1_0 / 3.54GB): create に 29.8 秒とコピー
+# 3.55GB、リンク差し替え後も `ollama stop` でアンロードしてから推論が通り、
+# チャットテンプレートは GGUF メタデータから引き継がれた。この bash 版は同じ
+# 手順の移植で、macOS / Linux では未検証。
+#
+# 非対応: mmproj-*.gguf (vision projector)。Modelfile から紐づける手段が無く、
+# 取り込んでもテキスト専用になるため一覧から除外している。
+
+set -euo pipefail
+
+readonly PROG="lmstudio-to-ollama"
+
+die() {
+  echo "$PROG: $1" >&2
+  exit "${2:-1}"
+}
+
+warn() {
+  echo "$PROG: $1" >&2
+}
+
+# stat のオプションは BSD(macOS) と GNU(Linux) で違う。GNU の `stat -f` は
+# 「ファイルシステムを見る」の意味で、書式が違っても終了ステータス 0 で通って
+# しまうので、実行して判定せず uname で分ける。
+case "$(uname -s)" in
+  Darwin | *BSD)
+    file_size() { stat -f '%z' "$1"; }
+    file_dev() { stat -f '%d' "$1"; }
+    ;;
+  *)
+    file_size() { stat -c '%s' "$1"; }
+    file_dev() { stat -c '%d' "$1"; }
+    ;;
+esac
+
+to_gb() {
+  awk -v b="$1" 'BEGIN { printf "%.2f", b / 1073741824 }'
+}
+
+# --- 引数 --------------------------------------------------------------------
+model=""
+name=""
+do_copy=0
+force=0
+list_only=0
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -n | --name)
+      [ "$#" -ge 2 ] || die "--name には値が必要です。"
+      name="$2"
+      shift 2
+      ;;
+    --copy) do_copy=1; shift ;;
+    -f | --force) force=1; shift ;;
+    -l | --list) list_only=1; shift ;;
+    -h | --help)
+      sed -n '/^# Usage:/,/^#$/p' "$0" | sed 's/^# \{0,1\}//'
+      exit 0
+      ;;
+    -*) die "不明なオプション: $1" ;;
+    *)
+      [ -z "$model" ] || die "モデルの指定は 1 つだけです。"
+      model="$1"
+      shift
+      ;;
+  esac
+done
+
+# --- 置き場所 ----------------------------------------------------------------
+# LM Studio はダウンロード先 (変更可能) を settings.json に持っている。
+lm_dir="${LMSTUDIO_MODELS_DIR:-}"
+if [ -z "$lm_dir" ] && [ -f "$HOME/.lmstudio/settings.json" ]; then
+  if command -v jq >/dev/null 2>&1; then
+    lm_dir="$(jq -r '.downloadsFolder // empty' "$HOME/.lmstudio/settings.json" 2>/dev/null || true)"
+  else
+    lm_dir="$(sed -n 's/.*"downloadsFolder"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
+      "$HOME/.lmstudio/settings.json" | head -n1 || true)"
+  fi
+fi
+[ -n "$lm_dir" ] || lm_dir="$HOME/.lmstudio/models"
+[ -d "$lm_dir" ] || die "LM Studio のモデルディレクトリがありません ($lm_dir)。"
+
+ollama_dir="${OLLAMA_MODELS:-$HOME/.ollama/models}"
+
+# --- 一覧 --------------------------------------------------------------------
+# mmproj は除外。分割 GGUF は先頭シャードだけ拾う (残りは ollama が同じ
+# ディレクトリから自分で読む)。
+list_ggufs() {
+  find "$lm_dir" -type f -name '*.gguf' ! -name 'mmproj-*' ! -name '*-of-*.gguf' -print
+  find "$lm_dir" -type f -name '*-00001-of-*.gguf' ! -name 'mmproj-*' -print
+}
+
+default_name() {
+  basename "$1" .gguf |
+    tr '[:upper:]' '[:lower:]' |
+    sed -e 's/-[0-9][0-9][0-9][0-9][0-9]-of-[0-9][0-9][0-9][0-9][0-9]$//' \
+      -e 's/[^a-z0-9._-]/-/g'
+}
+
+ggufs="$(list_ggufs | sort)"
+[ -n "$ggufs" ] || die "$lm_dir に .gguf がありません。"
+
+if [ "$list_only" -eq 1 ] || [ -z "$model" ]; then
+  echo "LM Studio models under $lm_dir"
+  printf '%s\n' "$ggufs" | while IFS= read -r f; do
+    printf '%8s GB  %-28s %s\n' "$(to_gb "$(file_size "$f")")" \
+      "$(default_name "$f")" "${f#"$lm_dir"/}"
+  done
+  echo "取り込み: $PROG <パスの一部>"
+  exit 0
+fi
+
+# --- 対象を決める ------------------------------------------------------------
+# ollama を要求するのはここから先だけ。一覧を見るだけなら未導入でも通す。
+command -v ollama > /dev/null 2>&1 ||
+  die "ollama が見つかりません。https://ollama.com/download を参照。" 127
+
+if [ -f "$model" ]; then
+  src="$model"
+else
+  # -F: 部分一致は正規表現ではなくリテラルで扱う。
+  hits="$(printf '%s\n' "$ggufs" | grep -iF -- "$model" || true)"
+  [ -n "$hits" ] || die "'$model' に一致するモデルがありません。引数なしで実行すると一覧が出ます。"
+  if [ "$(printf '%s\n' "$hits" | wc -l)" -gt 1 ]; then
+    warn "'$model' が複数に一致しました:"
+    printf '%s\n' "$hits" | while IFS= read -r f; do echo "  $f" >&2; done
+    exit 1
+  fi
+  src="$hits"
+fi
+
+[ -n "$name" ] || name="$(default_name "$src")"
+case "$name" in
+  *:*)
+    tag="${name##*:}"
+    name="${name%:*}"
+    ;;
+  *) tag="latest" ;;
+esac
+ref="$name:$tag"
+
+manifest="$ollama_dir/manifests/registry.ollama.ai/library/$name/$tag"
+if [ -e "$manifest" ] && [ "$force" -eq 0 ]; then
+  die "ollama に '$ref' が既にあります。--force で入れ直すか --name で別名を。"
+fi
+
+# --- 取り込み ----------------------------------------------------------------
+src_size="$(file_size "$src")"
+echo "$PROG: importing $(basename "$src") ($(to_gb "$src_size") GB) as $ref"
+
+modelfile="$(mktemp)"
+trap 'rm -f "$modelfile"' EXIT
+printf 'FROM %s\n' "$src" > "$modelfile"
+ollama create "$ref" -f "$modelfile"
+
+if [ "$do_copy" -eq 1 ]; then
+  echo "$PROG: done: $ref (コピーのまま。--copy)"
+  exit 0
+fi
+
+# --- blob をハードリンクへ差し替え -------------------------------------------
+# ここから先は best-effort。少しでも怪しければコピーのまま残す (それでも動く)。
+if [ "$(file_dev "$src")" != "$(file_dev "$ollama_dir")" ]; then
+  warn "LM Studio と Ollama が別ファイルシステム上にあります。コピーのまま残します。"
+  exit 0
+fi
+
+# 差し替えは blob を消して作り直すので、先にアンロードしておく。
+ollama stop "$ref" > /dev/null 2>&1 || true
+
+[ -f "$manifest" ] || {
+  warn "manifest が見つかりません ($manifest)。コピーのまま残します。"
+  exit 0
+}
+
+digest=""
+if command -v jq > /dev/null 2>&1; then
+  digest="$(jq -r '.layers[] | select(.mediaType=="application/vnd.ollama.image.model") | .digest' \
+    "$manifest" 2>/dev/null | head -n1 || true)"
+fi
+if [ -z "$digest" ] || [ "$digest" = "null" ]; then
+  digest="$(tr -d ' \n' < "$manifest" |
+    sed -n 's/.*"mediaType":"application\/vnd\.ollama\.image\.model","digest":"\(sha256:[0-9a-f]*\)".*/\1/p')"
+fi
+[ -n "$digest" ] || {
+  warn "manifest からモデルレイヤを読めません。コピーのまま残します。"
+  exit 0
+}
+
+blob="$ollama_dir/blobs/$(printf '%s' "$digest" | tr ':' '-')"
+[ -f "$blob" ] || {
+  warn "blob が見つかりません ($blob)。コピーのまま残します。"
+  exit 0
+}
+if [ "$(file_size "$blob")" != "$src_size" ]; then
+  # 量子化や書き換えが入って同一バイト列ではなくなっている。
+  warn "blob のサイズが元ファイルと違います。コピーのまま残します。"
+  exit 0
+fi
+
+tmp_link="$blob.hardlink.tmp"
+rm -f "$tmp_link"
+if ! ln "$src" "$tmp_link" 2>/dev/null; then
+  warn "ハードリンクを作れませんでした。コピーのまま残します。"
+  exit 0
+fi
+# 先にリンクを作ってから消す。途中で落ちても再実行すれば直る。
+rm -f "$blob"
+mv "$tmp_link" "$blob"
+
+echo "$PROG: done: $ref - ハードリンク化しました (重複していた $(to_gb "$src_size") GB を解放)"
+echo "  実行: ollama run $ref"
