@@ -45,7 +45,13 @@ param(
     # Re-import even if Ollama already has that name:tag.
     [switch]$Force,
     # List and exit (same as passing no model).
-    [switch]$List
+    [switch]$List,
+    # Print one .gguf path per line on stdout and exit, for scripts.
+    [switch]$ListPaths,
+    # Emit only the resulting model ref on stdout, for scripts. In this mode an
+    # already-imported model is success (the caller wants the end state, and it
+    # is already there), not the usual "already exists" error.
+    [switch]$PrintRef
 )
 
 $ErrorActionPreference = 'Stop'
@@ -92,6 +98,11 @@ function Get-DefaultName {
     $n = $n -replace '-\d{5}-of-\d{5}$', ''
     $n = $n -replace '[^a-z0-9._-]', '-'
     return $n
+}
+
+if ($ListPaths) {
+    $ggufs | ForEach-Object { Write-Output $_.FullName }
+    exit 0
 }
 
 if ($List -or -not $Model) {
@@ -147,6 +158,7 @@ $ref = "${Name}:${tag}"
 
 $manifest = Join-Path $ollamaDir "manifests\registry.ollama.ai\library\$Name\$tag"
 if ((Test-Path $manifest) -and -not $Force) {
+    if ($PrintRef) { Write-Output $ref; exit 0 }
     Fail "ollama already has '$ref'. Pass -Force to re-import, or -Name to use another name."
 }
 
@@ -163,21 +175,31 @@ Write-Host "importing $($src.Name) ($([math]::Round($src.Length / 1GB, 2)) GB) a
 $modelfile = Join-Path ([System.IO.Path]::GetTempPath()) 'Modelfile.lmstudio-to-ollama'
 # No BOM: the Modelfile is parsed as plain text and a BOM lands in the FROM path.
 [System.IO.File]::WriteAllText($modelfile, "FROM $($src.FullName)`r`n", (New-Object System.Text.UTF8Encoding($false)))
-& $ollama create $ref -f $modelfile
+# Out-Host in -PrintRef mode so ollama's progress does not land on stdout,
+# which in that mode carries the model ref and nothing else.
+if ($PrintRef) { & $ollama create $ref -f $modelfile | Out-Host } else { & $ollama create $ref -f $modelfile }
 $createExit = $LASTEXITCODE
 Remove-Item $modelfile -Force -ErrorAction SilentlyContinue
 if ($createExit -ne 0) { Fail "ollama create failed (exit $createExit)." $createExit }
 
 if ($Copy) {
     Write-Host "done: $ref (kept as a copy, -Copy)" -ForegroundColor Green
+    if ($PrintRef) { Write-Output $ref }
     exit 0
 }
 
 # --- swap the blob for a hard link -------------------------------------------
 # Everything below is best-effort: on any doubt keep the copy, which works.
+# The model is imported either way, so these all end in success - and in
+# -PrintRef mode the caller still needs the ref.
+function Exit-Imported {
+    if ($PrintRef) { Write-Output $script:ref }
+    exit 0
+}
+
 if ([System.IO.Path]::GetPathRoot($src.FullName) -ne [System.IO.Path]::GetPathRoot($ollamaDir)) {
     Warn "LM Studio and Ollama are on different volumes - hard link not possible, keeping the copy."
-    exit 0
+    Exit-Imported
 }
 
 # Unload first: the link swap deletes and recreates the blob under the server.
@@ -187,17 +209,17 @@ if ([System.IO.Path]::GetPathRoot($src.FullName) -ne [System.IO.Path]::GetPathRo
 # when the model is not currently loaded, which is the normal case here.
 try { & $ollama stop $ref | Out-Null } catch { }
 
-if (-not (Test-Path $manifest)) { Warn "manifest not found ($manifest), keeping the copy."; exit 0 }
+if (-not (Test-Path $manifest)) { Warn "manifest not found ($manifest), keeping the copy."; Exit-Imported }
 $layer = (Get-Content $manifest -Raw | ConvertFrom-Json).layers |
     Where-Object { $_.mediaType -eq 'application/vnd.ollama.image.model' } | Select-Object -First 1
-if (-not $layer) { Warn "no model layer in the manifest, keeping the copy."; exit 0 }
+if (-not $layer) { Warn "no model layer in the manifest, keeping the copy."; Exit-Imported }
 
 $blob = Join-Path $ollamaDir ('blobs\' + ($layer.digest -replace ':', '-'))
-if (-not (Test-Path $blob)) { Warn "blob not found ($blob), keeping the copy."; exit 0 }
+if (-not (Test-Path $blob)) { Warn "blob not found ($blob), keeping the copy."; Exit-Imported }
 if ((Get-Item $blob).Length -ne $src.Length) {
     # ollama requantized or rewrote the file, so the two are not the same bytes.
     Warn "blob size differs from the source, keeping the copy."
-    exit 0
+    Exit-Imported
 }
 
 $tmpLink = "$blob.hardlink.tmp"
@@ -206,7 +228,7 @@ try {
     New-Item -ItemType HardLink -Path $tmpLink -Target $src.FullName -ErrorAction Stop | Out-Null
 } catch {
     Warn "could not hard-link ($($_.Exception.Message)), keeping the copy."
-    exit 0
+    Exit-Imported
 }
 # Link first, delete second: if this machine dies in between, re-running fixes it.
 Remove-Item $blob -Force
@@ -214,3 +236,4 @@ Move-Item -LiteralPath $tmpLink -Destination $blob
 
 Write-Host ("done: $ref - hard-linked, {0:N1} GB of duplicate data reclaimed" -f ($src.Length / 1GB)) -ForegroundColor Green
 Write-Host "  run it with: ollama run $ref" -ForegroundColor DarkGray
+Exit-Imported

@@ -8,6 +8,12 @@
 #   lmstudio-to-ollama gpt-oss -n gpt-oss:20b
 #   lmstudio-to-ollama gpt-oss --copy   # ハードリンク化せずコピーのまま残す
 #
+# スクリプト向けに 2 つ:
+#   --list-paths  .gguf のフルパスを 1 行 1 件で標準出力に出して終わる
+#   --print-ref   標準出力にはモデル ref だけを出す。既に取り込み済みなら
+#                 エラーにせず ref を返して 0 で終わる (呼び出し側が欲しいのは
+#                 結果の状態なので)。lmstudio-to-opencode がこれを使う。
+#
 # Windows(PowerShell) 版は同じディレクトリの lmstudio-to-ollama.ps1。
 #
 # なぜ 2 段階か: Ollama は .gguf の入ったディレクトリを読めない。モデル置き場は
@@ -67,6 +73,8 @@ name=""
 do_copy=0
 force=0
 list_only=0
+list_paths=0
+print_ref=0
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -78,6 +86,8 @@ while [ "$#" -gt 0 ]; do
     --copy) do_copy=1; shift ;;
     -f | --force) force=1; shift ;;
     -l | --list) list_only=1; shift ;;
+    --list-paths) list_paths=1; shift ;;
+    --print-ref) print_ref=1; shift ;;
     -h | --help)
       sed -n '/^# Usage:/,/^#$/p' "$0" | sed 's/^# \{0,1\}//'
       exit 0
@@ -125,6 +135,26 @@ default_name() {
 ggufs="$(list_ggufs | sort)"
 [ -n "$ggufs" ] || die "$lm_dir に .gguf がありません。"
 
+if [ "$list_paths" -eq 1 ]; then
+  printf '%s\n' "$ggufs"
+  exit 0
+fi
+
+# --print-ref: 標準出力にはモデル ref だけを流したいので、通常の出力は
+# まとめて stderr へ寄せ、ref だけを fd 3 経由で元の stdout に返す。
+if [ "$print_ref" -eq 1 ]; then
+  exec 3>&1 1>&2
+fi
+
+# 取り込みが済んだ状態で抜ける共通処理。ハードリンク化に失敗してコピーのまま
+# 残す場合も「取り込みは成功」なので 0 で返し、ref も返す。
+exit_imported() {
+  if [ "$print_ref" -eq 1 ]; then
+    echo "$ref" >&3
+  fi
+  exit 0
+}
+
 if [ "$list_only" -eq 1 ] || [ -z "$model" ]; then
   echo "LM Studio models under $lm_dir"
   printf '%s\n' "$ggufs" | while IFS= read -r f; do
@@ -166,6 +196,11 @@ ref="$name:$tag"
 
 manifest="$ollama_dir/manifests/registry.ollama.ai/library/$name/$tag"
 if [ -e "$manifest" ] && [ "$force" -eq 0 ]; then
+  # --print-ref は「この LM Studio モデルの ref をくれ、無ければ取り込んで」の
+  # 意味なので、既にある場合は成功として ref を返す。
+  if [ "$print_ref" -eq 1 ]; then
+    exit_imported
+  fi
   die "ollama に '$ref' が既にあります。--force で入れ直すか --name で別名を。"
 fi
 
@@ -180,14 +215,14 @@ ollama create "$ref" -f "$modelfile"
 
 if [ "$do_copy" -eq 1 ]; then
   echo "$PROG: done: $ref (コピーのまま。--copy)"
-  exit 0
+  exit_imported
 fi
 
 # --- blob をハードリンクへ差し替え -------------------------------------------
 # ここから先は best-effort。少しでも怪しければコピーのまま残す (それでも動く)。
 if [ "$(file_dev "$src")" != "$(file_dev "$ollama_dir")" ]; then
   warn "LM Studio と Ollama が別ファイルシステム上にあります。コピーのまま残します。"
-  exit 0
+  exit_imported
 fi
 
 # 差し替えは blob を消して作り直すので、先にアンロードしておく。
@@ -195,7 +230,7 @@ ollama stop "$ref" > /dev/null 2>&1 || true
 
 [ -f "$manifest" ] || {
   warn "manifest が見つかりません ($manifest)。コピーのまま残します。"
-  exit 0
+  exit_imported
 }
 
 digest=""
@@ -209,25 +244,25 @@ if [ -z "$digest" ] || [ "$digest" = "null" ]; then
 fi
 [ -n "$digest" ] || {
   warn "manifest からモデルレイヤを読めません。コピーのまま残します。"
-  exit 0
+  exit_imported
 }
 
 blob="$ollama_dir/blobs/$(printf '%s' "$digest" | tr ':' '-')"
 [ -f "$blob" ] || {
   warn "blob が見つかりません ($blob)。コピーのまま残します。"
-  exit 0
+  exit_imported
 }
 if [ "$(file_size "$blob")" != "$src_size" ]; then
   # 量子化や書き換えが入って同一バイト列ではなくなっている。
   warn "blob のサイズが元ファイルと違います。コピーのまま残します。"
-  exit 0
+  exit_imported
 fi
 
 tmp_link="$blob.hardlink.tmp"
 rm -f "$tmp_link"
 if ! ln "$src" "$tmp_link" 2>/dev/null; then
   warn "ハードリンクを作れませんでした。コピーのまま残します。"
-  exit 0
+  exit_imported
 fi
 # 先にリンクを作ってから消す。途中で落ちても再実行すれば直る。
 rm -f "$blob"
@@ -235,3 +270,4 @@ mv "$tmp_link" "$blob"
 
 echo "$PROG: done: $ref - ハードリンク化しました (重複していた $(to_gb "$src_size") GB を解放)"
 echo "  実行: ollama run $ref"
+exit_imported
