@@ -74,6 +74,15 @@
 				},
 				{
 					"PackageIdentifier" : "SST.opencode"
+				},
+				{
+					"PackageIdentifier" : "SST.OpenCodeDesktop"
+				},
+				{
+					"PackageIdentifier" : "Ollama.Ollama"
+				},
+				{
+					"PackageIdentifier" : "ElementLabs.LMStudio"
 				}
 			],
 			"SourceDetails" : 
