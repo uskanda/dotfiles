@@ -48,6 +48,8 @@ CLAUDE.md
 # Unix 版（executable_* の方）と対で、中身は同じことをする。
 # .config/powershell/profile.ps1 は ~/.local/bin を PATH に通す土台で、
 # setup.ps1 の Install-PowerShellProfile が実プロファイルから source する。
+# .config/opencode/ は Windows 機の opencode 設定。登録しているモデルもコンテキストも
+# この GPU (RX 9070 XT / VRAM 15.9GB) で実測して決めた値なので、他機へは配らない。
 {{ if ne .chezmoi.os "windows" }}
 .local/bin/claude-notify.ps1
 .local/bin/install-voicevox-engine.ps1
@@ -56,6 +58,7 @@ CLAUDE.md
 .local/bin/ollama-to-opencode.ps1
 .local/bin/lmstudio-to-opencode.ps1
 .config/powershell/
+.config/opencode/
 {{ end }}
 
 # === VSCode ユーザー設定 ===

@@ -1,0 +1,36 @@
+// Written by ollama-to-opencode. Model tags carry a baked-in num_ctx, which is the
+// only way to set the context over the OpenAI-compatible endpoint.
+{
+  "$schema": "https://opencode.ai/config.json",
+  "disabled_providers": [],
+  "model": "ollama/gpt-oss-20b-mxfp4:128k",
+  "provider": {
+    "ollama": {
+      "name": "Ollama",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "gemma-4-12b-it-q4_k_m:256k": {
+          "name": "Gemma 4 12B it (256k)"
+        },
+        "gpt-oss-20b-mxfp4:128k": {
+          "name": "gpt-oss 20B (128k)"
+        },
+        "gemma-4-e4b-it-q4_k_m:128k": {
+          "name": "Gemma 4 E4B it (128k)"
+        },
+        "ornith:9b-256k": {
+          "name": "ornith:9b-256k"
+        },
+        "qwen3.5:9b-256k": {
+          "name": "qwen3.5:9b-256k"
+        },
+        "lfm2:24b-a2b-32k": {
+          "name": "lfm2:24b-a2b-32k"
+        }
+      }
+    }
+  }
+}
