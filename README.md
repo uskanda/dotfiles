@@ -16,6 +16,11 @@ installation
 > Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 > ./setup.ps1
 
+1 行目の `-Scope Process` は**この `setup.ps1` を走らせるためだけ**のブートストラップ。
+恒久的な設定は `setup.ps1` 側（`Set-UserExecutionPolicy`）が `CurrentUser` スコープに
+`RemoteSigned` を入れて行う。詳細は
+[実行ポリシー](#実行ポリシーrestricted-のままだとプロファイルが読めない) を参照。
+
 `setup.ps1` は既定ではターミナル本体（WezTerm と Alacritty）の winget インストールと
 設定の配置だけを行う。本体は未導入なら `winget install`、導入済みなら `winget upgrade`
 で最新に追従する（`-Winget` の一括 import は `--no-upgrade` だが、このリポジトリが設定を
@@ -396,6 +401,40 @@ OneDrive の同期とも相性が良いため。既に該当行があれば何�
 
 > 反映には**新しいシェルを開く**必要がある。今のセッションに効かせるなら
 > `. $PROFILE.CurrentUserAllHosts`。
+
+### 実行ポリシー（Restricted のままだとプロファイルが読めない）
+
+PowerShell 起動時にこう出るなら、シムの問題ではなく**実行ポリシー**:
+
+```
+このシステムではスクリプトの実行が無効になっているため、ファイル
+C:\Users\<user>\OneDrive\ドキュメント\WindowsPowerShell\profile.ps1 を読み込むことができません。
+```
+
+クライアント版 Windows の Windows PowerShell 5.1 は既定が `Restricted` で、`.ps1` が
+一切走らない。プロファイルも `.ps1` なので、シムの追記が正しくても毎回このエラーになり、
+`~/.local/bin` が PATH に入らず、このリポジトリが配る `.ps1` コマンドも動かない。
+インストール手順の `-Scope Process` の Bypass は `setup.ps1` 自身を走らせるためだけの
+一時設定なので、これだけでは次のシェルで元に戻る。
+
+恒久対応は `setup.ps1` の `Set-UserExecutionPolicy` が行う（`Install-PowerShellProfile`
+の直前に実行）。単体で直すならこれ 1 行で、**管理者権限は不要**:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+* スコープを `CurrentUser` にしているのは、昇格が要らず `LocalMachine` を汚さないため
+  （優先順位は `MachinePolicy` > `UserPolicy` > `Process` > `CurrentUser` > `LocalMachine`
+  なので、`LocalMachine` が Restricted でも `CurrentUser` が勝つ）。
+* `RemoteSigned` は「ローカルで作った `.ps1` は無署名で実行可、ダウンロード由来
+  （mark-of-the-web 付き）は署名必須」。chezmoi が書くファイルには MOTW が付かないので
+  これで足りる。`Unrestricted` / `Bypass` まで緩める必要はない。
+* 設定先は HKCU なので、`setup.ps1` を昇格して走らせる場合も**同じアカウント**であること。
+  「別のユーザーとして実行」だとそちらのアカウントに入ってしまう。
+* `MachinePolicy` / `UserPolicy` が `Undefined` 以外（＝グループポリシー管理下）のときは
+  ローカルで何を設定しても効かない。`setup.ps1` はその場合、黙って成功したように
+  見せずに警告を出してスキップする。現状を見るなら `Get-ExecutionPolicy -List`。
 
 ### `chezmoi-merge`
 

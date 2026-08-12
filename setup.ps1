@@ -118,6 +118,47 @@ function Test-WezTermConfig {
     }
 }
 
+# --- Execution policy: let the profile actually load -------------------------
+# Client Windows defaults to Restricted, under which *no* .ps1 runs - including
+# $PROFILE. The shim Install-PowerShellProfile appends then fails on every launch
+# with "running scripts is disabled on this system", and the .ps1 commands this
+# repo ships in ~/.local/bin cannot run either. The README's
+# `Set-ExecutionPolicy -Scope Process Bypass` only covers the setup.ps1 run
+# itself, so without this step nothing is fixed for the next shell.
+#
+# RemoteSigned is the smallest policy that covers both: local scripts run
+# unsigned, anything carrying a mark-of-the-web still needs a signature.
+# CurrentUser scope needs no elevation and leaves the machine-wide policy alone
+# (CurrentUser takes precedence over LocalMachine). It writes to HKCU, so run
+# setup.ps1 elevated as *this* user - "run as different user" would set it for
+# the other account instead.
+function Set-UserExecutionPolicy {
+    # Group Policy outranks every local scope, so setting CurrentUser there would
+    # look like it worked and change nothing.
+    foreach ($scope in 'MachinePolicy', 'UserPolicy') {
+        $managed = Get-ExecutionPolicy -Scope $scope
+        if ($managed -ne 'Undefined') {
+            Write-Host "Execution policy: managed by Group Policy ($scope = $managed) - cannot change it here." -ForegroundColor Yellow
+            return
+        }
+    }
+
+    $current = Get-ExecutionPolicy -Scope CurrentUser
+    if ($current -in @('RemoteSigned', 'Unrestricted', 'Bypass')) {
+        Write-Host "Execution policy: CurrentUser = $current - scripts already allowed." -ForegroundColor Green
+        return
+    }
+
+    try {
+        # -Force answers the confirmation prompt; without it setup.ps1 blocks here.
+        Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+        Write-Host "Execution policy: CurrentUser $current -> RemoteSigned" -ForegroundColor Green
+    } catch {
+        # Not fatal for the rest of setup - report it and carry on.
+        Write-Host "Execution policy: could not set CurrentUser to RemoteSigned - $($_.Exception.Message)" -ForegroundColor Yellow
+    }
+}
+
 # --- PowerShell profile: load the chezmoi-managed one ------------------------
 # This is what puts %USERPROFILE%\.local\bin on PATH, i.e. what makes this
 # repo's own commands (chezmoi-merge, ...) runnable by name in PowerShell. The
@@ -312,6 +353,7 @@ Set-AlacrittyLink
 Install-Terminal -Id 'wez.wezterm' -Name 'WezTerm' -ProcessName 'wezterm-gui', 'wezterm'
 Test-WezTermConfig
 
+Set-UserExecutionPolicy
 Install-PowerShellProfile
 
 if ($Winget -or $env:INSTALL_WINGET -eq '1') {
