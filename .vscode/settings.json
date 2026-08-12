@@ -1,0 +1,24 @@
+{
+  // このウィンドウを他の VSCode ウィンドウと見分けるための設定。
+  // window スコープなので workspace 側（ここ）か user settings にしか置けない。
+  // ${remoteName} は Remote-SSH / WSL 接続時に接続先名へ展開される。
+  // 同じ dotfiles を macOS / Windows / WSL2 / SSH 先で開いても区別できる。
+  "window.title": "⚙️ dotfiles [${remoteName}]${separator}${activeEditorShort}",
+
+  // 値はテーマの id。日本語言語パックが入っていると一覧の表示名だけ翻訳される
+  // （例: Dark Modern → ダーク モダン）ので、表示名で書くと黙って無視される。
+  "workbench.colorTheme": "Kimbie Dark",
+
+  // テーマ本体は琥珀寄りのブラウンなので、識別用にタイトルバーと
+  // アクティビティバーだけ鮮やかな金色にしている。
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#C79400",
+    "titleBar.activeForeground": "#1A1A1A",
+    "titleBar.inactiveBackground": "#8A6700",
+    "titleBar.inactiveForeground": "#E8E4DA",
+    "activityBar.background": "#C79400",
+    "activityBar.foreground": "#1A1A1A",
+    "activityBar.inactiveForeground": "#1A1A1A99",
+    "activityBar.activeBorder": "#1A1A1A"
+  }
+}
