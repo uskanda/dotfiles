@@ -10,6 +10,12 @@
 #
 # 後勝ちなので、CRLF を保ちたい拡張子は最後に書く。
 
+# 既定を LF にする。拡張子ごとに列挙する方式だと属性の無いものが漏れ、
+# Windows 端末でだけ CRLF になってドリフト扱いされる（実測: SKILL.md 群・
+# vscode-workspace-env.py・dot_config/git/ignore が該当した）。
+# text=auto なのでバイナリは Git が自動判別して対象外になる。
+* text=auto eol=lf
+
 dot_local/bin/*   text eol=lf
 setup             text eol=lf
 *.sh              text eol=lf
