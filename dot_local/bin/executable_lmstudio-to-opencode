@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+# lmstudio-to-opencode: LM Studio のモデルを opencode で使える状態まで一気に持っていく。
+#
+# Usage:
+#   lmstudio-to-opencode                    # LM Studio の一覧を表示
+#   lmstudio-to-opencode qwen3.6-27b        # 取り込み → 設定 → 疎通確認
+#   lmstudio-to-opencode a b --default a    # 複数まとめて。既定モデルも指定
+#   lmstudio-to-opencode --all              # LM Studio の全モデル
+#   lmstudio-to-opencode a --ctx 32768      # コンテキストのプローブを飛ばす
+#
+# Windows(PowerShell) 版は同じディレクトリの lmstudio-to-opencode.ps1。
+#
+# これ自体はオーケストレータで、実際の仕事は隣の 2 コマンドにある。単体でも使える:
+#
+#   lmstudio-to-ollama   .gguf を取り込み、blob を LM Studio 側へのハードリンクに
+#                        差し替えて二重にディスクを使わないようにする
+#   ollama-to-opencode   100% GPU に載る最大コンテキストを実測して
+#                        `<model>:<tag>` に焼き込み、opencode の設定へ登録して
+#                        /v1 エンドポイント経由の疎通まで確認する
+
+set -euo pipefail
+
+readonly PROG="lmstudio-to-opencode"
+here="$(cd "$(dirname "$0")" && pwd)"
+importer="$here/lmstudio-to-ollama"
+configurer="$here/ollama-to-opencode"
+
+die() {
+  echo "$PROG: $1" >&2
+  exit "${2:-1}"
+}
+
+for p in "$importer" "$configurer"; do
+  [ -x "$p" ] || die "$p がありません。chezmoi apply で一式を入れてください。" 127
+done
+
+# --- 引数 --------------------------------------------------------------------
+# 自分で解釈するのは --all / --default / --list だけで、あとは下位コマンドへ
+# そのまま渡す。オプションを二重管理しないため。
+targets=()
+passthru=()
+all=0
+default_ref=""
+force=0
+list_only=0
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --all) all=1; shift ;;
+    -l | --list) list_only=1; shift ;;
+    --default)
+      [ "$#" -ge 2 ] || die "--default には値が必要です。"
+      default_ref="$2"
+      shift 2
+      ;;
+    -f | --force)
+      force=1
+      passthru+=("--force")
+      shift
+      ;;
+    --ctx)
+      [ "$#" -ge 2 ] || die "--ctx には値が必要です。"
+      passthru+=("--ctx" "$2")
+      shift 2
+      ;;
+    --no-verify) passthru+=("--no-verify"); shift ;;
+    -h | --help)
+      sed -n '/^# Usage:/,/^#$/p' "$0" | sed 's/^# \{0,1\}//'
+      exit 0
+      ;;
+    -*) die "不明なオプション: $1" ;;
+    *) targets+=("$1"); shift ;;
+  esac
+done
+
+if [ "$list_only" -eq 1 ] || { [ "${#targets[@]}" -eq 0 ] && [ "$all" -eq 0 ]; }; then
+  "$importer" --list
+  echo
+  echo "一気通貫で実行: $PROG <パスの一部>"
+  exit 0
+fi
+
+if [ "$all" -eq 1 ]; then
+  targets=()
+  while IFS= read -r line; do
+    # `[ ... ] && cmd` を素で書かないこと: 条件が偽だと戻り値 1 がそのまま
+    # 文の値になり、set -e でスクリプトが落ちる。
+    if [ -n "$line" ]; then targets+=("$line"); fi
+  done < <("$importer" --list-paths)
+  [ "${#targets[@]}" -gt 0 ] || die "LM Studio に取り込める .gguf がありません。"
+  echo "$PROG: LM Studio の ${#targets[@]} モデルを取り込みます" >&2
+fi
+
+# --- 1/2: LM Studio -> Ollama ------------------------------------------------
+refs=()
+for t in "${targets[@]}"; do
+  echo "$PROG: [1/2] importing $t" >&2
+  import_args=("$t" "--print-ref")
+  if [ "$force" -eq 1 ]; then import_args+=("--force"); fi
+  ref="$("$importer" "${import_args[@]}")"
+  [ -n "$ref" ] || die "'$t' の取り込みに失敗しました。"
+  refs+=("$ref")
+done
+
+# --- 2/2: Ollama -> opencode -------------------------------------------------
+echo "$PROG: [2/2] configuring opencode for ${refs[*]}" >&2
+config_args=("${refs[@]}")
+if [ "${#passthru[@]}" -gt 0 ]; then config_args+=("${passthru[@]}"); fi
+if [ -n "$default_ref" ]; then
+  # LM Studio 側の名前で指定されているかもしれないので、実際にできた ref へ寄せる。
+  hit=""
+  for r in "${refs[@]}"; do
+    case "$r" in
+      *"$(echo "$default_ref" | tr '[:upper:]' '[:lower:]')"*) hit="$r"; break ;;
+    esac
+  done
+  config_args+=("--default" "${hit:-$default_ref}")
+fi
+
+exec "$configurer" "${config_args[@]}"

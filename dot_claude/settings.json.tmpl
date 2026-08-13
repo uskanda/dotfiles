@@ -2,27 +2,53 @@
   ~/.claude/settings.json (user 設定) — chezmoi 管理。
   端末差分が出やすい値は chezmoi のデータ経由で上書きする。
 
-  既定値: model = "claude-opus-4-8[1m]"  （[1m] = 1M コンテキストウィンドウ）
+  既定値: model = "opus[1m]"  （[1m] = 1M コンテキストウィンドウ）
+  世代を固定せずエイリアスで指定しているので、新しい Opus が出ても追随する。
   端末固有の上書き: ~/.config/chezmoi/chezmoi.toml に以下を書く
 
       [data.claude]
       model = "claude-sonnet-4-6"
 
   `dig` で未設定時に既定値へフォールバックするため、データ未定義でも安全に描画される。
+
+  permissions.allow は複数端末の union で育てる。端末側で増えた分は
+  chezmoi-merge スキル（または sync-claude-settings）で突合してここへ集約する。
+  特定 devcontainer 固有の additionalDirectories（/workspace/... 配下）は端末を
+  またいで意味を持たないので追跡しない。
 */ -}}
-{{- $model := dig "claude" "model" "claude-opus-4-8[1m]" . -}}
+{{- $model := dig "claude" "model" "opus[1m]" . -}}
 {{- /* Claude Code runs command hooks through Git Bash on Windows; emit a
        bash-friendly "~" path there instead of a "C:\Users\..." path whose
        backslashes the shell would mangle. */ -}}
-{{- $hook := printf "%s/.local/bin/claude-notify-hook" .chezmoi.homeDir -}}
+{{- $bin := printf "%s/.local/bin" .chezmoi.homeDir -}}
 {{- if eq .chezmoi.os "windows" -}}
-{{-   $hook = "~/.local/bin/claude-notify-hook" -}}
+{{-   $bin = "~/.local/bin" -}}
 {{- end -}}
+{{- $hook := printf "%s/claude-notify-hook" $bin -}}
+{{- $hostingHook := printf "%s/claude-hosting-hook" $bin -}}
 {
   "agentPushNotifEnabled": true,
   "cleanupPeriodDays": 30,
   "effortLevel": "xhigh",
+  "extraKnownMarketplaces": {
+    "superpowers-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers-marketplace"
+      }
+    }
+  },
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": {{ $hostingHook | quote }}
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "hooks": [
@@ -69,22 +95,29 @@
       "Bash(gh repo *)",
       "Bash(glab auth *)",
       "Bash(glab variable *)",
+      "Bash(glab api *)",
+      "Bash(glab ci *)",
+      "Bash(glab issue *)",
+      "Bash(glab repo *)",
       "Bash(crontab -l)",
       "Bash(ls -la)",
       "Bash(cat MEMORY.md)",
       "Bash(exit 1)",
       "Bash(bash -n *)",
       "Bash(bash --version)",
+      "Bash(claude --version)",
+      "WebSearch",
 
       "Bash(../venv/bin/pyinfra *)",
       "Bash(venv/bin/pyinfra *)",
-
       "Bash(venv/bin/python -m py_compile *)",
-
       "Bash(venv/bin/python -c ' *)",
+      "Bash(venv/bin/python -c \" *)",
       "Bash(../venv/bin/python -)",
       "Bash(venv/bin/pip install *)",
       "Bash(venv/bin/pip freeze *)",
+      "Bash(backend/venv/bin/python -)",
+      "Bash(backend/venv/bin/python -c \"import pygments; print\\('pygments', pygments.__version__\\)\")",
 
       "Bash(apt-cache *)",
       "Bash(apt-get download *)",
@@ -99,18 +132,54 @@
       "Bash(chezmoi source-path *)",
 
       "Bash(openspec --help)",
+      "Bash(openspec --version)",
       "Bash(openspec show *)",
+      "Bash(openspec list *)",
+      "Bash(openspec new *)",
+      "Bash(openspec status *)",
+      "Bash(openspec instructions *)",
       "Bash(openspec archive *)",
       "Bash(openspec validate *)",
+
+      "Skill(commit)",
+      "Skill(commit:*)",
+      "Skill(list-unmerged-qa-changes)",
+      "Skill(list-unmerged-qa-changes:*)",
+      "Skill(merge-develop)",
+      "Skill(merge-develop:*)",
+      "Skill(mr-qa)",
+      "Skill(mr-qa:*)",
+
+      "Bash(grep -rn -E \"mypy|ruff\" .gitlab-ci.yml .github)",
+      "Bash(find /workspace -maxdepth 3 -name \".pre-commit-config.yaml\")",
+      "Bash(cat /proc/1/cgroup 2>/dev/null | head -5; echo \"--- env ---\"; env | grep -iE \"remote|codespace|devcontainer|container|CLAUDE|ANTHROPIC\" | sed 's/\\\\\\(KEY|TOKEN|SECRET\\\\\\)=.*/\\\\1=REDACTED/I')",
+
+      "Bash(systemctl is-enabled *)",
+      "Bash(systemctl is-active *)",
+      "Bash(sudo ls -la /var/spool/cron/crontabs/)",
+
+      "Bash(lscpu)",
+      "Bash(lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,UUID)",
+      "Bash(mount)",
+      "Bash(pvs)",
+      "Bash(vgs)",
+      "Bash(sudo pvs)",
+      "Bash(sudo vgs)",
+      "Bash(sudo lvs)",
+
+      "PowerShell(git *)",
+      "PowerShell(chezmoi source-path)",
 
       "Read(//etc/**)",
       "Read(//usr/lib/**)",
       "Read(//usr/share/fonts/**)",
       "Read(//tmp/**)",
-      "Read(//home/vscode/.claude/skills/mr/**)",
-      "Read(//home/vscode/.claude/skills/mr-staging/**)",
-      "Read(//home/vscode/.claude/skills/mr-qa/**)"
+      "Read(//proc/1/**)",
+      "Read(//sys/devices/system/cpu/**)",
+      "Read(//var/spool/cron/crontabs/**)",
+      "Read(//home/vscode/.claude/**)"
     ]
   },
-  "theme": "auto"
+  "theme": "auto",
+  "tui": "fullscreen"
 }

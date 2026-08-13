@@ -15,6 +15,24 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 command -v pyenv >/dev/null && eval "$(pyenv init - zsh)"
 
+# nvm: インストールされている場合のみ読み込む
+# (元は nvm のインストーラが各端末の zshrc に直接書き込んでいたものを、
+#  存在チェック付きに直してここへ集約した)
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+
+# pnpm: グローバルインストール先 (eas / tsc など) を PATH に通す。
+# pnpm 本体は nvm 配下の node に同梱されているので、ここで見るのは
+# `pnpm add -g` の出力先だけ。ディレクトリがある端末でのみ有効。
+export PNPM_HOME="$HOME/.local/share/pnpm"
+if [[ -d "$PNPM_HOME" ]] && [[ ":$PATH:" != *":$PNPM_HOME:"* ]]; then
+  export PATH="$PNPM_HOME:$PATH"
+fi
+
+# pyenv / nvm / pnpm はいずれも PATH を通すだけなので AGENT_MODE ガードより上に置く。
+# エージェント用シェルでも node や python が見えている方が都合がよい。
+
 # CopilotやAIエージェント用の最低限の設定
 if [[ "$AGENT_MODE" == "1" ]]; then
   export PS1='$ '   # プロンプト超シンプルに
@@ -23,12 +41,45 @@ if [[ "$AGENT_MODE" == "1" ]]; then
   return
 fi
 
-# SSH 経由で Linux にログインした対話シェルでは tmux を自動起動する
-# (AI 用シェルは上の AGENT_MODE ブロックで return 済みなので対象外)
-if [[ -o interactive ]] && [[ "$OSTYPE" == linux* ]] && [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]] && command -v tmux >/dev/null; then
-  # 既存セッションがあれば attach、なければ新規作成。tmux 終了後はログアウトする
-  tmux attach 2>/dev/null || tmux new-session
-  exit
+# Linux の対話シェルでは tmux を自動起動する。
+# セッションの永続化（ウィンドウを閉じても作業が残り、次回 attach で戻れる）と
+# tmux 側のウィンドウ/ペイン管理が目的なので、SSH 経由に限らずローカルでも起動する。
+#
+# macOS ローカルは対象外。WezTerm 自身の mux とタブで完結しており、ssh-window.sh が
+# 「1 OS ウィンドウ = 1 リモートホスト」を作る前提なので、手前で tmux を挟むと
+# リモート側の tmux と nested になる。
+#
+# 除外する経路:
+#   AGENT_MODE=1   上のブロックで return 済み（AI 用シェル）
+#   CLAUDECODE     Claude Code が起こすシェル。tmux を挟むと出力の取り回しが壊れる
+#   TERM_PROGRAM   VSCode 統合ターミナルは自前でタブを持ち、シェル統合も壊れる
+#   TERM=dumb      エディタ内シェルや tramp のような端末機能なしの経路
+#   TMUX           既に tmux の中（nested 防止）
+# 一時的に切りたいときは ZSH_NO_TMUX=1 zsh
+if [[ -o interactive ]] && [[ "$OSTYPE" == linux* ]] && [[ -z "$TMUX" ]] \
+   && [[ -z "$ZSH_NO_TMUX" ]] && [[ -z "$CLAUDECODE" ]] \
+   && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$TERM" != "dumb" ]] \
+   && command -v tmux >/dev/null; then
+  # 既存セッションがあればそこへ入り、1 つも無いときだけ新規作成する。名前が `main` の
+  # ものだけを見る（-A -s main）と、`tmux` を素で叩いて出来た `0` のようなセッションが
+  # 残っていても別途 `main` が作られてしまうため、名前で決め打ちせず一覧から選ぶ。
+  # 選び方は「未 attach を優先 → その中で最終利用が新しいもの」。前半で複数端末から
+  # 開いても別々のセッションに散り、後半でどれに入るかが決定的になる。全部 attach 済み
+  # なら最後に使ったものへ相乗り（＝画面が同期する）が、ここで新規作成すると開くたびに
+  # セッションが増えていくので許容する。
+  # tmux が正常終了（detach / 最後のウィンドウを閉じる）したらシェルも終わらせて
+  # ウィンドウを閉じる。起動自体に失敗したときは素のシェルへ落とす — exit を無条件に
+  # 書くと、tmux が動かない環境でログインできなくなる。
+  _tmux_target=$(tmux list-sessions -F '#{session_attached} #{session_activity} #{session_name}' 2>/dev/null \
+    | sort -k1,1n -k2,2nr | head -n1 | cut -d' ' -f3-)
+  if [[ -n "$_tmux_target" ]] && tmux attach-session -t "$_tmux_target"; then
+    exit
+  fi
+  # attach 先が無い / 直前に消えた場合はここに落ちてくる。
+  unset _tmux_target
+  if tmux new-session -A -s main; then
+    exit
+  fi
 fi
 
 ### Added by Zinit's installer
@@ -107,3 +158,19 @@ function accept-line-or-ls() {
 }
 zle -N accept-line-or-ls
 bindkey '^M' accept-line-or-ls
+
+# スリープ復帰や SSH 切断で TUI アプリ (vim/tmux/less 等) が終了処理を飛ばすと、
+# マウストラッキング (1000/1002/1003/1006) やフォーカスレポート (1004) が端末に
+# 残り、以後マウス操作が [I や [<0;12;34M のような文字列として入力されてしまう。
+# プロンプトのたびに解除しておけば、次のプロンプトで自動復旧する。
+# ブラケットペースト (2004) は zsh 自身が管理しているので触らない。
+function reset-terminal-reporting() {
+  printf '\e[?1000l\e[?1002l\e[?1003l\e[?1004l\e[?1006l'
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd reset-terminal-reporting
+
+# 対話ログイン目的の ssh を WezTerm の別ウィンドウで開くラッパー。
+# WezTerm が無い環境（リモートホスト等）では素の ssh にフォールバックする。
+# 無効化: SSH_NO_NEW_WINDOW=1 ssh host
+[[ -f "$HOME/.config/shell/ssh-window.sh" ]] && source "$HOME/.config/shell/ssh-window.sh"

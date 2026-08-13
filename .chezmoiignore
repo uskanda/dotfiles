@@ -2,6 +2,11 @@ setup
 setup.ps1
 win_main_apps.json
 README.md
+windows-voicevox.md
+# このリポジトリ自体の説明書であって $HOME に置くものではない。
+# 除外しないと ~/CLAUDE.md として展開され、全プロジェクト共通の
+# Claude Code 指示として読まれてしまう。
+CLAUDE.md
 # OpenSpec の変更管理ディレクトリ。リポジトリ内のドキュメントであり
 # $HOME に配布するものではないので追跡対象から外す。
 openspec
@@ -24,3 +29,64 @@ openspec
 # known_marketplaces.json も Claude Code が lastUpdated/installLocation を
 # 更新し続けるため管理対象外とする。
 .claude/plugins/
+# Claude Code が実行時に書くキャッシュ。設定ではないので追跡しない。
+# （中身を確認したうえで除外している。ユーザーが書いた設定は tui や
+#   extraKnownMarketplaces のように追跡対象に残してある）
+.claude/mcp-needs-auth-cache.json
+.claude/stats-cache.json
+.claude/.last-cleanup
+
+# === ~/.local/bin に置かれるインストーラ由来のバイナリ ===
+# 自分で書いたスクリプトだけを追跡する方針なので、各端末のインストーラが置く
+# 実行ファイルは明示的に外す。ディレクトリ単位で `chezmoi add ~/.local/bin` を
+# 叩いたときに巻き込んでコミットしてしまう事故を防ぐ。
+.local/bin/chezmoi
+.local/bin/claude
+# Windows の Python ランチャ (python3.10.exe 等)。他の .exe も同様に追跡しない。
+.local/bin/*.exe
+
+# === Windows 専用スクリプト ===
+# PowerShell 版は Windows でしか使わないので他 OS へは配らない。
+# chezmoi-merge / lmstudio-to-ollama / ollama-to-opencode / lmstudio-to-opencode は
+# Unix 版（executable_* の方）と対で、中身は同じことをする。
+# .config/powershell/profile.ps1 は ~/.local/bin を PATH に通す土台で、
+# setup.ps1 の Install-PowerShellProfile が実プロファイルから source する。
+# .config/opencode/ は Windows 機の opencode 設定。登録しているモデルもコンテキストも
+# この GPU (RX 9070 XT / VRAM 15.9GB) で実測して決めた値なので、他機へは配らない。
+{{ if ne .chezmoi.os "windows" }}
+.local/bin/claude-notify.ps1
+.local/bin/install-voicevox-engine.ps1
+.local/bin/chezmoi-merge.ps1
+.local/bin/lmstudio-to-ollama.ps1
+.local/bin/ollama-to-opencode.ps1
+.local/bin/lmstudio-to-opencode.ps1
+.config/powershell/
+.config/opencode/
+{{ end }}
+
+# === VSCode ユーザー設定 ===
+# 実体は .chezmoitemplates/vscode-settings.json 一本。反映先が OS ごとに違うので
+# 薄いラッパを 3 つ置き、現在の OS 以外のものをここで除外する。
+#   macOS   ~/Library/Application Support/Code/User/settings.json ← 下の Library/ で除外
+#   Linux   ~/.config/Code/User/settings.json
+#   Windows ~/AppData/Roaming/Code/User/settings.json
+{{ if ne .chezmoi.os "linux" }}.config/Code/{{ end }}
+{{ if ne .chezmoi.os "windows" }}AppData/{{ end }}
+
+# === macOS 専用の ~/Library 配下 ===
+# VSCode 設定 (Application Support/Code/) と colima の LaunchAgents はどちらも
+# macOS でしか使わない。中身のパスだけを列挙すると親の Library/ と
+# Library/Application Support/ が除外対象から外れ、他 OS でも空ディレクトリとして
+# 作られてしまうため、macOS 以外では ~/Library ごと除外する。
+{{ if ne .chezmoi.os "darwin" }}Library/{{ end }}
+
+# === colima の docker.sock 復旧まわり（macOS 専用）===
+# LaunchAgent 2 本 + 実体スクリプト。lima の docker.sock forward が落ちる問題への
+# 対処なので、macOS 以外には配らない。LaunchAgent 側 (Library/LaunchAgents/) は
+# 上の Library/ 除外に含まれるので、ここでは実体スクリプトだけを落とす。
+# なお colima 本体の自動起動 plist (homebrew.mxcl.colima) は brew services の
+# 生成物であり、dot_Brewfile の `start_service: true` が面倒を見るため追跡しない。
+{{ if ne .chezmoi.os "darwin" }}
+.colima/
+.wakeup
+{{ end }}

@@ -1,0 +1,346 @@
+#!/usr/bin/env bash
+# ollama-to-opencode: ローカルの Ollama モデルを opencode から使えるようにする。
+#
+# Usage:
+#   ollama-to-opencode                    # ローカルのモデルと現在の登録状況を表示
+#   ollama-to-opencode gpt-oss-20b        # プローブ → 焼き込み → 登録 → 疎通確認
+#   ollama-to-opencode a b --default a    # 複数まとめて。既定モデルも指定
+#   ollama-to-opencode a --ctx 32768      # プローブを飛ばす
+#   ollama-to-opencode a --no-variant     # そのまま登録 (コンテキストを焼かない)
+#
+# Windows(PowerShell) 版は同じディレクトリの ollama-to-opencode.ps1。
+#
+# モデルごとにやること:
+#   1. 100% GPU に載る最大コンテキストを実測で探す (--ctx 指定で省略可)
+#   2. `<model>:<tag>` として `ollama create` で焼き込む
+#      (blob を共有するのでディスクは増えない)
+#   3. ~/.config/opencode/opencode.json(c) の "ollama" プロバイダに登録し、
+#      baseURL を http://localhost:11434/v1 に向ける
+#   4. その /v1 エンドポイント経由で 1 回投げて疎通確認する
+#
+# なぜコンテキストをモデルに焼き込むのか: opencode は OpenAI 互換エンドポイント
+# 経由で Ollama を叩くが、この API には num_ctx を渡す場所が無い。指定が無いと
+# Ollama は VRAM から既定値を決め (16GB カードで 4096)、opencode のシステム
+# プロンプトだけで約 9.4k トークンあるため切り捨てられる。結果としてエージェント
+# の挙動が壊れ、さらにプロンプトキャッシュが毎ターン無効化されて再プリフィルが
+# 走る。OLLAMA_CONTEXT_LENGTH を全体に設定するのは誤った手で、その値を VRAM に
+# 収められない大きいモデルまで CPU へ追い出してしまう。
+#
+# 依存: curl と python3 (設定ファイルの JSONC 読み書きに使う)。
+
+set -euo pipefail
+
+readonly PROG="ollama-to-opencode"
+readonly OLLAMA_URL="http://localhost:11434"
+# コーディングエージェントに渡す下限。opencode 自身のプロンプトが約 9.4k
+# トークンなので、これを割ると初回から切り捨てが起きる。
+readonly MIN_CTX=16384
+
+die() {
+  echo "$PROG: $1" >&2
+  exit "${2:-1}"
+}
+
+warn() { echo "$PROG: $1" >&2; }
+info() { echo "$PROG: $1" >&2; }
+
+command -v ollama > /dev/null 2>&1 ||
+  die "ollama が見つかりません。https://ollama.com/download を参照。" 127
+command -v curl > /dev/null 2>&1 || die "curl が見つかりません。" 127
+command -v python3 > /dev/null 2>&1 ||
+  die "python3 が見つかりません (opencode の設定ファイルの読み書きに使います)。" 127
+
+config_path() {
+  dir="$HOME/.config/opencode"
+  for n in opencode.jsonc opencode.json; do
+    if [ -f "$dir/$n" ]; then
+      echo "$dir/$n"
+      return
+    fi
+  done
+  echo "$dir/opencode.json"
+}
+
+# --- 引数 --------------------------------------------------------------------
+models=()
+ctx=0
+default_ref=""
+no_variant=0
+force=0
+no_verify=0
+list_only=0
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --ctx)
+      [ "$#" -ge 2 ] || die "--ctx には値が必要です。"
+      ctx="$2"
+      shift 2
+      ;;
+    --default)
+      [ "$#" -ge 2 ] || die "--default には値が必要です。"
+      default_ref="$2"
+      shift 2
+      ;;
+    --no-variant) no_variant=1; shift ;;
+    -f | --force) force=1; shift ;;
+    --no-verify) no_verify=1; shift ;;
+    -l | --list) list_only=1; shift ;;
+    -h | --help)
+      sed -n '/^# Usage:/,/^#$/p' "$0" | sed 's/^# \{0,1\}//'
+      exit 0
+      ;;
+    -*) die "不明なオプション: $1" ;;
+    *) models+=("$1"); shift ;;
+  esac
+done
+
+ollama_up() { curl -sS -m 5 "$OLLAMA_URL/" > /dev/null 2>&1; }
+ollama_up || die "Ollama サーバが $OLLAMA_URL に応答しません。Ollama を起動してください (ollama serve)。"
+
+config="$(config_path)"
+
+# --- 一覧 --------------------------------------------------------------------
+if [ "$list_only" -eq 1 ] || [ "${#models[@]}" -eq 0 ]; then
+  echo "Local Ollama models:"
+  ollama list
+  echo
+  echo "opencode config: $config"
+  if [ -f "$config" ]; then
+    python3 - "$config" <<'PY'
+import json, sys, re
+def strip(t):
+    out=[]; i=0; s=False; esc=False
+    while i < len(t):
+        c=t[i]
+        if s:
+            out.append(c)
+            if esc: esc=False
+            elif c=='\\': esc=True
+            elif c=='"': s=False
+            i+=1; continue
+        if c=='"': s=True; out.append(c); i+=1; continue
+        if c=='/' and i+1 < len(t):
+            if t[i+1]=='/':
+                while i < len(t) and t[i] != '\n': i+=1
+                continue
+            if t[i+1]=='*':
+                i+=2
+                while i+1 < len(t) and not (t[i]=='*' and t[i+1]=='/'): i+=1
+                i+=2; continue
+        out.append(c); i+=1
+    return re.sub(r',(\s*[}\]])', r'\1', ''.join(out))
+try:
+    cfg=json.loads(strip(open(sys.argv[1], encoding='utf-8').read()))
+except Exception as e:
+    print("  (読めません: %s)" % e); raise SystemExit(0)
+m=cfg.get('provider', {}).get('ollama', {}).get('models', {})
+print("  registered: %s" % (', '.join(m) if m else '(none)'))
+if cfg.get('model'): print("  default   : %s" % cfg['model'])
+PY
+  else
+    echo "  (まだありません)"
+  fi
+  echo
+  echo "登録: $PROG <model>"
+  exit 0
+fi
+
+# --- コンテキストのプローブ --------------------------------------------------
+loaded_processor() {
+  base="${1%%:*}"
+  ollama ps | grep -F "$base" |
+    grep -oE '[0-9]+%/[0-9]+% CPU/GPU|[0-9]+% GPU|[0-9]+% CPU' | head -n1 || true
+}
+
+stop_if_loaded() {
+  if ollama ps | grep -qF "${1%%:*}"; then
+    ollama stop "$1" > /dev/null 2>&1 || true
+  fi
+}
+
+try_load() {
+  ref="$1"
+  want="$2"
+  stop_if_loaded "$ref"
+  sleep 1
+  if ! curl -sS -m 900 -X POST "$OLLAMA_URL/api/chat" \
+    -H 'Content-Type: application/json' \
+    -d "{\"model\":\"$ref\",\"messages\":[{\"role\":\"user\",\"content\":\"hi\"}],\"stream\":false,\"think\":false,\"keep_alive\":\"30s\",\"options\":{\"num_ctx\":$want,\"num_predict\":1}}" \
+    > /dev/null 2>&1; then
+    echo "load failed"
+    return
+  fi
+  proc="$(loaded_processor "$ref")"
+  stop_if_loaded "$ref"
+  echo "${proc:-?}"
+}
+
+probe_ctx() {
+  ref="$1"
+  trained="$(ollama show "$ref" | sed -n 's/.*context length[[:space:]]\{1,\}\([0-9]\{1,\}\).*/\1/p' | head -n1 || true)"
+  [ -n "$trained" ] || trained=131072
+  c="$trained"
+  while [ "$c" -ge "$MIN_CTX" ]; do
+    printf '  probing %7d ... ' "$c" >&2
+    proc="$(try_load "$ref" "$c")"
+    echo "$proc" >&2
+    if [ "$proc" = "100% GPU" ]; then
+      echo "$c"
+      return 0
+    fi
+    c=$((c / 2))
+  done
+  warn "$ref は VRAM に収まりません。$MIN_CTX を使いますが、CPU へこぼれて遅くなります。"
+  echo "$MIN_CTX"
+}
+
+ctx_tag() {
+  c="$1"
+  if [ "$c" -ge 1024 ] && [ $((c % 1024)) -eq 0 ]; then
+    echo "$((c / 1024))k"
+  else
+    echo "$c"
+  fi
+}
+
+ollama_dir="${OLLAMA_MODELS:-$HOME/.ollama/models}"
+
+refs=()
+for m in "${models[@]}"; do
+  ollama show "$m" > /dev/null 2>&1 ||
+    die "ollama に '$m' がありません。引数なしで実行すると一覧が出ます。"
+
+  if [ "$no_variant" -eq 1 ]; then
+    info "$m をそのまま登録します (--no-variant)"
+    refs+=("$m")
+    continue
+  fi
+
+  if [ "$ctx" -gt 0 ]; then
+    target="$ctx"
+    info "$m : --ctx $target を使います"
+  else
+    info "$m : 100% GPU に載る最大コンテキストを実測します"
+    target="$(probe_ctx "$m")"
+  fi
+
+  # 元の ref が持っていたタグは残す。`ornith:9b` は `ornith:9b-256k` になり、
+  # `ornith:256k` にはしない (サイズを落とすと同じ系列の別モデルが名前で衝突する)。
+  base="${m%%:*}"
+  case "$m" in
+    *:*) src_tag="${m#*:}" ;;
+    *) src_tag="latest" ;;
+  esac
+  ct="$(ctx_tag "$target")"
+  if [ "$src_tag" = "latest" ]; then
+    new_tag="$ct"
+  elif [ "$src_tag" = "$ct" ] || [ "${src_tag%"-$ct"}" != "$src_tag" ]; then
+    # 既にそのコンテキストを表すタグになっている。
+    new_tag="$src_tag"
+  else
+    new_tag="$src_tag-$ct"
+  fi
+  ref="$base:$new_tag"
+  manifest="$ollama_dir/manifests/registry.ollama.ai/library/$base/$new_tag"
+
+  if [ -e "$manifest" ] && [ "$force" -eq 0 ]; then
+    info "$ref は既にあります (--force で作り直し)"
+  else
+    mf="$(mktemp)"
+    printf 'FROM %s\nPARAMETER num_ctx %s\n' "$m" "$target" > "$mf"
+    ollama create "$ref" -f "$mf"
+    rm -f "$mf"
+    info "$ref を作成しました (num_ctx $target、blob 共有なのでディスクは増えません)"
+  fi
+  refs+=("$ref")
+done
+
+# --- opencode の設定へマージ -------------------------------------------------
+# 標準出力に「最終的な既定モデル」を 1 行だけ返す。疎通確認でそれを使う。
+written_default="$(python3 - "$config" "$OLLAMA_URL" "$default_ref" "${refs[@]}" <<'PY'
+import json, os, re, shutil, sys
+
+path, url, default = sys.argv[1], sys.argv[2], sys.argv[3]
+refs = sys.argv[4:]
+
+def strip(t):
+    out=[]; i=0; s=False; esc=False
+    while i < len(t):
+        c=t[i]
+        if s:
+            out.append(c)
+            if esc: esc=False
+            elif c=='\\': esc=True
+            elif c=='"': s=False
+            i+=1; continue
+        if c=='"': s=True; out.append(c); i+=1; continue
+        if c=='/' and i+1 < len(t):
+            if t[i+1]=='/':
+                while i < len(t) and t[i] != '\n': i+=1
+                continue
+            if t[i+1]=='*':
+                i+=2
+                while i+1 < len(t) and not (t[i]=='*' and t[i+1]=='/'): i+=1
+                i+=2; continue
+        out.append(c); i+=1
+    # JSONC の末尾カンマは JSON では不正なので落とす。
+    return re.sub(r',(\s*[}\]])', r'\1', ''.join(out))
+
+cfg = {"$schema": "https://opencode.ai/config.json"}
+if os.path.exists(path):
+    raw = open(path, encoding='utf-8').read()
+    if raw.strip():
+        try:
+            cfg = json.loads(strip(raw))
+        except Exception as e:
+            sys.exit("設定 %s を解析できません: %s" % (path, e))
+    shutil.copyfile(path, path + '.bak')
+    print("%s に退避しました (コメントは保持されません)" % (path + '.bak'), file=sys.stderr)
+
+cfg.setdefault("$schema", "https://opencode.ai/config.json")
+prov = cfg.setdefault("provider", {}).setdefault("ollama", {})
+prov["name"] = "Ollama"
+# opencode に Ollama 専用プロバイダは無い。OpenAI 互換アダプタ + Ollama の /v1 が
+# サポートされた経路。
+prov["npm"] = "@ai-sdk/openai-compatible"
+prov.setdefault("options", {})["baseURL"] = url + "/v1"
+models = prov.setdefault("models", {})
+for r in refs:
+    models.setdefault(r, {"name": r})
+
+if default:
+    cfg["model"] = default if default.startswith("ollama/") else "ollama/" + default
+elif not cfg.get("model"):
+    cfg["model"] = "ollama/" + refs[0]
+
+os.makedirs(os.path.dirname(path), exist_ok=True)
+header = ("// Written by ollama-to-opencode. Model tags carry a baked-in num_ctx,\n"
+          "// which is the only way to set the context over the OpenAI-compatible endpoint.\n")
+with open(path, 'w', encoding='utf-8') as f:
+    f.write(header + json.dumps(cfg, indent=2, ensure_ascii=False) + "\n")
+print(cfg["model"])
+PY
+)"
+
+info "$config を更新しました"
+echo "  registered: ${refs[*]}"
+echo "  default   : $written_default"
+
+# --- 疎通確認 ----------------------------------------------------------------
+if [ "$no_verify" -eq 1 ]; then
+  exit 0
+fi
+
+verify_ref="${written_default#ollama/}"
+info "$verify_ref を $OLLAMA_URL/v1 経由で確認します ..."
+if ! curl -sS -m 900 -X POST "$OLLAMA_URL/v1/chat/completions" \
+  -H 'Content-Type: application/json' \
+  -d "{\"model\":\"$verify_ref\",\"messages\":[{\"role\":\"user\",\"content\":\"hi\"}],\"max_tokens\":1}" \
+  > /dev/null; then
+  warn "OpenAI 互換エンドポイントがエラーを返しました。"
+  exit 1
+fi
+proc="$(loaded_processor "$verify_ref")"
+echo "$PROG: ok: $verify_ref が /v1 経由で応答しました (${proc:-loaded})"
+echo "  試す: opencode run \"hello\""

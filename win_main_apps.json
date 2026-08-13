@@ -22,6 +22,9 @@
 					"PackageIdentifier" : "Alacritty.Alacritty"
 				},
 				{
+					"PackageIdentifier" : "wez.wezterm"
+				},
+				{
 					"PackageIdentifier" : "Google.JapaneseIME"
 				},
 				{
@@ -65,6 +68,21 @@
 				},
 				{
 					"PackageIdentifier" : "Microsoft.VisualStudioCode"
+				},
+				{
+					"PackageIdentifier" : "Anthropic.ClaudeCode"
+				},
+				{
+					"PackageIdentifier" : "SST.opencode"
+				},
+				{
+					"PackageIdentifier" : "SST.OpenCodeDesktop"
+				},
+				{
+					"PackageIdentifier" : "Ollama.Ollama"
+				},
+				{
+					"PackageIdentifier" : "ElementLabs.LMStudio"
 				}
 			],
 			"SourceDetails" : 
