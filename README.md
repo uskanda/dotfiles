@@ -148,7 +148,7 @@ unset -f ssh                   # ラッパー自体を外す
 export SSH_WINDOW_DOMAIN='WSL:Debian'          # spawn 先 domain を上書き
 export SSH_WINDOW_RUNTIME_DIR="$HOME/..."      # WezTerm ランタイムディレクトリを上書き
 
-export SSH_WINDOW_COOLDOWN=5   # 同じ宛先を続けて開かない秒数 (0 で無効)
+SSH_WINDOW_DUP=1 ssh host      # 既存ウィンドウがあっても別ウィンドウで開く
 export SSH_WINDOW_MAX=8        # 同時に開いておける ssh ウィンドウ数 (0 で無制限)
 ```
 
@@ -159,19 +159,84 @@ ssh は接続を諦めるまで（既定で 1 分以上）黙って粘るのに�
 時点でプロンプトへ戻るので、「開かなかったように見えて叩き直す」たびに 1 枚ずつ
 積み上がる。さらに悪いことに、mux（`unix` domain / WSL domain）は GUI を閉じても
 生き残るため、溜まったウィンドウは**次に GUI が繋いだ瞬間にまとめて開き直す**。
-実際に mux へ 8 枚の失敗した ssh ウィンドウが residual していたことがある。
+実際に mux へ 9 枚の ssh ウィンドウが residual していたことがある。
 
 歯止めは 3 つ:
 
-1. **同じ宛先は開き直さない** — 直前（既定 5 秒以内）に開いたウィンドウが生きて
-   いれば、2 枚目を開かずそのウィンドウを前面に出す。台帳は
-   `$XDG_RUNTIME_DIR`（無ければ `$TMPDIR`）の `ssh-window-<uid>.panes` で、
-   参照のたびに `wezterm cli list` と突き合わせて閉じ済みの行を落とす。
+1. **同じ宛先のウィンドウが生きている間は開き直さない** — 2 枚目を開かず、既存の
+   ウィンドウを前面に出す。もともと「1 OS ウィンドウ = 1 リモートホスト」が狙いの
+   仕組みなので、これが既定の挙動。意図して 2 セッション張りたいときは
+   `SSH_WINDOW_DUP=1 ssh host`。台帳は `$XDG_RUNTIME_DIR`（無ければ `$TMPDIR`）の
+   `ssh-window-<uid>.panes` で、参照のたびに `wezterm cli list` と突き合わせて
+   閉じ済みの行を落とす。
+   既存ウィンドウが「ssh が失敗してキー待ち」状態のときは、**閉じてから開き直す**。
+   前面に出すだけだと再試行できず、残したまま開くと失敗のたびに 1 枚ずつ増える。
+   入れ替えなら何度失敗しても宛先あたり 1 枚に収まる。判定は hold スクリプトが
+   行頭に出す `[ssh-window:failed]` マーカー（日本語メッセージは `get-text` で
+   桁折り返しされ grep が当たらないので ASCII の目印を使う）。
 2. **枚数の上限** — 生きている ssh ウィンドウが `SSH_WINDOW_MAX`（既定 8）に達したら
    spawn せずその場で実行する。宛先が毎回違う暴走もここで止まる。前面で ssh が
    走るぶん、次の 1 回が勝手に始まらないのも狙い。
 3. **エラー表示の自動クローズ** — 失敗したウィンドウのキー待ちは 5 分で打ち切って
    閉じる。無期限に待つと mux に永久に残るため（上の residual の正体）。
+
+> ⚠️ **「n 秒以内の再実行だけ抑止する」では足りない**（実測）。当初は 5 秒の
+> クールダウンで止めるつもりだったが、人間の叩き直しは数秒〜十数秒間隔なので
+> 素通りし、7 秒間隔の 3 連打で普通に 3 枚開いた。上限の枚数まで積み上がるだけで
+> 歯止めになっていない。生きている限り開かない、が正しい。
+
+### 増殖の真犯人: mux への自己接続 (`--domain-name unix`)
+
+**macOS / Linux では `wezterm cli spawn` に `--domain-name` を渡してはいけない。**
+
+`unix` domain のペインでは `WEZTERM_UNIX_SOCKET` が **mux サーバ自身**のソケットを
+指す。そこへ `--domain-name unix` で spawn を頼むと、mux は「自分自身の unix domain
+へ接続する」動きになる。実測した挙動:
+
+* spawn 1 回で pane id が 2 → 7 まで飛ぶ（内部で複数ペインが作られる）
+* `wezterm cli list` に**実体のないゴースト**が残る。`kill-pane` しても
+  `Error: no such pane` で消せない
+* GUI が繋いだ瞬間にゴーストぶんのウィンドウが**一斉に開く**
+* GUI が繋がっていない mux に対しては spawn が**返ってこない**（2 分待っても終わらず、
+  そのまま mux 自体が落ちることもある）
+
+これが「ssh を叩くたびにウィンドウが大量に出る」の主因だった。domain を省けば
+「今いるサーバの既定 domain」に開くので、mux のペインからなら mux の中に、GUI
+ローカルのペインからなら GUI の中に、正しく 1 枚だけ開く。
+
+WSL だけは逆で、Windows 側の GUI に対して `--domain-name WSL:<distro>` を明示しないと
+Windows の `ssh.exe` が起動してしまうため、指定を残してある。
+
+> ⚠️ **溜まったゴーストは mux を落とすまで消えない。** `wezterm cli kill-pane` は
+> 効かず、GUI を閉じても mux は生き残る。`pkill -f wezterm-mux-server`（SIGTERM で
+> 落ちる）で mux ごと終了させると、その mux 上のセッションは全部消えるかわりに
+> 一掃できる。GUI もぶら下がっているので一緒に終了する。
+> なお **pkill が効いていないように見えるのは、GUI を開き直すと新しい mux が
+> 作られ、そこにまた溜まるから**であって、pkill 自体は効いている。
+
+### macOS では unix domain を使わない
+
+**macOS の WezTerm はローカル端末として動かす**（`unix_domains` も
+`default_gui_startup_args = {'connect','unix'}` も設定しない）。以前は他の OS と
+同じく mux に乗せていたが、実測で次の 4 つが起きたためやめた:
+
+1. **✗ でウィンドウを 1 枚閉じると、その mux の全ウィンドウが消える。** WezTerm は
+   クライアント domain のウィンドウを閉じるとき、リモートのセッションを殺さない
+   ように **domain ごと detach** する。GUI ログに
+   `detaching domain` → `domain detached panes: [18 個…]` が残る。
+   この detach だけを止める設定は無い。
+2. `--domain-name unix` の自己接続でペインが増殖する（上節）
+3. 実体のないゴーストが `cli list` に残り、`kill-pane` でも消せない
+4. GUI を閉じても mux が生き残るので、上記のゴミが日をまたいで蓄積する
+
+unix domain を入れた元々の狙いは「tmux ペインから `wezterm cli` を刺しても、GUI を
+再起動したソケット変更で壊れないようにする」ことだが、**macOS では tmux を使って
+いない**（自動起動は Linux/WSL のみ）ので当てはまらない。tmux を使う Linux
+ネイティブでは従来どおり unix domain を張る。
+
+引き換えに、**macOS では GUI を閉じるとその中のシェルも終了する**（セッションは
+残らない）。ssh ウィンドウも GUI と一緒に消えるので、mux に residual が積もる問題は
+構造的に起きない。
 
 `wezterm cli list` が引けないときは「判断できない」＝ **開いてよい**側に倒す。
 ガードのせいで ssh が開けなくなる方が困るため。
