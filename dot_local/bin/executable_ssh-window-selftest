@@ -97,11 +97,26 @@ else
   fi
   # ここでリダイレクトしないこと。stdout を /dev/null に向けると [ -t 1 ] が
   # 偽になり、ラッパーが仕様どおりその場実行に落ちてテストにならない。
-  ssh -o ConnectTimeout=2 "$target"
+  #
+  # 1 回目は暴走ガードを切って叩く。前回の実行で閉じ損ねたウィンドウが残っていると
+  # 「同じ宛先は開き直さない」に引っかかり、spawn できるのに NG に見えてしまうため。
+  SSH_WINDOW_COOLDOWN=0 SSH_WINDOW_MAX=0 ssh -o ConnectTimeout=2 "$target"
   sleep 4
   after=$(__ssh_window_cli cli list --format json 2>/dev/null | grep -c '"pane_id"')
   if [[ "$after" -gt "$before" ]]; then
     ok "新しいウィンドウが開いた (ペイン $before -> $after)"
+
+    # 暴走ガード: 疎通しない相手を連打してもウィンドウは増えない。
+    # (ssh は接続を諦めるまで黙って粘るので、ここが効かないと連打のぶんだけ増える)
+    local dup
+    ssh -o ConnectTimeout=2 "$target"
+    dup=$(__ssh_window_cli cli list --format json 2>/dev/null | grep -c '"pane_id"')
+    if [[ "$dup" -eq "$after" ]]; then
+      ok '同じ宛先を続けて叩いても 2 枚目は開かない (暴走ガード)'
+    else
+      ng "同じ宛先の連打でウィンドウが増えた (ペイン $after -> $dup)"
+    fi
+
     local id txt closed=0
     for id in ${(f)"$(__ssh_window_cli cli list --format json 2>/dev/null | grep '"pane_id"' | grep -o '[0-9]\+')"}; do
       txt=$(__ssh_window_cli cli get-text --pane-id "$id" 2>/dev/null)
