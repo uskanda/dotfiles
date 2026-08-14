@@ -13,6 +13,7 @@ local act = wezterm.action
 local config = wezterm.config_builder()
 
 local is_windows = wezterm.target_triple:find 'windows' ~= nil
+local is_macos = wezterm.target_triple:find 'darwin' ~= nil
 
 -- ---------------------------------------------------------------------------
 -- 見た目 / 操作感（Alacritty の設定からの移植）
@@ -115,9 +116,9 @@ if is_windows then
   if preferred then
     table.insert(config.launch_menu, 1, { label = preferred, domain = { DomainName = preferred } })
   end
-else
+elseif not is_macos then
   -- -------------------------------------------------------------------------
-  -- macOS / Linux: mux を unix domain に固定する
+  -- Linux (ネイティブ): mux を unix domain に固定する
   -- -------------------------------------------------------------------------
   -- GUI が自前で作る gui-sock-<pid> は WezTerm を再起動するたびにパスが変わる。
   -- 先に起動していた tmux サーバは古い WEZTERM_UNIX_SOCKET を握ったままなので、
@@ -130,6 +131,28 @@ else
   -- すべてのペインを同じ mux に乗せる。
   config.default_gui_startup_args = { 'connect', 'unix' }
 end
+
+-- ---------------------------------------------------------------------------
+-- macOS で unix domain を使わない理由（消さないこと）
+-- ---------------------------------------------------------------------------
+-- 以前は macOS でも上と同じ unix domain + `connect unix` を設定していたが、
+-- 実測で次の 4 つが起きたのでやめた。GUI はローカル端末として素直に動かす。
+--
+--  1. ✗ でウィンドウを 1 枚閉じると、その mux の**全ウィンドウ**が消える。
+--     WezTerm はクライアント domain のウィンドウを閉じるとき、リモートの
+--     セッションを殺さないよう「domain ごと detach」する。GUI ログに
+--     `detaching domain` → `domain detached panes: [18 個…]` が残る。
+--     この detach だけを止める設定は無い。
+--  2. `wezterm cli spawn --domain-name unix` を mux 自身に投げると自己接続になり、
+--     spawn 1 回で pane id が 2 → 7 まで飛ぶ（ssh-window.sh 側の注記も参照）。
+--  3. `cli list` に実体のないゴーストが残る。`kill-pane` しても "no such pane"
+--     で消せず、GUI を繋ぐたびにウィンドウとして一斉に開く。
+--  4. GUI を閉じても mux が生き残るため、上記のゴミが日をまたいで蓄積する。
+--
+-- unix domain を入れた元々の狙いは「tmux ペインから `wezterm cli` を刺す」こと
+-- だが、macOS では tmux を使っていない（自動起動は Linux/WSL のみ。CLAUDE.md
+-- 参照）ので、そもそも当てはまらない。Linux ネイティブでは tmux を使うため
+-- 上の分岐に残してある。
 
 -- ---------------------------------------------------------------------------
 -- キーバインド
