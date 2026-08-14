@@ -98,23 +98,24 @@ else
   # ここでリダイレクトしないこと。stdout を /dev/null に向けると [ -t 1 ] が
   # 偽になり、ラッパーが仕様どおりその場実行に落ちてテストにならない。
   #
-  # 1 回目は暴走ガードを切って叩く。前回の実行で閉じ損ねたウィンドウが残っていると
+  # 暴走ガードは切って叩く。前回の実行で閉じ損ねたウィンドウが残っていると
   # 「同じ宛先は開き直さない」に引っかかり、spawn できるのに NG に見えてしまうため。
-  SSH_WINDOW_COOLDOWN=0 SSH_WINDOW_MAX=0 ssh -o ConnectTimeout=2 "$target"
+  SSH_WINDOW_DUP=1 SSH_WINDOW_MAX=0 ssh -o ConnectTimeout=2 "$target"
   sleep 4
   after=$(__ssh_window_cli cli list --format json 2>/dev/null | grep -c '"pane_id"')
   if [[ "$after" -gt "$before" ]]; then
     ok "新しいウィンドウが開いた (ペイン $before -> $after)"
 
-    # 暴走ガード: 疎通しない相手を連打してもウィンドウは増えない。
-    # (ssh は接続を諦めるまで黙って粘るので、ここが効かないと連打のぶんだけ増える)
-    local dup
+    # 失敗して待っているウィンドウは、再試行で「閉じてから開き直す」ので枚数が
+    # 増えない。ここは今まさにエラー表示で止まっているので、そのまま検証できる。
+    local retry
     ssh -o ConnectTimeout=2 "$target"
-    dup=$(__ssh_window_cli cli list --format json 2>/dev/null | grep -c '"pane_id"')
-    if [[ "$dup" -eq "$after" ]]; then
-      ok '同じ宛先を続けて叩いても 2 枚目は開かない (暴走ガード)'
+    sleep 4
+    retry=$(__ssh_window_cli cli list --format json 2>/dev/null | grep -c '"pane_id"')
+    if [[ "$retry" -eq "$after" ]]; then
+      ok '失敗したウィンドウは再試行で入れ替わる (枚数が増えない)'
     else
-      ng "同じ宛先の連打でウィンドウが増えた (ペイン $after -> $dup)"
+      ng "再試行でウィンドウが増えた (ペイン $after -> $retry)"
     fi
 
     local id txt closed=0
@@ -133,6 +134,43 @@ else
     (( closed )) && print -r -- '  (テストで開いたウィンドウは閉じた)'
   else
     ng "ウィンドウが開かなかった (ペイン $before -> $after)。SSH_WINDOW_DEBUG=1 ssh host で原因を見る"
+  fi
+fi
+
+head1 '暴走ガード (同じ宛先のウィンドウが生きている間は開き直さない)'
+if [[ -z "$__ssh_window_wezterm" ]]; then
+  print -r -- '  wezterm が無いのでスキップ'
+else
+  # ここで ssh を使わないのは、相手が解決できないと「失敗してキー待ち」状態になり
+  # 仕様どおり再試行が許可されてしまうから。接続中のウィンドウを sleep で模す。
+  local gdest='ssh-window-selftest-guard.invalid' gpane gbefore gafter
+  # domain は指定があるとき（WSL）だけ渡す。macOS で unix domain を明示すると
+  # mux が自己接続してペインが増殖する（ラッパー本体と同じ理由）。
+  if [[ -n "$__ssh_window_domain" ]]; then
+    gpane=$(__ssh_window_cli cli spawn --new-window \
+      --domain-name "$__ssh_window_domain" -- /bin/sh -c 'sleep 60')
+  else
+    gpane=$(__ssh_window_cli cli spawn --new-window -- /bin/sh -c 'sleep 60')
+  fi
+  gpane="${gpane%%[!0-9]*}"
+  if [[ -z "$gpane" ]]; then
+    ng 'ガード検証用のペインを開けなかった'
+  else
+    print -r -- "$gpane $(date +%s) $gdest" >> "$__ssh_window_state"
+    gbefore=$(__ssh_window_cli cli list --format json 2>/dev/null | grep -c '"pane_id"')
+    ssh "$gdest"
+    gafter=$(__ssh_window_cli cli list --format json 2>/dev/null | grep -c '"pane_id"')
+    if [[ "$gafter" -eq "$gbefore" ]]; then
+      ok '生きているウィンドウがあるとき 2 枚目を開かない'
+    else
+      ng "2 枚目が開いてしまった (ペイン $gbefore -> $gafter)"
+    fi
+    __ssh_window_cli cli kill-pane --pane-id "$gpane" >/dev/null 2>&1
+    if [[ -f "$__ssh_window_state" ]]; then
+      grep -v " $gdest\$" "$__ssh_window_state" > "$__ssh_window_state.selftest" 2>/dev/null
+      mv -f "$__ssh_window_state.selftest" "$__ssh_window_state" 2>/dev/null
+    fi
+    print -r -- '  (検証用ペインは閉じた)'
   fi
 fi
 
