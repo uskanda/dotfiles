@@ -21,6 +21,9 @@ local is_macos = wezterm.target_triple:find 'darwin' ~= nil
 -- font_with_fallback にしておくと、UDEV Gothic NF が入っていない端末でも
 -- 起動時に落ちずに既定フォントへ落ちる。
 config.font = wezterm.font_with_fallback { 'UDEV Gothic NF', 'Menlo', 'Consolas' }
+-- WezTerm の既定は 12.0（IncreaseFontSize は 1 回 10% 拡大なので 3 回で ≒ 16.0）。
+-- そこから手元で調整した値。
+config.font_size = 17.5
 -- タブが 1 枚のときはタブバーを隠す。ssh ウィンドウはタブ 1 枚なので
 -- ssh-window.sh が付けた "ssh: <host>" がタブバーからは見えなくなるが、
 -- 下の format-window-title で OS ウィンドウのタイトルにも同じ文字列を出して
