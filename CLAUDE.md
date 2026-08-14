@@ -133,6 +133,8 @@ bash 版 + PowerShell 版の対で、判定ロジックを揃えて差分を最�
 
 - **`wezterm cli` を叩く前に `builtin cd` でランタイムディレクトリへ移ること。** WezTerm 20240203 の Windows 版は gui ソケットを相対パスで開くため、cwd がそこでないと接続できない。そして [dot_config/zshrc](dot_config/zshrc) の独自 `cd` は移動後に `ls` を出力するので、コマンド置換の中で素の `cd` を呼ぶと出力が値に混入して壊れる。`builtin` を外さないこと。
 - ラッパーは「壊れても ssh が使えなくならない」ことが最優先。判定に迷う場合・spawn に失敗した場合は必ず `command ssh "$@"` にフォールバックする。
+- **ウィンドウが増える経路には歯止めを残すこと。** 疎通できないホストへの ssh は、ssh 自身がタイムアウトまで黙って粘る一方でラッパーは即座にプロンプトへ戻るため、連打や再試行ループのぶんだけウィンドウが積み上がる。しかも mux（`unix` domain / WSL domain）は GUI を閉じても生き残るので、溜まったウィンドウは次に GUI が繋いだ瞬間に一斉に開き直す（実測: 失敗した ssh ウィンドウが 8 枚 mux に residual していた）。現在は ① 同じ宛先を `SSH_WINDOW_COOLDOWN`（既定 5 秒）以内に開き直さない ② 生存ウィンドウが `SSH_WINDOW_MAX`（既定 8）に達したらその場実行に落とす ③ 失敗時のキー待ちを 5 分で打ち切る、の 3 段で止めている。台帳は `$XDG_RUNTIME_DIR`（無ければ `$TMPDIR`）の `ssh-window-<uid>.panes`。`wezterm cli list` が引けないときは「開いてよい」側に倒す（ガードのせいで ssh が開けなくなる方が困るため）。
+- **キー待ちのタイムアウトに `/bin/sh` を使わないこと。** Ubuntu の `/bin/sh` は dash で `read -t` が無く、macOS の `/bin/sh` は bash 3.2 で `read -t` のタイムアウト時の戻り値が 1（bash 4 以降の `>128` ではない）。戻り値では「非対応」と「時間切れ」を区別できないので、spawn するシェルを `/bin/bash` に選んで分岐そのものを消してある。
 - **`exit_behavior` はグローバル設定なので触らない。** `'CloseOnCleanExit'` にすると ssh の失敗は読めるようになるが、zsh の `exit` は直前のコマンドの終了ステータスを返すため、通常のシェルペインまで残るようになる（実測済み）。失敗した ssh ウィンドウを残す仕事は、spawn するコマンドを `sh -c` で包んで終了コード 255（= ssh 自身のエラー）のときだけキー待ちすることで実現している。
 - spawn に渡す `sh -c` のスクリプト文字列に**シングルクォートを含めないこと**。zsh → `wezterm.exe`(Windows) → `wsl.exe` → `sh` と 2 回境界を越える。空白・二重引用符・日本語が保たれることは検証済み。
 - **WSL では `--domain-name` を外して spawn しないこと。** domain を外すと Windows 側の `ssh.exe` が起動し、WSL の `~/.ssh/config` も鍵も参照されない。domain 指定で失敗したときに domain 無しで開き直すフォールバックは macOS / Linux 経路にのみ入れてある（そちらは既定 domain もローカルなので安全）。
