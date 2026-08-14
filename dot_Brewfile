@@ -34,3 +34,5 @@ cask "bettertouchtool"
 cask "iterm2"
 cask "vivaldi"
 cask "wezterm"
+# 等幅フォント (UDEV Gothic Nerd Fonts 版: 全角/半角 2:1 + Nerd Fonts のアイコン)
+cask "font-udev-gothic-nf"
