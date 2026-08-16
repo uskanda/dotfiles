@@ -31,7 +31,8 @@
   // 下は保険。Settings Sync が再び有効化されても、端末ごとに値が変わるキーだけは
   // 運ばれないようにする。これを入れる前は macOS の /opt/homebrew のパスや
   // NODE_EXTRA_CA_CERTS が Windows 側の settings.json に流れ込んでいた。
-  // ここに挙げるのは、このテンプレートが lookPath / stat で出し分けているキー。
+  // ここに挙げるのは、このテンプレートが lookPath / stat で出し分けているキーと、
+  // ウィンドウ単位で意味が変わるため user スコープへ上がってはいけないキー。
   "settingsSync.ignoredSettings": [
     "dev.containers.dockerPath",
     "dev.containers.dockerComposePath",
@@ -40,6 +41,15 @@
     "vim.autoSwitchInputMethod.obtainIMCmd",
     "vim.autoSwitchInputMethod.switchIMCmd",
     "vim.autoSwitchInputMethod.defaultIM",
+    // ワークスペース識別用の色（.vscode/settings.json 側）が user スコープへ
+    // 混ざると全ウィンドウが同じ色になる。実際に dotfiles の金色 #C79400 が
+    // Windows の user settings に紛れ込み、全ウィンドウが黄色いタイトルバーに
+    // なった。このキーは chezmoi が持つ（statusBar の #005f5f だけが正）ので
+    // Sync に運ばせる理由が無い。
+    "workbench.colorCustomizations",
+    // window.title もウィンドウ単位。user スコープへ上がると全ウィンドウが
+    // 同じタイトル（例: "⚙️ dotfiles"）になり、見分ける目的が逆に潰れる。
+    "window.title",
   ],
 
   "bracket-pair-colorizer-2.depreciation-notice": false,
