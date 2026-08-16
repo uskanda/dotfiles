@@ -724,8 +724,50 @@ macOS の `/opt/homebrew/bin/docker` や `/Users/<user>/.config/certs/...` が W
 #### 保険
 
 万が一 Settings Sync の `Settings` が再び有効になっても事故が再発しないよう、
-テンプレート冒頭で `settingsSync.ignoredSettings` に**端末ごとに値が変わるキー**を
-列挙している。テンプレートが `lookPath` / `stat` で出し分けているキーと同じ顔ぶれ。
+テンプレート冒頭で `settingsSync.ignoredSettings` にキーを列挙している。顔ぶれは 2 種類:
+
+1. **端末ごとに値が変わるキー** — テンプレートが `lookPath` / `stat` で出し分けているもの。
+2. **ウィンドウ単位で意味が変わるキー** — `workbench.colorCustomizations` と `window.title`。
+
+### 全ウィンドウが同じ色／同じタイトルになったとき
+
+`window.title` / `workbench.colorTheme` / `workbench.colorCustomizations` はいずれも
+**window スコープ**なので、workspace 設定（`.vscode/settings.json`）に置いた値は
+そのウィンドウにしか効かない。**全ウィンドウに波及しているなら、その値は workspace より
+上のスコープ＝ user settings に入っている。**
+
+実際に起きた事故: [.vscode/settings.json](.vscode/settings.json) が dotfiles ウィンドウ識別用に
+入れている金色 `#C79400` の `titleBar.*` / `activityBar.*` が、Windows の
+`%APPDATA%\Code\User\settings.json` の `workbench.colorCustomizations` へ**混ざり込み**、
+全ウィンドウのタイトルバーが黄色くなった。chezmoi が配る正しい値は `statusBar.*`（`#005f5f`）
+の 5 キーだけなので、混入は差分として一目で分かる。
+
+疑う順番と復旧:
+
+1. **user settings を見る。** テーマピッカー（`Ctrl+K Ctrl+T`）を Enter で確定すると
+   user 側へ書かれる。Settings Sync が有効なら、1 台で混ざった時点で全端末へ運ばれる。
+
+   ```bash
+   chezmoi diff ~/.config/Code/User/settings.json    # Linux。差分が出れば混入
+   ```
+
+2. **chezmoi で巻き戻す。** テンプレートが唯一の正なので、そのまま上書きしてよい。
+
+   ```powershell
+   chezmoi apply --force "$env:APPDATA\Code\User\settings.json"    # Windows
+   ```
+
+   ```bash
+   chezmoi apply --force ~/Library/Application\ Support/Code/User/settings.json   # macOS
+   chezmoi apply --force ~/.config/Code/User/settings.json                        # Linux
+   ```
+
+   **混入した端末すべてで実行すること。** `settingsSync.ignoredSettings` は以後の伝播を
+   止めるだけで、既に各端末やクラウドに残っている値は消してくれない。
+
+3. **他のウィンドウも同じ workspace を開いていないか確認する。** macOS / Windows / WSL /
+   SSH 先で dotfiles を 4 枚開けば全部金色になるのは**正しい挙動**。「全ウィンドウ」が
+   dotfiles 以外も含むのかどうかが分かれ目。
 
 ### 端末差の吸収
 
