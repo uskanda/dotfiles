@@ -51,11 +51,37 @@ auto-merge（CI通過後に自動マージ）を有効化してください。
      --yes
    ```
 2. 作成されたMRのID（URL末尾の数字）を取得する
-3. 5秒待つ（作成直後はGitLab側のマージ可否計算が未完了で一時的に `cannot_be_merged` になることがあるため）: `sleep 5`
-4. auto-merge を有効化する（CI＝全マージチェック通過後に自動マージ）:
+3. **MRパイプラインの生成を待つ**。`glab mr merge --auto-merge` は対象MRにパイプラインが
+   無いと auto-merge を設定せず**その場で即時マージする**（実際に !789 が CI 未実行のまま
+   develop へマージされた）。固定の `sleep` では間に合わないことがあるため、head_pipeline を
+   ポーリングする:
+   ```bash
+   PROJ=$(git remote get-url origin | sed -E 's#^(https?://[^/]+/|git@[^:]+:|ssh://git@[^/]+/)##; s#\.git$##' | sed 's#/#%2F#g')
+   for i in $(seq 1 18); do   # 最大約3分
+     PSTATUS=$(glab api "projects/$PROJ/merge_requests/<MR_ID>" 2>/dev/null | python3 -c 'import sys,json; d=json.load(sys.stdin); print((d.get("head_pipeline") or {}).get("status") or "none")')
+     case "$PSTATUS" in
+       none|"") sleep 10 ;;
+       *) break ;;
+     esac
+   done
+   echo "head_pipeline=$PSTATUS"
+   ```
+4. **`PSTATUS` で分岐する**:
+   - `created` / `waiting_for_resource` / `preparing` / `pending` / `running` → 手順5へ
+   - `success` / `failed` / `canceled` / `skipped`（既に完了）や `none`（3分待っても生成されない）
+     → **マージせずに中止**し、「パイプラインが無い（または完了済み）ため auto-merge を設定できない。
+     即時マージを避けて中断した」旨と MR の URL をユーザーに報告する。手動マージが必要なら
+     ユーザーが判断する
+5. auto-merge を有効化する（CI＝全マージチェック通過後に自動マージ）:
    ```
    glab mr merge <MR_ID> --auto-merge --yes
    ```
+6. **意図どおり auto-merge になったか検証する**（出力に `✓ Merged!` が出た場合は即時マージされている）:
+   ```
+   glab mr view <MR_ID> 2>&1 | grep -E '^state:'
+   ```
+   `state: merged` になっていたら auto-merge ではなく**マージ済み**なので、その事実（CIゲートを
+   通っていないこと）を必ずユーザーに報告する。`state: opened` なら auto-merge 設定済み
 
 ### GitHub の場合
 
@@ -73,13 +99,30 @@ auto-merge（CI通過後に自動マージ）を有効化してください。
    既に同じブランチのPRが存在してコマンドが失敗した場合は、新規作成せず
    `gh pr view --json url -q .url` で既存PRのURLを報告する。
 2. 作成されたPRの番号（URL末尾の数字）を取得する
-3. 5秒待つ: `sleep 5`
-4. auto-merge を有効化する:
+3. **チェックの登録を待つ**。GitHub でも、必須チェックが1つも無い状態で `--auto` を指定すると
+   即時マージされうる。チェックが現れるまでポーリングする:
+   ```bash
+   for i in $(seq 1 18); do   # 最大約3分
+     CHECKS=$(gh pr checks <PR番号> 2>/dev/null | wc -l)
+     [ "$CHECKS" -gt 0 ] && break
+     sleep 10
+   done
+   echo "checks=$CHECKS"
+   ```
+4. **`CHECKS` で分岐する**:
+   - 1件以上 → 手順5へ
+   - 0件のまま（3分待ってもチェックが無い）→ **マージせずに中止**し、その旨と PR の URL を報告する
+5. auto-merge を有効化する:
    ```
    gh pr merge <PR番号> --auto --merge
    ```
    リポジトリ設定でauto-mergeが無効な場合はこのコマンドが失敗する。その場合は
    マージせず、「auto-merge未有効のため手動マージが必要」と報告する。
+6. **意図どおり auto-merge になったか検証する**:
+   ```
+   gh pr view <PR番号> --json state,autoMergeRequest -q '.state, (.autoMergeRequest != null)'
+   ```
+   `MERGED` になっていたら即時マージされているので、CIゲートを通っていないことを必ず報告する。
 
 ## 完了時
 
