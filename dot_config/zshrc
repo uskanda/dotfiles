@@ -170,6 +170,33 @@ function reset-terminal-reporting() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd reset-terminal-reporting
 
+# tmux のペインは「生成された時点の環境変数」を持ち続ける。ssh -X で入り直しても、
+# 前回から開きっぱなしのペインの DISPLAY は古い値のまま — tmux サーバを -X なしの
+# ssh で立てていれば空 — なので、X アプリが cannot open display で落ちる（実測: ログイン
+# シェルは localhost:10.0、tmux のセッション環境も localhost:10.0、なのに着地する既存
+# ペインだけ空。attach 後に開いた新規ウィンドウでは X 接続が通る）。
+#
+# attach のたびに tmux 側のセッション環境は update-environment で更新される
+# (~/.config/tmux/tmux.conf) ので、プロンプトごとにそこから引き直せば追随できる。
+# 引き直すのは「接続ごとに変わる」ものだけ。WEZTERM_* は ssh-window.sh が必要な場面で
+# 自前で引き直すので、ここで毎回上書きしない。
+#
+# 副作用として、ペイン内で手動 export した DISPLAY 等は次のプロンプトで戻る。
+# 一時的に別の値を使いたいときはコマンドの前に付けて渡すこと (DISPLAY=:1 cmd)。
+function tmux-refresh-env() {
+  [[ -n "$TMUX" ]] || return 0
+  local line
+  # show-environment は 1 回だけ呼ぶ (プロンプトごとに走るので fork を増やさない)。
+  # 未設定の変数は先頭に "-" を付けて出てくる。
+  while IFS= read -r line; do
+    case "$line" in
+      -DISPLAY|-XAUTHORITY|-SSH_AUTH_SOCK|-SSH_CONNECTION) unset "${line#-}" ;;
+      DISPLAY=*|XAUTHORITY=*|SSH_AUTH_SOCK=*|SSH_CONNECTION=*) export "$line" ;;
+    esac
+  done < <(command tmux show-environment 2>/dev/null)
+}
+add-zsh-hook precmd tmux-refresh-env
+
 # 対話ログイン目的の ssh を WezTerm の別ウィンドウで開くラッパー。
 # WezTerm が無い環境（リモートホスト等）では素の ssh にフォールバックする。
 # 無効化: SSH_NO_NEW_WINDOW=1 ssh host

@@ -375,6 +375,43 @@ prefix は `C-b` ではなく **`C-j`**、マウス操作 on、履歴 50000 行�
 > tmux は接続先（WSL / リモート）に 1 つあるだけ。ウィンドウを閉じるときの確認
 > ダイアログも tmux ではなく WezTerm のもの（`window_close_confirmation` の既定値）。
 
+### ペインの環境変数を attach ごとに引き直す
+
+**tmux のペインは「生成された時点の環境変数」を持ち続ける。** `ssh -X` で入り直しても、
+前回から開きっぱなしのペインの `DISPLAY` は古い値のまま — tmux サーバを `-X` なしの
+`ssh` で立てていれば空 — なので、X アプリが `cannot open display` で落ちる。
+`ssh-agent` のソケット (`SSH_AUTH_SOCK`) も同じ理由で古いものを掴む。
+
+実測（WSL → NAS、双方 tmux）:
+
+| 見る場所 | `DISPLAY` |
+| ---- | ---- |
+| `ssh -X` 直後のログインシェル | `localhost:10.0` |
+| tmux のセッション環境（attach 時に `update-environment` が更新） | `localhost:10.0` |
+| **着地する既存ペイン** | **空** |
+| attach 後に開いた新規ウィンドウ | `localhost:10.0`（X 接続も通る） |
+
+そこで [dot_config/zshrc](dot_config/zshrc) の `tmux-refresh-env` を `precmd` に入れ、
+プロンプトごとにセッション環境から引き直している。引き直すのは接続ごとに変わる
+`DISPLAY` / `XAUTHORITY` / `SSH_AUTH_SOCK` / `SSH_CONNECTION` の 4 つだけ。
+`tmux show-environment` の呼び出しは 1 プロンプトあたり 1 回に抑えてある。
+
+手で直したいときは同じ関数を叩けばよい（`tmux-refresh-env`）。tmux の外では何もしない。
+
+> ペイン内で手動 `export DISPLAY=...` しても次のプロンプトで戻る。一時的に別の値を
+> 使いたいときはコマンドの前に付けて渡すこと（`DISPLAY=:1 cmd`）。
+
+> `WEZTERM_UNIX_SOCKET` / `WEZTERM_PANE` はここでは触らない。
+> [ssh-window.sh](dot_config/shell/ssh-window.sh) が `wezterm cli` を叩く直前に自前で
+> 引き直しており、二重に上書きすると WSL 経路（Windows 側の値が来る）で噛み合わなくなる。
+
+> **WSLg 側で出る `Warning: No xauth data; using fake authentication data for X11
+> forwarding.` は無視してよい。** WSLg には `~/.Xauthority` が無く、Xwayland に SECURITY
+> 拡張も無いので（`xauth generate` が `couldn't query Security extension`）必ず出る。
+> WSLg の X サーバはアクセス制御が無効で、cookie の中身を見ずに受け入れるため実害はない。
+> また Ubuntu の `/etc/ssh/ssh_config` は `ForwardX11Trusted yes` が既定なので、`-X` は
+> 実質 `-Y` として動き、`ForwardX11Timeout` の 20 分で切れることもない（実測）。
+
 Claude Code 設定 (~/.claude)
 -----------------------------
 Claude Code のユーザー設定を chezmoi で複数端末に共有する。
