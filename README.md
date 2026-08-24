@@ -391,10 +391,17 @@ prefix は `C-b` ではなく **`C-j`**、マウス操作 on、履歴 50000 行�
 | **着地する既存ペイン** | **空** |
 | attach 後に開いた新規ウィンドウ | `localhost:10.0`（X 接続も通る） |
 
-そこで [dot_config/zshrc](dot_config/zshrc) の `tmux-refresh-env` を `precmd` に入れ、
-プロンプトごとにセッション環境から引き直している。引き直すのは接続ごとに変わる
+そこで [dot_config/zshrc](dot_config/zshrc) の `tmux-refresh-env` を `preexec` に入れ、
+コマンドの実行直前にセッション環境から引き直している。引き直すのは接続ごとに変わる
 `DISPLAY` / `XAUTHORITY` / `SSH_AUTH_SOCK` / `SSH_CONNECTION` の 4 つだけ。
-`tmux show-environment` の呼び出しは 1 プロンプトあたり 1 回に抑えてある。
+`tmux show-environment` の呼び出しは 1 コマンドあたり 1 回に抑えてある。
+
+> **`precmd` ではなく `preexec`。** `precmd` はコマンドが終わってから走るので、attach
+> 直後の 1 発目 — まさに X アプリを起動したい瞬間 — が古い環境のままになる（`accept-line-or-ls`
+> による空 Enter は `zle reset-prompt` を呼ぶだけで `precmd` を走らせないため、Enter で
+> 空打ちしても直らない）。`preexec` はコマンドの実行直前に走り、変数展開はその後なので
+> 1 発目から効く（実測: ペイン生成後にセッション環境を書き換え、直後の 1 コマンドが
+> 新しい値を見ることを確認済み）。
 
 手で直したいときは同じ関数を叩けばよい（`tmux-refresh-env`）。tmux の外では何もしない。
 
