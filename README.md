@@ -781,10 +781,23 @@ macOS の `/opt/homebrew/bin/docker` や `/Users/<user>/.config/certs/...` が W
 上のスコープ＝ user settings に入っている。**
 
 実際に起きた事故: [.vscode/settings.json](.vscode/settings.json) が dotfiles ウィンドウ識別用に
-入れている金色 `#C79400` の `titleBar.*` / `activityBar.*` が、Windows の
+入れていた金色 `#C79400` の `titleBar.*` / `activityBar.*` が、Windows の
 `%APPDATA%\Code\User\settings.json` の `workbench.colorCustomizations` へ**混ざり込み**、
-全ウィンドウのタイトルバーが黄色くなった。chezmoi が配る正しい値は `statusBar.*`（`#005f5f`）
-の 5 キーだけなので、混入は差分として一目で分かる。
+全ウィンドウのタイトルバーとアクティビティバーが黄色くなった。chezmoi が配る正しい値は
+`statusBar.*`（`#005f5f`）の 5 キーだけなので、混入は差分として一目で分かる。
+
+**同じ事故が 2 度起きたので、金色そのものを [.vscode/settings.json](.vscode/settings.json) から
+削除した**（2026-08-24）。dotfiles ウィンドウの識別は `workbench.colorTheme` の Kimbie Dark
+（琥珀寄りのブラウン）と `window.title` の ⚙️ だけで付ける。このリポジトリはもう `titleBar.*` を
+どこにも書いていないので、**以後どこかで黄色いバーが出たら、それはその端末の user settings に
+残っている古い値**であり、下の手順で消える。識別色を強めたくなっても `.vscode/settings.json` へ
+`workbench.colorCustomizations` を戻さないこと（テーマ id を別のものへ変える方で付ける）。
+
+2 度目の混入時、Settings Sync のスナップショット（`Code/User/sync/settings/*.json`）には
+金色が 1 件も含まれていなかった。つまり Sync 経由で運ばれたのではなく、**その端末で user
+スコープへ直接書かれている**（設定 UI が「現在有効な値」を種にして user 側の JSON へ書き出す
+経路が疑わしい）。`settingsSync.ignoredSettings` は Sync 経路しか塞げないため、
+混入元の値ごと消す方が確実だった。
 
 疑う順番と復旧:
 
@@ -810,7 +823,7 @@ macOS の `/opt/homebrew/bin/docker` や `/Users/<user>/.config/certs/...` が W
    止めるだけで、既に各端末やクラウドに残っている値は消してくれない。
 
 3. **他のウィンドウも同じ workspace を開いていないか確認する。** macOS / Windows / WSL /
-   SSH 先で dotfiles を 4 枚開けば全部金色になるのは**正しい挙動**。「全ウィンドウ」が
+   SSH 先で dotfiles を 4 枚開けば全部同じテーマになるのは**正しい挙動**。「全ウィンドウ」が
    dotfiles 以外も含むのかどうかが分かれ目。
 
 ### 端末差の吸収

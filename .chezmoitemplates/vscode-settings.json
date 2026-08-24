@@ -44,7 +44,8 @@
     // ワークスペース識別用の色（.vscode/settings.json 側）が user スコープへ
     // 混ざると全ウィンドウが同じ色になる。実際に dotfiles の金色 #C79400 が
     // Windows の user settings に紛れ込み、全ウィンドウが黄色いタイトルバーに
-    // なった。このキーは chezmoi が持つ（statusBar の #005f5f だけが正）ので
+    // なった（2 度発生したため、金色は .vscode/settings.json から削除済み）。
+    // このキーは chezmoi が持つ（statusBar の #005f5f だけが正）ので
     // Sync に運ばせる理由が無い。
     "workbench.colorCustomizations",
     // window.title もウィンドウ単位。user スコープへ上がると全ウィンドウが
