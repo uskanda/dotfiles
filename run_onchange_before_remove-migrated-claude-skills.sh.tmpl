@@ -1,0 +1,14 @@
+{{- if ne .chezmoi.os "windows" -}}
+#!/usr/bin/env bash
+# Remove the copies chezmoi used to manage before these skills moved to uskn-harness.
+# .chezmoiremove cannot do this because .claude/skills/* is now ignored. Runs again only when this
+# file changes. Symlinks (placed by `uskn-harness sync`) are left alone; only real directories go.
+set -u
+# chezmoi exports CHEZMOI_DEST_DIR; using it keeps a --destination test run away from the real home.
+DEST="${CHEZMOI_DEST_DIR:-$HOME}"
+for name in commit push pr mr mr-main mr-qa rebase merge-develop switch-develop-branch cleanup-merged \
+            pre-merge fix-ci release nessun-dorma openspec-apply-change openspec-archive-change openspec-explore openspec-propose; do
+  d="$DEST/.claude/skills/$name"
+  if [ -d "$d" ] && [ ! -L "$d" ]; then rm -rf "$d" && echo "removed chezmoi copy: $d"; fi
+done
+{{- end }}

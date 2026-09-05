@@ -25,7 +25,6 @@
 {{-   $bin = "~/.local/bin" -}}
 {{- end -}}
 {{- $hook := printf "%s/claude-notify-hook" $bin -}}
-{{- $hostingHook := printf "%s/claude-hosting-hook" $bin -}}
 {
   "agentPushNotifEnabled": true,
   "cleanupPeriodDays": 30,
@@ -39,16 +38,6 @@
     }
   },
   "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": {{ $hostingHook | quote }}
-          }
-        ]
-      }
-    ],
     "Notification": [
       {
         "hooks": [
