@@ -10,6 +10,14 @@ if [ -x "$HOME/.codeium/windsurf/bin/windsurf" ]; then
   export PATH="$HOME/.codeium/windsurf/bin:$PATH"
 fi
 
+# mise: インストールされている場合のみ shims を PATH に通す（uskn-harness が要求する）。
+# shims 方式なので非対話シェル（エージェントの hook など）からも node / python が解決できる。
+# nvm / pyenv より前に置いてあるので、両方入っている端末では従来どおり nvm / pyenv が優先される。
+# nvm / pyenv からの移行（削除）は uskn-harness Phase 1 の run_once と合わせて別 PR で行う。
+if [[ -x "$HOME/.local/bin/mise" ]]; then
+  eval "$("$HOME/.local/bin/mise" activate zsh --shims)"
+fi
+
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
