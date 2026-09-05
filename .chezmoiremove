@@ -1,0 +1,4 @@
+# uskn-harness へ移管した SessionStart hook の、chezmoi が以前展開したコピーを削除する。
+# 移管したスキルのコピーは .chezmoiignore で除外済みのためここでは消えない。
+# run_onchange_before_remove-migrated-claude-skills.sh.tmpl が実ディレクトリだけを削除する。
+.local/bin/claude-hosting-hook

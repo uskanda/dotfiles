@@ -1,0 +1,19 @@
+{{- if ne .chezmoi.os "windows" -}}
+#!/usr/bin/env bash
+# Bootstrap the uskn harness once per machine (openspec: machine-bootstrap).
+# Copied from uskn-harness/templates/chezmoi/; the logic lives in `uskn-harness sync`.
+set -euo pipefail
+# chezmoi exports CHEZMOI_DEST_DIR; honoring it keeps a --destination test run away from the real home.
+export HOME="${CHEZMOI_DEST_DIR:-$HOME}"
+H="$HOME/.local/share/uskn-harness"
+command -v git >/dev/null || { echo "uskn-harness: git is required" >&2; exit 1; }
+if [ ! -x "$HOME/.local/bin/mise" ] && ! command -v mise >/dev/null; then
+  curl -fsSL https://mise.run | MISE_INSTALL_PATH="$HOME/.local/bin/mise" sh
+fi
+if [ ! -e "$H" ]; then
+  mkdir -p "$(dirname "$H")"
+  if [ -d "$HOME/repos/uskn-harness/.git" ]; then ln -s "$HOME/repos/uskn-harness" "$H"
+  else git clone --quiet https://github.com/uskanda/uskn-harness.git "$H" || { echo "uskn-harness: clone failed; run 'uskn-harness sync' later" >&2; exit 1; }; fi
+fi
+exec "$H/bin/uskn-harness" sync
+{{- end }}

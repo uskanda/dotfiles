@@ -36,6 +36,18 @@ openspec
 .claude/stats-cache.json
 .claude/.last-cleanup
 
+# === uskn-harness が管理するもの ===
+# ~/.claude/skills には uskn-harness sync がスキルの symlink とコピーを置く。
+# dotfiles が持つスキルは 4 つだけなので、それ以外を除外して `chezmoi add ~/.claude` に巻き込まれないようにする。
+.claude/skills/*
+!.claude/skills/chezmoi-merge
+!.claude/skills/cleanup
+!.claude/skills/set-workspace-theme
+!.claude/skills/sync-claude-settings
+# openspec の Claude 用コマンドとユーザー層の CLAUDE.md も uskn-harness sync が配置する。
+.claude/commands/
+.claude/CLAUDE.md
+
 # === ~/.local/bin に置かれるインストーラ由来のバイナリ ===
 # 自分で書いたスクリプトだけを追跡する方針なので、各端末のインストーラが置く
 # 実行ファイルは明示的に外す。ディレクトリ単位で `chezmoi add ~/.local/bin` を
