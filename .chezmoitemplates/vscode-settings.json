@@ -206,6 +206,9 @@
   "claudeCode.preferredLocation": "sidebar",
   "claudeCode.initialPermissionMode": "acceptEdits",
   "claudeCode.respectGitIgnore": false,
+  // 拡張がオンボーディングを閉じたときに live 側へ書く値。取り込んでおかないと
+  // apply のたびに消えてバナーが復活する。
+  "claudeCode.hideOnboarding": true,
   "gitlens.views.branches.files.layout": "tree",
   "gitlens.views.scm.grouped.hiddenViews": {
     "commits": true,
