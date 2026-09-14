@@ -108,6 +108,21 @@
   "explorer.confirmDragAndDrop": false,
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.shellIntegration.enabled": false,
+
+  // ターミナルにフォーカスがある間はシェル側のキーバインド (emacs 風) を優先する。
+  // allowChords:false は Ctrl-K 用。chord (Ctrl-K に続く第 2 打鍵) は既定で必ず
+  // シェルをスキップし、commandsToSkipShell すら bypass するため、これを切らないと
+  // Ctrl-K は「第 2 打鍵待ち」に吸われてシェルへ届かない。
+  // 代償: ターミナルフォーカス中は Ctrl-K Ctrl-S 等の chord が効かない (エディタでは従来どおり)。
+  "terminal.integrated.allowChords": false,
+  // 先頭の "-" は既定の skip リストから外す指定＝そのキーをシェルへ流す。
+  // Ctrl-P (quickOpen) はターミナル中では使えなくなるが、Ctrl-Shift-P (showCommands) は
+  // 既定リストに残るので健在。なお Ctrl-N / B / W / T / G は既定リストに元から無く、
+  // ターミナルフォーカス時は既にシェルへ届いているので列挙しない。
+  "terminal.integrated.commandsToSkipShell": [
+    "-workbench.action.quickOpen",
+    "-workbench.action.quickOpenView"
+  ],
   "git.enableSmartCommit": true,
   "material-icon-theme.folders.associations": {
     "config": "tools", // configフォルダにtoolsアイコン
