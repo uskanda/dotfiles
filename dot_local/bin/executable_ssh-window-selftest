@@ -77,6 +77,52 @@ check inplace -V
 check inplace --help
 check inplace
 
+head1 '自動再接続 (ssh-reconnect)'
+runner="$HOME/.local/bin/ssh-reconnect"
+if [[ ! -x "$runner" ]]; then
+  ng "$runner が無い。切断されても張り直さない (chezmoi apply を確認する)"
+else
+  ok 'ssh-reconnect がある'
+  # 本物の ssh の代わりに、呼ばれるたびに筋書きを 1 行ずつ演じる偽物を PATH の先頭に置く。
+  #   connect:N  LocalCommand を実行してから (= 認証まで通った) N で終わる
+  #   fail:N     LocalCommand を実行せずに (= 接続前の失敗) N で終わる
+  fake=$(mktemp -d "${TMPDIR:-/tmp}/ssh-reconnect-selftest.XXXXXX")
+  cat > "$fake/ssh" <<'EOF'
+#!/bin/sh
+n=$(cat "$FAKE_DIR/n" 2>/dev/null || echo 0); n=$((n + 1)); echo "$n" > "$FAKE_DIR/n"
+step=$(sed -n "${n}p" "$FAKE_DIR/plan")
+[ -n "$step" ] || step=$(tail -n 1 "$FAKE_DIR/plan")
+lc=''
+for a in "$@"; do
+  case "$a" in LocalCommand=*) lc="${a#LocalCommand=}" ;; esac
+done
+case "$step" in connect:*) sh -c "$lc" ;; esac
+exit "${step#*:}"
+EOF
+  chmod +x "$fake/ssh"
+  reconnect_check() {  # reconnect_check <説明> <期待する終了コード> <期待する ssh の呼び出し回数> <筋書き...>
+    local desc="$1" want_st="$2" want_n="$3" st n
+    shift 3
+    print -rl -- "$@" > "$fake/plan"
+    rm -f "$fake/n"
+    # stdin を /dev/null にすると、張り直し前の待ち (read -t) が即座に終わる
+    PATH="$fake:$PATH" FAKE_DIR="$fake" "$runner" host </dev/null >/dev/null 2>&1
+    st=$?
+    n=$(cat "$fake/n" 2>/dev/null || echo 0)
+    if [[ "$st" == "$want_st" && "$n" == "$want_n" ]]; then
+      ok "$desc"
+    else
+      ng "$desc (終了コード $st / 期待 $want_st、ssh の呼び出し $n 回 / 期待 $want_n 回)"
+    fi
+  }
+  reconnect_check '一度も繋がらずに失敗したら張り直さない' 255 1 fail:255
+  reconnect_check '繋がった後に切れたら、繋がるまで張り直す' 0 3 connect:255 fail:255 connect:0
+  reconnect_check 'ログアウトしたら終了コードをそのまま返す' 1 1 connect:1
+  SSH_RECONNECT=0 reconnect_check 'SSH_RECONNECT=0 なら張り直さない' 255 1 connect:255
+  SSH_RECONNECT_GIVEUP=10 reconnect_check '待ち時間の合計が SSH_RECONNECT_GIVEUP に達したら諦める' 255 4 connect:255 fail:255
+  rm -rf "$fake"
+fi
+
 if (( DRY )); then
   head1 '結果'
   print -r -- "  pass=$pass fail=$fail  (--dry のため実 spawn はしていない)"

@@ -18,6 +18,8 @@
 #                           （別ウィンドウが開かず、その場実行に落ちるときの原因調査用）
 #   SSH_WINDOW_DUP=1        同じ宛先のウィンドウが生きていても別ウィンドウで開く
 #   SSH_WINDOW_MAX          同時に開いておける ssh ウィンドウ数 (既定 8、0 で無制限)
+#   SSH_RECONNECT=0         切断されても張り直さない (~/.local/bin/ssh-reconnect)
+#   SSH_RECONNECT_GIVEUP    張り直しを諦めるまでの待ち時間の合計秒数 (既定 600、0 で無制限)
 #
 # 捕まえないもの (仕様):
 #   - git / rsync / scp / ansible が内部で呼ぶ ssh
@@ -411,50 +413,77 @@ ssh() {
     return
   fi
 
-  # ssh 自身がエラーで落ちたときだけキー入力を待ってウィンドウを残す。
-  # WezTerm の exit_behavior='CloseOnCleanExit' でも似たことはできるが、あれは
-  # 全ペインに効くので「失敗したコマンドの直後に exit した通常のシェル」まで
-  # 残ってしまう。ここで面倒を見ればグローバル設定は既定の 'Close' のままでよい。
+  # ウィンドウの中身は ~/.local/bin/ssh-reconnect。
+  #   - 繋がった後に切れたら（スリープ復帰の Broken pipe 等）自動で張り直す。
+  #     リモートの tmux は生きているので、zshrc の自動 attach で元の画面に戻る
+  #   - 一度も繋がらずに失敗したら、エラーを読めるようにキー待ちして残す
+  # 詳細はスクリプト冒頭のコメントを参照。
   #
-  # 判定に 255 を使うのは ssh(1) の仕様による: ssh はリモートコマンドの終了
-  # ステータスをそのまま返し、ssh 自身のエラー（名前解決失敗・接続拒否・認証
-  # 失敗など）のときだけ 255 を返す。おかげで「リモートで最後のコマンドが
-  # 失敗したまま exit した」ケースでは、ここで引っかからず素直に閉じる。
-  #
-  # キー待ちには必ずタイムアウトを付けること。unix domain / WSL domain の mux は
-  # GUI を閉じても生き残るので、待ち続けるペインは「閉じたつもりのウィンドウ」として
-  # mux に溜まり続け、次に GUI が繋いだ瞬間に全部まとめて開き直す（実測: 失敗した
-  # ssh ウィンドウが 8 枚 mux に residual していた）。読める時間だけ残して自然に消す。
-  #
-  # シングルクォートを含めないこと: この文字列は zsh → wezterm.exe(Windows) →
-  # wsl.exe → sh と 2 回境界を越える。空白と二重引用符が保たれることは検証済み。
-  #
-  # タイムアウト付きの待ちには bash を使う。Ubuntu の /bin/sh は dash で read -t を
-  # 持たず、macOS の /bin/sh は bash 3.2 で -t の戻り値が 1（bash 4 以降の >128 では
-  # ない）ため、「-t 非対応」と「時間切れ」を戻り値では区別できない。シェルの方を
-  # 選べば分岐が要らなくなる。bash が無い環境では従来どおり無期限に待つ。
-  local hold_sh='/bin/sh' hold_wait='read -r __dummy' hold_note=''
-  if [ -x /bin/bash ]; then
-    hold_sh='/bin/bash'
-    hold_wait='read -t 300 -r __dummy'
-    hold_note=' / 5 分で自動的に閉じます'
+  # spawn 先のプロセスは呼び出し元シェルの環境を引き継がない（WezTerm の mux /
+  # wsl.exe が新しく起こす）。張り直しの調整用の変数は env で明示的に渡す。
+  local runner="$HOME/.local/bin/ssh-reconnect"
+  local -a cmd
+  cmd=(env WEZTERM_SSH_WINDOW=1)
+  if [ -n "${SSH_RECONNECT:-}" ]; then
+    cmd+=("SSH_RECONNECT=$SSH_RECONNECT")
   fi
-  # 行頭の [ssh-window:failed] は __ssh_window_failed が読む機械的なマーカー。
-  # 日本語部分は get-text だと桁で折り返されるので、目印は ASCII で行頭に置く。
-  local hold='ssh "$@"; __st=$?; if [ "$__st" -eq 255 ]; then echo; echo "[ssh-window:failed] ssh がエラーで終了しました (255)。Enter でこのウィンドウを閉じます'"$hold_note"'"; '"$hold_wait"'; fi; exit "$__st"'
+  if [ -n "${SSH_RECONNECT_GIVEUP:-}" ]; then
+    cmd+=("SSH_RECONNECT_GIVEUP=$SSH_RECONNECT_GIVEUP")
+  fi
+
+  if [ -x "$runner" ]; then
+    cmd+=("$runner" "$@")
+  else
+    # ssh-reconnect が無いとき（chezmoi apply 前など）のフォールバック。張り直しは
+    # しないが、失敗したときにウィンドウを残すところまでは同じにしてある。
+    #
+    # ssh 自身がエラーで落ちたときだけキー入力を待ってウィンドウを残す。
+    # WezTerm の exit_behavior='CloseOnCleanExit' でも似たことはできるが、あれは
+    # 全ペインに効くので「失敗したコマンドの直後に exit した通常のシェル」まで
+    # 残ってしまう。ここで面倒を見ればグローバル設定は既定の 'Close' のままでよい。
+    #
+    # 判定に 255 を使うのは ssh(1) の仕様による: ssh はリモートコマンドの終了
+    # ステータスをそのまま返し、ssh 自身のエラー（名前解決失敗・接続拒否・認証
+    # 失敗など）のときだけ 255 を返す。おかげで「リモートで最後のコマンドが
+    # 失敗したまま exit した」ケースでは、ここで引っかからず素直に閉じる。
+    #
+    # キー待ちには必ずタイムアウトを付けること。unix domain / WSL domain の mux は
+    # GUI を閉じても生き残るので、待ち続けるペインは「閉じたつもりのウィンドウ」として
+    # mux に溜まり続け、次に GUI が繋いだ瞬間に全部まとめて開き直す（実測: 失敗した
+    # ssh ウィンドウが 8 枚 mux に residual していた）。読める時間だけ残して自然に消す。
+    #
+    # シングルクォートを含めないこと: この文字列は zsh → wezterm.exe(Windows) →
+    # wsl.exe → sh と 2 回境界を越える。空白と二重引用符が保たれることは検証済み。
+    #
+    # タイムアウト付きの待ちには bash を使う。Ubuntu の /bin/sh は dash で read -t を
+    # 持たず、macOS の /bin/sh は bash 3.2 で -t の戻り値が 1（bash 4 以降の >128 では
+    # ない）ため、「-t 非対応」と「時間切れ」を戻り値では区別できない。シェルの方を
+    # 選べば分岐が要らなくなる。bash が無い環境では従来どおり無期限に待つ。
+    local hold_sh='/bin/sh' hold_wait='read -r __dummy' hold_note=''
+    if [ -x /bin/bash ]; then
+      hold_sh='/bin/bash'
+      hold_wait='read -t 300 -r __dummy'
+      hold_note=' / 5 分で自動的に閉じます'
+    fi
+    # 行頭の [ssh-window:failed] は __ssh_window_failed が読む機械的なマーカー。
+    # 日本語部分は get-text だと桁で折り返されるので、目印は ASCII で行頭に置く。
+    # ssh-reconnect も同じ文言を出す。変えるなら両方を揃えること。
+    local hold='ssh "$@"; __st=$?; if [ "$__st" -eq 255 ]; then echo; echo "[ssh-window:failed] ssh がエラーで終了しました (255)。Enter でこのウィンドウを閉じます'"$hold_note"'"; '"$hold_wait"'; fi; exit "$__st"'
+    cmd+=("$hold_sh" -c "$hold" ssh-window "$@")
+  fi
 
   # env で立てているループガードは、spawn 先のシェル経由でこのラッパーが
-  # 再入しないための保険（sh は rc を読まないので実際には発火しない）。
+  # 再入しないための保険（rc を読まないので実際には発火しない）。
   #
   # domain を渡すのは WSL だけ（$__ssh_window_domain が空でないとき）。macOS /
   # Linux で渡すと mux の自己接続でウィンドウが増殖する。冒頭の注記を参照。
   if [ -n "$__ssh_window_domain" ]; then
     pane_id="$(__ssh_window_cli cli spawn --new-window \
       --domain-name "$__ssh_window_domain" \
-      -- env WEZTERM_SSH_WINDOW=1 "$hold_sh" -c "$hold" ssh-window "$@")" || spawn_status=$?
+      -- "${cmd[@]}")" || spawn_status=$?
   else
     pane_id="$(__ssh_window_cli cli spawn --new-window \
-      -- env WEZTERM_SSH_WINDOW=1 "$hold_sh" -c "$hold" ssh-window "$@")" || spawn_status=$?
+      -- "${cmd[@]}")" || spawn_status=$?
   fi
 
   # spawn は pane id (数値) を stdout に吐く。Windows バイナリ由来の CR や

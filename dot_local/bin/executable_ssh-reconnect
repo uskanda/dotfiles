@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+# ssh-reconnect — 接続が切れたら自動で張り直す ssh
+#
+#   ssh-reconnect [ssh の引数...]     # 引数は ssh と同じ
+#
+# ~/.config/shell/ssh-window.sh が WezTerm の新しいウィンドウで ssh を開くとき、
+# その中身として走る。単体で叩いてもよい（その場合は失敗時にキー待ちをしない）。
+#
+# なぜ要るか:
+#   スリープ中もリモートは書き込みを続ける（tmux のステータス行の時計が毎分変わる）。
+#   応答の無い相手への再送はサーバ側カーネルの net.ipv4.tcp_retries2（既定 15 ≒
+#   924.6 秒）で打ち切られて TCP ごと捨てられ、復帰後の最初の送信に RST が返って
+#   "Broken pipe" / "Connection reset" で ssh が 255 終了する。
+#   TCP を延命する設定は sshd にも ssh にも無い（効くのは全接続に掛かる sysctl だけ）
+#   ので、接続ではなくセッションを持たせる。リモートの tmux は切断後も生きているので、
+#   張り直せば zshrc の自動 attach で元の画面に戻る。
+#
+# 挙動:
+#   255 以外で終わった   ログアウト・リモートコマンドの終了。その終了ステータスで終わる
+#   一度も繋がらずに 255  名前解決失敗・接続拒否・認証失敗など。張り直しても同じ結果に
+#                         なるので諦める。ssh-window のウィンドウ内ならエラーを読ませて待つ
+#   繋がった後に 255      切断。3, 5, 10, 20, 30, 30, ... 秒おきに張り直す
+#                         （Enter で今すぐ、q / Ctrl-C でやめる）
+#
+# 調整（ssh-window 経由のときは呼び出し元シェルの値が渡される）:
+#   SSH_RECONNECT=0            張り直さない（切断も「失敗」として扱う）
+#   SSH_RECONNECT_GIVEUP=600   張り直しの待ち時間の合計がこの秒数に達したら諦める
+#                              （0 で無制限）。数えるのは待った秒数なので、スリープ中は
+#                              減らない。ホストを撤去したまま窓が残り続けないための歯止め
+#
+# NOTE: macOS の /bin/bash 3.2 でも動くように書くこと（WezTerm を Dock から起動すると
+#       spawn 先の PATH に Homebrew の bash が無い）。read -t の時間切れの戻り値は
+#       3.2 だと 1、4 以降だと >128 なので、「0 = キー入力 / それ以外 = 時間切れ」で見る。
+
+set -u
+
+case "${SSH_RECONNECT:-1}" in
+  0) reconnect=0 ;;
+  *) reconnect=1 ;;
+esac
+giveup="${SSH_RECONNECT_GIVEUP:-600}"
+case "$giveup" in ''|*[!0-9]*) giveup=600 ;; esac
+
+in_window=0
+if [ -n "${WEZTERM_SSH_WINDOW:-}" ]; then
+  in_window=1
+fi
+
+# 「一度でも繋がったか」は ssh 自身に教えてもらう。LocalCommand は認証が通って
+# セッションを始める直前にローカルで実行されるので、印のファイルが出来ていれば
+# 繋がった後の切断、無ければ接続前の失敗と判定できる。
+#
+# 経過時間で推測しないこと: 到達できないホストへの接続は SYN の再送で 2 分以上
+# 粘るので「長く走った = 繋がっていた」は成り立たない。また印をファイルにして
+# いるのは、ssh が起動直後に 3 番以降の fd を閉じる（closefrom）ため。
+flag="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}"
+flag="${flag%/}/ssh-reconnect.$$.up"
+trap 'rm -f "$flag"' EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+# 切断はリモートの TUI（tmux 等）が後始末をしないまま起きるので、端末にマウス
+# トラッキングやスクロール領域が残っている。メッセージが読めてキー入力が素直に
+# 届くよう最低限だけ戻す。
+#   属性 / スクロール領域（\e[r はカーソルを左上へ飛ばすので \e7 \e8 で挟む）/
+#   カーソル表示 / マウス 1000 1002 1003 1006 / フォーカス 1004 / ブラケットペースト 2004
+# 代替スクリーンは抜けない。抜けると ssh が出した切断理由（Broken pipe 等）も
+# 一緒に消える。張り直せば tmux が画面ごと描き直す。
+reset_term() {
+  if [ -t 1 ]; then
+    printf '\e[0m\e7\e[r\e8\e[?25h\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?1004l\e[?2004l'
+  fi
+}
+
+# 諦めて終わる。ssh-window のウィンドウ内でだけ、エラーを読めるようにウィンドウを残す。
+#
+# 行頭の [ssh-window:failed] は ssh-window.sh の __ssh_window_failed が読む機械的な
+# マーカーなので文言を変えないこと（同じ宛先へ ssh し直したとき、このウィンドウを
+# 閉じて開き直してよいかの判定に使っている）。待ちは 5 分で打ち切る — mux は GUI を
+# 閉じても生き残るので、待ち続けるペインは溜まり、次に GUI が繋いだときに一斉に開く。
+give_up() {
+  if [ "$in_window" = 1 ]; then
+    echo
+    echo '[ssh-window:failed] ssh がエラーで終了しました (255)。Enter でこのウィンドウを閉じます / 5 分で自動的に閉じます'
+    read -t 300 -r dummy || :
+  fi
+  exit 255
+}
+
+connected=0   # 一度でも認証まで通ったか
+tries=0       # 直近の切断からの張り直しの回数
+waited=0      # 直近の切断から待った秒数の合計（諦めの判定に使う）
+
+while :; do
+  rm -f "$flag"
+  started=$SECONDS
+  if [ "$tries" -eq 0 ]; then
+    command ssh -o PermitLocalCommand=yes -o "LocalCommand=touch '$flag'" "$@"
+  else
+    # 張り直しでは接続待ちを短く切る。復帰直後でネットワークがまだ無いと、SYN の
+    # 再送で 2 分以上黙ったままになり、その間は q も効かない。
+    command ssh -o ConnectTimeout=10 \
+      -o PermitLocalCommand=yes -o "LocalCommand=touch '$flag'" "$@"
+  fi
+  status=$?
+
+  # ssh は自分自身のエラーのときだけ 255 を返し、それ以外はリモートの終了ステータスを
+  # そのまま返す（ssh(1)）。255 以外はログアウトやリモートコマンドの終了なので返すだけ。
+  if [ "$status" -ne 255 ]; then
+    exit "$status"
+  fi
+
+  if [ -e "$flag" ]; then
+    connected=1
+    # 待ちを振り出しに戻すのは、しばらく繋がっていたときだけ。認証直後に切られる
+    # 相手（サーバ側の設定ミス等）を 3 秒おきに叩き続けないため。
+    if [ $((SECONDS - started)) -ge 30 ]; then
+      tries=0
+      waited=0
+    fi
+  fi
+
+  reset_term
+
+  if [ "$connected" = 0 ] || [ "$reconnect" = 0 ]; then
+    give_up
+  fi
+  if [ "$giveup" -gt 0 ] && [ "$waited" -ge "$giveup" ]; then
+    echo
+    echo "ssh-reconnect: 合計 ${waited} 秒待っても繋がらないので張り直しをやめます"
+    give_up
+  fi
+
+  tries=$((tries + 1))
+  case "$tries" in
+    1) delay=3 ;;
+    2) delay=5 ;;
+    3) delay=10 ;;
+    4) delay=20 ;;
+    *) delay=30 ;;
+  esac
+  echo
+  echo "[ssh-reconnect] 接続が切れました。${delay} 秒後に張り直します (${tries} 回目)  Enter: 今すぐ / q: やめる"
+  if read -r -s -n 1 -t "$delay" key; then
+    case "$key" in
+      q|Q) exit 255 ;;
+    esac
+  fi
+  waited=$((waited + delay))
+done
