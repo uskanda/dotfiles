@@ -76,6 +76,20 @@ openspec
 .config/opencode/
 {{ end }}
 
+# === ~/.ssh ===
+# 追跡するのは private_dot_ssh/ の 2 つだけ（config の末尾に Include を置く modify
+# テンプレートと、config.d/dotfiles.conf）。`chezmoi add ~/.ssh` で鍵や known_hosts を
+# 巻き込んで GitHub へ push する事故を防ぐため、明示的に外す。
+.ssh/id_*
+.ssh/*.pem
+.ssh/known_hosts*
+.ssh/authorized_keys
+# Windows の OpenSSH では確かめていないので配らない（ssh-reconnect も Unix 専用）。
+{{ if eq .chezmoi.os "windows" }}
+.ssh/
+.local/bin/ssh-reconnect
+{{ end }}
+
 # === VSCode ユーザー設定 ===
 # 実体は .chezmoitemplates/vscode-settings.json 一本。反映先が OS ごとに違うので
 # 薄いラッパを 3 つ置き、現在の OS 以外のものをここで除外する。

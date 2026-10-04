@@ -1,0 +1,24 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /*
+  ~/.ssh/config は端末ごとの Host 定義を持つので、chezmoi で丸ごとは管理しない。
+  このテンプレートは既存の中身をそのまま残し、dotfiles の共通設定を Include する
+  ブロックを末尾に 1 つだけ置く（無ければ足し、途中にあれば末尾へ移す）。
+
+  末尾に置く理由: ssh_config は「最初に得た値が勝つ」。先頭で Host * を読ませると、
+  後ろに書いた Host 個別の値がすべて負ける。末尾なら本体の値が優先され、dotfiles
+  側は既定値として効く。
+  Match all を挟む理由: 直前の Host ブロックの中に Include が入ると、そのホストに
+  しか効かなくなる。Match all で条件を全ホストに戻してから読む（Include した
+  ファイルの中の Host 行は外へ漏れない）。
+*/ -}}
+{{- $body := regexReplaceAll `(?ms)^# >>> dotfiles \(chezmoi\) >>>$.*?^# <<< dotfiles \(chezmoi\) <<<$\n?` .chezmoi.stdin "" -}}
+{{- $body = regexReplaceAll `\s+\z` $body "" -}}
+{{- if $body }}{{ $body }}
+
+{{ end -}}
+# >>> dotfiles (chezmoi) >>>
+# このブロックは chezmoi が管理し、apply のたびにファイル末尾へ置き直す
+# （~/dotfiles/private_dot_ssh/modify_private_config）。Host 定義はこれより上に書く。
+Match all
+Include ~/.ssh/config.d/dotfiles.conf
+# <<< dotfiles (chezmoi) <<<
