@@ -143,6 +143,14 @@ bash 版 + PowerShell 版の対で、判定ロジックを揃えて差分を最�
 - spawn に渡す `sh -c` のスクリプト文字列に**シングルクォートを含めないこと**。zsh → `wezterm.exe`(Windows) → `wsl.exe` → `sh` と 2 回境界を越える。空白・二重引用符・日本語が保たれることは検証済み。
 - **WSL では `--domain-name` を外して spawn しないこと。** domain を外すと Windows 側の `ssh.exe` が起動し、WSL の `~/.ssh/config` も鍵も参照されない。domain 指定で失敗したときに domain 無しで開き直すフォールバックは macOS / Linux 経路にのみ入れてある（そちらは既定 domain もローカルなので安全）。
 - WSL では WezTerm の環境変数（`WEZTERM_UNIX_SOCKET` / `WEZTERM_PANE`）が Windows 側から渡ってこない（検証済み）。tmux の環境変数を引き直す処理は macOS 経路でのみ意味を持つ。
+- **ウィンドウの中身は [ssh-reconnect](dot_local/bin/executable_ssh-reconnect)。** 繋がった後に 255 で終わったら（スリープ復帰の Broken pipe 等）張り直し、リモートの tmux へ自動 attach で戻る。触るときの注意:
+  - **スリープ跨ぎの切断を sshd / ssh_config の設定で直そうとしないこと。** 切っているのはサーバ側カーネルの再送打ち切り（`tcp_retries2` ≒ 15 分。寝ている間もリモート tmux の時計が書き込むため）で、sshd ではない（NAS の sshd は既定値のまま）。sshd に `ClientAliveInterval` を入れると寝ている相手を能動的に切るので悪化する。`ServerAliveInterval` もスリープ中はクライアントごと止まるので効かない。
+  - **「繋がった後か」は `-o LocalCommand` で作る印のファイルで判定する。経過時間で推測しないこと** — 到達できないホストへの接続は SYN の再送で 2 分以上粘る。印をファイルにしているのは ssh が起動直後に fd 3 以降を閉じる（closefrom）ため。
+  - **張り直しにも打ち切りを残すこと**（`SSH_RECONNECT_GIVEUP`、既定 600 秒）。数えるのは待った秒数でスリープ中は減らない。無制限にすると撤去したホストの窓が mux に永久に残る。
+  - 諦めたときの `[ssh-window:failed]` マーカーは `__ssh_window_failed` が読むので、[ssh-window.sh](dot_config/shell/ssh-window.sh) のフォールバック（`ssh-reconnect` が無いときの inline hold）と文言を揃えること。
+  - **spawn 先は呼び出し元シェルの環境を引き継がない。** `SSH_RECONNECT*` のような調整用の変数は `env` で明示的に渡している。増やすならそこにも足す。
+  - macOS では WezTerm を Dock から起動すると spawn 先の bash が `/bin/bash` 3.2 になるので、3.2 で動く書き方を保つこと（`read -t` の時間切れは 3.2 だと 1、4 以降だと >128。「0 = キー入力 / それ以外 = 時間切れ」で見る）。
+- **`~/.ssh/config` は丸ごと管理しない。** [private_dot_ssh/modify_private_config](private_dot_ssh/modify_private_config)（modify テンプレート）が既存の中身を残したまま、末尾に `Match all` + `Include ~/.ssh/config.d/dotfiles.conf` のブロックを置く（apply のたびに末尾へ移す）。**Include を先頭に移さないこと** — ssh_config は先勝ちなので、先頭の `Host *` が後ろのホスト個別設定を全部潰す。裏返しとして、端末の `~/.ssh/config` 本体に `Host *` の `ServerAliveInterval` が残っているとそちらが勝つ（効いている値は `ssh -G <host>`）。
 - 詳細と無効化方法（`SSH_NO_NEW_WINDOW=1`）は [README.md](README.md) の「WezTerm」節。
 
 ## プラットフォーム別の構成
