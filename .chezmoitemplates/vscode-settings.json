@@ -44,7 +44,8 @@
     // ワークスペース識別用の色（.vscode/settings.json 側）が user スコープへ
     // 混ざると全ウィンドウが同じ色になる。実際に dotfiles の金色 #C79400 が
     // Windows の user settings に紛れ込み、全ウィンドウが黄色いタイトルバーに
-    // なった（2 度発生したため、金色は .vscode/settings.json から削除済み）。
+    // なった（金色は .vscode/settings.json から削除済み。user スコープへ書き戻していた
+    // のは VSCodeVim の statusBarColorControl で、下で false にしてある）。
     // このキーは chezmoi が持つ（statusBar の #005f5f だけが正）ので
     // Sync に運ばせる理由が無い。
     "workbench.colorCustomizations",
@@ -75,7 +76,15 @@
       "before": ["j", "j"],
     },
   ],
-  "vim.statusBarColorControl": true,
+  // ⚠️ true に戻さないこと。全ウィンドウが黄色いタイトルバーになる事故の真犯人。
+  // VSCodeVim はモードが変わるたびに workbench.colorCustomizations の「有効値」
+  // （user + workspace を合成したもの）に statusBar.* を足して、user スコープへ
+  // 丸ごと書き戻す（1.32.4 の updateColor: get("colorCustomizations") → update(..., true)）。
+  // そのため、どこか 1 つの workspace に色指定があるだけで、それが user 設定へ昇格して
+  // 全ウィンドウに波及する。実際、金色 #C79400 をリポジトリから消した後も、pull して
+  // いなかった古い作業ツリーの .vscode/settings.json から再び持ち込まれた。
+  // 代償はモードごとのステータスバーの色替えだけ（モード名の表示は残る）。
+  "vim.statusBarColorControl": false,
 {{- if and $imSelect (eq .chezmoi.os "darwin") }}
   // IME 自動切替は現在 OFF。入力中に切り替わるのが煩わしいため全端末で無効にしている。
   // 戻したくなったら enable を true にするだけでよいので、im-select がある macOS では
