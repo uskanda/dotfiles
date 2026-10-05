@@ -159,6 +159,8 @@
   "remote.SSH.remotePlatform": {
     "192.168.0.82": "linux",
   },
+  // VS Code Server は手元でダウンロードしてから ssh 先へ転送する（ssh 先の外向き通信に頼らない）。
+  "remote.SSH.localServerDownload": "always",
   "editor.unicodeHighlight.invisibleCharacters": false,
   "gitlens.ai.model": "openai:gpt-5-mini",
   "gitlens.ai.vscode.model": "cerebras:cerebras",
