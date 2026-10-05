@@ -898,9 +898,22 @@ macOS の `/opt/homebrew/bin/docker` や `/Users/<user>/.config/certs/...` が W
 
 2 度目の混入時、Settings Sync のスナップショット（`Code/User/sync/settings/*.json`）には
 金色が 1 件も含まれていなかった。つまり Sync 経由で運ばれたのではなく、**その端末で user
-スコープへ直接書かれている**（設定 UI が「現在有効な値」を種にして user 側の JSON へ書き出す
-経路が疑わしい）。`settingsSync.ignoredSettings` は Sync 経路しか塞げないため、
-混入元の値ごと消す方が確実だった。
+スコープへ直接書かれている**。`settingsSync.ignoredSettings` は Sync 経路しか塞げない。
+
+**書いていたのは VSCodeVim だった（3 度目、2026-10-04 に特定）。** `vim.statusBarColorControl`
+が有効だと、VSCodeVim はモードが変わるたびに `workbench.colorCustomizations` の**有効値**
+（user + workspace を合成したもの）へ `statusBar.*` を足し、**user スコープへ丸ごと書き戻す**
+（1.32.4 の `updateColor` が `get("colorCustomizations")` → `update(..., true)`）。workspace の色が
+1 つでもあれば、それが user 設定へ昇格して全ウィンドウに波及する。chezmoi が配っている
+`statusBar.*` の 5 キーも、もとは VSCodeVim が書いたものと同じ組だった。
+
+3 度目は、金色をリポジトリから消した後に起きた。WSL の `~/dotfiles` が 11 コミット遅れたまま
+（金色を消すコミットを pull していない）で、そのウィンドウを開いた瞬間に古い
+`.vscode/settings.json` の金色が Windows の user 設定へ昇格した（user 設定の更新時刻と
+ウィンドウを開いた時刻が一致）。混入元を消すだけでは、古い作業ツリーや他のリポジトリの色指定
+が 1 つ残っているだけで再発する。そこで**書き戻す側を止めた**:
+テンプレートで `"vim.statusBarColorControl": false`。代償は Vim モードごとのステータスバーの
+色替えだけで、モード名の表示は残る。**true に戻さないこと。**
 
 疑う順番と復旧:
 
