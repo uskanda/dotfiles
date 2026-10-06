@@ -8,7 +8,7 @@
 # Windows(PowerShell) 版は同じディレクトリの chezmoi-merge.ps1。両者は同じ
 # 「source-path へ移動して /chezmoi-merge で対話セッションを開く」ことをする。
 #
-# スキル本体 (dot_claude/skills/chezmoi-merge/SKILL.md) は項目ごとにユーザーの
+# スキル本体 (.claude/skills/chezmoi-merge/SKILL.md、プロジェクト層) は項目ごとにユーザーの
 # 判断を仰ぐ設計なので、意図的に対話セッションで起動する。`-p` / `--print` を
 # 足すと決定を待てないまま片側へ倒れるので付けないこと。
 

@@ -1,9 +1,14 @@
 ---
 name: sync-claude-settings
-description: 複数台の ~/.claude を chezmoi で同期する際に settings.json.tmpl（特に permissions.allow）の衝突を解決し、merge→commit→push まで一気に行う。Use when settings.json.tmpl conflicts on git pull/rebase, or when syncing/merging Claude Code permission (allow) settings across machines and pushing the result. Keywords: chezmoi conflict, settings.json.tmpl merge, permission sync, dotfiles。
+description: Windows ネイティブ用に dotfiles に残した settings.json.tmpl（特に permissions.allow）の衝突を解決し、merge→commit→push まで一気に行う。Use when settings.json.tmpl conflicts on git pull/rebase, or when syncing/merging Claude Code permission (allow) settings across machines and pushing the result. Keywords: chezmoi conflict, settings.json.tmpl merge, permission sync, dotfiles。
 ---
 
 # sync-claude-settings
+
+> **対象は Windows ネイティブ用の `dot_claude/settings.json.tmpl` だけ。** Linux / macOS / WSL の
+> `~/.claude/settings.json` は 2026-10 から [uskn-harness](https://github.com/uskanda/uskn-harness) が
+> 設定断片をマージして作る（端末で増えた allow をリポジトリへ集める作業は無くなった）。
+> Windows 用の写しは凍結しており、ハーネスの Windows 対応でこのスキルごと廃止する。
 
 複数台で Claude Code (`~/.claude`) を chezmoi 管理・同期していると、各端末が
 `~/.claude/settings.json` に許可を追記するため、ソースの

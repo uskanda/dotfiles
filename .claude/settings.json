@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(git *)",
+      "PowerShell(chezmoi source-path)",
+      "PowerShell(chezmoi status)",
+      "PowerShell(chezmoi diff *)"
+    ]
+  }
+}

@@ -33,9 +33,14 @@ git status --porcelain          # 汚れていれば先に commit するかユ�
 git pull --rebase origin "$BR"
 ```
 
-`dot_claude/settings.json.tmpl` が衝突した場合は、専用の
-**sync-claude-settings** スキルに委譲する（allow の union と集約基準はそちらが持つ）。
+`dot_claude/settings.json.tmpl`（Windows ネイティブにだけ配る凍結した写し）が衝突した場合は、
+専用の **sync-claude-settings** スキルに委譲する（allow の union と集約基準はそちらが持つ）。
 それ以外のファイルが衝突したら**止めてユーザーに報告**する。
+
+> Linux / macOS / WSL の `~/.claude/settings.json`・Claude Code のスキル・読み上げ通知は
+> [uskn-harness](https://github.com/uskanda/uskn-harness) が配る（`.chezmoiignore` で
+> chezmoi の対象外）。ここでは突合しない。ずれは `uskn-harness doctor` で確かめ、
+> 共有したい値はハーネスの設定断片か端末別設定（`~/.config/uskn-harness/settings.json`）へ書く。
 
 ### 2. ドリフトを列挙
 
@@ -68,8 +73,9 @@ chezmoi state dump | grep -A2 '"<対象パス>"'   # chezmoi が想定するモ�
 描画結果と実ファイルを**意味ベース**で比較する:
 
 ```bash
-chezmoi cat ~/.claude/settings.json > /tmp/repo.json
-cp ~/.claude/settings.json /tmp/live.json
+T=~/.config/Code/User/settings.json   # 例。対象の JSON に置き換える
+chezmoi cat "$T" > /tmp/repo.json
+cp "$T" /tmp/live.json
 python3 - <<'PY'
 import json
 live = json.load(open('/tmp/live.json'))
@@ -102,7 +108,7 @@ git log -1 --format='%ad %s' --date=short -- dot_local/bin/executable_FOO
 
 ```bash
 # ライブが正 → リポジトリへ取り込む
-chezmoi add ~/.claude/skills/foo
+chezmoi add ~/.config/foo
 
 # リポジトリが正 → $HOME へ適用（パスを必ず指定）
 chezmoi apply --force ~/.local/bin ~/.config/tmux
@@ -122,6 +128,7 @@ chezmoi apply --force ~/.local/bin ~/.config/tmux
 ### 6. 検証（commit の前に必ず）
 
 ```bash
+# Windows 用の settings.json.tmpl に触れたとき
 chezmoi execute-template < dot_claude/settings.json.tmpl | jq -e . >/dev/null && echo "JSON OK"
 chezmoi status          # 決定した項目が消えていること
 ```
