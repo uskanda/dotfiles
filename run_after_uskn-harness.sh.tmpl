@@ -1,7 +1,8 @@
 {{- if ne .chezmoi.os "windows" -}}
 #!/usr/bin/env bash
-# Bootstrap the uskn harness once per machine (openspec: machine-bootstrap).
-# Copied from uskn-harness/templates/chezmoi/; the logic lives in `uskn-harness sync`.
+# Install the uskn harness when it is missing, then sync it, on every `chezmoi apply` (openspec: machine-bootstrap).
+# run_after_: the dotfiles' own files and their run_onchange_before_ cleanup land first, so sync can link into the
+# paths they freed. Copied from uskn-harness/templates/chezmoi/; the logic lives in `uskn-harness sync`.
 set -euo pipefail
 # chezmoi exports CHEZMOI_DEST_DIR; honoring it keeps a --destination test run away from the real home.
 export HOME="${CHEZMOI_DEST_DIR:-$HOME}"
@@ -13,7 +14,7 @@ fi
 if [ ! -e "$H" ]; then
   mkdir -p "$(dirname "$H")"
   if [ -d "$HOME/repos/uskn-harness/.git" ]; then ln -s "$HOME/repos/uskn-harness" "$H"
-  else git clone --quiet https://github.com/uskanda/uskn-harness.git "$H" || { echo "uskn-harness: clone failed; run 'uskn-harness sync' later" >&2; exit 1; }; fi
+  else git clone --quiet https://github.com/uskanda/uskn-harness.git "$H" || { echo "uskn-harness: clone failed; the next chezmoi apply (or uskn-harness sync) tries again" >&2; exit 1; }; fi
 fi
 exec "$H/bin/uskn-harness" sync
 {{- end }}
