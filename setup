@@ -145,30 +145,8 @@ else
     echo "done."
 fi
 
-# (Optional) VOICEVOX engine for claude-notify TTS notifications.
-# Off by default — it is a ~1.8GB download. Enable with: INSTALL_VOICEVOX=1 ./setup
-# Without it, claude-notify falls back to the macOS `say` voice.
-if [[ "${INSTALL_VOICEVOX:-0}" == "1" && "$OSTYPE" == "darwin"* ]]; then
-    echo "Installing VOICEVOX engine (optional)..."
-    if command -v install-voicevox-engine &> /dev/null; then
-        install-voicevox-engine
-    else
-        "$HOME/.local/bin/install-voicevox-engine"
-    fi
-    echo "done."
-else
-    echo "Skipping VOICEVOX engine install (set INSTALL_VOICEVOX=1 to enable)."
-fi
-
-# (Optional) Mac notify daemon so devcontainer/SSH sessions can play VOICEVOX
-# audio on this Mac. Off by default. Enable with: INSTALL_NOTIFY_DAEMON=1 ./setup
-if [[ "${INSTALL_NOTIFY_DAEMON:-0}" == "1" && "$OSTYPE" == "darwin"* ]]; then
-    echo "Installing claude-notify daemon (optional)..."
-    "$HOME/.local/bin/claude-notify-daemon" install
-    # ntfy subscriber self-skips until ~/.config/claude-notify/config.env is filled.
-    "$HOME/.local/bin/claude-notify-ntfy-sub" install
-    echo "done."
-else
-    echo "Skipping claude-notify daemon (set INSTALL_NOTIFY_DAEMON=1 to enable)."
-fi
+# Spoken notifications (claude-notify), the VOICEVOX engine and the notify receivers now come from
+# uskn-harness: `chezmoi apply` runs `uskn-harness sync`, which links them into ~/.local/bin. The receivers
+# and the engine stay opt-in; see plugins/uskn-notify/README.md in uskn-harness for
+# `claude-notify-daemon install`, `claude-notify-ntfy-sub install` and `install-voicevox-engine`.
         

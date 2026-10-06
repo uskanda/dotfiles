@@ -1,14 +1,25 @@
 {{- if ne .chezmoi.os "windows" -}}
 #!/usr/bin/env bash
-# Remove the copies chezmoi used to manage before these skills moved to uskn-harness.
-# .chezmoiremove cannot do this because .claude/skills/* is now ignored. Runs again only when this
-# file changes. Symlinks (placed by `uskn-harness sync`) are left alone; only real directories go.
+# Remove the copies chezmoi used to place before these moved to uskn-harness (its ADR-0006).
+# .chezmoiremove cannot do this: it runs on every apply and would also delete the symlinks
+# `uskn-harness sync` puts at the same paths. Runs again only when this file changes.
+# Symlinks are left alone; only real directories and real files go.
 set -u
 # chezmoi exports CHEZMOI_DEST_DIR; using it keeps a --destination test run away from the real home.
 DEST="${CHEZMOI_DEST_DIR:-$HOME}"
+# Skills: harness skills (git workflow, openspec, cleanup, set-workspace-theme) and the two that moved to the
+# dotfiles' own project layer (.claude/skills/ in this repository).
 for name in commit push pr mr mr-main mr-qa rebase merge-develop switch-develop-branch cleanup-merged \
-            pre-merge fix-ci release nessun-dorma openspec-apply-change openspec-archive-change openspec-explore openspec-propose; do
+            pre-merge fix-ci release nessun-dorma openspec-apply-change openspec-archive-change openspec-explore openspec-propose \
+            cleanup set-workspace-theme chezmoi-merge sync-claude-settings; do
   d="$DEST/.claude/skills/$name"
   if [ -d "$d" ] && [ ! -L "$d" ]; then rm -rf "$d" && echo "removed chezmoi copy: $d"; fi
+done
+# Spoken notifications: the uskn-notify plugin links these into ~/.local/bin.
+# ~/.config/claude-notify/config.env stays: it holds this machine's secrets and is the user's now.
+for name in claude-notify claude-notify.ps1 claude-notify-hook claude-notify-nag claude-notify-daemon \
+            claude-notify-ntfy-sub install-voicevox-engine; do
+  f="$DEST/.local/bin/$name"
+  if [ -f "$f" ] && [ ! -L "$f" ]; then rm -f "$f" && echo "removed chezmoi copy: $f"; fi
 done
 {{- end }}

@@ -1,7 +1,8 @@
 # setup.ps1 — Windows post-`chezmoi apply` setup.
 #
-# Run after `chezmoi apply`. Optional components are opt-in, mirroring the
-# INSTALL_VOICEVOX / INSTALL_NOTIFY_DAEMON flags in the Unix `setup` script.
+# Run after `chezmoi apply`. Optional components are opt-in (switch or INSTALL_* env var).
+# -Voicevox serves the frozen Windows copy of claude-notify; on Linux, macOS and WSL the
+# notifications come from uskn-harness (plugin uskn-notify), see its ADR-0006.
 #
 #   .\setup.ps1              # base setup only (terminal install + config link)
 #   .\setup.ps1 -Winget      # base setup + winget packages (win_main_apps.json)

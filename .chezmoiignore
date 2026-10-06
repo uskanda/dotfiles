@@ -12,7 +12,15 @@ CLAUDE.md
 openspec
 
 # === Claude Code (~/.claude) ===
-# Allowlist 方針: 自分で書いた設定だけを追跡し、
+# Linux / macOS / WSL では ~/.claude を uskn-harness が管理する。settings.json は設定断片のマージ、
+# スキルとプラグインは symlink、ユーザー層の CLAUDE.md はコピー。chezmoi はここに一切触らず、
+# dotfiles は run_after_uskn-harness.sh で導入と sync を呼ぶだけにする（uskn-harness の ADR-0006）。
+# Windows ネイティブはハーネスの対象外なので、凍結した settings.json.tmpl と set-workspace-theme を
+# 配り続ける。ハーネスの Windows 対応の change で移すか廃止する。
+{{ if ne .chezmoi.os "windows" }}
+.claude/
+{{ else }}
+# 以下は Windows のみ。Allowlist 方針: 自分で書いた設定だけを追跡し、
 # 認証情報・セッション履歴・ランタイム状態は絶対に含めない。
 # パターンはターゲットパス（$HOME からの相対）で評価される。
 # `chezmoi add ~/.claude` 時にもこの無視リストが適用されることを確認済み
@@ -35,18 +43,13 @@ openspec
 .claude/mcp-needs-auth-cache.json
 .claude/stats-cache.json
 .claude/.last-cleanup
-
-# === uskn-harness が管理するもの ===
-# ~/.claude/skills には uskn-harness sync がスキルの symlink とコピーを置く。
-# dotfiles が持つスキルは 4 つだけなので、それ以外を除外して `chezmoi add ~/.claude` に巻き込まれないようにする。
+# dotfiles が Windows に配るスキルは set-workspace-theme だけ。それ以外を除外して
+# `chezmoi add ~/.claude` に巻き込まれないようにする。
 .claude/skills/*
-!.claude/skills/chezmoi-merge
-!.claude/skills/cleanup
 !.claude/skills/set-workspace-theme
-!.claude/skills/sync-claude-settings
-# openspec の Claude 用コマンドとユーザー層の CLAUDE.md も uskn-harness sync が配置する。
 .claude/commands/
 .claude/CLAUDE.md
+{{ end }}
 
 # === ~/.local/bin に置かれるインストーラ由来のバイナリ ===
 # 自分で書いたスクリプトだけを追跡する方針なので、各端末のインストーラが置く
@@ -65,7 +68,17 @@ openspec
 # setup.ps1 の Install-PowerShellProfile が実プロファイルから source する。
 # .config/opencode/ は Windows 機の opencode 設定。登録しているモデルもコンテキストも
 # この GPU (RX 9070 XT / VRAM 15.9GB) で実測して決めた値なので、他機へは配らない。
+# 読み上げ通知（claude-notify 一式、VOICEVOX のインストーラ、.config/claude-notify/）は、
+# Linux / macOS / WSL では uskn-harness のプラグイン uskn-notify が ~/.local/bin へ symlink する。
+# ここで除外しないと、chezmoi が sync の symlink を実ファイルで上書きする。Windows には凍結した写しを配る。
 {{ if ne .chezmoi.os "windows" }}
+.local/bin/claude-notify
+.local/bin/claude-notify-hook
+.local/bin/claude-notify-nag
+.local/bin/claude-notify-daemon
+.local/bin/claude-notify-ntfy-sub
+.local/bin/install-voicevox-engine
+.config/claude-notify/
 .local/bin/claude-notify.ps1
 .local/bin/install-voicevox-engine.ps1
 .local/bin/chezmoi-merge.ps1
