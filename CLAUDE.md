@@ -153,6 +153,17 @@ bash 版 + PowerShell 版の対で、判定ロジックを揃えて差分を最�
 - **`~/.ssh/config` は丸ごと管理しない。** [private_dot_ssh/modify_private_config](private_dot_ssh/modify_private_config)（modify テンプレート）が既存の中身を残したまま、末尾に `Match all` + `Include ~/.ssh/config.d/dotfiles.conf` のブロックを置く（apply のたびに末尾へ移す）。**Include を先頭に移さないこと** — ssh_config は先勝ちなので、先頭の `Host *` が後ろのホスト個別設定を全部潰す。裏返しとして、端末の `~/.ssh/config` 本体に `Host *` の `ServerAliveInterval` が残っているとそちらが勝つ（効いている値は `ssh -G <host>`）。
 - 詳細と無効化方法（`SSH_NO_NEW_WINDOW=1`）は [README.md](README.md) の「WezTerm」節。
 
+## Claude Code と AI 関連の設定は uskn-harness が配る
+
+Linux / macOS / WSL の `~/.claude`（settings.json、スキル、プラグイン、ユーザー層の CLAUDE.md）と読み上げ通知（claude-notify 一式）は [uskn-harness](https://github.com/uskanda/uskn-harness) が配る（同リポジトリの ADR-0006）。dotfiles の役割は、[run_after_uskn-harness.sh.tmpl](run_after_uskn-harness.sh.tmpl) で導入と `uskn-harness sync` を `chezmoi apply` のたびに呼ぶことだけ。
+
+- Claude Code の設定・スキル・hook の変更は、ハーネスへの PR で行う。共有する settings.json の値はハーネスの設定断片 `templates/user/settings.json`、端末だけの値は `~/.config/uskn-harness/settings.json`（リポジトリ外）。
+- [.chezmoiignore](.chezmoiignore) は Windows 以外で `.claude/` と通知のコマンドを丸ごと除外している。この除外が chezmoi と sync の境界で、外すと chezmoi が sync の symlink を実ファイルで上書きする。
+- ハーネスへ移したものの旧コピーは [run_onchange_before_remove-migrated-claude-skills.sh.tmpl](run_onchange_before_remove-migrated-claude-skills.sh.tmpl) が消す（実ファイルだけ、symlink は残す）。`.chezmoiremove` は apply のたびに sync の symlink まで消すので、この用途には使わない。
+- Windows ネイティブはハーネスの対象外。`dot_claude/settings.json.tmpl`、`dot_claude/skills/set-workspace-theme/`、通知のコマンド、`dot_config/claude-notify/` は Windows だけに配る**凍結した写し**で、中身の変更はハーネス側で行う。
+- dotfiles でしか使わないスキル（chezmoi-merge、sync-claude-settings）と PowerShell の許可は、リポジトリ直下の [.claude/](.claude/)（プロジェクト層）に置く。chezmoi はソースの `.` で始まる名前を配らないので `$HOME` には出ない。
+- ローカル LLM（lmstudio / ollama / opencode）と Fusion MCP は、端末の構成として dotfiles に残す。
+
 ## プラットフォーム別の構成
 
 - [setup](setup) (bash) — Ubuntu/WSL/macOS 用。`$OSTYPE` で分岐して `brew` と `apt` を使い分ける。

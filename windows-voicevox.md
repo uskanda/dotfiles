@@ -2,6 +2,11 @@
 
 最終更新: 2026-06-05
 
+> **2026-10-06 追記**: Linux、macOS、WSLの読み上げ通知は、uskn-harnessのプラグインuskn-notifyへ移した（uskn-harnessのADR-0006）。
+> このメモが扱うWindowsネイティブ（env1、env3）は、dotfilesが配る凍結した写しで動く。
+> 写しのフック結線は、Windows用の `dot_claude/settings.json.tmpl` に残っている。
+> Windowsネイティブの移管は、ハーネスのWindows対応のchangeで扱う。
+
 Claude Code の処理完了/確認時の「発声」(VoiceVox TTS) を、Mac に加えて
 Windows 系3環境でも実現する作業の進捗メモ。設計・使い方の本文は
 [`README.md`](README.md) の「Windows での発話」節を参照。
