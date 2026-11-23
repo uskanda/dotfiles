@@ -120,13 +120,19 @@ fi
 # install starship
 echo "Installing Starship..."
 # check if starship is already installed
-if command -v starship &> /dev/null; then
+if command -v starship &> /dev/null || [ -x "$HOME/.local/bin/starship" ]; then
     echo "Starship is already installed. Installation skipped."
 else
     echo "Starship is NOT installed."
     echo "Installing Starship..."
-    curl -sS https://starship.rs/install.sh | sh
-    echo "done."
+    # 既定の /usr/local/bin は Apple Silicon の Mac に存在せず失敗するため、
+    # 全 OS で PATH に入っている ~/.local/bin へ sudo なしで入れる
+    mkdir -p "$HOME/.local/bin"
+    if curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.local/bin"; then
+        echo "done."
+    else
+        echo "Starship のインストールに失敗しました。" >&2
+    fi
 fi
 
 # install Atuin
