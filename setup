@@ -14,6 +14,15 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         brew update
         echo "done."
     fi
+    # A fresh install does not put brew on PATH (Apple Silicon uses /opt/homebrew), so later steps would miss it.
+    if ! command -v brew &> /dev/null; then
+        for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+            if [ -x "$brew_bin" ]; then
+                eval "$("$brew_bin" shellenv)"
+                break
+            fi
+        done
+    fi
 fi
 
 # Update apt package list
@@ -143,6 +152,52 @@ else
         exit 1
     fi
     echo "done."
+fi
+
+# macOS: install the apps in the Brewfile, then take unused stock apps off the Dock
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Installing apps from Brewfile..."
+    # A cask that fails (e.g. already installed outside Homebrew) must not stop the rest of setup.
+    if ! brew bundle --file="$HOME/dotfiles/dot_Brewfile"; then
+        echo "Some Brewfile entries failed. Continuing."
+    fi
+    echo "done."
+
+    echo "Removing unused apps from the Dock..."
+    if ! command -v dockutil &> /dev/null; then
+        brew install dockutil
+    fi
+    # Bundle IDs, not labels: labels are localized (e.g. "マップ") and change with the system language.
+    # Only listed apps are removed, so apps added by hand stay. A missing entry is a no-op.
+    dock_remove=(
+        com.apple.MobileSMS     # Messages
+        com.apple.mail          # Mail
+        com.apple.Maps          # Maps
+        com.apple.FaceTime      # FaceTime
+        com.apple.mobilephone   # Phone
+        com.apple.iCal          # Calendar
+        com.apple.AddressBook   # Contacts
+        com.apple.reminders     # Reminders
+        com.apple.TV            # TV
+        com.apple.Music         # Music
+        com.apple.games         # Games
+    )
+    if command -v dockutil &> /dev/null; then
+        dock_changed=0
+        for bundle_id in "${dock_remove[@]}"; do
+            # dockutil exits 1 when the item is not in the Dock, which is the normal case on a re-run.
+            if dockutil --remove "$bundle_id" --no-restart &> /dev/null; then
+                echo "  removed $bundle_id"
+                dock_changed=1
+            fi
+        done
+        if [ "$dock_changed" = 1 ]; then
+            killall Dock
+        fi
+        echo "done."
+    else
+        echo "dockutil is not available. Dock cleanup skipped."
+    fi
 fi
 
 # Spoken notifications (claude-notify), the VOICEVOX engine and the notify receivers now come from

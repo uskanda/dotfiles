@@ -57,11 +57,21 @@ $env:INSTALL_WINGET=1; ./setup.ps1   # 環境変数でも指定可
 winget export -o $env:TEMP\winget-now.json     # 作業用。リポジトリには上書きしない
 ```
 
-### Ubuntu, WSL
+### macOS, Ubuntu, WSL
 
 ```bash
 ./setup
 ```
+
+`setup` は冪等で、何度流してもよい。どの OS でも chezmoi・zsh・zinit・starship・atuin を入れ、
+`chezmoi init --apply` で $HOME へ反映する。macOS ではこれに加えて次を行う。
+
+* Homebrew を入れ、直後のシェルでも `brew` が引けるよう `brew shellenv` を読む
+* [dot_Brewfile](dot_Brewfile) を `brew bundle` で流す（一部の cask が失敗しても先へ進む）
+* `dockutil` で、メッセージ・メール・マップ・FaceTime・電話・カレンダー・連絡先・リマインダー・
+  TV・ミュージック・ゲームを Dock から外す。指定はラベルではなく bundle ID（ラベルは言語設定で
+  変わるため）。リストにないアプリは触らないので、手で足したアプリは残る。ただし、外したアプリを
+  Dock に戻しても、`setup` を流し直すとまた外れる。対象は `setup` の `dock_remove` で増減する
 
 リニューアル点
 -----------------------------
@@ -78,7 +88,6 @@ ToDo
 * zoxide or z
 * bat
 * delta new git diff
-* brewfileの追加
 * aptは...まあええか？
 * im-select VSCode vi mode IME設定
 

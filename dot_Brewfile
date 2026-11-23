@@ -27,6 +27,8 @@ brew "docker-compose"
 brew "docker-buildx"
 brew "docker-credential-helper"
 brew "kubernetes-cli"
+# setup が Dock から不要な標準アプリを外すのに使う
+brew "dockutil"
 cask "visual-studio-code"
 cask "google-chrome"
 cask "karabiner-elements"
