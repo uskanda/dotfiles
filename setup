@@ -181,6 +181,16 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         com.apple.TV            # TV
         com.apple.Music         # Music
         com.apple.games         # Games
+        com.apple.Safari        # Safari
+        com.apple.Pages         # Pages (also "Pages Creator Studio")
+        com.apple.Numbers       # Numbers (also "Numbers Creator Studio")
+    )
+    # Apps appended to the end of the Dock when installed and not already there.
+    dock_add=(
+        "/Applications/Visual Studio Code.app"
+        "/Applications/Claude.app"
+        "/Applications/WezTerm.app"
+        "/Applications/Vivaldi.app"
     )
     if command -v dockutil &> /dev/null; then
         dock_changed=0
@@ -188,6 +198,19 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
             # dockutil exits 1 when the item is not in the Dock, which is the normal case on a re-run.
             if dockutil --remove "$bundle_id" --no-restart &> /dev/null; then
                 echo "  removed $bundle_id"
+                dock_changed=1
+            fi
+        done
+        for app in "${dock_add[@]}"; do
+            if [ ! -d "$app" ]; then
+                continue
+            fi
+            # `dockutil --list` prints each item's file URL (spaces as %20, trailing slash) in column 2.
+            if dockutil --list | cut -f2 | grep -qxF "file://${app// /%20}/"; then
+                continue
+            fi
+            if dockutil --add "$app" --no-restart &> /dev/null; then
+                echo "  added $app"
                 dock_changed=1
             fi
         done

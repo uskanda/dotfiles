@@ -69,9 +69,11 @@ winget export -o $env:TEMP\winget-now.json     # 作業用。リポジトリに�
 * Homebrew を入れ、直後のシェルでも `brew` が引けるよう `brew shellenv` を読む
 * [dot_Brewfile](dot_Brewfile) を `brew bundle` で流す（一部の cask が失敗しても先へ進む）
 * `dockutil` で、メッセージ・メール・マップ・FaceTime・電話・カレンダー・連絡先・リマインダー・
-  TV・ミュージック・ゲームを Dock から外す。指定はラベルではなく bundle ID（ラベルは言語設定で
+  TV・ミュージック・ゲーム・Safari・Pages・Numbers を Dock から外す。指定はラベルではなく bundle ID（ラベルは言語設定で
   変わるため）。リストにないアプリは触らないので、手で足したアプリは残る。ただし、外したアプリを
   Dock に戻しても、`setup` を流し直すとまた外れる。対象は `setup` の `dock_remove` で増減する
+* 同じく `dockutil` で、Visual Studio Code・Claude・WezTerm・Vivaldi を Dock の末尾に足す。
+  `/Applications` に入っていて、まだ Dock に無いものだけが対象。対象は `setup` の `dock_add` で増減する
 
 リニューアル点
 -----------------------------
