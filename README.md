@@ -934,6 +934,33 @@ Homebrew 配下の `docker` が見えず Dev Containers が `spawn docker ENOENT
 実際にこの Mac では起動ログ 10 回中 2 回で失敗しており、いずれも colima の VM が
 起動・停止で負荷をかけていた時刻と一致した。絶対パス固定でこの依存を切っている。
 
+Karabiner-Elements（macOS）
+-----------------------------
+HHKBの日本語配列キーボードをWinモードのままKVM経由でMacにつなぐと、スペースの左右のキーがMacで反応しない。
+ディップスイッチはWindowsとの共用のため変えず、Karabiner-Elementsのルールで割り当てる。
+
+ルールの定義は [hhkb-jp-win-mode.json](dot_config/karabiner/assets/complex_modifications/hhkb-jp-win-mode.json) にある。
+各キーの割り当ては次のとおり。
+
+| キー | Karabiner のキー名 | 押しながら | 単体で押す |
+|---|---|---|---|
+| 無変換 | `japanese_pc_nfer` | 左 Command | 英数 |
+| 変換 | `japanese_pc_katakana` | 右 Command | かな |
+| かな | `japanese_pc_katakana` | 右 Command | かな |
+
+Winモードでは変換キーとかなキーがどちらも `japanese_pc_katakana` を送るため、2つのキーは同じ動きになる。
+macOSの入力ソースが反応するのは `japanese_eisuu` と `japanese_kana` だけで、`japanese_pc_katakana` には反応しない。
+
+Karabinerは、ルールを有効にした時点でその内容を `~/.config/karabiner/karabiner.json` に写す。
+`chezmoi apply` はルールファイルを置くだけで、有効にする操作はMacごとに次の手順で行う。
+
+1. `chezmoi apply` を実行する
+2. Karabiner-ElementsのSettingsを開き、Complex Modificationsの「Add predefined rule」を選ぶ
+3. 「無変換・変換・かなを」で始まるルールを有効にする
+
+ルールファイルを変更したときは、有効にしたルールを一度Removeしてから追加し直す。
+一度写した内容は、ルールファイルを更新しても変わらないためである。
+
 Colima（macOS）
 -----------------------------
 Docker Desktop は使わず [Colima](https://github.com/abiosoft/colima) + 素の Docker CLI。
