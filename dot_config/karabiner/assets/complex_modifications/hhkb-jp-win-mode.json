@@ -1,0 +1,37 @@
+{
+  "title": "HHKB JP (Win モード) を Mac で使う",
+  "rules": [
+    {
+      "description": "無変換・変換・かなを Command にする（単体で押すと英数・かな）",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "japanese_pc_nfer",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "left_command", "lazy": true }],
+          "to_if_alone": [{ "key_code": "japanese_eisuu" }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "japanese_pc_xfer",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "right_command", "lazy": true }],
+          "to_if_alone": [{ "key_code": "japanese_kana" }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "japanese_pc_katakana",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "right_command", "lazy": true }],
+          "to_if_alone": [{ "key_code": "japanese_kana" }]
+        }
+      ]
+    }
+  ]
+}
